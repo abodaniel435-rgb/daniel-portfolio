@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Daniel is a full-stack developer building useful digital products for finance, commerce, community and everyday life.">
+  <meta name="theme-color" content="#17231f">
+  <meta property="og:title" content="Daniel — Full-stack developer">
+  <meta property="og:description" content="Useful digital products, designed and built for the real world.">
+  <meta property="og:type" content="website">
+  <title>Daniel — Full-stack developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="wordmark" href="#top" aria-label="Daniel, home"><span class="wordmark-mark">D</span><span>DANIEL<span class="wordmark-dot">.</span></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+        <span class="sr-only">Open navigation</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a class="nav-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot"></span> FULL-STACK DEVELOPER <span class="eyebrow-divider">/</span> DIGITAL BUILDER</p>
+          <h1 id="hero-title">Daniel.<br><span>Useful by</span><br>design<span class="hero-period">.</span></h1>
+          <p class="hero-description">I build clear, practical web products for real people — from finance and housing tools to commerce and community platforms.</p>
+          <div class="hero-actions">
+            <a class="button button-bright" href="#work">Explore selected work <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="hero-proof" aria-label="Portfolio overview">
+            <div><strong>08</strong><span>selected projects</span></div>
+            <div><strong>07</strong><span>live previews checked</span></div>
+            <div><strong>01</strong><span>preview in progress</span></div>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="A collage of selected live project screens">
+          <div class="art-orbit orbit-one" aria-hidden="true"></div>
+          <div class="art-orbit orbit-two" aria-hidden="true"></div>
+          <figure class="screen screen-main">
+            <img src="assets/projects/rentjury.jpg" alt="RentJury rent reference tool preview">
+            <figcaption><span>01 / PRODUCT</span><b>RentJury</b></figcaption>
+          </figure>
+          <figure class="screen screen-small screen-top">
+            <img src="assets/projects/abosodion-farm.jpg" alt="ABOSODION Farm storefront preview">
+            <figcaption><span>02 / COMMERCE</span><b>ABOSODION Farm</b></figcaption>
+          </figure>
+          <figure class="screen screen-small screen-bottom">
+            <img src="assets/projects/skycast.jpg" alt="SkyCast weather lookup preview">
+            <figcaption><span>03 / TOOL</span><b>SkyCast</b></figcaption>
+          </figure>
+          <span class="art-index">A selection of real work <b>↗</b></span>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#work"><span class="scroll-line"></span> SCROLL TO EXPLORE</a>
+    </section>
+
+    <section class="work-section section-pad" id="work" aria-labelledby="work-title">
+      <div class="section-shell">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow eyebrow-dark"><span>01</span> SELECTED WORK</p>
+            <h2 id="work-title">Built to be <em>useful.</em></h2>
+          </div>
+          <p class="section-intro">A collection of products and experiences made to solve practical problems, tell a story, or make the next step easier.</p>
+        </div>
+
+        <div class="filter-bar reveal" role="group" aria-label="Filter projects">
+          <span class="filter-label">SHOW</span>
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All work <span>08</span></button>
+          <button class="filter-button" type="button" data-filter="product" aria-pressed="false">Products</button>
+          <button class="filter-button" type="button" data-filter="commerce" aria-pressed="false">Commerce</button>
+          <button class="filter-button" type="button" data-filter="community" aria-pressed="false">Community</button>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card project-card-featured reveal" data-category="commerce">
+            <a class="project-image" href="http://danielwebservices.com/AbosodionFarm/" target="_blank" rel="noopener noreferrer" aria-label="Open ABOSODION Farm live site">
+              <img src="assets/projects/abosodion-farm.jpg" alt="ABOSODION Farm poultry storefront with product ordering">
+              <span class="image-open" aria-hidden="true">↗</span>
+            </a>
+            <div class="project-meta"><span>01 / COMMERCE</span><span>LIVE PREVIEW</span></div>
+            <div class="project-title-row"><h3>ABOSODION Farm</h3><a class="project-arrow" href="http://danielwebservices.com/AbosodionFarm/" target="_blank" rel="noopener noreferrer" aria-label="Open ABOSODION Farm">↗</a></div>
+            <p>A farm-direct storefront for broilers, layers, and graded eggs, with a simple WhatsApp ordering flow.</p>
+            <div class="project-tags"><span>Digital commerce</span><span>Mobile-first</span><span>Ordering</span></div>
+          </article>
+
+          <article class="project-card reveal" data-category="product">
+            <a class="project-image" href="http://danielwebservices.com/curensee/" target="_blank" rel="noopener noreferrer" aria-label="Open CurrenSee live site">
+              <img src="assets/projects/currensee.jpg" alt="CurrenSee currency intelligence product login and overview">
+              <span class="image-open" aria-hidden="true">↗</span>
+            </a>
+            <div class="project-meta"><span>02 / FINTECH</span><span>LIVE PREVIEW</span></div>
+            <div class="project-title-row"><h3>CurrenSee</h3><a class="project-arrow" href="http://danielwebservices.com/curensee/" target="_blank" rel="noopener noreferrer" aria-label="Open CurrenSee">↗</a></div>
+            <p>A currency intelligence workspace for monitoring rates, setting targets, and keeping conversion activity organized.</p>
+            <div class="project-tags"><span>Finance</span><span>Dashboards</span><span>Responsive UI</span></div>
+          </article>
+
+          <article class="project-card reveal" data-category="community">
+            <a class="project-image" href="http://danielwebservices.com/moonlight-festival/" target="_blank" rel="noopener noreferrer" aria-label="Open Moonlight Events live site">
+              <img src="assets/projects/moonlight-events.jpg" alt="Moonlight Events festival discovery page with filters">
+              <span class="image-open" aria-hidden="true">↗</span>
+            </a>
+            <div class="project-meta"><span>03 / DISCOVERY</span><span>LIVE PREVIEW</span></div>
+            <div class="project-title-row"><h3>Moonlight Events</h3><a class="project-arrow" href="http://danielwebservices.com/moonlight-festival/" target="_blank" rel="noopener noreferrer" aria-label="Open Moonlight Events">↗</a></div>
+            <p>A global festival guide with quick filters for country, month, and tradition, built for curious browsing.</p>
+            <div class="project-tags"><span>Discovery</span><span>Filters</span><span>Culture</span></div>
+          </article>
+
+          <article class="project-card project-card-featured reveal" data-category="product">
+            <a class="project-image" href="http://danielwebservices.com/RentJury/" target="_blank" rel="noopener noreferrer" aria-label="Open RentJury live site">
+              <img src="assets/projects/rentjury.jpg" alt="RentJury Lagos rent quote checker and reference tool">
+              <span class="image-open" aria-hidden="true">↗</span>
+            </a>
+            <div class="project-meta"><span>04 / PROPTECH</span><span>LIVE PREVIEW</span></div>
+            <div class="project-title-row"><h3>RentJury</h3><a class="project-arrow" href="http://danielwebservices.com/RentJury/" target="_blank" rel="noopener noreferrer" aria-label="Open RentJury">↗</a></div>
+            <p>A Lagos rent and agent-fee reference that helps renters sanity-check a quote before committing.</p>
+            <div class="project-tags"><span>Housing</span><span>Decision tools</span><span>Lagos</span></div>
+          </article>
+
+          <article class="project-card reveal" data-category="community">
+            <a class="project-image" href="http://danielwebservices.com/ThatguyFitness/" target="_blank" rel="noopener noreferrer" aria-label="Open ThatGuys Fitness live site">
+              <img src="assets/projects/thatguys-fitness.jpg" alt="ThatGuys Fitness bodyweight workout home page">
+              <span class="image-open" aria-hidden="true">↗</span>
+            </a>
+            <div class="project-meta"><span>05 / WELLNESS</span><span>LIVE PREVIEW</span></div>
+            <div class="project-title-row"><h3>ThatGuys Fitness</h3><a class="project-arrow" href="http://danielwebservices.com/ThatguyFitness/" target="_blank" rel="noopener noreferrer" aria-label="Open ThatGuys Fitness">↗</a></div>
+            <p>A no-equipment, five-day bodyweight training experience with a direct, energetic visual identity.</p>
+            <div class="project-tags"><span>Fitness</span><span>Content design</span><span>Training</span></div>
+          </article>
+
+          <article class="project-card reveal" data-category="commerce">
+            <a class="project-image" href="http://danielwebservices.com/TrinityLighting/" target="_blank" rel="noopener noreferrer" aria-label="Open Trinity Lightings live site">
+              <img src="assets/projects/trinity-lightings.jpg" alt="Trinity Lightings chandelier storefront landing page">
+              <span class="image-open" aria-hidden="true">↗</span>
+            </a>
+            <div class="project-meta"><span>06 / RETAIL</span><span>LIVE PREVIEW</span></div>
+            <div class="project-title-row"><h3>Trinity Lightings</h3><a class="project-arrow" href="http://danielwebservices.com/TrinityLighting/" target="_blank" rel="noopener noreferrer" aria-label="Open Trinity Lightings">↗</a></div>
+            <p>A considered chandelier storefront that brings product discovery and local contact into one clear flow.</p>
+            <div class="project-tags"><span>Retail</span><span>Product browsing</span><span>Lagos</span></div>
+          </article>
+
+          <article class="project-card reveal" data-category="product">
+            <a class="project-image" href="http://danielwebservices.com/WeatherApp/" target="_blank" rel="noopener noreferrer" aria-label="Open SkyCast live site">
+              <img src="assets/projects/skycast.jpg" alt="SkyCast global weather lookup interface">
+              <span class="image-open" aria-hidden="true">↗</span>
+            </a>
+            <div class="project-meta"><span>07 / DATA TOOL</span><span>LIVE PREVIEW</span></div>
+            <div class="project-title-row"><h3>SkyCast</h3><a class="project-arrow" href="http://danielwebservices.com/WeatherApp/" target="_blank" rel="noopener noreferrer" aria-label="Open SkyCast">↗</a></div>
+            <p>A global weather lookup that guides people from country to region with a simple, focused interface.</p>
+            <div class="project-tags"><span>Weather</span><span>Open-Meteo</span><span>Live data</span></div>
+          </article>
+
+          <article class="project-card reveal" data-category="product">
+            <div class="project-image campus-preview" role="img" aria-label="Illustrative Campus Coin project artwork; live preview is currently unavailable">
+              <span class="campus-mark">CC</span>
+              <span class="campus-orbit campus-orbit-one" aria-hidden="true"></span>
+              <span class="campus-orbit campus-orbit-two" aria-hidden="true"></span>
+              <span class="campus-caption">CAMPUS <b>×</b> FINANCE</span>
+              <span class="campus-footnote">PROJECT PREVIEW CURRENTLY BLANK</span>
+            </div>
+            <div class="project-meta"><span>08 / FINTECH</span><span class="meta-warning">PREVIEW IN PROGRESS</span></div>
+            <div class="project-title-row"><h3>Campus Coin</h3></div>
+            <p>A campus-focused finance project. Its current cPanel preview is blank, so this card avoids linking to an exposed source directory.</p>
+            <div class="project-tags"><span>Student finance</span><span>Python backend</span><span>In progress</span></div>
+          </article>
+        </div>
+        <p class="work-note reveal"><span class="note-mark">!</span> Campus Coin’s live preview needs repair before it can be linked publicly.</p>
+      </div>
+    </section>
+
+    <section class="about-section section-pad" id="about" aria-labelledby="about-title">
+      <div class="about-shell">
+        <div class="about-label reveal"><p class="eyebrow"><span>02</span> A LITTLE ABOUT ME</p><span class="about-stamp">D<br><i>F</i></span></div>
+        <div class="about-copy reveal">
+          <h2 id="about-title">I like making complex things feel <em>clear.</em></h2>
+          <p>I’m Daniel, a full-stack developer building practical digital products for people and businesses. My work spans finance, housing, commerce, community, and everyday tools — with a focus on useful flows and interfaces that feel considered.</p>
+          <p>From the first idea to the live experience, I care about making technology approachable, reliable, and ready for real use.</p>
+          <div class="capability-list" aria-label="Areas of focus">
+            <span>Product thinking</span><span>Full-stack web</span><span>Python &amp; Flask</span><span>Responsive interfaces</span><span>JavaScript</span><span>Data-backed tools</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section section-pad" id="contact" aria-labelledby="contact-title">
+      <div class="contact-shell reveal">
+        <div>
+          <p class="eyebrow eyebrow-dark"><span>03</span> HAVE A PROJECT IN MIND?</p>
+          <h2 id="contact-title">Let’s make<br><em>something useful.</em></h2>
+        </div>
+        <div class="contact-actions">
+          <a class="contact-link" href="mailto:abodaniel435@gmail.com"><span>Email Daniel</span><b aria-hidden="true">↗</b></a>
+          <a class="contact-link" href="https://wa.me/2347038082491?text=Hello%20Daniel%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener noreferrer"><span>Message on WhatsApp</span><b aria-hidden="true">↗</b></a>
+          <p>Available for thoughtful collaborations and new opportunities.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark footer-mark" href="#top"><span class="wordmark-mark">D</span><span>DANIEL<span class="wordmark-dot">.</span></span></a>
+    <p>Full-stack developer · Useful by design</p>
+    <a href="#top" class="back-top">BACK TO TOP ↑</a>
+    <small>© <span id="year">2026</span> Daniel</small>
+  </footer>
+</body>
+</html>
