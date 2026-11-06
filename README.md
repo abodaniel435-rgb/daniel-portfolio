@@ -2,6 +2,8 @@
 
 A static, responsive portfolio for GitHub Pages. It showcases selected public project previews and uses local screenshot assets so the portfolio remains fast and self-contained.
 
+Live: https://abodaniel435-rgb.github.io/daniel-portfolio/
+
 ## Run locally
 
 Open `index.html` in a browser, or serve this folder with any static file server.
@@ -10,18 +12,18 @@ Open `index.html` in a browser, or serve this folder with any static file server
 
 Create a public repository, upload the files in this folder, then enable Pages from the repository's **Settings → Pages** page. Choose **Deploy from a branch**, `main`, and the repository root.
 
-The Campus Coin card is intentionally marked as in progress: its cPanel frontend preview currently renders blank, and the project directory exposes source files rather than a safe public demo.
-
 ## Included project previews
 
-- ABOSODION Farm
-- Campus Coin (preview needs repair)
-- CurrenSee
-- Moonlight Events
+- City of Gold Estates — paid client build, live at cityofgoldestate.com
 - RentJury
+- CurrenSee
+- ABOSODION Farm
+- Moonlight Events
 - ThatGuys Fitness
 - Trinity Lightings
 - SkyCast
+- Hotel Miramar SG (full-stack build, deployment on request)
+- Campus Coin (full-stack build, deployment on request)
 
 ## Visual asset
 
