@@ -1,0 +1,9 @@
+{{ hotel_name }} - new contact message
+
+New message from {{ msg.name }} <{{ msg.email }}>
+Subject: {{ msg.subject or '(no subject)' }}
+Received: {{ msg.created_at.strftime('%d %b %Y %H:%M') if msg.created_at else 'just now' }}
+
+{{ msg.message }}
+
+Reply directly to {{ msg.email }}. Also visible in Admin > Messages.

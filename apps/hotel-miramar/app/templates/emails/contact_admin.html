@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <body style="margin:0;background:#f7f3eb;color:#2c2c2c;font-family:Arial,sans-serif;">
+    <div style="max-width:620px;margin:32px auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(11,28,44,.12);">
+      <div style="padding:28px 36px;background:#0b1c2c;color:#f7f3eb;">
+        <div style="font-family:Georgia,serif;font-size:25px;font-weight:bold;">Hotel Miramar <span style="color:#c9a84c;">SG</span></div>
+        <div style="margin-top:12px;color:#c9a84c;font-size:14px;letter-spacing:.04em;">NEW CONTACT MESSAGE</div>
+      </div>
+      <div style="padding:32px 36px;line-height:1.6;">
+        <h1 style="margin:0 0 12px;color:#0b1c2c;font-family:Georgia,serif;font-size:24px;">New message from {{ msg.name }}</h1>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;font-size:14px;margin:16px 0;">
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #e8e4dc;color:#6b6b6b;">From</td><td style="padding:10px 14px;border-bottom:1px solid #e8e4dc;text-align:right;">{{ msg.name }} &lt;{{ msg.email }}&gt;</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #e8e4dc;color:#6b6b6b;">Subject</td><td style="padding:10px 14px;border-bottom:1px solid #e8e4dc;text-align:right;">{{ msg.subject or '(no subject)' }}</td></tr>
+          <tr><td style="padding:10px 14px;color:#6b6b6b;">Received</td><td style="padding:10px 14px;text-align:right;">{{ msg.created_at.strftime('%d %b %Y %H:%M') if msg.created_at else 'just now' }}</td></tr>
+        </table>
+        <div style="padding:16px;border:1px solid #e8e4dc;border-radius:8px;background:#f7f3eb;white-space:pre-wrap;">{{ msg.message }}</div>
+        <p style="margin:20px 0 0;font-size:13px;color:#6b6b6b;">Reply directly to {{ msg.email }}. Also visible in Admin &gt; Messages.</p>
+      </div>
+    </div>
+  </body>
+</html>

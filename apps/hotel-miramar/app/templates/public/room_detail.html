@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}{{ room.name }} — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1920&q=80');">
+  <div class="page-header">
+    <h1>{{ room.name }}</h1>
+    <div class="gold-line"></div>
+    <p>{{ room.room_type }} Room</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="grid-2">
+      <div class="room-gallery">
+        <img src="{% if room.image_filename %}{{ url_for('static', filename='images/rooms/' + room.image_filename) }}{% else %}https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80{% endif %}"
+             alt="{{ room.name }}" onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80'">
+      </div>
+      <div class="glass-panel" style="background:var(--white);">
+        <h2>{{ room.name }}</h2>
+        <p class="price" style="margin:0.75rem 0;">S${{ '%.2f'|format(room.price_per_night) }} <small>/ night</small></p>
+        <p style="color:var(--grey); margin-bottom:1.25rem;">{{ room.description }}</p>
+        <p><strong>Max occupancy:</strong> {{ room.max_occupancy }} guests</p>
+        {% if room.amenities %}
+        <div class="amenities-list">
+          {% for a in room.amenities.split(',') %}
+          <span class="amenity-tag">{{ a.strip() }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div style="margin-top:2rem;">
+          {% if current_user.is_authenticated and not current_user.is_admin %}
+            <a href="{{ url_for('customer.book_room', room_id=room.id) }}" class="btn btn-primary btn-lg">Book This Room</a>
+          {% elif not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.login', next=url_for('customer.book_room', room_id=room.id)) }}" class="btn btn-primary btn-lg">Login to Book</a>
+          {% endif %}
+          <a href="{{ url_for('public.rooms') }}" class="btn btn-navy" style="margin-left:0.5rem;">Back to Rooms</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

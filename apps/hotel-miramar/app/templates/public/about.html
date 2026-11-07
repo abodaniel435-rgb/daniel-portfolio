@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}About Us — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80');">
+  <div class="page-header">
+    <h1>About Hotel Miramar SG</h1>
+    <div class="gold-line"></div>
+    <p>Where contemporary elegance meets Singaporean hospitality</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container" style="max-width:800px;">
+    <div class="glass-panel" style="background:var(--white);">
+      <h2>Our Story</h2>
+      <div class="gold-line" style="margin:1rem 0;"></div>
+      <p style="margin-bottom:1.25rem; color:var(--grey);">
+        Hotel Miramar SG was conceived as a refined urban retreat for travellers who appreciate understated luxury.
+        Located steps from Marina Bay, our property combines architectural elegance with warm, personalised service.
+      </p>
+      <p style="margin-bottom:1.25rem; color:var(--grey);">
+        From the moment you arrive, every detail — from the curated art collection to the thoughtfully designed rooms —
+        reflects our commitment to creating memorable stays for business and leisure guests alike.
+      </p>
+      <h3 style="margin-top:2rem;">Our Promise</h3>
+      <ul style="color:var(--grey); line-height:2; margin-top:0.75rem;">
+        <li>Impeccable service from a dedicated team</li>
+        <li>Rooms and suites designed for comfort and productivity</li>
+        <li>Prime location with seamless access to Singapore’s highlights</li>
+        <li>Sustainable practices and community engagement</li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

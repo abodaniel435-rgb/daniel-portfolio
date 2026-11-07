@@ -1,0 +1,21 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}{{ title }} — {{ hotel_name }}{% endblock %}
+{% block admin_content %}
+<h2 class="mb-3">{{ title }}</h2>
+<div class="glass-panel" style="background:var(--white); max-width:640px;">
+  <form method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="form-group">{{ form.name.label }}{{ form.name(class='form-control') }}</div>
+    <div class="form-group">{{ form.room_type.label }}{{ form.room_type(class='form-control') }}</div>
+    <div class="form-group">{{ form.description.label }}{{ form.description(class='form-control') }}</div>
+    <div class="form-group">{{ form.price_per_night.label }}{{ form.price_per_night(class='form-control') }}</div>
+    <div class="form-group">{{ form.max_occupancy.label }}{{ form.max_occupancy(class='form-control') }}</div>
+    <div class="form-group">{{ form.amenities.label }}{{ form.amenities(class='form-control') }}</div>
+    <div class="form-group">{{ form.image.label }}{{ form.image(class='form-control') }}</div>
+    <div class="form-check">{{ form.is_available() }} {{ form.is_available.label }}</div>
+    <div class="form-check">{{ form.is_featured() }} {{ form.is_featured.label }}</div>
+    {{ form.submit(class='btn btn-primary') }}
+    <a href="{{ url_for('admin.rooms') }}" class="btn btn-navy" style="margin-left:0.5rem;">Cancel</a>
+  </form>
+</div>
+{% endblock %}

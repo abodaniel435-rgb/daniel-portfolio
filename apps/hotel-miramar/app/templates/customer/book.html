@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Book {{ room.name }} — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1920&q=80'); min-height:auto;">
+  <div class="page-header" style="padding:8rem 0 3rem;">
+    <h1>Book {{ room.name }}</h1>
+    <div class="gold-line"></div>
+    <p>S${{ '%.2f'|format(room.price_per_night) }} per night</p>
+  </div>
+</div>
+<section class="section" style="padding-top:2rem;">
+  <div class="container" style="max-width:560px;">
+    <div class="glass-panel" style="background:var(--white);">
+      <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.room_id() }}
+        <div class="form-group">
+          {{ form.check_in.label }}
+          {{ form.check_in(class='form-control') }}
+          {% for e in form.check_in.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.check_out.label }}
+          {{ form.check_out(class='form-control') }}
+          {% for e in form.check_out.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.num_guests.label }}
+          {{ form.num_guests(class='form-control') }}
+        </div>
+        <div class="form-group">
+          {{ form.special_requests.label }}
+          {{ form.special_requests(class='form-control') }}
+        </div>
+        {{ form.submit(class='btn btn-primary btn-block') }}
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

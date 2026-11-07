@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dash-layout">
+  <aside class="dash-sidebar">
+    <a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">Dashboard</a>
+    <a href="{{ url_for('admin.rooms') }}" class="{% if 'room' in request.endpoint %}active{% endif %}">Rooms</a>
+    <a href="{{ url_for('admin.customers') }}" class="{% if 'customer' in request.endpoint %}active{% endif %}">Customers</a>
+    <a href="{{ url_for('admin.bookings') }}" class="{% if 'booking' in request.endpoint %}active{% endif %}">Bookings</a>
+    <a href="{{ url_for('admin.feedback') }}" class="{% if 'feedback' in request.endpoint %}active{% endif %}">Feedback</a>
+    <a href="{{ url_for('admin.messages') }}" class="{% if 'message' in request.endpoint %}active{% endif %}">Messages</a>
+    <a href="{{ url_for('admin.slider') }}" class="{% if 'slider' in request.endpoint %}active{% endif %}">Slider</a>
+    <a href="{{ url_for('admin.profile') }}" class="{% if request.endpoint == 'admin.profile' %}active{% endif %}">Profile</a>
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+  </aside>
+  <main class="dash-main">
+    {% block admin_content %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

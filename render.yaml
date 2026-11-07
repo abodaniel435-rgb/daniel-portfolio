@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: hotel-miramar-sg
+    runtime: python
+    plan: free
+    rootDir: apps/hotel-miramar
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn passenger_wsgi:application --workers 1 --threads 4 --timeout 180 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SEED_DEMO_DATA
+        value: "true"
+      - key: MAIL_SUPPRESS_SEND
+        value: "true"
+
+  - type: web
+    name: campus-coin
+    runtime: python
+    plan: free
+    rootDir: apps/campus-coin
+    buildCommand: pip install -r requirements-prod.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput
+    startCommand: gunicorn config.wsgi:application --workers 1 --threads 4 --timeout 180 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        value: .onrender.com
+      - key: DJANGO_CSRF_TRUSTED_ORIGINS
+        value: https://*.onrender.com
+      - key: SERVE_SPA
+        value: "true"
+      - key: USE_SQLITE
+        value: "true"

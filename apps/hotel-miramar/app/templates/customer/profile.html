@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}My Profile — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80'); min-height:auto;">
+  <div class="page-header" style="padding:8rem 0 3rem;">
+    <h1>My Profile</h1>
+    <div class="gold-line"></div>
+  </div>
+</div>
+<section class="section" style="padding-top:2rem;">
+  <div class="container" style="max-width:560px;">
+    <div class="glass-panel" style="background:var(--white); margin-bottom:2rem;">
+      <h3 class="mb-3">Personal Information</h3>
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">{{ form.first_name.label }}{{ form.first_name(class='form-control') }}</div>
+        <div class="form-group">{{ form.last_name.label }}{{ form.last_name(class='form-control') }}</div>
+        <div class="form-group">{{ form.phone.label }}{{ form.phone(class='form-control') }}</div>
+        <div class="form-group">{{ form.address.label }}{{ form.address(class='form-control') }}</div>
+        <button type="submit" name="update_profile" class="btn btn-primary">Update Profile</button>
+      </form>
+    </div>
+    <div class="glass-panel" style="background:var(--white);">
+      <h3 class="mb-3">Change Password</h3>
+      <form method="post" action="{{ url_for('customer.change_password') }}">
+        {{ pwd_form.hidden_tag() }}
+        <div class="form-group">{{ pwd_form.current_password.label }}{{ pwd_form.current_password(class='form-control') }}</div>
+        <div class="form-group">{{ pwd_form.new_password.label }}{{ pwd_form.new_password(class='form-control') }}</div>
+        <div class="form-group">{{ pwd_form.confirm_password.label }}{{ pwd_form.confirm_password(class='form-control') }}</div>
+        {{ pwd_form.submit(class='btn btn-navy') }}
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

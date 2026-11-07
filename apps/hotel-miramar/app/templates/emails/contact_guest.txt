@@ -1,0 +1,10 @@
+{{ hotel_name }} - message received
+
+Thank you, {{ msg.name }}.
+
+We received your message{% if msg.subject %} about "{{ msg.subject }}"{% endif %} and our team will respond shortly.
+
+Your message:
+{{ msg.message }}
+
+Need urgent help? Contact {{ hotel_email }} or {{ hotel_phone }}.

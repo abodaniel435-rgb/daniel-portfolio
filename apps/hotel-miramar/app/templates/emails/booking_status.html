@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <body style="margin:0;background:#f7f3eb;color:#2c2c2c;font-family:Arial,sans-serif;">
+    <div style="max-width:620px;margin:32px auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(11,28,44,.12);">
+      <div style="padding:28px 36px;background:#0b1c2c;color:#f7f3eb;">
+        <div style="font-family:Georgia,serif;font-size:25px;font-weight:bold;">Hotel Miramar <span style="color:#c9a84c;">SG</span></div>
+        <div style="margin-top:12px;color:#c9a84c;font-size:14px;letter-spacing:.04em;">BOOKING UPDATE</div>
+      </div>
+      <div style="padding:32px 36px;">
+        <h1 style="margin:0 0 12px;color:#0b1c2c;font-family:Georgia,serif;font-size:27px;">{{ status_title }}</h1>
+        <p style="margin:0 0 22px;line-height:1.6;">Hello {{ booking.user.first_name }},<br>{{ status_message }}</p>
+        <div style="border:1px solid #e8e4dc;border-radius:8px;overflow:hidden;">
+          <div style="padding:12px 16px;background:#ede6d9;color:#0b1c2c;font-weight:bold;">Booking reference #{{ booking.id }}</div>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;font-size:14px;">
+            <tr><td style="padding:12px 16px;border-bottom:1px solid #e8e4dc;color:#6b6b6b;">Room</td><td style="padding:12px 16px;border-bottom:1px solid #e8e4dc;text-align:right;">{{ booking.room.name }}</td></tr>
+            <tr><td style="padding:12px 16px;border-bottom:1px solid #e8e4dc;color:#6b6b6b;">Stay</td><td style="padding:12px 16px;border-bottom:1px solid #e8e4dc;text-align:right;">{{ booking.check_in.strftime('%d %b %Y') }} – {{ booking.check_out.strftime('%d %b %Y') }}</td></tr>
+            <tr><td style="padding:12px 16px;border-bottom:1px solid #e8e4dc;color:#6b6b6b;">Guests / nights</td><td style="padding:12px 16px;border-bottom:1px solid #e8e4dc;text-align:right;">{{ booking.num_guests }} / {{ booking.nights }}</td></tr>
+            <tr><td style="padding:12px 16px;color:#6b6b6b;">Total</td><td style="padding:12px 16px;text-align:right;font-weight:bold;color:#0b1c2c;">S${{ '%.2f'|format(booking.total_price) }}</td></tr>
+          </table>
+        </div>
+        {% if booking.admin_notes %}<p style="margin:22px 0 0;padding:14px 16px;background:#f7f3eb;border-left:3px solid #c9a84c;line-height:1.55;"><strong>Message from our reservations team</strong><br>{{ booking.admin_notes }}</p>{% endif %}
+        <p style="margin:24px 0 0;line-height:1.6;">Need assistance? Contact us at <a style="color:#9d7c28;" href="mailto:{{ hotel_email }}">{{ hotel_email }}</a> or {{ hotel_phone }}.</p>
+      </div>
+    </div>
+  </body>
+</html>

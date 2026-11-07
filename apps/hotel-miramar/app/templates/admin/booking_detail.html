@@ -1,0 +1,29 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Booking #{{ booking.id }} — {{ hotel_name }}{% endblock %}
+{% block admin_content %}
+<h2 class="mb-3">Booking #{{ booking.id }}</h2>
+<div class="grid-2">
+  <div class="glass-panel" style="background:var(--white);">
+    <h3>Details</h3>
+    <p><strong>Guest:</strong> {{ booking.user.full_name }} ({{ booking.user.email }})</p>
+    <p><strong>Room:</strong> {{ booking.room.name }}</p>
+    <p><strong>Check-in:</strong> {{ booking.check_in }}</p>
+    <p><strong>Check-out:</strong> {{ booking.check_out }}</p>
+    <p><strong>Nights:</strong> {{ booking.nights }}</p>
+    <p><strong>Guests:</strong> {{ booking.num_guests }}</p>
+    <p><strong>Total:</strong> S${{ '%.2f'|format(booking.total_price) }}</p>
+    <p><strong>Status:</strong> <span class="badge badge-{{ booking.status }}">{{ booking.status|capitalize }}</span></p>
+    {% if booking.special_requests %}<p><strong>Requests:</strong> {{ booking.special_requests }}</p>{% endif %}
+  </div>
+  <div class="glass-panel" style="background:var(--white);">
+    <h3>Update Status</h3>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="form-group">{{ form.status.label }}{{ form.status(class='form-control') }}</div>
+      <div class="form-group">{{ form.admin_notes.label }}{{ form.admin_notes(class='form-control') }}</div>
+      {{ form.submit(class='btn btn-primary') }}
+    </form>
+  </div>
+</div>
+<a href="{{ url_for('admin.bookings') }}" class="btn btn-navy mt-3">← Back to Bookings</a>
+{% endblock %}

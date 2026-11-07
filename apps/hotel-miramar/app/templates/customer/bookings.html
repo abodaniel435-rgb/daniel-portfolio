@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}My Bookings — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1920&q=80'); min-height:auto;">
+  <div class="page-header" style="padding:8rem 0 3rem;">
+    <h1>My Bookings</h1>
+    <div class="gold-line"></div>
+  </div>
+</div>
+<section class="section" style="padding-top:2rem;">
+  <div class="container">
+    {% if bookings %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Room</th><th>Check-in</th><th>Check-out</th><th>Guests</th><th>Total</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          {% for b in bookings %}
+          <tr>
+            <td>{{ b.room.name }}</td>
+            <td>{{ b.check_in }}</td>
+            <td>{{ b.check_out }}</td>
+            <td>{{ b.num_guests }}</td>
+            <td>S${{ '%.2f'|format(b.total_price) }}</td>
+            <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
+            <td>
+              {% if b.status in ('pending', 'approved') %}
+              <form method="post" action="{{ url_for('customer.cancel_booking', booking_id=b.id) }}" style="display:inline;"
+                    onsubmit="return confirm('Cancel this booking?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-sm" style="background:var(--danger); color:#fff; border:none;">Cancel</button>
+              </form>
+              {% else %}—{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-center" style="color:var(--grey); padding:3rem;">No bookings yet. <a href="{{ url_for('customer.search_rooms') }}">Search rooms</a></p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

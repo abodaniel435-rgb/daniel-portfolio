@@ -1,0 +1,18 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}{{ title }} — {{ hotel_name }}{% endblock %}
+{% block admin_content %}
+<h2 class="mb-3">{{ title }}</h2>
+<div class="glass-panel" style="background:var(--white); max-width:560px;">
+  <form method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="form-group">{{ form.title.label }}{{ form.title(class='form-control') }}</div>
+    <div class="form-group">{{ form.caption.label }}{{ form.caption(class='form-control') }}</div>
+    <div class="form-group">{{ form.image.label }}{{ form.image(class='form-control') }}</div>
+    <div class="form-group">{{ form.link_url.label }}{{ form.link_url(class='form-control') }}</div>
+    <div class="form-group">{{ form.sort_order.label }}{{ form.sort_order(class='form-control') }}</div>
+    <div class="form-check">{{ form.is_active() }} {{ form.is_active.label }}</div>
+    {{ form.submit(class='btn btn-primary') }}
+    <a href="{{ url_for('admin.slider') }}" class="btn btn-navy" style="margin-left:0.5rem;">Cancel</a>
+  </form>
+</div>
+{% endblock %}

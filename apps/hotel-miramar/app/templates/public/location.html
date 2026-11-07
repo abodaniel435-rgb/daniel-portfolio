@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}Location — {{ hotel_name }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  #hotelMap { height: 380px; border-radius: var(--radius); z-index: 1; }
+  .distance-card {
+    margin-top: 1.5rem; padding: 1.25rem 1.5rem; border-radius: var(--radius);
+    background: var(--ivory); border: 1px solid var(--grey-light);
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  }
+  .distance-num { font-family: var(--font-serif); font-size: 1.8rem; color: var(--navy); font-weight: 700; }
+  .distance-sub { color: var(--grey); font-size: 0.92rem; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=80');">
+  <div class="page-header">
+    <h1>Our Location</h1>
+    <div class="gold-line"></div>
+    <p>18 Marina Boulevard, Singapore 018980</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="glass-panel" style="background:var(--white); max-width:900px; margin:0 auto;">
+      <h2>Getting Here</h2>
+      <div class="gold-line" style="margin:1rem 0;"></div>
+      <p style="color:var(--grey); margin-bottom:1.5rem;">
+        Hotel Miramar SG is ideally situated in the Marina Bay financial and lifestyle district,
+        minutes from the CBD, Gardens by the Bay, and major attractions.
+      </p>
+      <div class="grid-2" style="gap:1.5rem;">
+        <div>
+          <h4>By MRT</h4>
+          <p style="color:var(--grey); font-size:0.95rem;">Bayfront (Circle & Downtown lines) — 5-minute walk</p>
+        </div>
+        <div>
+          <h4>From Changi Airport</h4>
+          <p style="color:var(--grey); font-size:0.95rem;">Approx. 25 minutes by taxi / 40 minutes by MRT</p>
+        </div>
+        <div>
+          <h4>Parking</h4>
+          <p style="color:var(--grey); font-size:0.95rem;">Valet and self-parking available on site</p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p style="color:var(--grey); font-size:0.95rem;">{{ hotel_phone }} · {{ hotel_email }}</p>
+        </div>
+      </div>
+      <div class="distance-card" id="distanceCard">
+        <div style="flex:1; min-width:220px;">
+          <h4 style="margin-bottom:0.25rem;">How far are you from us?</h4>
+          <p class="distance-sub" id="distanceText">Finding your location automatically…</p>
+          <p class="distance-num" id="distanceValue" style="display:none;"></p>
+          <p class="distance-sub" id="distanceExtra" style="display:none;"></p>
+          <p class="distance-sub" id="distanceHelp" style="display:none; margin-top:0.5rem;"></p>
+          <div id="manualBox" style="display:none; margin-top:0.75rem;">
+            <label class="distance-sub" for="areaSelect">Or pick your area:</label>
+            <select id="areaSelect" class="form-control" style="max-width:280px; margin-top:0.25rem;">
+              <option value="">Select area…</option>
+              <option value="1.3644,103.9915">Changi Airport</option>
+              <option value="1.3048,103.8318">Orchard Road</option>
+              <option value="1.3331,103.7420">Jurong East</option>
+              <option value="1.4380,103.7880">Woodlands</option>
+              <option value="1.2834,103.8607">Marina Bay (near hotel)</option>
+              <option value="6.5244,3.3792">Lagos, Nigeria</option>
+              <option value="6.4541,3.3947">Victoria Island, Lagos</option>
+            </select>
+            <p class="distance-sub" style="margin-top:0.5rem;">Tip: you can also click anywhere on the map to set your location.</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button type="button" class="btn btn-primary" id="locateBtn">Enable Precise Location</button>
+          <button type="button" class="btn btn-navy" id="ipBtn">Show My Distance Instantly</button>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem; border-radius:var(--radius); overflow:hidden; background:var(--grey-light);">
+        <div id="hotelMap"></div>
+      </div>
+      <p style="margin-top:0.75rem; font-size:0.85rem; color:var(--grey);">
+        Map © OpenStreetMap contributors. Distance is straight-line. Driving distance will be longer.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+  window.HOTEL_LAT = {{ hotel_lat }};
+  window.HOTEL_LNG = {{ hotel_lng }};
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/location.js') }}"></script>
+{% endblock %}

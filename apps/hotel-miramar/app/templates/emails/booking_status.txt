@@ -1,0 +1,22 @@
+{{ hotel_name }}
+
+Hello {{ booking.user.first_name }},
+
+{{ status_title }}
+{{ status_message }}
+
+Booking reference: #{{ booking.id }}
+Room: {{ booking.room.name }}
+Check-in: {{ booking.check_in.strftime('%d %B %Y') }}
+Check-out: {{ booking.check_out.strftime('%d %B %Y') }}
+Guests: {{ booking.num_guests }}
+Nights: {{ booking.nights }}
+Total: S${{ '%.2f'|format(booking.total_price) }}
+Current status: {{ booking.status|capitalize }}
+{% if booking.admin_notes %}
+Message from our reservations team: {{ booking.admin_notes }}
+{% endif %}
+
+For help, contact {{ hotel_email }} or {{ hotel_phone }}.
+
+{{ hotel_name }}

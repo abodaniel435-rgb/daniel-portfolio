@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');">
+  <div class="page-header">
+    <h1>Contact Us</h1>
+    <div class="gold-line"></div>
+    <p>We would love to hear from you</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container" style="max-width:640px;">
+    <div class="glass-panel" style="background:var(--white);">
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.name.label }}
+          {{ form.name(class='form-control') }}
+          {% for e in form.name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label }}
+          {{ form.email(class='form-control') }}
+          {% for e in form.email.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.subject.label }}
+          {{ form.subject(class='form-control') }}
+        </div>
+        <div class="form-group">
+          {{ form.message.label }}
+          {{ form.message(class='form-control') }}
+          {% for e in form.message.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        {{ form.submit(class='btn btn-primary btn-block') }}
+      </form>
+      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--grey-light); font-size:0.92rem; color:var(--grey);">
+        <p><strong>Phone:</strong> {{ hotel_phone }}</p>
+        <p><strong>Email:</strong> {{ hotel_email }}</p>
+        <p><strong>Address:</strong> {{ hotel_address }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

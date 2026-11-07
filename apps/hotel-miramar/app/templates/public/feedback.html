@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Feedback — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80');">
+  <div class="page-header">
+    <h1>Share Your Experience</h1>
+    <div class="gold-line"></div>
+    <p>Your feedback helps us improve</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container" style="max-width:560px;">
+    <div class="glass-panel" style="background:var(--white);">
+      <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.name.label }}
+          {{ form.name(class='form-control') }}
+        </div>
+        <div class="form-group">
+          {{ form.email.label }}
+          {{ form.email(class='form-control') }}
+        </div>
+        <div class="form-group">
+          {{ form.rating.label }}
+          {{ form.rating(class='form-control') }}
+        </div>
+        <div class="form-group">
+          {{ form.message.label }}
+          {{ form.message(class='form-control') }}
+          {% for e in form.message.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        {{ form.submit(class='btn btn-primary btn-block') }}
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

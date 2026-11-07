@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+<div class="auth-page" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');">
+  <div class="auth-card text-center">
+    <h2>404</h2>
+    <p class="subtitle">The page you are looking for does not exist.</p>
+    <a href="{{ url_for('public.index') }}" class="btn btn-primary">Go Home</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Search Rooms — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1920&q=80'); min-height:auto;">
+  <div class="page-header" style="padding:8rem 0 3rem;">
+    <h1>Search Available Rooms</h1>
+    <div class="gold-line"></div>
+  </div>
+</div>
+<section class="section" style="padding-top:2rem;">
+  <div class="container">
+    <form method="post" class="search-bar mb-4">
+      {{ form.hidden_tag() }}
+      <div class="form-group" style="margin:0;">
+        {{ form.check_in.label }}
+        {{ form.check_in(class='form-control') }}
+      </div>
+      <div class="form-group" style="margin:0;">
+        {{ form.check_out.label }}
+        {{ form.check_out(class='form-control') }}
+      </div>
+      <div class="form-group" style="margin:0;">
+        {{ form.guests.label }}
+        {{ form.guests(class='form-control') }}
+      </div>
+      <div class="form-group" style="margin:0;">
+        {{ form.room_type.label }}
+        {{ form.room_type(class='form-control') }}
+      </div>
+      {{ form.submit(class='btn btn-primary') }}
+    </form>
+    {% if rooms %}
+    <div class="grid-3">
+      {% for room in rooms %}
+      <div class="card">
+        <div class="card-img">
+          <img src="{% if room.image_filename %}{{ url_for('static', filename='images/rooms/' + room.image_filename) }}{% else %}https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80{% endif %}"
+               alt="{{ room.name }}" onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80'">
+        </div>
+        <div class="card-body">
+          <h3>{{ room.name }}</h3>
+          <p style="color:var(--grey); font-size:0.9rem;">{{ room.room_type }} · Max {{ room.max_occupancy }}</p>
+          <div class="card-meta">
+            <span class="price">S${{ '%.0f'|format(room.price_per_night) }} <small>/ night</small></span>
+            <a href="{{ url_for('customer.book_room', room_id=room.id, check_in=form.check_in.data, check_out=form.check_out.data, guests=form.guests.data) }}" class="btn btn-primary btn-sm">Book</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% elif form.check_in.data %}
+    <p class="text-center" style="padding:2rem; color:var(--grey);">No rooms available for the selected dates.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

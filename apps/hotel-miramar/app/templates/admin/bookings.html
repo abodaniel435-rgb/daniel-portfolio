@@ -1,0 +1,34 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Bookings — {{ hotel_name }}{% endblock %}
+{% block admin_content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+  <h2>Bookings</h2>
+  <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+    <a href="{{ url_for('admin.bookings') }}" class="btn btn-sm {% if not status_filter %}btn-primary{% else %}btn-navy{% endif %}">All</a>
+    {% for s in ['pending','approved','disapproved','cancelled'] %}
+    <a href="{{ url_for('admin.bookings', status=s) }}" class="btn btn-sm {% if status_filter==s %}btn-primary{% else %}btn-navy{% endif %}">{{ s|capitalize }}</a>
+    {% endfor %}
+  </div>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Dates</th><th>Guests</th><th>Total</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for b in bookings %}
+      <tr>
+        <td>#{{ b.id }}</td>
+        <td>{{ b.user.full_name }}</td>
+        <td>{{ b.room.name }}</td>
+        <td>{{ b.check_in }} → {{ b.check_out }}</td>
+        <td>{{ b.num_guests }}</td>
+        <td>S${{ '%.2f'|format(b.total_price) }}</td>
+        <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
+        <td><a href="{{ url_for('admin.booking_detail', booking_id=b.id) }}" class="btn btn-sm btn-navy">Manage</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" style="text-align:center;">No bookings found</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

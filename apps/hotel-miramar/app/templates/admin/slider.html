@@ -1,0 +1,31 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Slider — {{ hotel_name }}{% endblock %}
+{% block admin_content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+  <h2>Homepage Slider</h2>
+  <a href="{{ url_for('admin.add_slider') }}" class="btn btn-primary">Add Image</a>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Title</th><th>Order</th><th>Active</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for s in sliders %}
+      <tr>
+        <td>{{ s.title or '—' }}</td>
+        <td>{{ s.sort_order }}</td>
+        <td>{% if s.is_active %}Yes{% else %}No{% endif %}</td>
+        <td>
+          <a href="{{ url_for('admin.edit_slider', item_id=s.id) }}" class="btn btn-sm btn-navy">Edit</a>
+          <form method="post" action="{{ url_for('admin.delete_slider', item_id=s.id) }}" style="display:inline;" onsubmit="return confirm('Delete?');">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-sm" style="background:var(--danger);color:#fff;border:none;">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" style="text-align:center;">No slider images yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

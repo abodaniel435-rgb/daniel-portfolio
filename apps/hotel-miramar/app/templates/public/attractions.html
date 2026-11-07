@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Nearby Attractions — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=80');">
+  <div class="page-header">
+    <h1>Nearby Attractions</h1>
+    <div class="gold-line"></div>
+    <p>Singapore’s finest experiences within easy reach</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="grid-3">
+      {% set spots = [
+        ('Gardens by the Bay', 'Iconic conservatories and the glowing Supertree Grove — a short stroll away.', 'https://images.unsplash.com/photo-1508964942454-1a566964d71a?w=600&q=80'),
+        ('Marina Bay Sands', 'SkyPark, shopping, and waterfront dining at Singapore’s landmark integrated resort.', 'https://images.unsplash.com/photo-1496939376852-6486a8c2c0a8?w=600&q=80'),
+        ('Merlion Park', 'The iconic Merlion statue and panoramic views of the bay.', 'https://images.unsplash.com/photo-1565967511849-76a60a69c2b3?w=600&q=80'),
+        ('Esplanade', 'World-class theatres and waterfront promenade for culture and leisure.', 'https://images.unsplash.com/photo-1555881403-64992e8e8e0b?w=600&q=80'),
+        ('Clarke Quay', 'Vibrant riverside dining, nightlife and entertainment district.', 'https://images.unsplash.com/photo-1552465011-b4e0e8d4d2a0?w=600&q=80'),
+        ('Singapore Flyer', 'Giant observation wheel offering 360° views of the city-state.', 'https://images.unsplash.com/photo-1565105749611-5c0d6a0a0a0a?w=600&q=80')
+      ] %}
+      {% for name, desc, img in spots %}
+      <div class="card">
+        <div class="card-img">
+          <img src="{{ img }}" alt="{{ name }}" onerror="this.src='https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&q=80'">
+        </div>
+        <div class="card-body">
+          <h3>{{ name }}</h3>
+          <p style="color:var(--grey); font-size:0.92rem;">{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

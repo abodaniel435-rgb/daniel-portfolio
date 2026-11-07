@@ -1,0 +1,11 @@
+Flask
+Flask-Login
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-WTF
+email-validator
+python-dotenv
+SQLAlchemy
+Werkzeug
+WTForms
+gunicorn>=22.0

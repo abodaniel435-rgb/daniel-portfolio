@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}My Dashboard — {{ hotel_name }}{% endblock %}
+{% block content %}
+<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1920&q=80'); min-height:auto;">
+  <div class="page-header" style="padding:8rem 0 3rem;">
+    <h1>Welcome, {{ current_user.first_name }}</h1>
+    <div class="gold-line"></div>
+    <p>Manage your stays and profile</p>
+  </div>
+</div>
+<section class="section" style="padding-top:2rem;">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">{{ pending_count }}</div>
+        <div class="label">Pending Bookings</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">{{ approved_count }}</div>
+        <div class="label">Approved Stays</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
+      <a href="{{ url_for('customer.search_rooms') }}" class="btn btn-primary">Search Rooms</a>
+      <a href="{{ url_for('customer.my_bookings') }}" class="btn btn-navy">My Bookings</a>
+      <a href="{{ url_for('customer.profile') }}" class="btn btn-navy">Profile</a>
+    </div>
+    <h3 class="mb-3">Recent Bookings</h3>
+    {% if recent_bookings %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Room</th><th>Check-in</th><th>Check-out</th><th>Total</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          {% for b in recent_bookings %}
+          <tr>
+            <td>{{ b.room.name }}</td>
+            <td>{{ b.check_in }}</td>
+            <td>{{ b.check_out }}</td>
+            <td>S${{ '%.2f'|format(b.total_price) }}</td>
+            <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p style="color:var(--grey);">You have no bookings yet. <a href="{{ url_for('customer.search_rooms') }}">Search rooms</a> to get started.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

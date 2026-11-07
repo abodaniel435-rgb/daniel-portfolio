@@ -1,0 +1,9 @@
+{
+  "name": "hotel-miramar-sg",
+  "version": "1.0.0",
+  "description": "Hotel Miramar SG Room Booking System frontend tooling",
+  "scripts": {
+    "start": "echo Use: python run.py"
+  },
+  "private": true
+}

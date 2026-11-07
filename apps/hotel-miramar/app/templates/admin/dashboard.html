@@ -1,0 +1,36 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Admin Dashboard — {{ hotel_name }}{% endblock %}
+{% block admin_content %}
+<h2 class="mb-3">Dashboard</h2>
+<div class="stat-grid">
+  <div class="stat-card"><div class="num">{{ stats.rooms }}</div><div class="label">Total Rooms</div></div>
+  <div class="stat-card"><div class="num">{{ stats.available_rooms }}</div><div class="label">Available</div></div>
+  <div class="stat-card"><div class="num">{{ stats.customers }}</div><div class="label">Customers</div></div>
+  <div class="stat-card"><div class="num">{{ stats.bookings }}</div><div class="label">Bookings</div></div>
+  <div class="stat-card"><div class="num">{{ stats.pending }}</div><div class="label">Pending</div></div>
+  <div class="stat-card"><div class="num">{{ stats.approved }}</div><div class="label">Approved</div></div>
+  <div class="stat-card"><div class="num">{{ stats.feedback_pending }}</div><div class="label">Feedback Queue</div></div>
+  <div class="stat-card"><div class="num">{{ stats.unread_messages }}</div><div class="label">Unread Msgs</div></div>
+</div>
+<h3 class="mb-2">Recent Bookings</h3>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Dates</th><th>Total</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for b in recent_bookings %}
+      <tr>
+        <td>#{{ b.id }}</td>
+        <td>{{ b.user.full_name }}</td>
+        <td>{{ b.room.name }}</td>
+        <td>{{ b.check_in }} → {{ b.check_out }}</td>
+        <td>S${{ '%.2f'|format(b.total_price) }}</td>
+        <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
+        <td><a href="{{ url_for('admin.booking_detail', booking_id=b.id) }}" class="btn btn-sm btn-navy">View</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" style="text-align:center; color:var(--grey);">No bookings yet</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
