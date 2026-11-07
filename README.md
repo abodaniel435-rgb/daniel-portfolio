@@ -22,8 +22,10 @@ Create a public repository, upload the files in this folder, then enable Pages f
 - ThatGuys Fitness
 - Trinity Lightings
 - SkyCast
-- Hotel Miramar SG (full-stack build, deployment on request)
-- Campus Coin (full-stack build, deployment on request)
+- Hotel Miramar SG — live at https://hotel-miramar-sg-9xuf.onrender.com/
+- Campus Coin — live at https://campus-coin-nm0j.onrender.com/ (demo login `demo` / `CampusCoin2026`)
+
+The two full-stack apps are deployed from `apps/` through `render.yaml`; their source lives in this repository.
 
 ## Visual asset
 
