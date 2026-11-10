@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="projects.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -47,7 +48,7 @@
             <a class="text-link" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
           </div>
           <div class="hero-proof" aria-label="Portfolio overview">
-            <div><strong>10</strong><span>selected projects</span></div>
+            <div><strong>16</strong><span>selected projects</span></div>
             <div><strong>10</strong><span>live &amp; shipped</span></div>
             <div><strong>01</strong><span>paid client build</span></div>
           </div>
@@ -80,129 +81,39 @@
             <p class="eyebrow eyebrow-dark"><span>01</span> SELECTED WORK</p>
             <h2 id="work-title">Built to be <em>useful.</em></h2>
           </div>
-          <p class="section-intro">Ten products and experiences made to solve practical problems — including a paid real-estate client build and ten live sites you can open right now.</p>
+          <p class="section-intro">Sixteen products and experiences made to solve practical problems — including a paid real-estate client build, ten live sites you can open right now, and an agent that writes deployable sites from a brief.</p>
         </div>
 
         <div class="filter-bar reveal" role="group" aria-label="Filter projects">
           <span class="filter-label">SHOW</span>
-          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All work <span>10</span></button>
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All work <span>16</span></button>
           <button class="filter-button" type="button" data-filter="product" aria-pressed="false">Products</button>
           <button class="filter-button" type="button" data-filter="commerce" aria-pressed="false">Commerce</button>
           <button class="filter-button" type="button" data-filter="community" aria-pressed="false">Community</button>
         </div>
 
-        <div class="project-grid">
-          <article class="project-card project-card-featured reveal" data-category="commerce">
-            <a class="project-image" href="https://cityofgoldestate.com" target="_blank" rel="noopener noreferrer" aria-label="Open City of Gold Estates live site">
-              <img src="assets/projects/city-of-gold.jpg" alt="City of Gold Estates real estate home page with property search">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>01 / REAL ESTATE · CLIENT</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>City of Gold Estates</h3><a class="project-arrow" href="https://cityofgoldestate.com" target="_blank" rel="noopener noreferrer" aria-label="Open City of Gold Estates">↗</a></div>
-            <p>A paid client build for a Lagos property firm: listings across Lagos, Kaduna and Anambra, enquiry capture, and a session-protected admin dashboard for managing properties.</p>
-            <div class="project-tags"><span>PHP + MySQL</span><span>Client delivery</span><span>Listings &amp; admin</span></div>
-          </article>
-
-          <article class="project-card project-card-featured reveal" data-category="product">
-            <a class="project-image" href="http://danielwebservices.com/RentJury/" target="_blank" rel="noopener noreferrer" aria-label="Open RentJury live site">
-              <img src="assets/projects/rentjury.jpg" alt="RentJury Lagos rent quote checker and reference tool">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>02 / PROPTECH</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>RentJury</h3><a class="project-arrow" href="http://danielwebservices.com/RentJury/" target="_blank" rel="noopener noreferrer" aria-label="Open RentJury">↗</a></div>
-            <p>A Lagos rent and agent-fee reference that helps renters sanity-check a quote before committing.</p>
-            <div class="project-tags"><span>Housing</span><span>Decision tools</span><span>Lagos</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="product">
-            <a class="project-image" href="http://danielwebservices.com/curensee/" target="_blank" rel="noopener noreferrer" aria-label="Open CurrenSee live site">
-              <img src="assets/projects/currensee.jpg" alt="CurrenSee currency intelligence product login and overview">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>03 / FINTECH</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>CurrenSee</h3><a class="project-arrow" href="http://danielwebservices.com/curensee/" target="_blank" rel="noopener noreferrer" aria-label="Open CurrenSee">↗</a></div>
-            <p>A currency intelligence workspace for monitoring rates, setting targets, and keeping conversion activity organized.</p>
-            <div class="project-tags"><span>Finance</span><span>Dashboards</span><span>Responsive UI</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="commerce">
-            <a class="project-image" href="http://danielwebservices.com/AbosodionFarm/" target="_blank" rel="noopener noreferrer" aria-label="Open ABOSODION Farm live site">
-              <img src="assets/projects/abosodion-farm.jpg" alt="ABOSODION Farm poultry storefront with product ordering">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>04 / COMMERCE</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>ABOSODION Farm</h3><a class="project-arrow" href="http://danielwebservices.com/AbosodionFarm/" target="_blank" rel="noopener noreferrer" aria-label="Open ABOSODION Farm">↗</a></div>
-            <p>A farm-direct storefront for broilers, layers, and graded eggs, with a simple WhatsApp ordering flow.</p>
-            <div class="project-tags"><span>Digital commerce</span><span>Mobile-first</span><span>Ordering</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="community">
-            <a class="project-image" href="http://danielwebservices.com/moonlight-festival/" target="_blank" rel="noopener noreferrer" aria-label="Open Moonlight Events live site">
-              <img src="assets/projects/moonlight-events.jpg" alt="Moonlight Events festival discovery page with filters">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>05 / DISCOVERY</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>Moonlight Events</h3><a class="project-arrow" href="http://danielwebservices.com/moonlight-festival/" target="_blank" rel="noopener noreferrer" aria-label="Open Moonlight Events">↗</a></div>
-            <p>A global festival guide with quick filters for country, month, and tradition, built for curious browsing.</p>
-            <div class="project-tags"><span>Discovery</span><span>Filters</span><span>Culture</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="community">
-            <a class="project-image" href="http://danielwebservices.com/ThatguyFitness/" target="_blank" rel="noopener noreferrer" aria-label="Open ThatGuys Fitness live site">
-              <img src="assets/projects/thatguys-fitness.jpg" alt="ThatGuys Fitness bodyweight workout home page">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>06 / WELLNESS</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>ThatGuys Fitness</h3><a class="project-arrow" href="http://danielwebservices.com/ThatguyFitness/" target="_blank" rel="noopener noreferrer" aria-label="Open ThatGuys Fitness">↗</a></div>
-            <p>A no-equipment, five-day bodyweight training experience with a direct, energetic visual identity.</p>
-            <div class="project-tags"><span>Fitness</span><span>Content design</span><span>Training</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="commerce">
-            <a class="project-image" href="http://danielwebservices.com/TrinityLighting/" target="_blank" rel="noopener noreferrer" aria-label="Open Trinity Lightings live site">
-              <img src="assets/projects/trinity-lightings.jpg" alt="Trinity Lightings chandelier storefront landing page">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>07 / RETAIL</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>Trinity Lightings</h3><a class="project-arrow" href="http://danielwebservices.com/TrinityLighting/" target="_blank" rel="noopener noreferrer" aria-label="Open Trinity Lightings">↗</a></div>
-            <p>A considered chandelier storefront that brings product discovery and local contact into one clear flow.</p>
-            <div class="project-tags"><span>Retail</span><span>Product browsing</span><span>Lagos</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="product">
-            <a class="project-image" href="http://danielwebservices.com/WeatherApp/" target="_blank" rel="noopener noreferrer" aria-label="Open SkyCast live site">
-              <img src="assets/projects/skycast.jpg" alt="SkyCast global weather lookup interface">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>08 / DATA TOOL</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>SkyCast</h3><a class="project-arrow" href="http://danielwebservices.com/WeatherApp/" target="_blank" rel="noopener noreferrer" aria-label="Open SkyCast">↗</a></div>
-            <p>A global weather lookup that guides people from country to region with a simple, focused interface.</p>
-            <div class="project-tags"><span>Weather</span><span>Open-Meteo</span><span>Live data</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="commerce">
-            <a class="project-image" href="https://hotel-miramar-sg-9xuf.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Hotel Miramar SG live site">
-              <img src="assets/projects/hotel-miramar.jpg" alt="Hotel Miramar SG resort home page with poolside hero and booking search">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>09 / HOSPITALITY</span><span>LIVE SITE</span></div>
-            <div class="project-title-row"><h3>Hotel Miramar SG</h3><a class="project-arrow" href="https://hotel-miramar-sg-9xuf.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Hotel Miramar SG">↗</a></div>
-            <p>A full hotel booking system — room browsing, reservation requests, guest accounts and an admin dashboard — built on Flask and SQLAlchemy with automated booking emails.</p>
-            <div class="project-tags"><span>Flask</span><span>Booking flow</span><span>SQLAlchemy</span></div>
-          </article>
-
-          <article class="project-card reveal" data-category="product">
-            <a class="project-image" href="https://campus-coin-nm0j.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Campus Coin live demo">
-              <img src="assets/projects/campus-coin.jpg" alt="Campus Coin student finance dashboard with balances, money health score and budget status">
-              <span class="image-open" aria-hidden="true">↗</span>
-            </a>
-            <div class="project-meta"><span>10 / FINTECH</span><span>LIVE DEMO</span></div>
-            <div class="project-title-row"><h3>Campus Coin</h3><a class="project-arrow" href="https://campus-coin-nm0j.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Campus Coin">↗</a></div>
-            <p>A student money workspace spanning allowance, canteen spending, budget jars and shared bills — a React client over a Django REST API. Demo login: <code>demo</code> / <code>CampusCoin2026</code>.</p>
-            <div class="project-tags"><span>React</span><span>Django REST</span><span>Budgets</span></div>
-          </article>
-        </div>
-        <p class="work-note reveal"><span class="note-mark">i</span> All ten projects are live and public. The two full-stack apps run on a free Python host that sleeps when idle — the first visit can take about 30 seconds to wake up.</p>
+        <div class="project-grid" id="projectGrid" aria-live="polite"></div>
+        <noscript>
+          <ul class="project-fallback">
+            <li><a href="project.html?p=city-of-gold-estates">City of Gold Estates <span>Real estate · paid client</span></a></li>
+            <li><a href="project.html?p=rentjury">RentJury <span>Proptech</span></a></li>
+            <li><a href="project.html?p=currensee">CurrenSee <span>Fintech</span></a></li>
+            <li><a href="project.html?p=abosodion-farm">ABOSODION Farm <span>Agriculture · commerce</span></a></li>
+            <li><a href="project.html?p=farmcoop">FarmCoop <span>Agritech · marketplace</span></a></li>
+            <li><a href="project.html?p=thatguys-fitness">ThatGuys Fitness <span>Health & fitness</span></a></li>
+            <li><a href="project.html?p=moonlight-events">Moonlight Events <span>Culture · discovery</span></a></li>
+            <li><a href="project.html?p=trinity-lightings">Trinity Lightings <span>Retail · lighting</span></a></li>
+            <li><a href="project.html?p=skycast">SkyCast <span>Data tool</span></a></li>
+            <li><a href="project.html?p=hotel-miramar">Hotel Miramar SG <span>Hospitality · booking</span></a></li>
+            <li><a href="project.html?p=campus-coin">Campus Coin <span>Student fintech</span></a></li>
+            <li><a href="project.html?p=meditrack">MediTrack <span>Healthcare</span></a></li>
+            <li><a href="project.html?p=ajocircle">AjoCircle <span>Community finance</span></a></li>
+            <li><a href="project.html?p=routepilot">RoutePilot <span>Logistics</span></a></li>
+            <li><a href="project.html?p=forgestack">ForgeStack <span>Developer tool · AI agent</span></a></li>
+            <li><a href="project.html?p=kite-courier">Kite Courier <span>Logistics · generated build</span></a></li>
+          </ul>
+        </noscript>
+        <p class="work-note reveal"><span class="note-mark">i</span> Ten projects are live and public. Five full-stack builds are packaged and deploy-ready, including Kite Courier — generated, installed and tested end-to-end by ForgeStack, the build agent in this portfolio. Open a case study for the problem, the stack and the feature set.</p>
       </div>
     </section>
 
