@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check a price — RentJury</title>
+<meta name="description" content="Grade a quoted annual rent against Nigerian rent bands, check the agent fee against the 10% standard, and see the yearly cost against your income.">
+<meta name="theme-color" content="#FAF6EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="RentJury home">
+      <span class="brand__mark" aria-hidden="true">₦</span>
+      <span class="brand__text">
+        <span class="brand__name">RentJury</span>
+        <span class="brand__sub">Know before you pay</span>
+      </span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Primary">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link" href="check-price.html" aria-current="page">Check a price</a>
+      <a class="nav__link" href="community.html">Community reports</a>
+      <button class="theme-btn" type="button" data-theme-toggle aria-label="Toggle light or dark theme">● Dark</button>
+      <a class="btn btn--primary btn--sm nav__cta" href="check-price.html">Check a price <span class="arrow" aria-hidden="true">→</span></a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+
+  <header class="page-head">
+    <div class="wrap page-head__grid">
+      <div>
+        <p class="eyebrow">The full checker</p>
+        <h1>Is this price fair?</h1>
+        <p>Enter the quote. RentJury puts it on the band for that area and property type, grades the gap, then checks the agent’s fee against the 10% standard — separately, because a fair rent with a stacked fee is still a bad deal.</p>
+      </div>
+      <div class="page-head__aside" aria-label="Reference points">
+        <div><b>36</b><span>States + FCT</span></div>
+        <div><b>10%</b><span>Agency fee ceiling</span></div>
+        <div><b>8%</b><span>Fair-price threshold</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section--flush" aria-label="Price checker">
+    <div class="wrap checker">
+
+      <!-- form -->
+      <form class="panel checker__form" id="checkForm" novalidate aria-describedby="formNote">
+        <div class="checker__form-head">
+          <h2>The quote</h2>
+          <button class="btn btn--ghost btn--sm" type="button" id="loadExample">Load example</button>
+        </div>
+
+        <fieldset>
+          <legend class="field__label" style="margin-bottom:var(--s-3)">Where</legend>
+          <div class="field">
+            <label class="field__label" for="state">State <span class="field__opt">36 + FCT</span></label>
+            <select id="state" name="state"></select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="area">Area / city</label>
+            <select id="area" name="area"></select>
+            <p class="field__hint">Lagos is covered at neighbourhood level; other states at their capital or commercial hub.</p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="type">Property type</label>
+            <select id="type" name="type"></select>
+          </div>
+        </fieldset>
+
+        <div class="form-divider"></div>
+
+        <div class="field">
+          <label class="field__label" for="rent">Annual rent quoted</label>
+          <div class="input-money">
+            <input type="number" id="rent" name="rent" inputmode="numeric" min="0" step="10000" placeholder="1200000">
+          </div>
+          <p class="field__hint">Naira per year, as the agent quoted it. Even an asking rent is enough to grade.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="agencyFee">Agent / agency fee <span class="field__opt">% of annual rent</span></label>
+          <div class="input-unit">
+            <input type="number" id="agencyFee" name="agencyFee" inputmode="decimal" min="0" max="100" step="0.5" placeholder="10">
+            <span class="unit" aria-hidden="true">%</span>
+          </div>
+          <p class="field__hint" id="agencyNairaHint">The fee is usually quoted as a percentage. Type 10 for the standard 10%.</p>
+        </div>
+
+        <details>
+          <summary>Other fees <span class="field__opt">optional</span></summary>
+          <div class="field">
+            <label class="field__label" for="legalFee">Legal / agreement fee</label>
+            <div class="input-unit">
+              <input type="number" id="legalFee" min="0" max="100" step="0.5" placeholder="10">
+              <span class="unit" aria-hidden="true">%</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="cautionFee">Caution deposit</label>
+            <div class="input-unit">
+              <input type="number" id="cautionFee" min="0" max="200" step="5" placeholder="20">
+              <span class="unit" aria-hidden="true">%</span>
+            </div>
+          </div>
+        </details>
+
+        <div class="form-divider"></div>
+
+        <div class="field">
+          <label class="field__label" for="income">What I actually earn <span class="field__opt">optional · yearly, gross</span></label>
+          <div class="input-money">
+            <input type="number" id="income" name="income" inputmode="numeric" min="0" step="10000" placeholder="4800000">
+          </div>
+          <p class="field__hint">Used only for a rent-to-income read. It never leaves this page.</p>
+        </div>
+
+        <button class="btn btn--accent btn--block" type="submit">Get the verdict</button>
+        <p class="form-note" id="formNote">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l5.5 3v3c0 3-2.3 4.6-5.5 5-3.2-.4-5.5-2-5.5-5v-3L7 1.5z" stroke="currentColor" stroke-width="1.2"/></svg>
+          The verdict updates as you type. Nothing is submitted.
+        </p>
+      </form>
+
+      <!-- live verdict -->
+      <div class="checker__result">
+        <div id="verdictPanel" aria-live="polite" aria-atomic="false">
+          <div class="empty">
+            <span class="empty__mark" aria-hidden="true">₦</span>
+            <h3>Your verdict lands here.</h3>
+            <p>Pick an area, a property type and enter the annual rent. The full breakdown — band position, fee compliance and next steps — appears without a page reload.</p>
+            <div class="empty__actions">
+              <button class="btn btn--primary btn--sm" type="button" data-load-example>Load the Yaba example</button>
+              <a class="btn btn--ghost btn--sm" href="index.html#how-bands">How bands work</a>
+            </div>
+          </div>
+        </div>
+        <div class="checker-note">
+          <span aria-hidden="true">§</span>
+          <p><b>Reference, not valuation.</b> Bands describe the market for that area and property type. Condition, security and servicing still move a real price — use this to start a conversation, then inspect.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- comparison -->
+  <section class="section section--alt" data-reveal aria-labelledby="compareTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Compare</p>
+        <h2 id="compareTitle">What the same property costs elsewhere.</h2>
+        <p>Sorted low to high across all 48 covered areas. Your checked area is highlighted, so you can see whether the quote is a Lagos problem or an area problem.</p>
+      </div>
+
+      <div class="table-tools">
+        <div class="field">
+          <label class="field__label" for="compareType">Property type</label>
+          <select id="compareType"></select>
+        </div>
+        <p>Annual rent · low / median / high</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table" id="compareTable">
+          <thead>
+            <tr>
+              <th scope="col">Area</th>
+              <th scope="col">Low</th>
+              <th scope="col">Median</th>
+              <th scope="col">High</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- red flags -->
+  <section class="section" id="redflags" data-reveal aria-labelledby="flagsTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Self-check</p>
+        <h2 id="flagsTitle">Eight warning signs of an inflated deal.</h2>
+        <p>Tick anything you have already seen. This is not a verdict on its own — it is the list of things that should stop a payment until they are explained.</p>
+      </div>
+
+      <div class="flags-wrap">
+        <div class="flags" id="flagList" role="group" aria-label="Red flag checklist"></div>
+        <div class="flag-meter" aria-live="polite">
+          <div class="flag-meter__count"><span id="flagCount">0</span><small>of 8 flagged</small></div>
+          <div class="flag-meter__bar"><i id="flagBar"></i></div>
+          <p class="flag-meter__hint" id="flagHint">Tick what you have seen. Nothing here is a verdict on its own.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <a class="brand" href="index.html" aria-label="RentJury home">
+          <span class="brand__mark" aria-hidden="true">₦</span>
+          <span class="brand__text"><span class="brand__name">RentJury</span><span class="brand__sub">Know before you pay</span></span>
+        </a>
+        <p>A community rent and agent-fee reference for Nigeria. Built for the renter who has been quoted a number and has no way to check it.</p>
+      </div>
+      <div class="foot__col">
+        <h3>Product</h3>
+        <ul>
+          <li><a href="check-price.html">Check a price</a></li>
+          <li><a href="community.html">Community reports</a></li>
+          <li><a href="check-price.html#redflags">Red flag checklist</a></li>
+          <li><a href="community.html#add-report">Add a report</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Coverage</h3>
+        <ul>
+          <li><a href="check-price.html?area=Lekki%20Phase%201&amp;type=2%20Bedroom%20Flat">Lagos</a></li>
+          <li><a href="check-price.html?area=Abuja%20(Central)&amp;type=2%20Bedroom%20Flat">Abuja (FCT)</a></li>
+          <li><a href="check-price.html?area=Port%20Harcourt&amp;type=3%20Bedroom%20Flat">Port Harcourt</a></li>
+          <li><a href="check-price.html">All 36 states + FCT</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Small print</h3>
+        <ul>
+          <li><a href="index.html#how-bands">How bands are built</a></li>
+          <li><a href="community.html#faq">FAQ</a></li>
+          <li><a href="community.html#faq">Privacy</a></li>
+          <li><a href="community.html#faq">Not legal advice</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span id="kw-year">2026</span> RentJury — a community reference, not a valuation or legal advice.</span>
+      <span>Lagos · Abuja · Port Harcourt · 34 more states + FCT</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var stateSel = document.getElementById("state");
+  var areaSel = document.getElementById("area");
+  var typeSel = document.getElementById("type");
+  var rentInput = document.getElementById("rent");
+  var agencyInput = document.getElementById("agencyFee");
+  var legalInput = document.getElementById("legalFee");
+  var cautionInput = document.getElementById("cautionFee");
+  var incomeInput = document.getElementById("income");
+  var panel = document.getElementById("verdictPanel");
+  var form = document.getElementById("checkForm");
+  var compareType = document.getElementById("compareType");
+
+  /* ---- selects ---- */
+  stateSel.innerHTML = STATE_GROUPS.map(function (g) {
+    return '<option value="' + g.state + '">' + g.state + '</option>';
+  }).join("");
+
+  function fillAreas(state, selected) {
+    var group = STATE_GROUPS.filter(function (g) { return g.state === state; })[0];
+    if (!group) return;
+    var areas = Object.keys(group.areas);
+    areaSel.innerHTML = '<option value="" disabled' + (selected ? "" : " selected") + '>Select area</option>' +
+      areas.map(function (a) { return '<option value="' + a + '">' + a + '</option>'; }).join("");
+    if (selected && areas.indexOf(selected) !== -1) areaSel.value = selected;
+  }
+
+  function defaultStateForArea(area) {
+    return AREA_STATE[area] || "Lagos";
+  }
+
+  stateSel.addEventListener("change", function () {
+    fillAreas(stateSel.value);
+    scheduleRender();
+    highlightCompare();
+  });
+
+  populateSelect(typeSel, PROPERTY_TYPES, "Select property type");
+  populateSelect(compareType, PROPERTY_TYPES, "Select property type");
+  compareType.value = "2 Bedroom Flat";
+
+  /* ---- initial state: honour deep links from the landing page ---- */
+  var params = new URLSearchParams(window.location.search);
+  var initialArea = params.get("area");
+  var initialState = initialArea && AREA_STATE[initialArea] ? AREA_STATE[initialArea] : "Lagos";
+  stateSel.value = initialState;
+  fillAreas(initialState, initialArea && AREA_STATE[initialArea] ? initialArea : null);
+
+  if (params.get("type") && PROPERTY_TYPES.indexOf(params.get("type")) !== -1) {
+    typeSel.value = params.get("type");
+  }
+  if (params.get("rent")) rentInput.value = Number(params.get("rent")) || "";
+  if (params.get("fee")) agencyInput.value = Number(params.get("fee")) || "";
+  if (params.get("income")) incomeInput.value = Number(params.get("income")) || "";
+
+  /* ---- helpers ---- */
+  function feeBlock(rent, agency, legal, caution) {
+    var fees = checkFees(rent, agency, legal, caution);
+    var agencyNaira = rent * agency / 100;
+    var capNaira = rent * 0.1;
+
+    if (!agency && !legal && !caution) {
+      return '<div class="fee-box">' +
+        '<div class="fee-box__head"><span class="fee-box__label">No fee entered yet</span>' +
+        '<span class="badge badge--neutral"><span class="badge__dot"></span>Not checked</span></div>' +
+        '<p class="fee-box__line">Add the agent’s percentage above to test it against the standard 10% ceiling. On this rent, the ceiling would be <b>' + nairaFmt(capNaira) + '</b>.</p>' +
+      '</div>';
+    }
+
+    var head, line, cls, badge;
+    if (agency > FEE_STANDARDS.agencyFeeMaxPct) {
+      cls = "fee-box--flag";
+      head = "Agency fee above the ceiling";
+      badge = '<span class="badge badge--over"><span class="badge__dot"></span>Above 10%</span>';
+      line = 'The fee works out at <b>' + nairaFmt(agencyNaira) + '</b> — <b>' + agency + '%</b> of the rent, which is <b>' +
+        nairaFmt(agencyNaira - capNaira) + '</b> above the ' + nairaFmt(capNaira) + ' ceiling. That excess is negotiable; ask for it to be reduced or waived in writing.';
+    } else if (agency) {
+      cls = "fee-box--ok";
+      head = "Agency fee within standard";
+      badge = '<span class="badge badge--fair"><span class="badge__dot"></span>Compliant</span>';
+      line = 'The fee works out at <b>' + nairaFmt(agencyNaira) + '</b> — <b>' + agency + '%</b> of the rent, inside the ' +
+        FEE_STANDARDS.agencyFeeMaxPct + '% ceiling of ' + nairaFmt(capNaira) + '.';
+    } else {
+      cls = "fee-box--watch";
+      head = "Agency fee not given";
+      badge = '<span class="badge badge--watch"><span class="badge__dot"></span>Missing</span>';
+      line = 'No agent fee has been entered, but other fees have. Ask what the agency cut is — the ceiling on this rent is <b>' + nairaFmt(capNaira) + '</b>.';
+    }
+
+    // The agency line above already explains an agency overcharge, so only
+    // surface the *other* fee flags here.
+    var otherFlags = fees.flags.filter(function (f) {
+      return f.indexOf("Agency fee is") !== 0;
+    });
+    var extra = otherFlags.length
+      ? '<ul class="next-steps" style="margin-top:2px">' + otherFlags.map(function (f) {
+          return '<li>' + f + '</li>';
+        }).join("") + '</ul>'
+      : "";
+
+    var totalLine = '<p class="fee-box__line" style="padding-top:4px;border-top:1px solid var(--line)">Total cash needed: <b>' +
+      nairaFmt(fees.totalAmount) + '</b> including rent — <b>' + (fees.totalPct - 100) + '%</b> on top of the rent in fees and deposits.</p>';
+
+    return '<div class="fee-box ' + cls + '">' +
+      '<div class="fee-box__head"><span class="fee-box__label">' + head + '</span>' + badge + '</div>' +
+      '<p class="fee-box__line">' + line + '</p>' +
+      extra + totalLine +
+    '</div>';
+  }
+
+  function incomeBlock(rent, income) {
+    if (!income || income <= 0) return "";
+    var read = rentToIncome(rent, income);
+    if (!read) return "";
+    var width = Math.min(read.pct, 100);
+    return '<div class="verdict-block" data-tone="' + read.tone + '">' +
+      '<h3>Rent against income <span>' + read.label + '</span></h3>' +
+      '<div class="income-read" data-tone="' + read.tone + '">' +
+        '<div class="income-read__num"><span>' + nairaFmt(rent) + ' rent / ' + nairaFmt(income) + ' gross</span><b>' + read.pct + '%</b></div>' +
+        '<div class="income-meter"><i style="width:' + width + '%"></i></div>' +
+        '<p class="income-read__note">' + read.note + '</p>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function rangeBar(result, rent) {
+    var band = result.band;
+    var dMin = band.min * 0.65;
+    var dMax = band.max * 1.35;
+    function pos(n) {
+      return Math.max(0, Math.min(100, ((n - dMin) / (dMax - dMin)) * 100));
+    }
+    var pMin = pos(band.min), pMax = pos(band.max), pMed = pos(band.avg), pYou = pos(rent);
+    var flagStyle = "transform:translateX(-" + pYou.toFixed(2) + "%);--ax:" + pYou.toFixed(2) + "%";
+
+    return '<div class="rangebar">' +
+      '<div class="rangebar__track">' +
+        '<div class="rangebar__band" style="left:' + pMin.toFixed(2) + '%;width:' + (pMax - pMin).toFixed(2) + '%"></div>' +
+        '<div class="rangebar__median" style="left:' + pMed.toFixed(2) + '%"></div>' +
+        '<div class="rangebar__marker" style="left:' + pYou.toFixed(2) + '%">' +
+          '<span class="rangebar__flag" style="' + flagStyle + '">You · ' + nairaFmt(rent) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="rangebar__scale">' +
+        '<span style="left:' + pMin.toFixed(2) + '%;transform:translateX(-50%)">Low<br><b>' + nairaFmt(band.min) + '</b></span>' +
+        '<span style="left:' + pMed.toFixed(2) + '%;transform:translateX(-50%)">Median<br><b>' + nairaFmt(band.avg) + '</b></span>' +
+        '<span style="left:' + pMax.toFixed(2) + '%;transform:translateX(-50%)">High<br><b>' + nairaFmt(band.max) + '</b></span>' +
+      '</div>' +
+      '<p class="rangebar__note">The shaded strip is the normal band for this area and type. Your marker sits ' +
+        (result.pct > 0 ? result.pct + '% above' : Math.abs(result.pct) + '% below') + ' the median.</p>' +
+    '</div>';
+  }
+
+  function emptyMarkup() {
+    return '<div class="empty">' +
+      '<span class="empty__mark" aria-hidden="true">₦</span>' +
+      '<h3>Your verdict lands here.</h3>' +
+      '<p>Pick an area, a property type and enter the annual rent. The full breakdown — band position, fee compliance and next steps — appears without a page reload.</p>' +
+      '<div class="empty__actions">' +
+        '<button class="btn btn--primary btn--sm" type="button" data-load-example>Load the Yaba example</button>' +
+        '<a class="btn btn--ghost btn--sm" href="index.html#how-bands">How bands work</a>' +
+      '</div>' +
+    '</div>';
+  }
+
+  /* ---- render ---- */
+  function render(focusHeading) {
+    var area = areaSel.value;
+    var type = typeSel.value;
+    var rent = Number(rentInput.value);
+    var agency = Number(agencyInput.value) || 0;
+    var legal = Number(legalInput.value) || 0;
+    var caution = Number(cautionInput.value) || 0;
+    var income = Number(incomeInput.value) || 0;
+
+    updateAgencyHint(rent, agency);
+
+    if (!area || !type || !rent) {
+      panel.innerHTML = emptyMarkup();
+      highlightCompare();
+      return;
+    }
+
+    var result = computeVerdict(area, type, rent);
+    if (!result) { panel.innerHTML = emptyMarkup(); return; }
+    var guide = verdictGuidance(result, area, type, rent);
+    var state = AREA_STATE[area] || "";
+
+    panel.innerHTML =
+      '<div class="verdict-panel verdict-panel--' + result.verdict + '">' +
+        '<div class="verdict-top">' +
+          '<div class="verdict-heading">' +
+            verdictBadgeMarkup(result.verdict) +
+            '<h2 id="verdictHeading" tabindex="-1">' + verdictName(result.verdict) + '</h2>' +
+            '<p>' + guide.summary + '</p>' +
+          '</div>' +
+          '<div class="verdict-stamp">' + stampMarkup(result) + '</div>' +
+        '</div>' +
+        '<div class="verdict-body">' +
+          '<div class="verdict-block">' +
+            '<h3>Where the quote falls <span>' + area + ' · ' + state + '</span></h3>' +
+            rangeBar(result, rent) +
+          '</div>' +
+          '<div class="verdict-block">' +
+            '<h3>Agent fee compliance <span>standard: max ' + FEE_STANDARDS.agencyFeeMaxPct + '%</span></h3>' +
+            feeBlock(rent, agency, legal, caution) +
+          '</div>' +
+          incomeBlock(rent, income) +
+          '<div class="verdict-block">' +
+            '<h3>What to do next</h3>' +
+            '<ul class="next-steps">' + guide.steps.map(function (s) { return '<li>' + s + '</li>'; }).join("") + '</ul>' +
+          '</div>' +
+        '</div>' +
+        '<div class="verdict-actions">' +
+          '<button class="btn btn--primary" type="button" id="addReportBtn">Add this to community reports</button>' +
+          '<a class="btn btn--ghost" href="community.html">See what others paid</a>' +
+          '<p class="form-note">Saved on this device only.</p>' +
+        '</div>' +
+      '</div>';
+
+    highlightCompare(area);
+
+    if (focusHeading) {
+      var h = document.getElementById("verdictHeading");
+      if (h) h.focus({ preventScroll: false });
+    }
+  }
+
+  function updateAgencyHint(rent, agency) {
+    var hint = document.getElementById("agencyNairaHint");
+    if (!hint) return;
+    if (rent > 0 && agency > 0) {
+      hint.textContent = "That is " + nairaFmt(rent * agency / 100) + " on a " + nairaFmt(rent) +
+        " rent — the standard ceiling is " + nairaFmt(rent * 0.1) + ".";
+    } else {
+      hint.textContent = "The fee is usually quoted as a percentage. Type 10 for the standard 10%.";
+    }
+  }
+
+  var timer = null;
+  function scheduleRender() {
+    clearTimeout(timer);
+    timer = setTimeout(function () { render(false); }, 240);
+  }
+
+  [areaSel, typeSel, agencyInput, legalInput, cautionInput, incomeInput].forEach(function (el) {
+    el.addEventListener("change", scheduleRender);
+    el.addEventListener("input", scheduleRender);
+  });
+  rentInput.addEventListener("input", scheduleRender);
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    clearTimeout(timer);
+    render(true);
+  });
+
+  /* ---- add to community reports ---- */
+  panel.addEventListener("click", function (e) {
+    if (e.target.closest("[data-load-example]")) {
+      loadExample();
+      return;
+    }
+    var btn = e.target.closest("#addReportBtn");
+    if (!btn) return;
+
+    var area = areaSel.value, type = typeSel.value, rent = Number(rentInput.value);
+    if (!area || !type || !rent) return;
+
+    var entry = saveReportLocal({
+      area: area,
+      type: type,
+      amount: rent,
+      agencyFee: Number(agencyInput.value) || 0,
+      legalFee: Number(legalInput.value) || 0,
+      cautionFee: Number(cautionInput.value) || 0,
+      note: "Submitted via the price checker.",
+      date: new Date().toISOString().slice(0, 10)
+    });
+
+    btn.textContent = "Added to reports ✓";
+    btn.disabled = true;
+    showToast("Saved — " + entry.area + ", " + entry.type + " at " + nairaFmt(entry.amount) + ".");
+
+    getFirebase().then(function (fb) {
+      if (!fb || !fb.submitReport) return;
+      fb.submitReport(entry).catch(function () { /* offline or unconfigured; local copy stands */ });
+    });
+  });
+
+  /* ---- example ---- */
+  function loadExample() {
+    stateSel.value = "Lagos";
+    fillAreas("Lagos", "Yaba");
+    typeSel.value = "2 Bedroom Flat";
+    rentInput.value = 1850000;
+    agencyInput.value = 15;
+    legalInput.value = 10;
+    cautionInput.value = 50;
+    incomeInput.value = 4800000;
+    var details = document.querySelector(".checker__form details");
+    if (details) details.open = true;
+    render(false);
+    showToast("Example loaded: Yaba, 2-bedroom, ₦1,850,000 a year.");
+  }
+  document.getElementById("loadExample").addEventListener("click", loadExample);
+
+  /* ---- comparison table ---- */
+  function renderCompare() {
+    var type = compareType.value || "2 Bedroom Flat";
+    var rows = AREAS.map(function (a) {
+      return { a: a, state: AREA_STATE[a], band: AREA_DATA[a][type] };
+    }).sort(function (x, y) { return x.band.avg - y.band.avg; });
+
+    document.querySelector("#compareTable tbody").innerHTML = rows.map(function (r) {
+      return '<tr data-area="' + r.a + '">' +
+        '<td><span class="area-name">' + r.a + '</span><span class="area-state">' + r.state + '</span></td>' +
+        '<td class="num">' + nairaFmt(r.band.min) + '</td>' +
+        '<td class="num num--strong">' + nairaFmt(r.band.avg) + '</td>' +
+        '<td class="num">' + nairaFmt(r.band.max) + '</td>' +
+      '</tr>';
+    }).join("");
+
+    highlightCompare(areaSel.value);
+  }
+
+  function highlightCompare(area) {
+    var current = area || areaSel.value;
+    document.querySelectorAll("#compareTable tbody tr").forEach(function (tr) {
+      tr.classList.toggle("is-current", tr.getAttribute("data-area") === current);
+    });
+  }
+
+  compareType.addEventListener("change", renderCompare);
+  areaSel.addEventListener("change", function () { highlightCompare(); });
+
+  /* ---- red flags ---- */
+  var flagList = document.getElementById("flagList");
+  flagList.innerHTML = RED_FLAGS.map(function (f, i) {
+    return '<label class="flag" for="flag' + i + '">' +
+      '<input type="checkbox" id="flag' + i + '">' +
+      '<span>' + f + '</span>' +
+    '</label>';
+  }).join("");
+
+  var flagHints = [
+    [0, "Tick what you have seen. Nothing here is a verdict on its own."],
+    [1, "Low friction so far. Keep every promise in writing anyway."],
+    [3, "Proceed carefully — verify the landlord and insist on receipts."],
+    [5, "High risk. Do not pay until the paperwork and the account name are clear."]
+  ];
+
+  function updateFlags() {
+    var items = flagList.querySelectorAll("input");
+    var checked = 0;
+    items.forEach(function (input) { if (input.checked) checked++; });
+    document.getElementById("flagCount").textContent = checked;
+    document.getElementById("flagBar").style.width = (checked / RED_FLAGS.length * 100) + "%";
+    var hint = flagHints[0][1];
+    flagHints.forEach(function (pair) { if (checked >= pair[0]) hint = pair[1]; });
+    document.getElementById("flagHint").textContent = hint;
+    flagList.querySelectorAll(".flag").forEach(function (label) {
+      label.classList.toggle("is-checked", label.querySelector("input").checked);
+    });
+  }
+  flagList.addEventListener("change", updateFlags);
+  updateFlags();
+
+  /* ---- boot ---- */
+  renderCompare();
+  render(false);
+})();
+</script>
+</body>
+</html>

@@ -45,6 +45,7 @@ window.PROJECTS = [
     ],
     stack: ["HTML5", "CSS3", "JavaScript", "LocalStorage", "cPanel"],
     live: "http://danielwebservices.com/RentJury/",
+    demo: "https://abodaniel435-rgb.github.io/daniel-portfolio/demos/rentjury/"
     source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/rentjury",
     thumb: "assets/projects/rentjury.jpg",
     accent: "#f0b429"
@@ -91,6 +92,7 @@ window.PROJECTS = [
     ],
     stack: ["HTML5", "CSS3", "JavaScript", "WhatsApp API", "cPanel"],
     live: "http://danielwebservices.com/AbosodionFarm/",
+    demo: "https://abodaniel435-rgb.github.io/daniel-portfolio/demos/abosodion-farm/"
     source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/abosodion-farm",
     thumb: "assets/projects/abosodion-farm.jpg",
     accent: "#9fca35"
@@ -137,6 +139,7 @@ window.PROJECTS = [
     ],
     stack: ["HTML5", "CSS3", "JavaScript", "WebP", "cPanel"],
     live: "http://danielwebservices.com/ThatguyFitness/",
+    demo: "https://abodaniel435-rgb.github.io/daniel-portfolio/demos/thatguys-fitness/"
     source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/thatguys-fitness",
     thumb: "assets/projects/thatguys-fitness.jpg",
     accent: "#e8342b"
@@ -160,6 +163,7 @@ window.PROJECTS = [
     ],
     stack: ["HTML5", "CSS3", "JavaScript", "JSON", "cPanel"],
     live: "http://danielwebservices.com/moonlight-festival/",
+    demo: "https://abodaniel435-rgb.github.io/daniel-portfolio/demos/moonlight-events/"
     source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/moonlight-events",
     thumb: "assets/projects/moonlight-events.jpg",
     accent: "#e0b465"
@@ -183,6 +187,7 @@ window.PROJECTS = [
     ],
     stack: ["HTML5", "CSS3", "JavaScript", "PHP", "cPanel"],
     live: "http://danielwebservices.com/TrinityLighting/",
+    demo: "https://abodaniel435-rgb.github.io/daniel-portfolio/demos/trinity-lightings/"
     source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/trinity-lightings",
     thumb: "assets/projects/trinity-lightings.jpg",
     accent: "#d8c3a0"
@@ -206,6 +211,7 @@ window.PROJECTS = [
     ],
     stack: ["HTML5", "CSS3", "JavaScript", "Open-Meteo", "cPanel"],
     live: "http://danielwebservices.com/WeatherApp/",
+    demo: "https://abodaniel435-rgb.github.io/daniel-portfolio/demos/skycast/"
     source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/skycast",
     thumb: "assets/projects/skycast.jpg",
     accent: "#86c9e4"

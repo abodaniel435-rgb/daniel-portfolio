@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Guelaguetza illustration</title>
+  <desc id="desc">Dance ribbons and a festive stage representing Oaxaca's Guelaguetza.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7b1e3e"/>
+      <stop offset="100%" stop-color="#f08a24"/>
+    </linearGradient>
+    <linearGradient id="stage" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5a2b2b"/>
+      <stop offset="100%" stop-color="#341616"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <path d="M0 634c124-38 266-44 417-17 146 27 258 33 397 17 124-15 247-10 386 15v151H0z" fill="url(#stage)"/>
+  <g transform="translate(600 510)">
+    <rect x="-230" y="-40" width="460" height="140" rx="16" fill="#f2d3a1"/>
+    <rect x="-185" y="-148" width="370" height="90" rx="16" fill="#89364c"/>
+    <circle cx="-120" cy="-100" r="22" fill="#f7c948"/>
+    <circle cx="-40" cy="-100" r="22" fill="#38bdf8"/>
+    <circle cx="40" cy="-100" r="22" fill="#22c55e"/>
+    <circle cx="120" cy="-100" r="22" fill="#f97316"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-width="22">
+    <path d="M244 170c90 60 156 151 182 266" stroke="#ffd166"/>
+    <path d="M956 170c-90 60-156 151-182 266" stroke="#38bdf8"/>
+    <path d="M398 146c54 84 82 180 82 286" stroke="#22c55e"/>
+    <path d="M802 146c-54 84-82 180-82 286" stroke="#f97316"/>
+  </g>
+  <g fill="#fff3dd">
+    <circle cx="240" cy="164" r="18"/>
+    <circle cx="394" cy="138" r="18"/>
+    <circle cx="806" cy="138" r="18"/>
+    <circle cx="960" cy="164" r="18"/>
+  </g>
+  <text x="80" y="96" fill="#fff2db" font-size="58" font-family="Georgia, serif" letter-spacing="4">GUELAGUETZA</text>
+  <text x="82" y="140" fill="#ffe08a" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Oaxaca dance, music and community sharing</text>
+</svg>

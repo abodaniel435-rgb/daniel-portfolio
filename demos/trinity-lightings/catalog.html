@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Collection — Trinity Lightings, Lagos</title>
+<meta name="description" content="The full Trinity Lightings collection: crystal, brass and modern chandeliers. Filter by family, open any piece, and enquire on WhatsApp.">
+<meta name="theme-color" content="#f7f2e9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231d1a17'/%3E%3Cg fill='none' stroke='%23c7a56c' stroke-width='2'%3E%3Cpath d='M32 12v8'/%3E%3Cpath d='M16 32a16 11 0 0 1 32 0'/%3E%3Cpath d='M16 32h32M20 32v7M32 32v10M44 32v7'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="Trinity Lightings, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 30 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 1.5v6" stroke="#A9834A" stroke-width="1.1"/>
+          <path d="M4 16a11 8.4 0 0 1 22 0" stroke="#A9834A" stroke-width="1.1"/>
+          <path d="M4 16h22M6.5 16v6M15 16v9M23.5 16v6" stroke="#A9834A" stroke-width="1.1"/>
+          <circle cx="6.5" cy="24.6" r="2.3" stroke="#A9834A" stroke-width="1.1"/>
+          <circle cx="15" cy="27.6" r="2.7" stroke="#A9834A" stroke-width="1.1"/>
+          <circle cx="23.5" cy="24.6" r="2.3" stroke="#A9834A" stroke-width="1.1"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">Trinity Lightings</span>
+        <span class="brand-sub">Chandelier atelier · Lagos</span>
+      </span>
+    </a>
+
+    <nav class="site-nav" id="siteNav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="catalog.html" aria-current="page">Collection</a>
+      <a href="visit.html">Visit &amp; enquire</a>
+      <a class="btn btn--brass nav-mobile-only" href="visit.html#enquire">Enquire</a>
+    </nav>
+
+    <a href="visit.html#enquire" class="btn btn--dark header-cta">Enquire</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
+      <span class="bars" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="page-head wrap">
+    <p class="eyebrow eyebrow--center">The collection</p>
+    <h1 class="display">Every piece, in one room.</h1>
+    <p class="lead">Open any piece to see it larger and read what makes it worth the wall space. Prices on request — finishes, sizes and drops are arranged individually.</p>
+  </div>
+
+  <div class="filters">
+    <div class="wrap filters-inner">
+      <div class="filter-list" id="filterBar" role="group" aria-label="Filter by collection">
+        <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All pieces</button>
+      </div>
+      <div class="filters-tools">
+        <div class="catalog-search">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <label class="sr-only" for="catalogSearch">Search the collection</label>
+          <input type="search" id="catalogSearch" placeholder="Search pieces" autocomplete="off">
+        </div>
+        <p class="filter-count" id="filterCount" aria-live="polite">Loading collection…</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="catalog-body wrap" aria-label="Pieces">
+    <div class="pieces" id="grid"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Trinity Lightings</span>
+        <p>Chandeliers and statement lighting, chosen in person and hung with care across Lagos.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalog.html">Collection</a></li>
+          <li><a href="visit.html">Visit &amp; enquire</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Showroom</h4>
+        <ul>
+          <li data-address>Plot 129, Amuwo Odofin, Lagos</li>
+          <li data-hours>Mon – Sat, 10am – 7pm</li>
+          <li><a href="#" data-whatsapp-link target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="#" data-tiktok-link target="_blank" rel="noopener">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Trinity Lightings. All rights reserved.</span>
+      <span>Lagos, Nigeria · Lighting that gets noticed.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="shared.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.getElementById('grid');
+    const bar = document.getElementById('filterBar');
+    const countEl = document.getElementById('filterCount');
+    const searchEl = document.getElementById('catalogSearch');
+
+    let activeFilter = 'all';
+    let activeQuery = '';
+
+    function visibleItems() {
+      const q = activeQuery.trim().toLowerCase();
+      return PRODUCTS.filter(p => {
+        const inFamily = activeFilter === 'all' || p.category === activeFilter;
+        if (!inFamily) return false;
+        if (!q) return true;
+        return [p.name, p.category, p.badge, p.desc, p.detail, p.finish]
+          .join(' ').toLowerCase().includes(q);
+      });
+    }
+
+    function render() {
+      const items = visibleItems();
+      const searching = Boolean(activeQuery.trim());
+
+      if (!items.length) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <h2>Nothing matches that yet.</h2>
+            <p>Try another name or finish — or clear the search to see all ${PRODUCTS.length} pieces.</p>
+            <button class="btn btn--line empty-reset" type="button">Clear search &amp; filters</button>
+          </div>`;
+      } else {
+        grid.innerHTML = items
+          .map(p => productCardHTML(p, PRODUCTS.indexOf(p)))
+          .join('');
+      }
+
+      if (items.length === PRODUCTS.length) {
+        countEl.textContent = `${items.length} ${items.length === 1 ? 'piece' : 'pieces'}`;
+      } else {
+        countEl.textContent = `${items.length} of ${PRODUCTS.length} pieces` +
+          (activeFilter === 'all' ? '' : ` · ${activeFilter}`) +
+          (searching ? ` · “${activeQuery.trim()}”` : '');
+      }
+    }
+
+    function resetAll() {
+      activeFilter = 'all';
+      activeQuery = '';
+      if (searchEl) searchEl.value = '';
+      bar.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.setAttribute('aria-pressed', chip.dataset.filter === 'all' ? 'true' : 'false');
+      });
+      const url = new URL(window.location.href);
+      url.searchParams.delete('category');
+      window.history.replaceState({}, '', url);
+      render();
+      if (searchEl) searchEl.focus();
+    }
+
+    grid.addEventListener('click', event => {
+      if (event.target.closest('.empty-reset')) resetAll();
+    });
+
+    if (searchEl) {
+      searchEl.addEventListener('input', () => {
+        activeQuery = searchEl.value;
+        render();
+      });
+      searchEl.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          searchEl.value = '';
+          activeQuery = '';
+          render();
+        }
+      });
+    }
+
+    function buildFilterBar() {
+      const categories = [...new Set(PRODUCTS.map(p => p.category))];
+      categories.forEach(cat => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'filter-chip';
+        chip.dataset.filter = cat;
+        chip.textContent = cat;
+        chip.setAttribute('aria-pressed', 'false');
+        bar.appendChild(chip);
+      });
+    }
+
+    function setFilter(value, updateUrl) {
+      const known = [...bar.querySelectorAll('.filter-chip')].some(c => c.dataset.filter === value);
+      activeFilter = known ? value : 'all';
+
+      bar.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.setAttribute('aria-pressed', chip.dataset.filter === activeFilter ? 'true' : 'false');
+      });
+
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        if (activeFilter === 'all') url.searchParams.delete('category');
+        else url.searchParams.set('category', activeFilter);
+        window.history.replaceState({}, '', url);
+      }
+
+      render();
+    }
+
+    bar.addEventListener('click', event => {
+      const chip = event.target.closest('.filter-chip');
+      if (!chip) return;
+      setFilter(chip.dataset.filter, true);
+    });
+
+    PRODUCTS_READY.then(() => {
+      buildFilterBar();
+      const requested = new URLSearchParams(window.location.search).get('category') || 'all';
+      setFilter(requested, false);
+    });
+  });
+</script>
+
+</body>
+</html>

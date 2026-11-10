@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products &amp; Prices — ABOSODION Farm</title>
+<meta name="description" content="Broilers, layers, and graded eggs (big, medium, small) from ABOSODION Farm in Ojo, Lagos. Filter the price list and order directly on WhatsApp.">
+<meta name="theme-color" content="#14532d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand" aria-label="ABOSODION Farm, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21c0-5 3-8 8-8 0 5-3 8-8 8Z" fill="currentColor"/><path d="M12 21c0-5-3-8-8-8 0 5 3 8 8 8Z" fill="currentColor" opacity=".6"/><path d="M12 20.5v-7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      <span class="brand-name">ABOSODION<span>Farm · Lagos</span></span>
+    </a>
+    <nav class="nav" id="siteNav" aria-label="Primary">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="products.html" aria-current="page">Products</a>
+      <a class="nav-link" href="contact.html">Contact</a>
+      <a class="btn btn-dark" href="https://wa.me/2348165595620" target="_blank" rel="noopener" data-wa-msg="Hello ABOSODION Farm, I'd like to place an order. Please share today's prices and availability.">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+        WhatsApp
+      </a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Products &amp; prices</span>
+      <h1>Everything we sell, priced plainly.</h1>
+      <p class="lede">Prices below are current estimates and may shift slightly with market and feed costs. Send a WhatsApp message to confirm today's price and what's in stock before you order.</p>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="toolbar-inner">
+        <div class="search-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <label class="sr-only" for="productSearch" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Search the price list</label>
+          <input type="search" id="productSearch" placeholder="Search eggs, broilers, layers…" autocomplete="off">
+        </div>
+        <div class="chips" role="group" aria-label="Filter products by category">
+          <button type="button" class="chip-btn" data-filter="all" aria-pressed="true">All products</button>
+          <button type="button" class="chip-btn" data-filter="eggs" aria-pressed="false">Eggs</button>
+          <button type="button" class="chip-btn" data-filter="poultry" aria-pressed="false">Poultry</button>
+        </div>
+      </div>
+      <p class="result-count" id="resultCount" role="status" aria-live="polite">Showing 8 products</p>
+    </div>
+  </div>
+
+  <section class="products-section" aria-labelledby="list-title">
+    <div class="wrap">
+      <h2 id="list-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Price list</h2>
+
+      <div class="product-list" id="productList"></div>
+
+      <div class="empty-state" id="emptyState" role="status">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/><path d="M8 11h6"/></svg>
+        <h2>Nothing matches that yet</h2>
+        <p>We sell eggs, broilers and layers — try “eggs”, “broiler” or “layer”, or clear the filters to see the whole price list.</p>
+        <button type="button" class="btn btn-ghost" id="resetFilters">Clear search &amp; filters</button>
+      </div>
+
+      <noscript>
+        <div class="note-strip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span>Filtering needs JavaScript. The full list is: Big eggs ₦4,200 per crate · Medium eggs ₦3,700 per crate · Small eggs ₦3,200 per crate · Small broiler ₦6,500 · Medium broiler ₦8,500 · Large broiler ₦10,500 · Point-of-lay layer ₦7,500 · Already-laying layer ₦9,000. Order on WhatsApp: +234 816 559 5620.</span>
+        </div>
+      </noscript>
+
+      <div class="note-strip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span>Buying five or more birds, or need eggs daily for a shop or restaurant? Ask about bulk pricing, mixed crates and standing weekly orders on WhatsApp.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-tight" style="background: var(--cream-2); border-top: 1px solid var(--line);" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Before you order</span>
+        <h2 id="faq-title">A few common questions</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>How do I actually place an order?</summary>
+          <p>Tap any “Order” button or the WhatsApp icon — it opens a chat with us directly, with your item already written in the message. Tell us how many you want and we confirm availability and price.</p>
+        </details>
+        <details>
+          <summary>Do prices ever change?</summary>
+          <p>Yes, slightly. Feed and market costs shift, so always confirm the current price on WhatsApp before you finalise an order.</p>
+        </details>
+        <details>
+          <summary>Can I get my broiler dressed (cleaned)?</summary>
+          <p>Yes. Just mention it when you order — dressed birds are best ordered a day ahead.</p>
+        </details>
+        <details>
+          <summary>Do you deliver?</summary>
+          <p>We arrange delivery within Lagos depending on the size of your order. Pickup at Abomalu Farm, Ojo Barracks is also available. Ask us on WhatsApp for details.</p>
+        </details>
+        <details>
+          <summary>How are the eggs packed?</summary>
+          <p>Eggs are sold by the crate of 30 and graded big, medium and small before packing. Mixed crates are available on request.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2>Not sure what's in stock today?</h2>
+          <p>One message is all it takes. We'll tell you what's available, confirm the price and arrange delivery or pickup.</p>
+        </div>
+        <a class="btn btn-primary" href="https://wa.me/2348165595620" target="_blank" rel="noopener" data-wa-msg="Hello ABOSODION Farm, I'd like to place an order. Please share today's prices and availability.">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+          Ask about stock
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="ABOSODION Farm, home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21c0-5 3-8 8-8 0 5-3 8-8 8Z" fill="currentColor"/><path d="M12 21c0-5-3-8-8-8 0 5 3 8 8 8Z" fill="currentColor" opacity=".6"/><path d="M12 20.5v-7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <span class="brand-name">ABOSODION<span>Farm · Lagos</span></span>
+        </a>
+        <p>Farm-direct broilers, layers and hand-graded eggs. Ordering is simple — send one message and we take it from there.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Visit</h3>
+        <p>Abomalu Farm, Ojo Barracks, Lagos, Nigeria</p>
+        <p>Mon – Sat, 8am – 7pm</p>
+      </div>
+      <div class="footer-col">
+        <h3>Order</h3>
+        <a href="https://wa.me/2348165595620" target="_blank" rel="noopener">WhatsApp only</a>
+        <a href="tel:+2348165595620">+234 816 559 5620</a>
+        <p>Replies within the hour during the day</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ABOSODION Farm. All rights reserved.</p>
+      <p>Orders taken strictly via WhatsApp.</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/2348165595620" target="_blank" rel="noopener" aria-label="Chat with ABOSODION Farm on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+</a>
+
+<script>
+(function () {
+  var WA_NUMBER = '2348165595620';
+
+  /* ---------- header ---------- */
+  var header = document.getElementById('siteHeader');
+  var nav = document.getElementById('siteNav');
+  var btn = document.getElementById('menuBtn');
+
+  function setOpen(open) {
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    header.classList.toggle('menu-open', open);
+  }
+
+  btn.addEventListener('click', function () {
+    setOpen(btn.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('open')) {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 900) setOpen(false);
+  });
+
+  var ticking = false;
+  function onScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  document.querySelectorAll('[data-wa-msg]').forEach(function (link) {
+    link.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(link.getAttribute('data-wa-msg'));
+  });
+
+  /* ---------- product data ---------- */
+  var PRODUCTS = [
+    {
+      id: 'eggs-big', name: 'Eggs — Big', cat: 'eggs', catLabel: 'Eggs',
+      price: '₦4,200', unit: 'per crate',
+      desc: 'Crate of 30 large-size eggs, collected daily and hand-graded before packing.',
+      specs: ['Crate of 30', 'Large size', 'Collected daily']
+    },
+    {
+      id: 'eggs-medium', name: 'Eggs — Medium', cat: 'eggs', catLabel: 'Eggs',
+      price: '₦3,700', unit: 'per crate',
+      desc: 'Crate of 30 medium-size eggs — the steady everyday crate for households and shops.',
+      specs: ['Crate of 30', 'Medium size', 'Hand-graded']
+    },
+    {
+      id: 'eggs-small', name: 'Eggs — Small', cat: 'eggs', catLabel: 'Eggs',
+      price: '₦3,200', unit: 'per crate',
+      desc: 'Crate of 30 small-size eggs, sorted by hand. Mixed crates available on request.',
+      specs: ['Crate of 30', 'Small size', 'Mixed crates on request']
+    },
+    {
+      id: 'broiler-small', name: 'Broiler — Small', cat: 'poultry', catLabel: 'Poultry',
+      price: '₦6,500', unit: 'per bird',
+      desc: 'Roughly 1.2kg – 1.5kg live weight. Sold live or dressed — tell us which you prefer.',
+      specs: ['1.2kg – 1.5kg', 'Live or dressed', 'Well-fed']
+    },
+    {
+      id: 'broiler-medium', name: 'Broiler — Medium', cat: 'poultry', catLabel: 'Poultry',
+      price: '₦8,500', unit: 'per bird',
+      desc: 'Roughly 1.6kg – 2kg live weight. Raised on a proper feeding schedule to good table weight.',
+      specs: ['1.6kg – 2kg', 'Live or dressed', 'Order a day ahead']
+    },
+    {
+      id: 'broiler-large', name: 'Broiler — Large', cat: 'poultry', catLabel: 'Poultry',
+      price: '₦10,500', unit: 'per bird',
+      desc: '2.1kg and above, live weight. The biggest birds we raise — best ordered a day ahead when dressed.',
+      specs: ['2.1kg +', 'Live or dressed', 'Bulk pricing 5+']
+    },
+    {
+      id: 'layer-point-of-lay', name: 'Layer — Point of Lay', cat: 'poultry', catLabel: 'Poultry',
+      price: '₦7,500', unit: 'per bird',
+      desc: 'Young hen, about to start laying. Ideal if you are starting a flock or restocking.',
+      specs: ['Point of lay', 'Live bird', 'Flock starter']
+    },
+    {
+      id: 'layer-laying', name: 'Layer — Already Laying', cat: 'poultry', catLabel: 'Poultry',
+      price: '₦9,000', unit: 'per bird',
+      desc: 'Mature hen, currently producing eggs. Ask about availability before a bulk order.',
+      specs: ['Already laying', 'Live bird', 'Restock ready']
+    }
+  ];
+
+  var GLYPHS = {
+    eggs: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M16 4c5 0 9 8.4 9 13.2C25 23 21 28 16 28s-9-5-9-10.8C7 12.4 11 4 16 4Z"/><path d="M11 17c1.5-3 3.5-5 6-6"/></svg>',
+    poultry: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M20 12c0-3.3-2.7-6-6-6s-6 2.7-6 6c0 1.4.5 2.6 1.3 3.6-2.5 1-4.3 3.4-4.3 6.4 0 .7.1 1.4.3 2 1.2-2 3.3-3.3 5.7-3.3M20 12c2.8 0 5 2.2 5 5 0 4-3.4 9-9 9"/><path d="M26 9l3-1-2 4"/><circle cx="21" cy="13" r="1" fill="currentColor" stroke="none"/></svg>'
+  };
+
+  var list = document.getElementById('productList');
+  var emptyState = document.getElementById('emptyState');
+  var resultCount = document.getElementById('resultCount');
+  var searchInput = document.getElementById('productSearch');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip-btn'));
+  var state = { cat: 'all', q: '' };
+
+  function orderMessage(product) {
+    return 'Hello ABOSODION Farm, I would like to order ' + product.name +
+      ' (' + product.price + ' ' + product.unit + ').' +
+      ' Please confirm today\'s price and availability.';
+  }
+
+  function buildCard(product) {
+    var card = document.createElement('article');
+    card.className = 'product-card';
+    card.id = product.id;
+    card.dataset.category = product.cat;
+    card.dataset.search = [product.name, product.catLabel, product.desc, product.specs.join(' '), product.price]
+      .join(' ').toLowerCase();
+
+    var orderHref = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(orderMessage(product));
+
+    card.innerHTML =
+      '<div class="product-top">' +
+        '<span class="pill pill-' + product.cat + '">' + product.catLabel + '</span>' +
+        '<span class="product-glyph" aria-hidden="true">' + GLYPHS[product.cat] + '</span>' +
+      '</div>' +
+      '<h3>' + product.name + '</h3>' +
+      '<p class="product-desc">' + product.desc + '</p>' +
+      '<ul class="specs">' + product.specs.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
+      '<div class="product-foot">' +
+        '<div class="price"><strong>' + product.price + '</strong><span>' + product.unit + '</span></div>' +
+        '<a class="btn btn-dark" href="' + orderHref + '" target="_blank" rel="noopener" aria-label="Order ' + product.name + ' on WhatsApp">Order' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
+        '</a>' +
+      '</div>';
+    return card;
+  }
+
+  PRODUCTS.forEach(function (p) { list.appendChild(buildCard(p)); });
+
+  function normalise(value) {
+    return String(value || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  function applyFilters() {
+    var q = normalise(state.q);
+    var visible = 0;
+
+    Array.prototype.forEach.call(list.children, function (card) {
+      var matchesCat = state.cat === 'all' || card.dataset.category === state.cat;
+      var matchesText = !q || card.dataset.search.indexOf(q) !== -1;
+      var show = matchesCat && matchesText;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+
+    emptyState.classList.toggle('is-visible', visible === 0);
+    resultCount.textContent = visible === 0
+      ? 'No products match your search'
+      : 'Showing ' + visible + ' of ' + PRODUCTS.length + ' products' +
+        (state.cat === 'all' ? '' : ' in ' + state.cat) +
+        (q ? ' for “' + state.q.trim() + '”' : '');
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      state.cat = chip.dataset.filter;
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+      applyFilters();
+    });
+  });
+
+  searchInput.addEventListener('input', function () {
+    state.q = searchInput.value;
+    applyFilters();
+  });
+
+  function resetAll() {
+    state.cat = 'all';
+    state.q = '';
+    searchInput.value = '';
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.filter === 'all')); });
+    applyFilters();
+    searchInput.focus();
+  }
+
+  document.getElementById('resetFilters').addEventListener('click', resetAll);
+
+  /* deep links from the home page: products.html#eggs / #poultry */
+  (function applyHash() {
+    var hash = (location.hash || '').replace('#', '').toLowerCase();
+    if (hash === 'eggs' || hash === 'poultry') {
+      state.cat = hash;
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.filter === hash)); });
+    }
+  })();
+
+  applyFilters();
+  window.addEventListener('hashchange', function () {
+    var hash = (location.hash || '').replace('#', '').toLowerCase();
+    if (hash === 'eggs' || hash === 'poultry') {
+      state.cat = hash;
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.filter === hash)); });
+      applyFilters();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

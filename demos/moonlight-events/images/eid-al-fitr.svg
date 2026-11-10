@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Eid al-Fitr festival illustration</title>
+  <desc id="desc">A crescent moon over lanterns and a mosque skyline for Eid al-Fitr.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08233a"/>
+      <stop offset="60%" stop-color="#0d4f6b"/>
+      <stop offset="100%" stop-color="#1b6f87"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe38a"/>
+      <stop offset="100%" stop-color="#e3a11c"/>
+    </linearGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="940" cy="118" r="74" fill="#ffe7a1"/>
+  <circle cx="972" cy="102" r="72" fill="#0f4a63"/>
+  <circle cx="160" cy="120" r="4" fill="#ffffff"/>
+  <circle cx="252" cy="88" r="5" fill="#ffffff"/>
+  <circle cx="315" cy="150" r="3" fill="#ffffff"/>
+  <circle cx="740" cy="170" r="4" fill="#ffffff"/>
+  <circle cx="1050" cy="210" r="5" fill="#ffffff"/>
+  <path d="M0 612c132-22 270-34 404-17 154 20 278 20 398 5 134-17 254-12 398 12v188H0z" fill="#092131"/>
+  <path d="M120 610h960v35H120z" fill="#0e3b4e"/>
+  <g fill="#123d50">
+    <rect x="180" y="430" width="92" height="180"/>
+    <rect x="310" y="365" width="104" height="245"/>
+    <rect x="510" y="390" width="180" height="220"/>
+    <rect x="785" y="350" width="112" height="260"/>
+    <rect x="940" y="430" width="88" height="180"/>
+  </g>
+  <g fill="#123d50">
+    <path d="M228 402a52 52 0 0 1 52 52h-104a52 52 0 0 1 52-52z"/>
+    <path d="M362 310a62 62 0 0 1 62 62H300a62 62 0 0 1 62-62z"/>
+    <path d="M600 305a92 92 0 0 1 92 92H508a92 92 0 0 1 92-92z"/>
+    <path d="M841 282a69 69 0 0 1 69 69H772a69 69 0 0 1 69-69z"/>
+    <path d="M984 402a52 52 0 0 1 52 52h-104a52 52 0 0 1 52-52z"/>
+  </g>
+  <rect x="588" y="250" width="24" height="120" fill="#123d50"/>
+  <circle cx="600" cy="238" r="18" fill="url(#gold)"/>
+  <g transform="translate(240 178)">
+    <path d="M0 0v150" stroke="#ffe38a" stroke-width="7" stroke-linecap="round"/>
+    <rect x="-26" y="56" width="52" height="64" rx="10" fill="none" stroke="#ffe38a" stroke-width="7"/>
+    <path d="M-26 74h52M-26 102h52" stroke="#ffe38a" stroke-width="5"/>
+    <circle cx="0" cy="88" r="18" fill="#ffe38a" opacity="0.25" filter="url(#softGlow)"/>
+  </g>
+  <g transform="translate(800 160)">
+    <path d="M0 0v170" stroke="#ffe38a" stroke-width="7" stroke-linecap="round"/>
+    <rect x="-30" y="64" width="60" height="74" rx="12" fill="none" stroke="#ffe38a" stroke-width="7"/>
+    <path d="M-30 86h60M-30 116h60" stroke="#ffe38a" stroke-width="5"/>
+    <circle cx="0" cy="102" r="22" fill="#ffe38a" opacity="0.28" filter="url(#softGlow)"/>
+  </g>
+  <text x="82" y="94" fill="#fff5cd" font-size="54" font-family="Georgia, serif" letter-spacing="4">EID AL-FITR</text>
+  <text x="82" y="138" fill="#c9f4ff" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Prayer, lanterns and a crescent night</text>
+</svg>

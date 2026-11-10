@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Sakura festival illustration</title>
+  <desc id="desc">Cherry blossoms drifting over a serene spring landscape in Japan.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#eef7ff"/>
+      <stop offset="100%" stop-color="#ffdbe8"/>
+    </linearGradient>
+    <linearGradient id="mountain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#95a7c9"/>
+      <stop offset="100%" stop-color="#6d7fa3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="930" cy="130" r="64" fill="#fff3d8" opacity="0.95"/>
+  <path d="M0 585c160-22 299-6 419 26 126 34 223 47 374 23 117-18 229-20 407 7v159H0z" fill="#d5eadc"/>
+  <path d="M362 530l188-234 176 234z" fill="url(#mountain)"/>
+  <path d="M510 342l40-46 38 46z" fill="#ffffff"/>
+  <path d="M720 598c53-39 110-59 171-59s118 20 171 59" fill="none" stroke="#9d5e5e" stroke-width="18" stroke-linecap="round"/>
+  <path d="M72 214c140 14 242 67 309 156 49 65 74 123 99 236" fill="none" stroke="#5b3a2f" stroke-width="26" stroke-linecap="round"/>
+  <path d="M46 326c113-4 192 18 274 78" fill="none" stroke="#5b3a2f" stroke-width="18" stroke-linecap="round"/>
+  <path d="M244 142c83 40 141 89 176 153" fill="none" stroke="#5b3a2f" stroke-width="18" stroke-linecap="round"/>
+  <g fill="#f8b7cf">
+    <circle cx="166" cy="236" r="24"/>
+    <circle cx="242" cy="192" r="22"/>
+    <circle cx="296" cy="286" r="24"/>
+    <circle cx="388" cy="250" r="26"/>
+    <circle cx="442" cy="372" r="22"/>
+    <circle cx="292" cy="390" r="22"/>
+    <circle cx="134" cy="338" r="22"/>
+    <circle cx="86" cy="270" r="20"/>
+    <circle cx="198" cy="120" r="20"/>
+    <circle cx="334" cy="172" r="18"/>
+  </g>
+  <g fill="#f6a6c2" opacity="0.88">
+    <path d="M870 208l18 20 26-10-9 26 20 18-27 0-10 26-9-26-27-1 20-17z"/>
+    <path d="M994 270l14 16 22-8-8 22 16 14-23 0-8 22-8-22-23 0 17-14z"/>
+    <path d="M910 346l16 18 24-9-9 24 18 16-25 0-9 24-8-24-26-1 20-15z"/>
+  </g>
+  <text x="82" y="98" fill="#694a62" font-size="58" font-family="Georgia, serif" letter-spacing="4">SAKURA FESTIVAL</text>
+  <text x="82" y="142" fill="#8c6a7a" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Cherry blossoms, hanami and spring light</text>
+</svg>

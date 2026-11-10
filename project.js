@@ -57,9 +57,13 @@ if (!project) {
   const links = document.getElementById('caseLinks');
   if (links) {
     const parts = [];
+    if (project.demo) {
+      parts.push('<a class="case-link case-link-primary" href="' + project.demo + '" target="_blank" rel="noopener noreferrer">Open the rebuilt site <span aria-hidden="true">↗</span></a>');
+    }
     if (project.live) {
-      parts.push('<a class="case-link case-link-primary" href="' + project.live + '" target="_blank" rel="noopener noreferrer">Open the live site <span aria-hidden="true">↗</span></a>');
-    } else {
+      parts.push('<a class="case-link' + (project.demo ? '' : ' case-link-primary') + '" href="' + project.live + '" target="_blank" rel="noopener noreferrer">' + (project.demo ? 'Original live site' : 'Open the live site') + ' <span aria-hidden="true">↗</span></a>');
+    }
+    if (!project.demo && !project.live) {
       parts.push('<p class="case-note">This build is packaged for deployment. The source and cPanel package are available on request.</p>');
     }
     if (project.source) {
@@ -72,8 +76,8 @@ if (!project) {
 
   const actionBar = document.getElementById('caseActions');
   if (actionBar) {
-    actionBar.innerHTML = project.live
-      ? '<a class="button button-dark" href="' + project.live + '" target="_blank" rel="noopener noreferrer">Open live site <span aria-hidden="true">↗</span></a><a class="text-link case-text-link" href="index.html#work">All work <span aria-hidden="true">←</span></a>'
+    actionBar.innerHTML = (project.demo || project.live)
+      ? '<a class="button button-dark" href="' + (project.demo || project.live) + '" target="_blank" rel="noopener noreferrer">Open ' + (project.demo ? 'rebuilt site' : 'live site') + ' <span aria-hidden="true">↗</span></a><a class="text-link case-text-link" href="index.html#work">All work <span aria-hidden="true">←</span></a>'
       : '<a class="button button-dark" href="mailto:abodaniel435@gmail.com?subject=' + encodeURIComponent('Deployment: ' + project.name) + '">Ask about this build <span aria-hidden="true">↗</span></a><a class="text-link case-text-link" href="index.html#work">All work <span aria-hidden="true">←</span></a>';
   }
 

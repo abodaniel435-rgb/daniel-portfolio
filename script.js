@@ -29,10 +29,10 @@ function escapeHtml(value) {
 
 function projectCard(project, index) {
   const caseUrl = 'project.html?p=' + encodeURIComponent(project.slug);
-  const isLive = Boolean(project.live);
-  const href = isLive ? project.live : caseUrl;
+  const isLive = Boolean(project.demo || project.live);
+  const href = project.demo || project.live || caseUrl;
   const linkAttrs = isLive ? ' target="_blank" rel="noopener noreferrer"' : '';
-  const statusClass = isLive ? 'project-status is-live' : 'project-status';
+  const statusClass = project.demo ? 'project-status is-live' : (isLive ? 'project-status is-live' : 'project-status');
   const alt = project.name + ' — ' + project.tagline;
   return [
     '<article class="project-card reveal" data-category="' + escapeHtml(project.category) + '">',
