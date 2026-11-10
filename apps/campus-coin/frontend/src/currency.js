@@ -172,5 +172,70 @@ export function setCurrency(countryName) {
 
 export const getCurrency = () => current
 
-export const cash = (value) =>
-  `${current.symbol}${Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+const formatters = new Map()
+
+function numberFormat(decimals) {
+  let formatter = formatters.get(decimals)
+  if (!formatter) {
+    formatter = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })
+    formatters.set(decimals, formatter)
+  }
+  return formatter
+}
+
+/**
+ * The single money formatter used by the whole UI.
+ * Accepts the raw values the API sends (DRF returns Decimal fields as strings,
+ * and aggregated figures as numbers) and always renders grouped digits with
+ * tabular numerals in the user's currency.
+ */
+export function money(value, options = {}) {
+  const { decimals = 2, symbol = true, signed = false } = options
+  const amount = Number(value ?? 0)
+  const safe = Number.isFinite(amount) ? amount : 0
+  const body = numberFormat(decimals).format(Math.abs(safe))
+  const prefix = symbol ? current.symbol : ''
+  if (signed && safe !== 0) return `${safe > 0 ? '+ ' : '− '}${prefix}${body}`
+  return `${safe < 0 ? '−' : ''}${prefix}${body}`
+}
+
+/** Legacy alias kept so older pages keep working unchanged. */
+export const cash = (value) => money(value)
+
+/** Short form for chart labels: ₦25k, ₦1.2m */
+export function shortMoney(value) {
+  const amount = Number(value) || 0
+  const abs = Math.abs(amount)
+  if (abs >= 1_000_000) return `${current.symbol}${(amount / 1_000_000).toFixed(1)}m`
+  if (abs >= 1_000) return `${current.symbol}${Math.round(amount / 1_000)}k`
+  return `${current.symbol}${Math.round(amount)}`
+}
+
+/** 17250.5 -> "17250.50" for <input type="number"> values. */
+export const amountForInput = (value) => (Number(value) || 0).toFixed(2)
+
+/** "2026-11-09" -> "9 Nov" (no timezone drift: parsed as a plain date). */
+export function dateLabel(value, options = {}) {
+  if (!value) return '—'
+  const date = new Date(`${String(value).slice(0, 10)}T12:00:00`)
+  if (Number.isNaN(date.getTime())) return String(value)
+  return date.toLocaleDateString(undefined, { day: 'numeric', month: 'short', ...options })
+}
+
+/** "2026-11-01" -> "November 2026" */
+export function monthLabel(value) {
+  if (!value) return '—'
+  const date = new Date(`${String(value).slice(0, 10)}T12:00:00`)
+  if (Number.isNaN(date.getTime())) return String(value)
+  return date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
+}
+
+export function daysBetween(from, to) {
+  const a = new Date(`${String(from).slice(0, 10)}T12:00:00`)
+  const b = new Date(`${String(to).slice(0, 10)}T12:00:00`)
+  return Math.round((b - a) / 86_400_000)
+}
+

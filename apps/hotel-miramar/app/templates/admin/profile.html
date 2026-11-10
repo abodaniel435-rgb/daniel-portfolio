@@ -1,25 +1,78 @@
 {% extends 'admin/base_admin.html' %}
-{% block title %}Admin Profile — {{ hotel_name }}{% endblock %}
+{% block title %}Profile — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">Admin Profile</h2>
-<div class="glass-panel" style="background:var(--white); max-width:560px; margin-bottom:2rem;">
-  <form method="post">
-    {{ form.hidden_tag() }}
-    <div class="form-group">{{ form.first_name.label }}{{ form.first_name(class='form-control') }}</div>
-    <div class="form-group">{{ form.last_name.label }}{{ form.last_name(class='form-control') }}</div>
-    <div class="form-group">{{ form.phone.label }}{{ form.phone(class='form-control') }}</div>
-    <div class="form-group">{{ form.address.label }}{{ form.address(class='form-control') }}</div>
-    <button type="submit" name="update_profile" class="btn btn-primary">Update Profile</button>
-  </form>
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Account</p>
+    <h1>Your profile</h1>
+    <p>Contact details used on booking correspondence. Password changes take effect immediately.</p>
+  </div>
 </div>
-<div class="glass-panel" style="background:var(--white); max-width:560px;">
-  <h3 class="mb-3">Change Password</h3>
-  <form method="post" action="{{ url_for('admin.change_password') }}">
-    {{ pwd_form.hidden_tag() }}
-    <div class="form-group">{{ pwd_form.current_password.label }}{{ pwd_form.current_password(class='form-control') }}</div>
-    <div class="form-group">{{ pwd_form.new_password.label }}{{ pwd_form.new_password(class='form-control') }}</div>
-    <div class="form-group">{{ pwd_form.confirm_password.label }}{{ pwd_form.confirm_password(class='form-control') }}</div>
-    {{ pwd_form.submit(class='btn btn-navy') }}
-  </form>
+
+<div class="dash-grid">
+  <div class="panel admin-form">
+    <div class="panel__head">
+      <div>
+        <h2>Personal details</h2>
+        <p>{{ current_user.email }}</p>
+      </div>
+    </div>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="form-grid">
+        <div class="form-group">
+          {{ form.first_name.label }}
+          {{ form.first_name(class='input', autocomplete='given-name') }}
+          {% for e in form.first_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.last_name.label }}
+          {{ form.last_name(class='input', autocomplete='family-name') }}
+          {% for e in form.last_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.phone.label }}
+          {{ form.phone(class='input', autocomplete='tel') }}
+          {% for e in form.phone.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.address.label }}
+          {{ form.address(class='input', autocomplete='street-address') }}
+          {% for e in form.address.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" name="update_profile" class="btn">Update profile</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <div class="panel__head">
+      <div>
+        <h2>Change password</h2>
+        <p>Minimum six characters.</p>
+      </div>
+    </div>
+    <form method="post" action="{{ url_for('admin.change_password') }}">
+      {{ pwd_form.hidden_tag() }}
+      <div class="form-group">
+        {{ pwd_form.current_password.label }}
+        {{ pwd_form.current_password(class='input', autocomplete='current-password') }}
+        {% for e in pwd_form.current_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group">
+        {{ pwd_form.new_password.label }}
+        {{ pwd_form.new_password(class='input', autocomplete='new-password') }}
+        {% for e in pwd_form.new_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group">
+        {{ pwd_form.confirm_password.label }}
+        {{ pwd_form.confirm_password(class='input', autocomplete='new-password') }}
+        {% for e in pwd_form.confirm_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      {{ pwd_form.submit(class='btn btn--ghost') }}
+    </form>
+  </div>
 </div>
 {% endblock %}

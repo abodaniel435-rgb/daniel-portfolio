@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}Server Error{% endblock %}
+{% block title %}Something went wrong — {{ hotel_name }}{% endblock %}
 {% block content %}
-<div class="auth-page" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');">
-  <div class="auth-card text-center">
-    <h2>500</h2>
-    <p class="subtitle">Something went wrong. Please try again later.</p>
-    <a href="{{ url_for('public.index') }}" class="btn btn-primary">Go Home</a>
+<section class="section" style="min-height: 62vh; display: grid; place-items: center;">
+  <div class="container container--narrow text-center">
+    <p class="eyebrow" style="justify-content: center;">500</p>
+    <h1 class="display" style="font-size: clamp(3rem, 7vw, 5.5rem); margin-top: 0.5rem;">A moment, please.</h1>
+    <hr class="rule--brass" style="margin: 1.5rem auto;">
+    <p class="muted" style="margin-inline: auto;">Something did not load as it should. The desk has been notified — please try again, or call us if you are mid-booking.</p>
+    <div class="form-actions" style="justify-content: center; margin-top: 1.75rem;">
+      <a class="btn" href="{{ url_for('public.index') }}">Return home</a>
+      <a class="btn btn--ghost" href="{{ url_for('public.contact') }}">Contact the desk</a>
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}

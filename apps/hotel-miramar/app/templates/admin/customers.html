@@ -1,27 +1,44 @@
 {% extends 'admin/base_admin.html' %}
-{% block title %}Customers — {{ hotel_name }}{% endblock %}
+{% block title %}Guests — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">Registered Customers</h2>
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Directory</p>
+    <h1>Guest accounts</h1>
+    <p>{{ customers|length }} registered {{ 'guest' if customers|length == 1 else 'guests' }}. Deactivating an account blocks sign-in without deleting booking history.</p>
+  </div>
+</div>
+
 <div class="table-wrap">
   <table>
-    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th><th>Status</th><th>Action</th></tr></thead>
+    <thead>
+      <tr><th>Guest</th><th>Email</th><th>Phone</th><th>Joined</th><th>Status</th><th>Action</th></tr>
+    </thead>
     <tbody>
       {% for c in customers %}
       <tr>
-        <td>{{ c.full_name }}</td>
-        <td>{{ c.email }}</td>
-        <td>{{ c.phone or '—' }}</td>
-        <td>{{ c.created_at.strftime('%Y-%m-%d') }}</td>
-        <td>{% if c.is_active %}<span class="badge badge-approved">Active</span>{% else %}<span class="badge badge-cancelled">Inactive</span>{% endif %}</td>
         <td>
-          <form method="post" action="{{ url_for('admin.toggle_customer', user_id=c.id) }}" style="display:inline;">
+          <div class="cell-with-thumb">
+            <span class="admin-user__avatar" aria-hidden="true">{{ c.first_name[0] }}{{ c.last_name[0] }}</span>
+            <div class="cell-with-thumb__name">{{ c.full_name }}</div>
+          </div>
+        </td>
+        <td class="cell-muted"><a href="mailto:{{ c.email }}">{{ c.email }}</a></td>
+        <td class="table-num">{{ c.phone or '—' }}</td>
+        <td class="table-num">{{ c.created_at.strftime('%d %b %Y') }}</td>
+        <td>
+          {% if c.is_active %}<span class="badge badge-approved">Active</span>
+          {% else %}<span class="badge badge-cancelled">Inactive</span>{% endif %}
+        </td>
+        <td>
+          <form method="post" action="{{ url_for('admin.toggle_customer', user_id=c.id) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit" class="btn btn-sm btn-navy">{% if c.is_active %}Deactivate{% else %}Activate{% endif %}</button>
+            <button type="submit" class="btn btn--ghost btn--sm">{% if c.is_active %}Deactivate{% else %}Activate{% endif %}</button>
           </form>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="6" style="text-align:center;">No customers yet</td></tr>
+      <tr><td colspan="6" class="cell-muted">No guest accounts yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>

@@ -271,19 +271,25 @@ class PulseView(APIView):
             days_left = 0
             broke_date = today.isoformat()
         savings_rate = (float(balance) / float(income)) if float(income) > 0 else 0.0
-        score = max(0, min(40, savings_rate * 80))
+        savings_points = max(0.0, min(40.0, savings_rate * 80))
+        score = savings_points
         budgets = Budget.objects.filter(user=request.user, month=month).select_related('category')
+        budget_lines = budgets.count()
+        budget_ok = 0
         if budgets.exists():
             ok = 0
             for b in budgets:
                 spent = tx.filter(type='expense', category=b.category, transaction_date__gte=month).aggregate(t=Coalesce(Sum('amount'), Decimal('0')))['t'] or Decimal('0')
                 if float(spent) <= float(b.limit_amount):
                     ok += 1
-            score += 30.0 * ok / budgets.count()
+            budget_points = 30.0 * ok / budget_lines
+            budget_ok = ok
         else:
-            score += 15.0 if float(expenses) < float(income) else 5.0
+            budget_points = 15.0 if float(expenses) < float(income) else 5.0
+        score += budget_points
         log_days = tx.filter(transaction_date__gte=window_start).values('transaction_date').distinct().count()
-        score += min(30.0, log_days)
+        logging_points = min(30.0, float(log_days))
+        score += logging_points
         health = int(round(max(5, min(99, score))))
         days = set(tx.values_list('transaction_date', flat=True))
         streak = 0
@@ -334,6 +340,20 @@ class PulseView(APIView):
             'broke_date': broke_date, 'days_left': days_left,
             'health': health,
             'health_label': 'Solid' if health >= 75 else 'Growing' if health >= 50 else 'On thin ice',
+            # Additive detail so the UI can explain the score instead of
+            # printing a number with no reasoning behind it.
+            'health_breakdown': {
+                'savings_rate': round(savings_rate * 100, 1),
+                'savings_points': round(savings_points, 1),
+                'savings_max': 40,
+                'budget_points': round(budget_points, 1),
+                'budget_max': 30,
+                'budget_lines': budget_lines,
+                'budget_lines_ok': budget_ok,
+                'logging_points': round(logging_points, 1),
+                'logging_max': 30,
+                'log_days': log_days,
+            },
             'streak': streak, 'xp': xp, 'level': level, 'level_name': level_name,
             'next_level_in': 150 - (xp % 150), 'log_days': log_days,
             'leaderboard': board, 'rank': rank,
@@ -485,7 +505,12 @@ class RoommateView(APIView):
                 parts.append(f"That is {'more' if delta > 0 else 'less'} than last month's {money(last_expenses)} by {money(delta)}.")
             if cat_rows:
                 parts.append(f"{top_name} takes the biggest slice ({money(top_amt)}, {round(top_amt / expenses * 100) if expenses else 0}% of your spend).")
-            over = [b.category.name for b in Budget.objects.filter(user=request.user, month=month) if b.spent and float(b.spent) > float(b.limit_amount)]
+            over = []
+            for budget in Budget.objects.filter(user=request.user, month=month).select_related('category'):
+                line_spent = month_tx.filter(type='expense', category=budget.category).aggregate(t=Coalesce(Sum('amount'), Decimal('0')))['t'] or Decimal('0')
+                if float(line_spent) > float(budget.limit_amount):
+                    over.append(budget.category.name)
+
             if over:
                 parts.append(f"And your {', '.join(over)} budget is already crossed.")
             answer = ' '.join(parts)

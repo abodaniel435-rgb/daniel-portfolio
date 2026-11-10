@@ -1,21 +1,83 @@
 {% extends 'admin/base_admin.html' %}
 {% block title %}{{ title }} — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">{{ title }}</h2>
-<div class="glass-panel" style="background:var(--white); max-width:640px;">
-  <form method="post" enctype="multipart/form-data">
+<div class="admin-page-head">
+  <div>
+    <a class="link-arrow" href="{{ url_for('admin.rooms') }}" style="margin-bottom: 0.75rem;">All rooms</a>
+    <p class="eyebrow">Inventory</p>
+    <h1>{{ title }}</h1>
+    <p>Changes appear on the public rooms page and detail page immediately.</p>
+  </div>
+  {% if room and room.image_filename %}
+  <div class="admin-page-head__actions">
+    <img class="thumb" style="width: 96px; height: 64px;" src="{{ url_for('static', filename='images/rooms/' + room.image_filename) }}" alt="Current photo for {{ room.name }}">
+  </div>
+  {% endif %}
+</div>
+
+<div class="panel admin-form">
+  <form method="post" enctype="multipart/form-data" novalidate>
     {{ form.hidden_tag() }}
-    <div class="form-group">{{ form.name.label }}{{ form.name(class='form-control') }}</div>
-    <div class="form-group">{{ form.room_type.label }}{{ form.room_type(class='form-control') }}</div>
-    <div class="form-group">{{ form.description.label }}{{ form.description(class='form-control') }}</div>
-    <div class="form-group">{{ form.price_per_night.label }}{{ form.price_per_night(class='form-control') }}</div>
-    <div class="form-group">{{ form.max_occupancy.label }}{{ form.max_occupancy(class='form-control') }}</div>
-    <div class="form-group">{{ form.amenities.label }}{{ form.amenities(class='form-control') }}</div>
-    <div class="form-group">{{ form.image.label }}{{ form.image(class='form-control') }}</div>
-    <div class="form-check">{{ form.is_available() }} {{ form.is_available.label }}</div>
-    <div class="form-check">{{ form.is_featured() }} {{ form.is_featured.label }}</div>
-    {{ form.submit(class='btn btn-primary') }}
-    <a href="{{ url_for('admin.rooms') }}" class="btn btn-navy" style="margin-left:0.5rem;">Cancel</a>
+
+    <div class="admin-form__section">
+      <h2 class="admin-form__section-title">Room details</h2>
+      <div class="form-grid">
+        <div class="form-group form-group--full">
+          {{ form.name.label }}
+          {{ form.name(class='input', **({'aria-invalid': 'true'} if form.name.errors else {})) }}
+          {% for e in form.name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.room_type.label }}
+          {{ form.room_type(class='input') }}
+          {% for e in form.room_type.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.max_occupancy.label }}
+          {{ form.max_occupancy(class='input', min='1', max='12') }}
+          {% for e in form.max_occupancy.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.price_per_night.label }}
+          {{ form.price_per_night(class='input', step='0.01') }}
+          {% for e in form.price_per_night.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.image.label }}
+          {{ form.image(class='input', accept='image/*') }}
+          <p class="form-note">JPG, PNG, GIF or WebP. Uploading replaces the current photo.</p>
+          {% for e in form.image.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group form-group--full">
+          {{ form.description.label }}
+          {{ form.description(class='input', rows='5') }}
+          {% for e in form.description.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group form-group--full">
+          {{ form.amenities.label }}
+          {{ form.amenities(class='input', rows='3', placeholder='Free Wi-Fi, Air Conditioning, Rain Shower') }}
+          <p class="form-note">Comma-separated. The public page splits these into a list automatically.</p>
+          {% for e in form.amenities.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-form__section">
+      <h2 class="admin-form__section-title">Visibility</h2>
+      <div class="form-check">
+        {{ form.is_available() }}
+        {{ form.is_available.label }}
+      </div>
+      <div class="form-check">
+        {{ form.is_featured() }}
+        {{ form.is_featured.label }}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      {{ form.submit(class='btn') }}
+      <a href="{{ url_for('admin.rooms') }}" class="btn btn--ghost">Cancel</a>
+    </div>
   </form>
 </div>
 {% endblock %}

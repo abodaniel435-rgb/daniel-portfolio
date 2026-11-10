@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}Page Not Found{% endblock %}
+{% block title %}Page not found — {{ hotel_name }}{% endblock %}
 {% block content %}
-<div class="auth-page" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');">
-  <div class="auth-card text-center">
-    <h2>404</h2>
-    <p class="subtitle">The page you are looking for does not exist.</p>
-    <a href="{{ url_for('public.index') }}" class="btn btn-primary">Go Home</a>
+<section class="section" style="min-height: 62vh; display: grid; place-items: center;">
+  <div class="container container--narrow text-center">
+    <p class="eyebrow" style="justify-content: center;">404</p>
+    <h1 class="display" style="font-size: clamp(4rem, 9vw, 7rem); margin-top: 0.5rem;">Off the map.</h1>
+    <hr class="rule--brass" style="margin: 1.5rem auto;">
+    <p class="muted" style="margin-inline: auto;">The page you are looking for has moved or never existed. The bay is still where you left it.</p>
+    <div class="form-actions" style="justify-content: center; margin-top: 1.75rem;">
+      <a class="btn" href="{{ url_for('public.index') }}">Return home</a>
+      <a class="btn btn--ghost" href="{{ url_for('public.rooms') }}">View rooms</a>
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}

@@ -23,6 +23,19 @@ def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
 
+    # cPanel-friendly MySQL driver shim. Only runs when DATABASE_URL explicitly
+    # asks for PyMySQL, so SQLite and other drivers are untouched.
+    db_uri = app.config.get('SQLALCHEMY_DATABASE_URI', '')
+    if db_uri.startswith('mysql') and 'pymysql' in db_uri:
+        try:
+            import pymysql
+            pymysql.install_as_MySQLdb()
+        except ImportError:  # pragma: no cover - optional dependency
+            app.logger.warning(
+                'DATABASE_URL uses the pymysql driver but PyMySQL is not installed. '
+                'Run: pip install --user PyMySQL'
+            )
+
     if config_name == 'production' and app.config['SECRET_KEY'] == 'miramar-sg-dev-secret-key-change-in-production':
         raise RuntimeError('Set SECRET_KEY before running Hotel Miramar SG in production.')
 

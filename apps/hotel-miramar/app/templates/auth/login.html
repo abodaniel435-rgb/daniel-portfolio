@@ -1,32 +1,50 @@
 {% extends 'base.html' %}
-{% block title %}Login — {{ hotel_name }}{% endblock %}
+{% block title %}Sign in — {{ hotel_name }}{% endblock %}
+
 {% block content %}
-<div class="auth-page" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');">
-  <div class="auth-card">
-    <h2>Welcome Back</h2>
-    <p class="subtitle">Sign in to manage your bookings</p>
-    <form method="post">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.email.label }}
-        {{ form.email(class='form-control', placeholder='you@example.com') }}
-        {% for e in form.email.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+<div class="auth-shell">
+  <div class="auth-media">
+    <img src="{{ url_for('static', filename='images/rooms/marina-deluxe.jpg') }}" alt="Marina Deluxe room at dusk">
+    <div class="auth-media__caption">
+      <p class="eyebrow">Guest account</p>
+      <h2>Your room, kept exactly as you left it.</h2>
+      <p>Sign in to review bookings, amend dates and keep your details ready for the next stay.</p>
+    </div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-card__head">
+        <p class="eyebrow">Welcome back</p>
+        <h1>Sign in</h1>
+        <p>Access your reservations and guest details.</p>
       </div>
-      <div class="form-group">
-        {{ form.password.label }}
-        {{ form.password(class='form-control') }}
-        {% for e in form.password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+
+      <form method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.email.label }}
+          {{ form.email(class='input', autocomplete='email', placeholder='you@example.com', **({'aria-invalid': 'true'} if form.email.errors else {})) }}
+          {% for e in form.email.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.password.label }}
+          {{ form.password(class='input', autocomplete='current-password', **({'aria-invalid': 'true'} if form.password.errors else {})) }}
+          {% for e in form.password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-check">
+          {{ form.remember() }}
+          {{ form.remember.label }}
+        </div>
+        {{ form.submit(class='btn btn--block') }}
+      </form>
+
+      <div class="auth-alt">
+        <a href="{{ url_for('auth.password_recovery') }}">Forgot password?</a>
+        <span aria-hidden="true" class="muted">·</span>
+        <a href="{{ url_for('auth.register') }}">Create an account</a>
       </div>
-      <div class="form-check">
-        {{ form.remember() }} {{ form.remember.label }}
-      </div>
-      {{ form.submit(class='btn btn-primary btn-block') }}
-    </form>
-    <p class="text-center mt-3" style="font-size:0.9rem;">
-      <a href="{{ url_for('auth.password_recovery') }}">Forgot password?</a>
-      &nbsp;·&nbsp;
-      <a href="{{ url_for('auth.register') }}">Create account</a>
-    </p>
+    </div>
   </div>
 </div>
 {% endblock %}

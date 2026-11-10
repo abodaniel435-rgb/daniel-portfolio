@@ -13,13 +13,8 @@ if BASE_DIR not in sys.path:
 os.environ.setdefault('FLASK_ENV', 'production')
 
 from app import create_app  # noqa: E402
-from app.bootstrap import ensure_database  # noqa: E402
 
 application = create_app(os.environ.get('FLASK_ENV', 'production'))
-
-# Passenger imports this module instead of run.py, so the database has to be
-# created/seeded here or the first request fails with "no such table".
-ensure_database(application)
 
 if __name__ == '__main__':
     application.run()

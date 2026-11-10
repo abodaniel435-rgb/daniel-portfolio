@@ -1,91 +1,139 @@
 {% extends 'base.html' %}
-{% block title %}Location — {{ hotel_name }}{% endblock %}
+{% block title %}Location &amp; Directions — {{ hotel_name }}{% endblock %}
+{% block meta_description %}Hotel Miramar SG is at 18 Marina Boulevard, Singapore. Directions by MRT, car and from Changi Airport.{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-  #hotelMap { height: 380px; border-radius: var(--radius); z-index: 1; }
-  .distance-card {
-    margin-top: 1.5rem; padding: 1.25rem 1.5rem; border-radius: var(--radius);
-    background: var(--ivory); border: 1px solid var(--grey-light);
-    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  #hotelMap {
+    height: clamp(320px, 42vh, 430px);
+    width: 100%;
+    z-index: 1;
+    filter: saturate(0.85) contrast(1.02);
   }
-  .distance-num { font-family: var(--font-serif); font-size: 1.8rem; color: var(--navy); font-weight: 700; }
-  .distance-sub { color: var(--grey); font-size: 0.92rem; }
+  .distance-card {
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.35rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .distance-card__body { flex: 1; min-width: 220px; }
+  .distance-card h3 { font-size: 1.15rem; margin-bottom: 0.35rem; }
+  .distance-num {
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .distance-sub { color: var(--muted); font-size: 0.8125rem; line-height: 1.6; }
+  .leaflet-container { font-family: var(--font-sans); }
+  .leaflet-popup-content { font-size: 0.8125rem; }
 </style>
 {% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=80');">
-  <div class="page-header">
-    <h1>Our Location</h1>
-    <div class="gold-line"></div>
-    <p>18 Marina Boulevard, Singapore 018980</p>
+<section class="page-hero">
+  <div class="page-hero__media">
+    <img src="{{ url_for('static', filename='images/attractions/merlion-park.jpg') }}" alt="Merlion Park and Marina Bay" fetchpriority="high">
   </div>
-</div>
+  <div class="container page-hero__inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Location</span>
+    </nav>
+    <h1>Finding us</h1>
+    <p>18 Marina Boulevard, Singapore 018980 — on the bay, one block from Bayfront MRT.</p>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
-    <div class="glass-panel" style="background:var(--white); max-width:900px; margin:0 auto;">
-      <h2>Getting Here</h2>
-      <div class="gold-line" style="margin:1rem 0;"></div>
-      <p style="color:var(--grey); margin-bottom:1.5rem;">
-        Hotel Miramar SG is ideally situated in the Marina Bay financial and lifestyle district,
-        minutes from the CBD, Gardens by the Bay, and major attractions.
-      </p>
-      <div class="grid-2" style="gap:1.5rem;">
-        <div>
-          <h4>By MRT</h4>
-          <p style="color:var(--grey); font-size:0.95rem;">Bayfront (Circle & Downtown lines) — 5-minute walk</p>
-        </div>
-        <div>
-          <h4>From Changi Airport</h4>
-          <p style="color:var(--grey); font-size:0.95rem;">Approx. 25 minutes by taxi / 40 minutes by MRT</p>
-        </div>
-        <div>
-          <h4>Parking</h4>
-          <p style="color:var(--grey); font-size:0.95rem;">Valet and self-parking available on site</p>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <p style="color:var(--grey); font-size:0.95rem;">{{ hotel_phone }} · {{ hotel_email }}</p>
-        </div>
-      </div>
-      <div class="distance-card" id="distanceCard">
-        <div style="flex:1; min-width:220px;">
-          <h4 style="margin-bottom:0.25rem;">How far are you from us?</h4>
-          <p class="distance-sub" id="distanceText">Finding your location automatically…</p>
-          <p class="distance-num" id="distanceValue" style="display:none;"></p>
-          <p class="distance-sub" id="distanceExtra" style="display:none;"></p>
-          <p class="distance-sub" id="distanceHelp" style="display:none; margin-top:0.5rem;"></p>
-          <div id="manualBox" style="display:none; margin-top:0.75rem;">
-            <label class="distance-sub" for="areaSelect">Or pick your area:</label>
-            <select id="areaSelect" class="form-control" style="max-width:280px; margin-top:0.25rem;">
-              <option value="">Select area…</option>
-              <option value="1.3644,103.9915">Changi Airport</option>
-              <option value="1.3048,103.8318">Orchard Road</option>
-              <option value="1.3331,103.7420">Jurong East</option>
-              <option value="1.4380,103.7880">Woodlands</option>
-              <option value="1.2834,103.8607">Marina Bay (near hotel)</option>
-              <option value="6.5244,3.3792">Lagos, Nigeria</option>
-              <option value="6.4541,3.3947">Victoria Island, Lagos</option>
-            </select>
-            <p class="distance-sub" style="margin-top:0.5rem;">Tip: you can also click anywhere on the map to set your location.</p>
+    <div class="detail-shell" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: start;">
+      <div>
+        <p class="eyebrow">Directions</p>
+        <h2 style="margin-top: 0.9rem;">Getting here</h2>
+        <p class="muted" style="margin-top: 1rem;">Hotel Miramar SG sits in the Marina Bay financial and lifestyle district, minutes from the CBD, Gardens by the Bay and the waterfront promenade.</p>
+
+        <div class="amenity-list" style="margin-top: 1.5rem;">
+          <div class="amenity">
+            <span class="amenity__num">01</span>
+            <div>
+              <div class="amenity__name">By MRT</div>
+              <p class="amenity__copy">Bayfront station (Circle and Downtown lines) — 5-minute walk, exit B.</p>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity__num">02</span>
+            <div>
+              <div class="amenity__name">From Changi Airport</div>
+              <p class="amenity__copy">About 25 minutes by taxi, or 40 minutes by MRT with one change.</p>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity__num">03</span>
+            <div>
+              <div class="amenity__name">Parking &amp; arrival</div>
+              <p class="amenity__copy">Valet and self-parking on site. Pull into the porte-cochère and we will take the car.</p>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity__num">04</span>
+            <div>
+              <div class="amenity__name">On foot</div>
+              <p class="amenity__copy">The waterfront promenade, Esplanade and Marina Bay Sands are all within fifteen minutes.</p>
+            </div>
           </div>
         </div>
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <button type="button" class="btn btn-primary" id="locateBtn">Enable Precise Location</button>
-          <button type="button" class="btn btn-navy" id="ipBtn">Show My Distance Instantly</button>
+
+        <div class="form-actions">
+          <a class="btn" href="{{ url_for('public.contact') }}">Arrange a transfer</a>
+          <a class="btn btn--ghost" href="tel:{{ hotel_phone|replace(' ', '') }}">Call {{ hotel_phone }}</a>
         </div>
       </div>
 
-      <div style="margin-top:1.5rem; border-radius:var(--radius); overflow:hidden; background:var(--grey-light);">
-        <div id="hotelMap"></div>
+      <div>
+        <div style="border: 1px solid var(--line); background: var(--sand);">
+          <div id="hotelMap"></div>
+        </div>
+        <p class="form-note">Map &copy; OpenStreetMap contributors. Click the map to measure a straight-line distance.</p>
+
+        <div class="distance-card" id="distanceCard">
+          <div class="distance-card__body">
+            <h3>How far are you from us?</h3>
+            <p class="distance-sub" id="distanceText">Finding your location automatically…</p>
+            <p class="distance-num" id="distanceValue" style="display:none;"></p>
+            <p class="distance-sub" id="distanceExtra" style="display:none;"></p>
+            <p class="distance-sub" id="distanceHelp" style="display:none; margin-top:0.5rem;"></p>
+            <div id="manualBox" style="display:none; margin-top:0.75rem;">
+              <label class="field__label" for="areaSelect">Or pick your area</label>
+              <select id="areaSelect" class="input" style="max-width: 300px;">
+                <option value="">Select area…</option>
+                <option value="1.3644,103.9915">Changi Airport</option>
+                <option value="1.3048,103.8318">Orchard Road</option>
+                <option value="1.3331,103.7420">Jurong East</option>
+                <option value="1.4380,103.7880">Woodlands</option>
+                <option value="1.2834,103.8607">Marina Bay (near hotel)</option>
+                <option value="6.5244,3.3792">Lagos, Nigeria</option>
+                <option value="6.4541,3.3947">Victoria Island, Lagos</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:grid; gap:0.5rem;">
+            <button type="button" class="btn btn--sm" id="locateBtn">Enable precise location</button>
+            <button type="button" class="btn btn--ghost btn--sm" id="ipBtn">Show my distance</button>
+          </div>
+        </div>
       </div>
-      <p style="margin-top:0.75rem; font-size:0.85rem; color:var(--grey);">
-        Map © OpenStreetMap contributors. Distance is straight-line. Driving distance will be longer.
-      </p>
     </div>
   </div>
 </section>
 {% endblock %}
+
 {% block extra_js %}
 <script>
   window.HOTEL_LAT = {{ hotel_lat }};

@@ -1,35 +1,82 @@
 {% extends 'base.html' %}
-{% block title %}Nearby Attractions — {{ hotel_name }}{% endblock %}
+{% block title %}Neighbourhood — {{ hotel_name }}{% endblock %}
+{% block meta_description %}What is around Hotel Miramar SG: Gardens by the Bay, Marina Bay Sands, Merlion Park, Clarke Quay and more, with walking times.{% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=80');">
-  <div class="page-header">
-    <h1>Nearby Attractions</h1>
-    <div class="gold-line"></div>
-    <p>Singapore’s finest experiences within easy reach</p>
+<section class="page-hero">
+  <div class="page-hero__media">
+    <img src="{{ url_for('static', filename='images/attractions/marina-bay-header.jpg') }}" alt="Marina Bay and the Esplanade at dusk" fetchpriority="high">
   </div>
-</div>
+  <div class="container page-hero__inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Neighbourhood</span>
+    </nav>
+    <h1>The neighbourhood</h1>
+    <p>Singapore's finest experiences, most of them within a walk of the lobby.</p>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
-    <div class="grid-3">
-      {% set spots = [
-        ('Gardens by the Bay', 'Iconic conservatories and the glowing Supertree Grove — a short stroll away.', 'https://images.unsplash.com/photo-1508964942454-1a566964d71a?w=600&q=80'),
-        ('Marina Bay Sands', 'SkyPark, shopping, and waterfront dining at Singapore’s landmark integrated resort.', 'https://images.unsplash.com/photo-1496939376852-6486a8c2c0a8?w=600&q=80'),
-        ('Merlion Park', 'The iconic Merlion statue and panoramic views of the bay.', 'https://images.unsplash.com/photo-1565967511849-76a60a69c2b3?w=600&q=80'),
-        ('Esplanade', 'World-class theatres and waterfront promenade for culture and leisure.', 'https://images.unsplash.com/photo-1555881403-64992e8e8e0b?w=600&q=80'),
-        ('Clarke Quay', 'Vibrant riverside dining, nightlife and entertainment district.', 'https://images.unsplash.com/photo-1552465011-b4e0e8d4d2a0?w=600&q=80'),
-        ('Singapore Flyer', 'Giant observation wheel offering 360° views of the city-state.', 'https://images.unsplash.com/photo-1565105749611-5c0d6a0a0a0a?w=600&q=80')
-      ] %}
-      {% for name, desc, img in spots %}
-      <div class="card">
-        <div class="card-img">
-          <img src="{{ img }}" alt="{{ name }}" onerror="this.src='https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&q=80'">
-        </div>
-        <div class="card-body">
-          <h3>{{ name }}</h3>
-          <p style="color:var(--grey); font-size:0.92rem;">{{ desc }}</p>
-        </div>
+    <div class="section-head">
+      <div class="section-head__text">
+        <p class="eyebrow">Around the bay</p>
+        <h2>Six reasons to leave the room</h2>
+        <p>Distances are on foot from the hotel unless noted. The front desk will arrange a car for anything further.</p>
       </div>
+      <div class="section-head__aside">
+        <a class="link-arrow" href="{{ url_for('public.location') }}">Getting here</a>
+      </div>
+    </div>
+
+    {% set spots = [
+      ('Gardens by the bay', 'Iconic conservatories and the glowing Supertree Grove, best seen after sunset.', 'images/attractions/gardens-by-the-bay.jpg', '8 min walk'),
+      ('Marina Bay Sands', 'SkyPark, shopping and waterfront dining at Singapore\'s landmark integrated resort.', 'images/attractions/marina-bay-sands.jpg', '10 min walk'),
+      ('Merlion Park', 'The Merlion statue and the classic postcard view back across the bay.', 'images/attractions/merlion-park.jpg', '12 min walk'),
+      ('Esplanade', 'World-class theatres and a waterfront promenade for culture and long lunches.', 'images/attractions/esplanade.jpg', '6 min walk'),
+      ('Clarke Quay', 'Riverside dining, nightlife and the old godowns turned restaurants.', 'images/attractions/clarke-quay.jpg', '15 min walk'),
+      ('Singapore Flyer', 'A slow rotation with 360-degree views of the city and the strait.', 'images/attractions/singapore-flyer.jpg', '14 min walk')
+    ] %}
+
+    <div class="grid-3">
+      {% for name, desc, img, time in spots %}
+      <article class="room-card reveal">
+        <div class="room-card__media">
+          <img src="{{ url_for('static', filename=img) }}" alt="{{ name }}" loading="lazy">
+          <span class="room-card__flag">{{ time }}</span>
+        </div>
+        <div class="room-card__body">
+          <span class="room-card__type">Nearby</span>
+          <h3 class="room-card__title">{{ name }}</h3>
+          <p class="room-card__copy">{{ desc }}</p>
+          <div class="room-card__footer">
+            <span class="room-card__type">From the hotel</span>
+            <span class="muted" style="font-size: 0.75rem;">{{ time }}</span>
+          </div>
+        </div>
+      </article>
       {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand section--hairline">
+  <div class="container">
+    <div class="split">
+      <div>
+        <p class="eyebrow">A day out</p>
+        <h2 style="margin-top: 1rem;">A suggested Saturday.</h2>
+        <p class="muted" style="margin-top: 1rem;">Coffee at the hotel, the conservatories before the heat, lunch at the water, and the Supertrees after dark.</p>
+        <a class="link-arrow" href="{{ url_for('public.contact') }}" style="margin-top: 1.5rem;">Ask the desk to plan it</a>
+      </div>
+      <div class="distance-list" style="margin-top: 0;">
+        <div class="distance"><div class="distance__name">07:30 — Breakfast at Miramar Table</div><div class="distance__time">In house</div></div>
+        <div class="distance"><div class="distance__name">09:00 — Gardens by the Bay</div><div class="distance__time">8 min walk</div></div>
+        <div class="distance"><div class="distance__name">13:00 — Lunch on the waterfront</div><div class="distance__time">10 min walk</div></div>
+        <div class="distance"><div class="distance__name">19:30 — Supertree Grove light show</div><div class="distance__time">8 min walk</div></div>
+      </div>
     </div>
   </div>
 </section>

@@ -1,29 +1,79 @@
 {% extends 'admin/base_admin.html' %}
-{% block title %}Booking #{{ booking.id }} — {{ hotel_name }}{% endblock %}
+{% block title %}Booking MMR-{{ '%05d'|format(booking.id) }} — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">Booking #{{ booking.id }}</h2>
-<div class="grid-2">
-  <div class="glass-panel" style="background:var(--white);">
-    <h3>Details</h3>
-    <p><strong>Guest:</strong> {{ booking.user.full_name }} ({{ booking.user.email }})</p>
-    <p><strong>Room:</strong> {{ booking.room.name }}</p>
-    <p><strong>Check-in:</strong> {{ booking.check_in }}</p>
-    <p><strong>Check-out:</strong> {{ booking.check_out }}</p>
-    <p><strong>Nights:</strong> {{ booking.nights }}</p>
-    <p><strong>Guests:</strong> {{ booking.num_guests }}</p>
-    <p><strong>Total:</strong> S${{ '%.2f'|format(booking.total_price) }}</p>
-    <p><strong>Status:</strong> <span class="badge badge-{{ booking.status }}">{{ booking.status|capitalize }}</span></p>
-    {% if booking.special_requests %}<p><strong>Requests:</strong> {{ booking.special_requests }}</p>{% endif %}
-  </div>
-  <div class="glass-panel" style="background:var(--white);">
-    <h3>Update Status</h3>
-    <form method="post">
-      {{ form.hidden_tag() }}
-      <div class="form-group">{{ form.status.label }}{{ form.status(class='form-control') }}</div>
-      <div class="form-group">{{ form.admin_notes.label }}{{ form.admin_notes(class='form-control') }}</div>
-      {{ form.submit(class='btn btn-primary') }}
-    </form>
+<div class="admin-page-head">
+  <div>
+    <a class="link-arrow" href="{{ url_for('admin.bookings') }}" style="margin-bottom: 0.75rem;">All bookings</a>
+    <p class="eyebrow">Booking detail</p>
+    <h1>MMR-{{ '%05d'|format(booking.id) }}</h1>
+    <p>Requested {{ booking.created_at.strftime('%d %b %Y, %H:%M') }} &middot; <span class="badge badge-{{ booking.status }}">{{ booking.status|capitalize }}</span></p>
   </div>
 </div>
-<a href="{{ url_for('admin.bookings') }}" class="btn btn-navy mt-3">← Back to Bookings</a>
+
+<div class="dash-grid">
+  <div>
+    <div class="panel">
+      <div class="panel__head">
+        <div>
+          <h2>Stay</h2>
+          <p>{{ booking.room.name }} &middot; {{ booking.nights }} {{ 'night' if booking.nights == 1 else 'nights' }}</p>
+        </div>
+        <span class="badge badge-{{ booking.status }}">{{ booking.status|capitalize }}</span>
+      </div>
+      <dl class="kv">
+        <div class="kv__row"><dt>Guest</dt><dd>{{ booking.user.full_name }}</dd></div>
+        <div class="kv__row"><dt>Email</dt><dd><a href="mailto:{{ booking.user.email }}">{{ booking.user.email }}</a></dd></div>
+        <div class="kv__row"><dt>Phone</dt><dd>{{ booking.user.phone or '—' }}</dd></div>
+        <div class="kv__row"><dt>Room</dt><dd>{{ booking.room.name }} <span class="cell-muted">({{ booking.room.room_type }})</span></dd></div>
+        <div class="kv__row"><dt>Check-in</dt><dd>{{ booking.check_in.strftime('%A %d %B %Y') }}</dd></div>
+        <div class="kv__row"><dt>Check-out</dt><dd>{{ booking.check_out.strftime('%A %d %B %Y') }}</dd></div>
+        <div class="kv__row"><dt>Guests</dt><dd>{{ booking.num_guests }} of {{ booking.room.max_occupancy }} maximum</dd></div>
+        <div class="kv__row"><dt>Nightly rate</dt><dd>S${{ '%.2f'|format(booking.room.price_per_night) }}</dd></div>
+        <div class="kv__row"><dt>Total</dt><dd><strong>S${{ '%.2f'|format(booking.total_price) }}</strong></dd></div>
+        <div class="kv__row"><dt>Special requests</dt><dd>{{ booking.special_requests or 'None recorded' }}</dd></div>
+        <div class="kv__row"><dt>Admin notes</dt><dd>{{ booking.admin_notes or 'No notes yet' }}</dd></div>
+      </dl>
+    </div>
+
+    <div class="admin-note" style="margin-top: 1.25rem;">
+      <span aria-hidden="true" style="color: var(--brass);">&#9670;</span>
+      <span>The guest receives an email automatically when the status changes. Notes are internal only.</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__head">
+      <div>
+        <h2>Update status</h2>
+        <p>Approval re-checks the room calendar.</p>
+      </div>
+    </div>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.status.label }}
+        {{ form.status(class='input') }}
+        {% for e in form.status.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.admin_notes.label }}
+        {{ form.admin_notes(class='input', rows='5', placeholder='Internal note for the team') }}
+        {% for e in form.admin_notes.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-actions">
+        {{ form.submit(class='btn btn--block') }}
+      </div>
+    </form>
+
+    <div class="panel__head" style="margin-top: 1.5rem;">
+      <div><h2>Guest</h2></div>
+    </div>
+    <dl class="kv">
+      <div class="kv__row"><dt>Bookings</dt><dd>{{ booking.user.bookings.count() }} total</dd></div>
+      <div class="kv__row"><dt>Account</dt><dd>{{ 'Active' if booking.user.is_active else 'Deactivated' }}</dd></div>
+      <div class="kv__row"><dt>Joined</dt><dd>{{ booking.user.created_at.strftime('%d %b %Y') }}</dd></div>
+    </dl>
+    <a class="btn btn--ghost btn--sm btn--block" style="margin-top: 1rem;" href="{{ url_for('admin.customers') }}">Open guest list</a>
+  </div>
+</div>
 {% endblock %}

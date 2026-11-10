@@ -5,15 +5,16 @@ import { setCurrency } from './currency'
 const SessionContext = createContext(null)
 
 export function SessionProvider({ children }) {
-  const [theme, setTheme] = useState(() => localStorage.getItem('cc-theme') || 'light')
-  const [size, setSize] = useState(() => localStorage.getItem('cc-size') || 'md')
+  // Campus Coin ships a single deep-ink theme. The attribute is still set so
+  // older utility pages that key off [data-theme] resolve to the dark surface.
+  const theme = 'dark'
+  const [size] = useState(() => localStorage.getItem('cc-size') || 'md')
   const [profile, setProfile] = useState(null)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     document.documentElement.dataset.size = size
-    localStorage.setItem('cc-theme', theme)
-    localStorage.setItem('cc-size', size)
   }, [theme, size])
 
   const refreshProfile = async () => {
@@ -32,17 +33,19 @@ export function SessionProvider({ children }) {
       .catch(() => false)
       .then(() => refreshProfile())
       .catch(() => setProfile(null))
+      .finally(() => setReady(true))
   }, [])
 
   const value = {
     theme,
     size,
     profile,
+    ready,
     setProfile,
     refreshProfile,
-    setTheme,
-    setSize,
-    toggleTheme: () => setTheme((current) => (current === 'dark' ? 'light' : 'dark')),
+    setTheme: () => {},
+    setSize: () => {},
+    toggleTheme: () => {},
     clearSession: () => {
       localStorage.removeItem('campusCoinToken')
       localStorage.removeItem('campusCoinRefresh')

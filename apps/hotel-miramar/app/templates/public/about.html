@@ -1,33 +1,96 @@
 {% extends 'base.html' %}
-{% block title %}About Us — {{ hotel_name }}{% endblock %}
+{% block title %}The Hotel — {{ hotel_name }}{% endblock %}
+{% block meta_description %}The story of Hotel Miramar SG: warm timber, harbour light and unhurried service on Marina Bay, Singapore.{% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80');">
-  <div class="page-header">
-    <h1>About Hotel Miramar SG</h1>
-    <div class="gold-line"></div>
-    <p>Where contemporary elegance meets Singaporean hospitality</p>
+<section class="page-hero">
+  <div class="page-hero__media">
+    <img src="{{ url_for('static', filename='images/hero/hero-poster.jpg') }}" alt="The pool terrace at Hotel Miramar SG" fetchpriority="high">
   </div>
-</div>
+  <div class="container page-hero__inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">The hotel</span>
+    </nav>
+    <h1>Where the city slows down</h1>
+    <p>Contemporary elegance, Singaporean warmth, and a front door one block from the bay.</p>
+  </div>
+</section>
+
 <section class="section">
-  <div class="container" style="max-width:800px;">
-    <div class="glass-panel" style="background:var(--white);">
-      <h2>Our Story</h2>
-      <div class="gold-line" style="margin:1rem 0;"></div>
-      <p style="margin-bottom:1.25rem; color:var(--grey);">
-        Hotel Miramar SG was conceived as a refined urban retreat for travellers who appreciate understated luxury.
-        Located steps from Marina Bay, our property combines architectural elegance with warm, personalised service.
-      </p>
-      <p style="margin-bottom:1.25rem; color:var(--grey);">
-        From the moment you arrive, every detail — from the curated art collection to the thoughtfully designed rooms —
-        reflects our commitment to creating memorable stays for business and leisure guests alike.
-      </p>
-      <h3 style="margin-top:2rem;">Our Promise</h3>
-      <ul style="color:var(--grey); line-height:2; margin-top:0.75rem;">
-        <li>Impeccable service from a dedicated team</li>
-        <li>Rooms and suites designed for comfort and productivity</li>
-        <li>Prime location with seamless access to Singapore’s highlights</li>
-        <li>Sustainable practices and community engagement</li>
-      </ul>
+  <div class="container">
+    <div class="split intro-split">
+      <div>
+        <p class="eyebrow">Our story</p>
+        <h2 class="display" style="font-size: clamp(2rem, 3.4vw, 2.9rem); margin-top: 1rem;">A refined urban retreat, built around the guest.</h2>
+      </div>
+      <div class="prose">
+        <p>Hotel Miramar SG was conceived as a quiet counterpoint to the city outside: a place where the architecture steps back and the service comes forward. Warm timber, natural cloth, brass and stone do most of the talking.</p>
+        <p>From the curated art in the lobby to the linen on the beds, every detail has been chosen for how it feels at the end of a long day. The result is a hotel that is polished without being formal, and calm without being empty.</p>
+        <p>We are a small team, and we like it that way. It means the front desk remembers how you take your coffee, and the kitchen will cook something off-menu if you ask nicely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand section--hairline">
+  <div class="container">
+    <div class="split" style="align-items: stretch;">
+      <div class="neighbourhood-media">
+        <img src="{{ url_for('static', filename='images/rooms/marina-deluxe.jpg') }}" alt="Marina Deluxe room with harbour view" loading="lazy">
+      </div>
+      <div>
+        <p class="eyebrow">Our promise</p>
+        <h2 style="margin-top: 1rem;">Four things we hold to.</h2>
+        <div class="amenity-list" style="margin-top: 1.5rem;">
+          <div class="amenity">
+            <span class="amenity__num">01</span>
+            <div>
+              <div class="amenity__name">Service that remembers</div>
+              <p class="amenity__copy">A dedicated team, briefed on your stay before you arrive.</p>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity__num">02</span>
+            <div>
+              <div class="amenity__name">Rooms built for rest</div>
+              <p class="amenity__copy">Blackout drapes, considered lighting and beds worth staying in for.</p>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity__num">03</span>
+            <div>
+              <div class="amenity__name">A location that walks</div>
+              <p class="amenity__copy">Gardens, waterfront and the MRT within minutes of the door.</p>
+            </div>
+          </div>
+          <div class="amenity">
+            <span class="amenity__num">04</span>
+            <div>
+              <div class="amenity__name">A lighter footprint</div>
+              <p class="amenity__copy">Refill amenities, local sourcing and a genuine reduction in single-use plastic.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-band__media" aria-hidden="true">
+    <img src="{{ url_for('static', filename='images/attractions/marina-bay-header.jpg') }}" alt="" loading="lazy">
+  </div>
+  <div class="container cta-band__inner">
+    <div>
+      <p class="eyebrow" style="color: var(--brass-bright);">Stay with us</p>
+      <h2>Come and see for yourself.</h2>
+      <p>Rates are live and booking directly always gets you the best available price.</p>
+    </div>
+    <div class="cta-band__actions">
+      <a class="btn btn--brass" href="{{ url_for('public.rooms') }}">View rooms</a>
+      <a class="btn btn--light" href="{{ url_for('public.contact') }}">Contact us</a>
     </div>
   </div>
 </section>

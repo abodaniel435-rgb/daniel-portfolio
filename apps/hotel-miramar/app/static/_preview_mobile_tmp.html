@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mobile frame</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #e7e2d8; }
+  body { display: flex; justify-content: center; align-items: flex-start; }
+  iframe { width: 390px; height: 1000px; border: 0; display: block; background: #fbf7ef; }
+</style>
+</head>
+<body>
+  <iframe id="frame" src="http://127.0.0.1:5001/" title="Hotel Miramar mobile preview"></iframe>
+  <script>
+    const f = document.getElementById('frame');
+    f.addEventListener('load', () => {
+      try {
+        const d = f.contentDocument.documentElement;
+        document.title = 'vw=' + d.clientWidth + ' sw=' + d.scrollWidth;
+      } catch (e) {
+        document.title = 'measure-error';
+      }
+    });
+  </script>
+</body>
+</html>

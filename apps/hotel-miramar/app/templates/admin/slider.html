@@ -1,31 +1,54 @@
 {% extends 'admin/base_admin.html' %}
-{% block title %}Slider — {{ hotel_name }}{% endblock %}
+{% block title %}Homepage Slider — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-  <h2>Homepage Slider</h2>
-  <a href="{{ url_for('admin.add_slider') }}" class="btn btn-primary">Add Image</a>
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Content</p>
+    <h1>Homepage slider</h1>
+    <p>The first active image becomes the homepage hero. Captions appear beneath the headline.</p>
+  </div>
+  <div class="admin-page-head__actions">
+    <a class="btn btn--sm" href="{{ url_for('admin.add_slider') }}">Add image</a>
+  </div>
 </div>
+
 <div class="table-wrap">
   <table>
-    <thead><tr><th>Title</th><th>Order</th><th>Active</th><th>Actions</th></tr></thead>
+    <thead>
+      <tr><th>Image</th><th>Order</th><th>Link</th><th>Active</th><th>Actions</th></tr>
+    </thead>
     <tbody>
       {% for s in sliders %}
       <tr>
-        <td>{{ s.title or '—' }}</td>
-        <td>{{ s.sort_order }}</td>
-        <td>{% if s.is_active %}Yes{% else %}No{% endif %}</td>
         <td>
-          <a href="{{ url_for('admin.edit_slider', item_id=s.id) }}" class="btn btn-sm btn-navy">Edit</a>
-          <form method="post" action="{{ url_for('admin.delete_slider', item_id=s.id) }}" style="display:inline;" onsubmit="return confirm('Delete?');">
+          <div class="cell-with-thumb">
+            <img class="thumb" src="{{ url_for('static', filename='images/slider/' + s.image_filename) }}" alt="">
+            <div>
+              <div class="cell-with-thumb__name">{{ s.title or 'Untitled' }}</div>
+              <div class="cell-with-thumb__meta">{{ s.caption|truncate(48, true, '…') if s.caption else 'No caption' }}</div>
+            </div>
+          </div>
+        </td>
+        <td class="table-num">{{ s.sort_order }}</td>
+        <td class="cell-muted">{{ s.link_url or '—' }}</td>
+        <td>{% if s.is_active %}<span class="badge badge-approved">Active</span>{% else %}<span class="badge badge-cancelled">Hidden</span>{% endif %}</td>
+        <td>
+          <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.edit_slider', item_id=s.id) }}">Edit</a>
+          <form method="post" action="{{ url_for('admin.delete_slider', item_id=s.id) }}" onsubmit="return confirm('Delete this slider image?');">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-sm" style="background:var(--danger);color:#fff;border:none;">Delete</button>
+            <button type="submit" class="btn btn--danger btn--sm">Delete</button>
           </form>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="4" style="text-align:center;">No slider images yet.</td></tr>
+      <tr><td colspan="5" class="cell-muted">No slider images yet. The homepage uses the Marina Bay photograph until one is added.</td></tr>
       {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="admin-note" style="margin-top: 1.25rem;">
+  <span aria-hidden="true" style="color: var(--brass);">&#9670;</span>
+  <span>Upload wide landscape images (at least 1600px across) for the cinematic hero crop.</span>
 </div>
 {% endblock %}

@@ -1,36 +1,122 @@
 {% extends 'admin/base_admin.html' %}
-{% block title %}Admin Dashboard — {{ hotel_name }}{% endblock %}
+{% block title %}Dashboard — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">Dashboard</h2>
-<div class="stat-grid">
-  <div class="stat-card"><div class="num">{{ stats.rooms }}</div><div class="label">Total Rooms</div></div>
-  <div class="stat-card"><div class="num">{{ stats.available_rooms }}</div><div class="label">Available</div></div>
-  <div class="stat-card"><div class="num">{{ stats.customers }}</div><div class="label">Customers</div></div>
-  <div class="stat-card"><div class="num">{{ stats.bookings }}</div><div class="label">Bookings</div></div>
-  <div class="stat-card"><div class="num">{{ stats.pending }}</div><div class="label">Pending</div></div>
-  <div class="stat-card"><div class="num">{{ stats.approved }}</div><div class="label">Approved</div></div>
-  <div class="stat-card"><div class="num">{{ stats.feedback_pending }}</div><div class="label">Feedback Queue</div></div>
-  <div class="stat-card"><div class="num">{{ stats.unread_messages }}</div><div class="label">Unread Msgs</div></div>
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Today at the desk</p>
+    <h1>Dashboard</h1>
+    <p>A live read on occupancy requests, the guest queue and the content your team maintains.</p>
+  </div>
+  <div class="admin-page-head__actions">
+    <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.messages') }}">Open inbox</a>
+    <a class="btn btn--sm" href="{{ url_for('admin.bookings', status='pending') }}">Review pending</a>
+  </div>
 </div>
-<h3 class="mb-2">Recent Bookings</h3>
-<div class="table-wrap">
-  <table>
-    <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Dates</th><th>Total</th><th>Status</th><th></th></tr></thead>
-    <tbody>
-      {% for b in recent_bookings %}
-      <tr>
-        <td>#{{ b.id }}</td>
-        <td>{{ b.user.full_name }}</td>
-        <td>{{ b.room.name }}</td>
-        <td>{{ b.check_in }} → {{ b.check_out }}</td>
-        <td>S${{ '%.2f'|format(b.total_price) }}</td>
-        <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
-        <td><a href="{{ url_for('admin.booking_detail', booking_id=b.id) }}" class="btn btn-sm btn-navy">View</a></td>
-      </tr>
-      {% else %}
-      <tr><td colspan="7" style="text-align:center; color:var(--grey);">No bookings yet</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <span class="stat-card__label">Rooms</span>
+    <span class="stat-card__value">{{ stats.rooms }}</span>
+    <span class="stat-card__hint">{{ stats.available_rooms }} available</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-card__label">Bookings</span>
+    <span class="stat-card__value">{{ stats.bookings }}</span>
+    <span class="stat-card__hint">{{ stats.approved }} approved</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-card__label">Pending requests</span>
+    <span class="stat-card__value">{{ stats.pending }}</span>
+    <span class="stat-card__hint">Awaiting decision</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-card__label">Registered guests</span>
+    <span class="stat-card__value">{{ stats.customers }}</span>
+    <span class="stat-card__hint">Guest accounts</span>
+  </div>
+</div>
+
+<div class="dash-grid">
+  <div class="panel">
+    <div class="panel__head">
+      <div>
+        <h2>Recent bookings</h2>
+        <p>The eight most recent requests, newest first.</p>
+      </div>
+      <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.bookings') }}">All bookings</a>
+    </div>
+    <div class="table-wrap" style="border: 0;">
+      <table class="table--compact">
+        <thead>
+          <tr><th>Reference</th><th>Guest</th><th>Dates</th><th>Total</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          {% for b in recent_bookings %}
+          <tr>
+            <td class="table-num mono-ref"><a href="{{ url_for('admin.booking_detail', booking_id=b.id) }}" aria-label="Manage booking MMR-{{ '%05d'|format(b.id) }}">MMR-{{ '%05d'|format(b.id) }}</a></td>
+            <td>
+              <span class="guest-name">{{ b.user.full_name }}</span>
+              <span class="guest-room">{{ b.room.name }}</span>
+            </td>
+            <td class="table-num">{{ b.check_in.strftime('%d %b') }} &rarr; {{ b.check_out.strftime('%d %b') }}</td>
+            <td class="table-num">S${{ '%.2f'|format(b.total_price) }}</td>
+            <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="cell-muted">No bookings yet. New requests will appear here.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__head">
+      <div>
+        <h2>Queue</h2>
+        <p>What needs a human next.</p>
+      </div>
+    </div>
+    <div class="queue-list">
+      <a class="queue-item" href="{{ url_for('admin.bookings', status='pending') }}">
+        <span class="queue-item__icon" aria-hidden="true">B</span>
+        <span class="queue-item__body">
+          <span class="queue-item__title">Pending bookings</span>
+          <span class="queue-item__meta">Approve or decline requests</span>
+        </span>
+        <span class="queue-item__value">{{ stats.pending }}</span>
+      </a>
+      <a class="queue-item" href="{{ url_for('admin.feedback') }}">
+        <span class="queue-item__icon" aria-hidden="true">F</span>
+        <span class="queue-item__body">
+          <span class="queue-item__title">Feedback to review</span>
+          <span class="queue-item__meta">Approved notes appear on the site</span>
+        </span>
+        <span class="queue-item__value">{{ stats.feedback_pending }}</span>
+      </a>
+      <a class="queue-item" href="{{ url_for('admin.messages') }}">
+        <span class="queue-item__icon" aria-hidden="true">M</span>
+        <span class="queue-item__body">
+          <span class="queue-item__title">Unread messages</span>
+          <span class="queue-item__meta">Contact form enquiries</span>
+        </span>
+        <span class="queue-item__value">{{ stats.unread_messages }}</span>
+      </a>
+    </div>
+
+    <div class="panel__head" style="margin-top: 1.5rem;">
+      <div><h2>Quick actions</h2></div>
+    </div>
+    <div class="admin-stack" style="gap: 0.5rem;">
+      <a class="btn btn--ghost btn--sm btn--block" href="{{ url_for('admin.add_room') }}">Add a room</a>
+      <a class="btn btn--ghost btn--sm btn--block" href="{{ url_for('admin.add_slider') }}">Add slider image</a>
+      <a class="btn btn--ghost btn--sm btn--block" href="{{ url_for('admin.customers') }}">Review guest accounts</a>
+    </div>
+  </div>
+</div>
+
+<div class="admin-note" style="margin-top: 1.25rem;">
+  <span aria-hidden="true" style="color: var(--brass);">&#9670;</span>
+  <span><strong>Reminder.</strong> Approving a booking re-checks availability first. The guest is emailed automatically when a status changes.</span>
 </div>
 {% endblock %}

@@ -1,28 +1,41 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { api } from '../api'
-import { asList, Burst, cash, EmptyState, ErrorState, Field, PageHead, Skeleton } from '../components'
-import { rememberCategory, suggestCategory } from '../suggest'
+import {
+  asList,
+  Card,
+  CardHead,
+  EmptyState,
+  ErrorState,
+  Icon,
+  Modal,
+  PageHead,
+  Pill,
+  Skeleton,
+  TransactionRow,
+  money,
+  useToast,
+} from '../components'
+import { TransactionDialog } from '../forms'
 
-const today = () => new Date().toISOString().slice(0, 10)
-const blank = () => ({ type: 'expense', category: '', amount: '', description: '', transaction_date: today(), is_recurring: false })
+const PAGE_SIZE = 10
+const EMPTY_FILTERS = { type: 'all', category: 'all', start: '', end: '', q: '' }
 
 export default function Transactions() {
+  const { toast } = useToast()
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
   const [items, setItems] = useState([])
   const [categories, setCategories] = useState([])
-  const [form, setForm] = useState(blank())
-  const [editing, setEditing] = useState(null)
-  const [manual, setManual] = useState(false)
-  const [hint, setHint] = useState('')
-  const [note, setNote] = useState('')
-  const [filter, setFilter] = useState('all')
-  const [query, setQuery] = useState('')
-  const [burst, setBurst] = useState(false)
+  const [filters, setFilters] = useState(EMPTY_FILTERS)
+  const [page, setPage] = useState(1)
+  const [dialog, setDialog] = useState(null)
+  const [confirming, setConfirming] = useState(null)
+  const [busyId, setBusyId] = useState(null)
   const [csvNote, setCsvNote] = useState('')
+  const [csvBusy, setCsvBusy] = useState(false)
 
   const load = () => {
-    setStatus('loading')
+    setStatus((current) => (current === 'ready' ? 'ready' : 'loading'))
     setError('')
     Promise.all([api('/transactions/'), api('/categories/')])
       .then(([transactions, cats]) => {
@@ -38,90 +51,67 @@ export default function Transactions() {
 
   useEffect(load, [])
 
-  const norm = (value) => String(value || '').trim().toLowerCase()
-  const pool = categories.filter((category) => norm(category.type) === norm(form.type))
-  const fallbackPool = pool.length > 0 ? pool : categories
-  const visible = items.filter((item) => {
-    const typeOk = filter === 'all' || item.type === filter
-    const text = `${item.description || ''} ${item.category_name || ''}`.toLowerCase()
-    return typeOk && text.includes(query.trim().toLowerCase())
-  })
+  useEffect(() => {
+    setPage(1)
+  }, [filters])
 
-  const onDescription = (value) => {
-    const next = { ...form, description: value }
-    if (!manual) {
-      const guess = suggestCategory(value, categories, form.type)
-      if (guess) {
-        next.category = String(guess.id)
-        setHint(`Suggested ${guess.name}. Change it if that is off — Campus Coin will remember.`)
-      } else {
-        setHint('')
-      }
-    }
-    setForm(next)
+  const filtered = useMemo(() => {
+    const needle = filters.q.trim().toLowerCase()
+    return items
+      .filter((item) => filters.type === 'all' || item.type === filters.type)
+      .filter((item) => filters.category === 'all' || String(item.category) === String(filters.category))
+      .filter((item) => !filters.start || String(item.transaction_date).slice(0, 10) >= filters.start)
+      .filter((item) => !filters.end || String(item.transaction_date).slice(0, 10) <= filters.end)
+      .filter((item) => {
+        if (!needle) return true
+        const haystack = `${item.description || ''} ${item.category_name || ''} ${item.transaction_date || ''}`.toLowerCase()
+        return haystack.includes(needle)
+      })
+      .sort((a, b) => String(b.transaction_date).localeCompare(String(a.transaction_date)) || b.id - a.id)
+  }, [items, filters])
+
+  const totals = useMemo(
+    () =>
+      filtered.reduce(
+        (acc, item) => {
+          const value = Number(item.amount) || 0
+          if (item.type === 'income') acc.income += value
+          else acc.expense += value
+          return acc
+        },
+        { income: 0, expense: 0 },
+      ),
+    [filtered],
+  )
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  const current = Math.min(page, pageCount)
+  const rows = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
+  const isFiltered =
+    filters.type !== 'all' || filters.category !== 'all' || filters.start || filters.end || filters.q.trim()
+
+  const setFilter = (key) => (event) => {
+    const value = event?.target ? event.target.value : event
+    setFilters((current) => ({ ...current, [key]: value }))
   }
 
-  const save = async (event) => {
-    event.preventDefault()
-    setNote('')
-    const payload = {
-      ...form,
-      category: Number(form.category),
-      amount: form.amount,
-      is_recurring: Boolean(form.is_recurring),
-    }
-    const duplicate = items.some((item) => (
-      item.id !== editing
-      && item.type === form.type
-      && String(item.category) === String(form.category)
-      && Number(item.amount) === Number(form.amount)
-      && item.transaction_date === form.transaction_date
-      && (item.description || '') === (form.description || '')
-    ))
-    if (duplicate && !window.confirm('This looks like a duplicate of a transaction you already saved. Save it anyway?')) return
+  const clearFilters = () => setFilters(EMPTY_FILTERS)
+
+  const startEdit = (item) => setDialog({ mode: 'edit', item })
+
+  const remove = async () => {
+    if (!confirming) return
+    const target = confirming
+    setBusyId(target.id)
     try {
-      if (editing) await api(`/transactions/${editing}/`, { method: 'PATCH', body: payload })
-      else await api('/transactions/', { method: 'POST', body: payload })
-      rememberCategory(form.type, form.description || '', form.category)
-      setForm(blank())
-      setEditing(null)
-      setManual(false)
-      setHint('')
-      setBurst(true)
-      setTimeout(() => setBurst(false), 800)
-      setNote(editing ? 'Transaction updated.' : 'Saved. The story just got a new line.')
-      load()
+      await api(`/transactions/${target.id}/`, { method: 'DELETE' })
+      setItems((current) => current.filter((row) => row.id !== target.id))
+      toast({ title: 'Transaction removed', message: `${target.category_name} · ${money(target.amount)}` })
+      setConfirming(null)
     } catch (err) {
-      setNote(err.message)
-    }
-  }
-
-  const startEdit = (item) => {
-    setEditing(item.id)
-    setManual(true)
-    setHint('')
-    setForm({
-      type: item.type,
-      category: String(item.category),
-      amount: item.amount,
-      description: item.description || '',
-      transaction_date: item.transaction_date,
-      is_recurring: Boolean(item.is_recurring),
-    })
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const remove = async (item) => {
-    if (!window.confirm(`Remove ${item.category_name} · ${cash(item.amount)}? It stays in the history as deleted.`)) return
-    try {
-      await api(`/transactions/${item.id}/`, { method: 'DELETE' })
-      if (editing === item.id) {
-        setEditing(null)
-        setForm(blank())
-      }
-      load()
-    } catch (err) {
-      setNote(err.message)
+      toast({ tone: 'error', title: 'Could not remove it', message: err.message })
+    } finally {
+      setBusyId(null)
     }
   }
 
@@ -132,99 +122,243 @@ export default function Transactions() {
     const body = new FormData()
     body.append('file', file)
     setCsvNote('')
+    setCsvBusy(true)
     try {
       const result = await api('/transactions/import-csv/', { method: 'POST', body })
       const problems = (result.errors || []).length
-      setCsvNote(`Imported ${result.created} row${result.created === 1 ? '' : 's'}${problems ? ` · ${problems} need another look` : ''}.`)
+      const message = `Imported ${result.created} row${result.created === 1 ? '' : 's'}${problems ? ` · ${problems} need a second look` : ''}.`
+      setCsvNote(message)
+      toast({ title: 'CSV processed', message })
       load()
     } catch (err) {
       setCsvNote(err.message)
+      toast({ tone: 'error', title: 'Import failed', message: err.message })
+    } finally {
+      setCsvBusy(false)
     }
   }
 
-  if (status === 'loading' && items.length === 0) return <Skeleton lines={5} />
-  if (status === 'error' && items.length === 0) return <ErrorState message={error} onRetry={load} />
+  if (status === 'loading' && items.length === 0) {
+    return (
+      <>
+        <PageHead eyebrow="The daily details" title="Transactions" />
+        <Card style={{ padding: 0 }}>
+          <Skeleton lines={6} />
+        </Card>
+      </>
+    )
+  }
+
+  if (status === 'error' && items.length === 0) {
+    return <ErrorState message={error} onRetry={load} />
+  }
 
   return (
     <>
-      <PageHead eyebrow="The daily details" title="Every naira has a story." />
-      <section className="two-col">
-        <form className="glass transaction-form rise" onSubmit={save}>
-          <p className="overline">{editing ? 'Edit entry' : 'Quick entry'}</p>
-          <h2>{editing ? 'Rewrite this line.' : 'What happened?'}</h2>
-          <div className="toggle">
-            <button type="button" className={form.type === 'expense' ? 'selected' : ''} onClick={() => { setForm({ ...form, type: 'expense', category: '' }); setManual(false); setHint('') }}>I spent</button>
-            <button type="button" className={form.type === 'income' ? 'selected' : ''} onClick={() => { setForm({ ...form, type: 'income', category: '' }); setManual(false); setHint('') }}>I earned</button>
+      <PageHead
+        eyebrow="The daily details"
+        title="Transactions"
+        subtitle="Filter, search and fix any line in your ledger."
+        action={
+          <button type="button" className="cc-btn cc-btn--primary" onClick={() => setDialog({ mode: 'new' })}>
+            <Icon name="plus" size={16} /> Log money
+          </button>
+        }
+      />
+
+      <Card style={{ padding: 0 }}>
+        <div className="cc-tx-filters">
+          <div className="cc-search grow">
+            <Icon name="search" size={16} />
+            <input
+              className="cc-input"
+              value={filters.q}
+              onChange={setFilter('q')}
+              placeholder="Search notes, categories or dates"
+              aria-label="Search transactions"
+              type="search"
+            />
           </div>
-          <Field label="What was it?">
-            <input value={form.description} placeholder="e.g. Lunch at the canteen" onChange={(event) => onDescription(event.target.value)} />
-          </Field>
-          {hint && <p className="hint">{hint}</p>}
-          <Field label="Category">
-            <select required value={form.category} onChange={(event) => { setManual(true); setForm({ ...form, category: event.target.value }) }}>
-              <option value="">{fallbackPool.length === 0 ? 'No categories found — add one under Categories' : 'Pick a category'}</option>
-              {fallbackPool.map((category) => <option key={category.id} value={category.id}>{category.name} ({category.type})</option>)}
+          <div className="cc-typechips" role="group" aria-label="Filter by type">
+            {[
+              ['all', 'All'],
+              ['expense', 'Spent'],
+              ['income', 'Received'],
+            ].map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                className="cc-chip"
+                aria-pressed={filters.type === key}
+                onClick={() => setFilter('type')(key)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="cc-tx-filtergrid">
+          <label className="cc-field">
+            <span className="cc-label">Category</span>
+            <select className="cc-select" value={filters.category} onChange={setFilter('category')}>
+              <option value="all">Every category</option>
+              {categories
+                .filter((category) => filters.type === 'all' || category.type === filters.type)
+                .map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
             </select>
-          </Field>
-          {categories.length === 0 && <p className="hint">Still empty after reload? Your login token may be stale — log out and back in, or add one under Categories.</p>}{categories.length > 0 && pool.length === 0 && <p className="hint">Showing all categories because none match "{form.type}".</p>}
-          <Field label="Amount">
-            <input required type="number" step="0.01" min="0.01" placeholder="0.00" value={form.amount} onChange={(event) => setForm({ ...form, amount: event.target.value })} />
-          </Field>
-          <Field label="Date">
-            <input required type="date" value={form.transaction_date} onChange={(event) => setForm({ ...form, transaction_date: event.target.value })} />
-          </Field>
-          <label className="check">
-            <input type="checkbox" checked={form.is_recurring} onChange={(event) => setForm({ ...form, is_recurring: event.target.checked })} />
-            This repeats every month
           </label>
-          {note && <p className={note.includes('Saved') || note.includes('updated') ? 'form-note ok' : 'form-note'}>{note}</p>}
-          <div className="button-row">
-            <button className="cta full" type="submit">{editing ? 'Update it' : 'Save it'} <b>→</b></button>
-            <Burst active={burst} />
+          <label className="cc-field">
+            <span className="cc-label">From</span>
+            <input className="cc-input cc-num-input" type="date" value={filters.start} onChange={setFilter('start')} />
+          </label>
+          <label className="cc-field">
+            <span className="cc-label">To</span>
+            <input className="cc-input cc-num-input" type="date" value={filters.end} onChange={setFilter('end')} />
+          </label>
+          <div className="cc-field cc-filter-reset">
+            <span className="cc-label">&nbsp;</span>
+            <button
+              type="button"
+              className="cc-btn cc-btn--ghost"
+              onClick={clearFilters}
+              disabled={!isFiltered}
+            >
+              Reset filters
+            </button>
           </div>
-          {editing && <button className="text-btn" type="button" onClick={() => { setEditing(null); setForm(blank()); setManual(false) }}>Cancel edit</button>}
-          <div className="csv-box">
-            <p className="overline">CSV import</p>
-            <p className="hint">Columns: type, category, amount, description, transaction_date (YYYY-MM-DD).</p>
-            <label className="file-btn">
-              Choose a CSV
-              <input type="file" accept=".csv,text/csv" onChange={importCsv} />
-            </label>
-            {csvNote && <p className="hint">{csvNote}</p>}
+        </div>
+
+        <div className="cc-list-summary">
+          <p>
+            <b>{filtered.length}</b> {filtered.length === 1 ? 'entry' : 'entries'}{' '}
+            {isFiltered ? (filtered.length === 1 ? 'matches' : 'match') : 'in total'}
+          </p>
+          <div className="cc-list-summary-money">
+            <span className="in">In {money(totals.income)}</span>
+            <span className="out">Out {money(totals.expense)}</span>
           </div>
-        </form>
-        <section className="transaction-list rise delay">
-          <div className="list-tools">
-            <div>
-              <p className="overline">Your latest moves</p>
-              <h2>Recent activity</h2>
-            </div>
-            <div className="filters">
-              <select value={filter} onChange={(event) => setFilter(event.target.value)} aria-label="Filter by type">
-                <option value="all">All</option>
-                <option value="expense">Spent</option>
-                <option value="income">Earned</option>
-              </select>
-              <input value={query} placeholder="Search notes" onChange={(event) => setQuery(event.target.value)} aria-label="Search transactions" />
+        </div>
+
+        {rows.length > 0 ? (
+          <div className="cc-txlist">
+            {rows.map((item) => (
+              <TransactionRow
+                key={item.id}
+                item={item}
+                manage
+                busy={busyId}
+                onEdit={startEdit}
+                onDelete={(row) => setConfirming(row)}
+              />
+            ))}
+          </div>
+        ) : items.length === 0 ? (
+          <EmptyState
+            icon="list"
+            title="Nothing logged yet"
+            text="Your ledger is wide open. Add the first transaction and the dashboard starts telling the story."
+            actionLabel="Log your first transaction"
+            onAction={() => setDialog({ mode: 'new' })}
+          />
+        ) : (
+          <EmptyState
+            icon="filter"
+            title="No lines match those filters"
+            text="Loosen the dates, switch the type, or clear the search to see everything again."
+            actionLabel="Reset filters"
+            onAction={clearFilters}
+          />
+        )}
+
+        {filtered.length > 0 && (
+          <div className="cc-pager">
+            <span>
+              Showing <b>{(current - 1) * PAGE_SIZE + 1}</b>–<b>{Math.min(current * PAGE_SIZE, filtered.length)}</b> of{' '}
+              <b>{filtered.length}</b>
+            </span>
+            <div className="cc-pager-btns">
+              <button
+                type="button"
+                className="cc-btn cc-btn--ghost cc-btn--sm"
+                onClick={() => setPage(Math.max(1, current - 1))}
+                disabled={current <= 1}
+                aria-label="Previous page"
+              >
+                <Icon name="chevronLeft" size={15} /> Prev
+              </button>
+              <span className="cc-pill cc-pill--ok" aria-live="polite">
+                {current} / {pageCount}
+              </span>
+              <button
+                type="button"
+                className="cc-btn cc-btn--ghost cc-btn--sm"
+                onClick={() => setPage(Math.min(pageCount, current + 1))}
+                disabled={current >= pageCount}
+                aria-label="Next page"
+              >
+                Next <Icon name="chevronRight" size={15} />
+              </button>
             </div>
           </div>
-          {visible.map((item, index) => (
-            <article className="activity rise" style={{ animationDelay: `${Math.min(index, 8) * 0.05}s` }} key={item.id}>
-              <span className={item.type}>{item.type === 'income' ? '↓' : '↑'}</span>
-              <div>
-                <b>{item.category_name}{item.is_recurring ? ' · monthly' : ''}</b>
-                <p>{item.description || item.transaction_date}</p>
-              </div>
-              <strong className={item.type}>{cash(item.amount)}</strong>
-            <div className="row-actions coin-actions">
-              <button type="button" className="coin-btn edit" onClick={() => startEdit(item)}>Edit</button>
-              <button type="button" className="coin-btn delete" onClick={() => remove(item)}>Delete</button>
-            </div>
-            </article>
-          ))}
-          {visible.length === 0 && <EmptyState icon="⇄" title="Nothing in this view." text="Log a transaction, or clear the search." />}
-        </section>
-      </section>
+        )}
+      </Card>
+
+      <div className="cc-split-gap" />
+
+      <Card>
+        <CardHead
+          eyebrow="Bring your own data"
+          title="Import a bank or spreadsheet export"
+          action={<Pill tone="info">CSV</Pill>}
+        />
+        <p className="cc-sub" style={{ marginBottom: 14 }}>
+          Columns: <code>type, category, amount, description, transaction_date</code> — dates as YYYY-MM-DD.
+        </p>
+        <div className="cc-csv-row">
+          <label className={`cc-btn cc-btn--ghost ${csvBusy ? 'is-busy' : ''}`.trim()}>
+            {csvBusy ? 'Uploading…' : 'Choose a CSV file'}
+            <input type="file" accept=".csv,text/csv" onChange={importCsv} disabled={csvBusy} hidden />
+          </label>
+          {csvNote && <p className="cc-hint">{csvNote}</p>}
+        </div>
+      </Card>
+
+      <TransactionDialog
+        open={Boolean(dialog)}
+        initial={dialog?.item || null}
+        categories={categories}
+        onClose={() => setDialog(null)}
+        onSaved={() => load()}
+      />
+
+      <Modal
+        open={Boolean(confirming)}
+        onClose={() => (busyId ? null : setConfirming(null))}
+        eyebrow="Remove entry"
+        title="Delete this transaction?"
+        footer={
+          <>
+            <button type="button" className="cc-btn cc-btn--ghost" onClick={() => setConfirming(null)} disabled={Boolean(busyId)}>
+              Keep it
+            </button>
+            <button type="button" className="cc-btn cc-btn--danger" onClick={remove} disabled={Boolean(busyId)}>
+              {busyId ? 'Removing…' : 'Yes, remove'}
+            </button>
+          </>
+        }
+      >
+        {confirming && (
+          <p className="cc-sub">
+            <b>{confirming.description || confirming.category_name}</b> — {money(confirming.amount)} on{' '}
+            {String(confirming.transaction_date).slice(0, 10)}. It leaves your totals but stays in the history as deleted.
+          </p>
+        )}
+      </Modal>
     </>
   )
 }

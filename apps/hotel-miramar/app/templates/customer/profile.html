@@ -1,35 +1,88 @@
 {% extends 'base.html' %}
-{% block title %}My Profile — {{ hotel_name }}{% endblock %}
+{% block title %}My profile — {{ hotel_name }}{% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80'); min-height:auto;">
-  <div class="page-header" style="padding:8rem 0 3rem;">
-    <h1>My Profile</h1>
-    <div class="gold-line"></div>
+<div class="container">
+  <div class="page-intro">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="color: var(--muted);">
+      <a href="{{ url_for('customer.dashboard') }}" style="color: var(--muted);">My account</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page" style="color: var(--ink);">Profile</span>
+    </nav>
+    <p class="eyebrow" style="margin-top: 1rem;">Account</p>
+    <h1>My profile</h1>
+    <p>Contact details used for booking confirmations. Every change is effective immediately.</p>
   </div>
-</div>
-<section class="section" style="padding-top:2rem;">
-  <div class="container" style="max-width:560px;">
-    <div class="glass-panel" style="background:var(--white); margin-bottom:2rem;">
-      <h3 class="mb-3">Personal Information</h3>
+
+  <div class="detail-shell" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding-bottom: clamp(2.5rem, 5vw, 4rem);">
+    <div class="summary-card" style="padding: clamp(1.5rem, 3vw, 2.25rem);">
+      <div class="panel__head">
+        <div>
+          <h2>Personal information</h2>
+          <p>{{ current_user.email }}</p>
+        </div>
+      </div>
       <form method="post">
         {{ form.hidden_tag() }}
-        <div class="form-group">{{ form.first_name.label }}{{ form.first_name(class='form-control') }}</div>
-        <div class="form-group">{{ form.last_name.label }}{{ form.last_name(class='form-control') }}</div>
-        <div class="form-group">{{ form.phone.label }}{{ form.phone(class='form-control') }}</div>
-        <div class="form-group">{{ form.address.label }}{{ form.address(class='form-control') }}</div>
-        <button type="submit" name="update_profile" class="btn btn-primary">Update Profile</button>
+        <div class="form-grid">
+          <div class="form-group">
+            {{ form.first_name.label }}
+            {{ form.first_name(class='input', autocomplete='given-name') }}
+            {% for e in form.first_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.last_name.label }}
+            {{ form.last_name(class='input', autocomplete='family-name') }}
+            {% for e in form.last_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.phone.label }}
+            {{ form.phone(class='input', autocomplete='tel') }}
+            {% for e in form.phone.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.address.label }}
+            {{ form.address(class='input', autocomplete='street-address') }}
+            {% for e in form.address.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" name="update_profile" class="btn">Save changes</button>
+        </div>
       </form>
     </div>
-    <div class="glass-panel" style="background:var(--white);">
-      <h3 class="mb-3">Change Password</h3>
+
+    <div class="summary-card" style="padding: clamp(1.5rem, 3vw, 2.25rem);">
+      <div class="panel__head">
+        <div>
+          <h2>Change password</h2>
+          <p>Minimum six characters.</p>
+        </div>
+      </div>
       <form method="post" action="{{ url_for('customer.change_password') }}">
         {{ pwd_form.hidden_tag() }}
-        <div class="form-group">{{ pwd_form.current_password.label }}{{ pwd_form.current_password(class='form-control') }}</div>
-        <div class="form-group">{{ pwd_form.new_password.label }}{{ pwd_form.new_password(class='form-control') }}</div>
-        <div class="form-group">{{ pwd_form.confirm_password.label }}{{ pwd_form.confirm_password(class='form-control') }}</div>
-        {{ pwd_form.submit(class='btn btn-navy') }}
+        <div class="form-group">
+          {{ pwd_form.current_password.label }}
+          {{ pwd_form.current_password(class='input', autocomplete='current-password') }}
+          {% for e in pwd_form.current_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ pwd_form.new_password.label }}
+          {{ pwd_form.new_password(class='input', autocomplete='new-password') }}
+          {% for e in pwd_form.new_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          {{ pwd_form.confirm_password.label }}
+          {{ pwd_form.confirm_password(class='input', autocomplete='new-password') }}
+          {% for e in pwd_form.confirm_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        {{ pwd_form.submit(class='btn btn--ghost') }}
       </form>
+      <div class="distance-list" style="margin-top: 1.5rem;">
+        <div class="distance"><div class="distance__name">Member since</div><div class="distance__time">{{ current_user.created_at.strftime('%b %Y') }}</div></div>
+        <div class="distance"><div class="distance__name">Bookings to date</div><div class="distance__time">{{ current_user.bookings.count() }}</div></div>
+      </div>
     </div>
   </div>
-</section>
+</div>
 {% endblock %}

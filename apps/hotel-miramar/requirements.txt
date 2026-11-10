@@ -8,4 +8,6 @@ python-dotenv
 SQLAlchemy
 Werkzeug
 WTForms
-gunicorn>=22.0
+
+# cPanel shared hosting: pure-Python MySQL driver (no compilation).
+PyMySQL

@@ -1,6 +1,13 @@
-Django==6.1.1
+# Campus Coin backend requirements (cPanel / shared-hosting friendly)
+# Django 5.2 is an LTS line: supported until April 2028.
+Django~=5.2.19
+django-cors-headers==4.9.0
 djangorestframework==3.18.1
 djangorestframework-simplejwt==5.5.1
-django-cors-headers==4.9.0
+
+# MySQL driver: PyMySQL is pure Python, so no C compiler is needed on shared
+# hosting (mysqlclient needs mysql_config / build tools). config/__init__.py
+# installs the MySQLdb shim only when the MySQL backend is in use.
+PyMySQL[rsa]>=1.1.1,<2
+
 python-dotenv==1.2.3
-PyMySQL==1.1.1

@@ -1,19 +1,134 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="dash-layout">
-  <aside class="dash-sidebar">
-    <a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">Dashboard</a>
-    <a href="{{ url_for('admin.rooms') }}" class="{% if 'room' in request.endpoint %}active{% endif %}">Rooms</a>
-    <a href="{{ url_for('admin.customers') }}" class="{% if 'customer' in request.endpoint %}active{% endif %}">Customers</a>
-    <a href="{{ url_for('admin.bookings') }}" class="{% if 'booking' in request.endpoint %}active{% endif %}">Bookings</a>
-    <a href="{{ url_for('admin.feedback') }}" class="{% if 'feedback' in request.endpoint %}active{% endif %}">Feedback</a>
-    <a href="{{ url_for('admin.messages') }}" class="{% if 'message' in request.endpoint %}active{% endif %}">Messages</a>
-    <a href="{{ url_for('admin.slider') }}" class="{% if 'slider' in request.endpoint %}active{% endif %}">Slider</a>
-    <a href="{{ url_for('admin.profile') }}" class="{% if request.endpoint == 'admin.profile' %}active{% endif %}">Profile</a>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
-  </aside>
-  <main class="dash-main">
-    {% block admin_content %}{% endblock %}
-  </main>
-</div>
-{% endblock %}
+{% set ep = request.endpoint or '' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Operations — {{ hotel_name }}{% endblock %}</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#16241d">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="admin-body">
+  <a class="skip-link" href="#admin-main">Skip to console content</a>
+
+  <div class="admin-shell">
+    <aside class="admin-sidebar" id="admin-sidebar" data-admin-panel aria-label="Console navigation">
+      <a class="admin-brand" href="{{ url_for('admin.dashboard') }}">
+        <span class="admin-brand__monogram" aria-hidden="true">M</span>
+        <span>
+          <span class="admin-brand__name">Miramar</span>
+          <span class="admin-brand__role">Operations</span>
+        </span>
+      </a>
+
+      <nav class="admin-nav" aria-label="Console sections">
+        <p class="admin-nav__group">Overview</p>
+        <a href="{{ url_for('admin.dashboard') }}" class="admin-nav__link{% if ep == 'admin.dashboard' %} is-active{% endif %}"{% if ep == 'admin.dashboard' %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7"/><rect x="13.5" y="3.5" width="7" height="7"/><rect x="3.5" y="13.5" width="7" height="7"/><rect x="13.5" y="13.5" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+
+        <p class="admin-nav__group">Operations</p>
+        <a href="{{ url_for('admin.bookings') }}" class="admin-nav__link{% if 'booking' in ep %} is-active{% endif %}"{% if 'booking' in ep %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+          Bookings
+        </a>
+        <a href="{{ url_for('admin.rooms') }}" class="admin-nav__link{% if 'room' in ep %} is-active{% endif %}"{% if 'room' in ep %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5v-6h17v6M3.5 18.5h17M3.5 12.5v-3a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v3M7 12.5v-2h4v2"/></svg>
+          Rooms
+        </a>
+        <a href="{{ url_for('admin.customers') }}" class="admin-nav__link{% if 'customer' in ep %} is-active{% endif %}"{% if 'customer' in ep %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5c.6-3.2 2.7-5 5.5-5s4.9 1.8 5.5 5M16 5.5a3 3 0 0 1 0 6M17.5 14.8c2 .5 3.2 2.1 3.5 4.7"/></svg>
+          Guests
+        </a>
+
+        <p class="admin-nav__group">Guest voice</p>
+        <a href="{{ url_for('admin.feedback') }}" class="admin-nav__link{% if 'feedback' in ep %} is-active{% endif %}"{% if 'feedback' in ep %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></svg>
+          Feedback
+        </a>
+        <a href="{{ url_for('admin.messages') }}" class="admin-nav__link{% if 'message' in ep %} is-active{% endif %}"{% if 'message' in ep %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.5h17v11h-10l-4 3.5v-3.5h-3z"/><path d="M7 9.5h10M7 12.5h6"/></svg>
+          Messages
+        </a>
+
+        <p class="admin-nav__group">Content</p>
+        <a href="{{ url_for('admin.slider') }}" class="admin-nav__link{% if 'slider' in ep %} is-active{% endif %}"{% if 'slider' in ep %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15"/><path d="M3.5 15l4.5-4.5 4 4 3-3 5.5 5.5M8 8.8h.01"/></svg>
+          Homepage slider
+        </a>
+
+        <p class="admin-nav__group">Account</p>
+        <a href="{{ url_for('admin.profile') }}" class="admin-nav__link{% if ep == 'admin.profile' %} is-active{% endif %}"{% if ep == 'admin.profile' %} aria-current="page"{% endif %}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.4"/><path d="M5 20c.7-3.5 3.3-5.4 7-5.4s6.3 1.9 7 5.4"/></svg>
+          Profile
+        </a>
+        <a href="{{ url_for('public.index') }}" class="admin-nav__link">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.5H4.5V6H10"/></svg>
+          View website
+        </a>
+      </nav>
+
+      <div class="admin-sidebar__foot">
+        {{ hotel_name }}<br>
+        Operations console &middot; Marina Bay<br>
+        <a href="{{ url_for('auth.logout') }}">Sign out</a>
+      </div>
+    </aside>
+
+    <div class="admin-scrim" data-admin-scrim></div>
+
+    <div class="admin-main" id="admin-main">
+      <header class="admin-topbar">
+        <button class="admin-toggle" type="button" data-admin-toggle aria-expanded="false" aria-controls="admin-sidebar" aria-label="Toggle console menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+        <div>
+          <p class="admin-topbar__eyebrow">Operations console</p>
+          <p class="admin-topbar__title">{{ hotel_name }}</p>
+        </div>
+        <div class="admin-topbar__actions">
+          <a class="admin-topbar__link" href="{{ url_for('public.index') }}">View site</a>
+          <a class="admin-topbar__link" href="{{ url_for('admin.messages') }}">Inbox</a>
+          <div class="admin-user">
+            <span class="admin-user__avatar" aria-hidden="true">{{ current_user.first_name[0] }}{{ current_user.last_name[0] }}</span>
+            <span>
+              <span class="admin-user__name">{{ current_user.full_name }}</span>
+              <span class="admin-user__role">Administrator</span>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="stack--sm" style="display: grid; gap: 0.6rem; margin-bottom: 1.25rem;" role="status" aria-live="polite">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" data-tone="{{ category }}">
+                  <span>{{ message }}</span>
+                  <button type="button" class="alert__close" aria-label="Dismiss message">&times;</button>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% block admin_content %}{% endblock %}
+      </main>
+
+      <footer class="admin-footer">
+        <span>&copy; 2026 {{ hotel_name }} &middot; Operations console</span>
+        <span>Signed in as {{ current_user.email }}</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,40 +1,120 @@
 {% extends 'base.html' %}
-{% block title %}Book {{ room.name }} — {{ hotel_name }}{% endblock %}
+{% block title %}Reserve {{ room.name }} — {{ hotel_name }}{% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1920&q=80'); min-height:auto;">
-  <div class="page-header" style="padding:8rem 0 3rem;">
-    <h1>Book {{ room.name }}</h1>
-    <div class="gold-line"></div>
-    <p>S${{ '%.2f'|format(room.price_per_night) }} per night</p>
+{% set nights = ((form.check_out.data - form.check_in.data).days if form.check_in.data and form.check_out.data else 0) %}
+{% set nights = nights if nights > 0 else 0 %}
+{% set total = room.price_per_night * nights %}
+
+<div class="container">
+  <div class="page-intro" style="padding-bottom: 0;">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="color: var(--muted);">
+      <a href="{{ url_for('public.rooms') }}" style="color: var(--muted);">Rooms</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ url_for('public.room_detail', room_id=room.id) }}" style="color: var(--muted);">{{ room.name }}</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page" style="color: var(--ink);">Reserve</span>
+    </nav>
+    <p class="eyebrow" style="margin-top: 1rem;">Reservation request</p>
+    <h1>Reserve your stay</h1>
+    <p>Three short steps. No payment is taken online — the desk confirms your room and rate.</p>
   </div>
-</div>
-<section class="section" style="padding-top:2rem;">
-  <div class="container" style="max-width:560px;">
-    <div class="glass-panel" style="background:var(--white);">
-      <form method="post">
-        {{ form.hidden_tag() }}
-        {{ form.room_id() }}
-        <div class="form-group">
-          {{ form.check_in.label }}
-          {{ form.check_in(class='form-control') }}
-          {% for e in form.check_in.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
-        </div>
-        <div class="form-group">
-          {{ form.check_out.label }}
-          {{ form.check_out(class='form-control') }}
-          {% for e in form.check_out.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
-        </div>
-        <div class="form-group">
-          {{ form.num_guests.label }}
-          {{ form.num_guests(class='form-control') }}
-        </div>
-        <div class="form-group">
-          {{ form.special_requests.label }}
-          {{ form.special_requests(class='form-control') }}
-        </div>
-        {{ form.submit(class='btn btn-primary btn-block') }}
-      </form>
+
+  <div class="stepper" aria-label="Booking progress">
+    <div class="step is-done">
+      <span class="step__num" aria-hidden="true">&#10003;</span>
+      <span class="step__label">Choose room</span>
+    </div>
+    <div class="step is-active">
+      <span class="step__num" aria-hidden="true">2</span>
+      <span class="step__label">Dates &amp; guests</span>
+    </div>
+    <div class="step">
+      <span class="step__num" aria-hidden="true">3</span>
+      <span class="step__label">Confirmation</span>
     </div>
   </div>
-</section>
+
+  <div class="detail-shell" style="padding-bottom: clamp(3rem, 6vw, 5rem);" data-price-root data-rate="{{ room.price_per_night }}">
+    <div class="summary-card" style="padding: clamp(1.5rem, 3vw, 2.25rem);">
+      <div class="panel__head" style="margin-bottom: 1.5rem;">
+        <div>
+          <h2>{{ room.name }}</h2>
+          <p>{{ room.room_type }} &middot; sleeps up to {{ room.max_occupancy }}</p>
+        </div>
+        <span class="badge badge-approved">Available</span>
+      </div>
+
+      <form method="post" data-date-scope novalidate>
+        {{ form.hidden_tag() }}
+        {{ form.room_id() }}
+
+        <div class="form-grid">
+          <div class="form-group">
+            {{ form.check_in.label }}
+            {{ form.check_in(class='input', **({'aria-invalid': 'true'} if form.check_in.errors else {})) }}
+            {% for e in form.check_in.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.check_out.label }}
+            {{ form.check_out(class='input', **({'aria-invalid': 'true'} if form.check_out.errors else {})) }}
+            {% for e in form.check_out.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.num_guests.label }}
+            {{ form.num_guests(class='input', min='1', max=room.max_occupancy, **({'aria-invalid': 'true'} if form.num_guests.errors else {})) }}
+            <p class="form-note">Maximum {{ room.max_occupancy }} guests for this room.</p>
+            {% for e in form.num_guests.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            <span class="field__label">Guest</span>
+            <p style="font-size: 0.9rem; color: var(--ink); padding-top: 0.6rem;">{{ current_user.full_name }}</p>
+            <p class="form-note">{{ current_user.email }}</p>
+          </div>
+          <div class="form-group form-group--full">
+            {{ form.special_requests.label }}
+            {{ form.special_requests(class='input', rows='4', placeholder='Early arrival, a quiet floor, dietary notes…') }}
+            <p class="form-note">Optional. We will do our best; requests are not guaranteed.</p>
+            {% for e in form.special_requests.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+        </div>
+
+        <div class="form-actions">
+          {{ form.submit(class='btn btn--lg') }}
+          <a class="btn btn--ghost btn--lg" href="{{ url_for('public.room_detail', room_id=room.id) }}">Back to room</a>
+        </div>
+        <p class="form-note" style="margin-top: 0.9rem;">Submitting sends a request, not a charge. Our team confirms availability by email, usually within a few hours.</p>
+      </form>
+    </div>
+
+    <aside class="book-panel" aria-label="Price summary">
+      <div class="summary-room">
+        <img src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}" alt="{{ room.name }}">
+        <div>
+          <div class="summary-room__name">{{ room.name }}</div>
+          <div class="summary-room__meta">{{ room.room_type }} &middot; sleeps {{ room.max_occupancy }}</div>
+        </div>
+      </div>
+
+      <div class="summary-row"><span>Nightly rate</span><span data-rate-line>S${{ '%.2f'|format(room.price_per_night) }}</span></div>
+      <div class="summary-row"><span>Nights</span><span data-nights>{% if nights %}{{ nights }} {{ 'night' if nights == 1 else 'nights' }}{% else %}—{% endif %}</span></div>
+      {% if form.num_guests.data %}
+      <div class="summary-row"><span>Guests</span><span>{{ form.num_guests.data }}</span></div>
+      {% endif %}
+      <div class="summary-row"><span>Taxes &amp; service</span><span>Included</span></div>
+
+      <div class="summary-total">
+        <span class="summary-total__label">Estimated total</span>
+        <span class="summary-total__value" data-total>S${{ '%.2f'|format(total) }}</span>
+      </div>
+
+      <p class="book-panel__note" style="margin-top: 1rem;">Payable at the hotel on arrival. Free cancellation up to 48 hours before check-in; contact the desk to amend.</p>
+
+      <div class="book-panel__facts" style="border-bottom: 0; padding-bottom: 0;">
+        <div><span>Check-in</span><strong>From 15:00</strong></div>
+        <div><span>Check-out</span><strong>By 12:00</strong></div>
+      </div>
+    </aside>
+  </div>
+</div>
 {% endblock %}

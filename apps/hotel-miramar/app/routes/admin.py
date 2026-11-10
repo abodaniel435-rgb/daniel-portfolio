@@ -52,6 +52,12 @@ def save_upload(file, subfolder='rooms'):
     return None
 
 
+@admin_bp.route('/login')
+def login():
+    """Convenience entry point for staff: /admin/login → shared sign-in."""
+    return redirect(url_for('auth.login', next=url_for('admin.dashboard')))
+
+
 @admin_bp.route('/dashboard')
 @admin_required
 def dashboard():

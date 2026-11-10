@@ -1,18 +1,61 @@
 {% extends 'admin/base_admin.html' %}
 {% block title %}{{ title }} — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">{{ title }}</h2>
-<div class="glass-panel" style="background:var(--white); max-width:560px;">
-  <form method="post" enctype="multipart/form-data">
+<div class="admin-page-head">
+  <div>
+    <a class="link-arrow" href="{{ url_for('admin.slider') }}" style="margin-bottom: 0.75rem;">Homepage slider</a>
+    <p class="eyebrow">Content</p>
+    <h1>{{ title }}</h1>
+    <p>Use a wide landscape image. Order controls which active image the homepage uses first.</p>
+  </div>
+  {% if slider and slider.image_filename %}
+  <div class="admin-page-head__actions">
+    <img class="thumb" style="width: 120px; height: 72px;" src="{{ url_for('static', filename='images/slider/' + slider.image_filename) }}" alt="Current slider image">
+  </div>
+  {% endif %}
+</div>
+
+<div class="panel admin-form">
+  <form method="post" enctype="multipart/form-data" novalidate>
     {{ form.hidden_tag() }}
-    <div class="form-group">{{ form.title.label }}{{ form.title(class='form-control') }}</div>
-    <div class="form-group">{{ form.caption.label }}{{ form.caption(class='form-control') }}</div>
-    <div class="form-group">{{ form.image.label }}{{ form.image(class='form-control') }}</div>
-    <div class="form-group">{{ form.link_url.label }}{{ form.link_url(class='form-control') }}</div>
-    <div class="form-group">{{ form.sort_order.label }}{{ form.sort_order(class='form-control') }}</div>
-    <div class="form-check">{{ form.is_active() }} {{ form.is_active.label }}</div>
-    {{ form.submit(class='btn btn-primary') }}
-    <a href="{{ url_for('admin.slider') }}" class="btn btn-navy" style="margin-left:0.5rem;">Cancel</a>
+    <div class="form-grid">
+      <div class="form-group">
+        {{ form.title.label }}
+        {{ form.title(class='input') }}
+        {% for e in form.title.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.sort_order.label }}
+        {{ form.sort_order(class='input') }}
+        {% for e in form.sort_order.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group form-group--full">
+        {{ form.caption.label }}
+        {{ form.caption(class='input', placeholder='A line of copy shown over the hero') }}
+        {% for e in form.caption.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.image.label }}
+        {{ form.image(class='input', accept='image/*') }}
+        <p class="form-note">JPG, PNG, GIF or WebP, landscape orientation.</p>
+        {% for e in form.image.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.link_url.label }}
+        {{ form.link_url(class='input', placeholder='/rooms') }}
+        {% for e in form.link_url.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+      </div>
+    </div>
+
+    <div class="form-check" style="margin-top: 1.15rem;">
+      {{ form.is_active() }}
+      {{ form.is_active.label }}
+    </div>
+
+    <div class="form-actions">
+      {{ form.submit(class='btn') }}
+      <a href="{{ url_for('admin.slider') }}" class="btn btn--ghost">Cancel</a>
+    </div>
   </form>
 </div>
 {% endblock %}

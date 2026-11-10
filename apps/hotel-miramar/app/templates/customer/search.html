@@ -1,56 +1,85 @@
 {% extends 'base.html' %}
-{% block title %}Search Rooms — {{ hotel_name }}{% endblock %}
+{% block title %}Search rooms — {{ hotel_name }}{% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1920&q=80'); min-height:auto;">
-  <div class="page-header" style="padding:8rem 0 3rem;">
-    <h1>Search Available Rooms</h1>
-    <div class="gold-line"></div>
+<div class="container">
+  <div class="page-intro">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="color: var(--muted);">
+      <a href="{{ url_for('customer.dashboard') }}" style="color: var(--muted);">My account</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page" style="color: var(--ink);">Search rooms</span>
+    </nav>
+    <p class="eyebrow" style="margin-top: 1rem;">Reservations</p>
+    <h1>Search available rooms</h1>
+    <p>Choose your dates and party size; we will only show rooms that are genuinely free.</p>
+  </div>
+
+  <form method="post" class="booking-bar" data-date-scope style="margin-bottom: 2.5rem;" aria-label="Search rooms">
+    {{ form.hidden_tag() }}
+    <div class="booking-bar__field">
+      {{ form.check_in.label }}
+      {{ form.check_in(class='input') }}
+    </div>
+    <div class="booking-bar__field">
+      {{ form.check_out.label }}
+      {{ form.check_out(class='input') }}
+    </div>
+    <div class="booking-bar__field">
+      {{ form.guests.label }}
+      {{ form.guests(class='input', min='1', max='10') }}
+    </div>
+    <div class="booking-bar__field">
+      {{ form.room_type.label }}
+      {{ form.room_type(class='input') }}
+    </div>
+    <div class="booking-bar__submit">
+      {{ form.submit(class='btn btn--block') }}
+    </div>
+  </form>
+
+  {% if form.check_in.errors or form.check_out.errors %}
+  <div class="alert alert-danger" data-tone="danger" style="margin-bottom: 1.5rem;">
+    <span>Please provide a valid arrival and departure date.</span>
+  </div>
+  {% endif %}
+
+  <div class="section-head" style="margin-bottom: 1.75rem;">
+    <div class="section-head__text">
+      <p class="eyebrow">{{ rooms|length }} {{ 'room' if rooms|length == 1 else 'rooms' }} available</p>
+      {% if form.check_in.data and form.check_out.data %}
+      <h2 style="font-size: clamp(1.5rem, 2.4vw, 1.95rem);">{{ form.check_in.data.strftime('%d %b') }} — {{ form.check_out.data.strftime('%d %b %Y') }}</h2>
+      {% else %}
+      <h2 style="font-size: clamp(1.5rem, 2.4vw, 1.95rem);">All rooms</h2>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom: 3rem;">
+    {% for room in rooms %}
+    {% set amenities = room.amenities.split(',') if room.amenities else [] %}
+    <article class="room-card">
+      <a class="room-card__media" href="{{ url_for('public.room_detail', room_id=room.id) }}" tabindex="-1" aria-hidden="true">
+        <img src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}" alt="{{ room.name }}" loading="lazy">
+        <span class="room-card__flag">{{ room.room_type }}</span>
+      </a>
+      <div class="room-card__body">
+        <span class="room-card__type">{{ room.room_type }}</span>
+        <h3 class="room-card__title"><a href="{{ url_for('public.room_detail', room_id=room.id) }}">{{ room.name }}</a></h3>
+        <div class="room-card__meta"><span>Sleeps {{ room.max_occupancy }}</span><span>{{ amenities|length }} amenities</span></div>
+        <div class="room-card__footer">
+          <div class="rate">S${{ '%.0f'|format(room.price_per_night) }}<span class="rate__unit">per night</span></div>
+          <a href="{{ url_for('customer.book_room', room_id=room.id, check_in=form.check_in.data, check_out=form.check_out.data, guests=form.guests.data) }}" class="btn btn--sm">Book</a>
+        </div>
+      </div>
+    </article>
+    {% else %}
+    <div class="empty-state" style="grid-column: 1 / -1;">
+      <p class="eyebrow" style="justify-content: center;">No availability</p>
+      <h2 style="margin-top: 0.75rem;">Nothing free for those dates</h2>
+      <p>Adjust your dates or party size, or call the desk and we will look at the whole calendar for you.</p>
+      <a class="btn btn--ghost" href="{{ url_for('public.contact') }}">Contact the desk</a>
+    </div>
+    {% endfor %}
   </div>
 </div>
-<section class="section" style="padding-top:2rem;">
-  <div class="container">
-    <form method="post" class="search-bar mb-4">
-      {{ form.hidden_tag() }}
-      <div class="form-group" style="margin:0;">
-        {{ form.check_in.label }}
-        {{ form.check_in(class='form-control') }}
-      </div>
-      <div class="form-group" style="margin:0;">
-        {{ form.check_out.label }}
-        {{ form.check_out(class='form-control') }}
-      </div>
-      <div class="form-group" style="margin:0;">
-        {{ form.guests.label }}
-        {{ form.guests(class='form-control') }}
-      </div>
-      <div class="form-group" style="margin:0;">
-        {{ form.room_type.label }}
-        {{ form.room_type(class='form-control') }}
-      </div>
-      {{ form.submit(class='btn btn-primary') }}
-    </form>
-    {% if rooms %}
-    <div class="grid-3">
-      {% for room in rooms %}
-      <div class="card">
-        <div class="card-img">
-          <img src="{% if room.image_filename %}{{ url_for('static', filename='images/rooms/' + room.image_filename) }}{% else %}https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80{% endif %}"
-               alt="{{ room.name }}" onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80'">
-        </div>
-        <div class="card-body">
-          <h3>{{ room.name }}</h3>
-          <p style="color:var(--grey); font-size:0.9rem;">{{ room.room_type }} · Max {{ room.max_occupancy }}</p>
-          <div class="card-meta">
-            <span class="price">S${{ '%.0f'|format(room.price_per_night) }} <small>/ night</small></span>
-            <a href="{{ url_for('customer.book_room', room_id=room.id, check_in=form.check_in.data, check_out=form.check_out.data, guests=form.guests.data) }}" class="btn btn-primary btn-sm">Book</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-    {% elif form.check_in.data %}
-    <p class="text-center" style="padding:2rem; color:var(--grey);">No rooms available for the selected dates.</p>
-    {% endif %}
-  </div>
-</section>
 {% endblock %}

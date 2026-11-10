@@ -1,8 +1,7 @@
-// The server injects window.__CC_API__ when it mounts the app under a sub-path,
-// so a cPanel deployment does not need a rebuilt bundle per host.
-const INJECTED_API = typeof window !== 'undefined' ? window.__CC_API__ : ''
-export const API = INJECTED_API || import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api'
-export const APP_BASE = INJECTED_API ? INJECTED_API.replace(/\/api\/?$/, '') : ''
+// The SPA always talks to the same origin by default (/api), which is what the
+// cPanel deployment does. During development Vite proxies /api to Django on
+// 127.0.0.1:8001, and VITE_API_URL can point anywhere else when needed.
+export const API = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '')
 
 export function formatError(body) {
   if (!body || typeof body !== 'object') return 'Something went wrong.'
@@ -11,9 +10,27 @@ export function formatError(body) {
   const parts = []
   for (const [key, value] of Object.entries(body)) {
     const message = Array.isArray(value) ? value.join(' ') : typeof value === 'string' ? value : ''
-    if (message) parts.push(key === 'non_field_errors' ? message : `${key}: ${message}`)
+    if (message) parts.push(key === 'non_field_errors' ? message : `${label(key)}: ${message}`)
   }
   return parts.join(' ') || 'Something went wrong.'
+}
+
+/**
+ * Per-field messages from a DRF error body, so forms can show inline errors
+ * next to the input that caused them instead of one wall of text.
+ */
+export function fieldErrors(body) {
+  if (!body || typeof body !== 'object') return {}
+  const out = {}
+  for (const [key, value] of Object.entries(body)) {
+    const message = Array.isArray(value) ? value.join(' ') : typeof value === 'string' ? value : ''
+    if (message) out[key] = message
+  }
+  return out
+}
+
+function label(key) {
+  return key.replace(/_/g, ' ').replace(/^\w/, (c) => c.toUpperCase())
 }
 
 async function parse(response) {
@@ -22,7 +39,7 @@ async function parse(response) {
   try {
     return JSON.parse(text)
   } catch {
-    return { detail: `Unexpected ${response.status} from ${response.url} (starts: ${text.slice(0, 120)})` }
+    return { detail: `Unexpected ${response.status} from ${response.url}` }
   }
 }
 
@@ -30,6 +47,7 @@ function fail(response, body) {
   const error = new Error(formatError(body))
   error.status = response.status
   error.body = body
+  error.fields = fieldErrors(body)
   return error
 }
 
@@ -54,21 +72,21 @@ export async function restoreSession() {
 }
 
 function bounceToLogin() {
-  const path = window.location.pathname.slice(APP_BASE.length) || '/'
+  const path = window.location.pathname
   if (path === '/' || path === '/login' || path === '/register' || path === '/reset-password') return
-  window.location.assign(`${APP_BASE}/login`)
+  window.location.assign('/login')
 }
 
-export async function publicJson(path, payload) {
+export async function publicJson(path, payload, method = 'POST') {
   let response
   try {
     response = await fetch(`${API}${path}`, {
-      method: 'POST',
+      method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: payload === undefined ? undefined : JSON.stringify(payload),
     })
   } catch {
-    throw new Error('Cannot reach Campus Coin. Start the API server and try again.')
+    throw new Error('Cannot reach Campus Coin. Check your connection and try again.')
   }
   const body = await parse(response)
   if (!response.ok) throw fail(response, body)
@@ -90,7 +108,7 @@ export async function api(path, options = {}, retried = false) {
   try {
     response = await fetch(`${API}${path}`, { ...options, headers, body })
   } catch {
-    throw new Error('Cannot reach Campus Coin. Start the API server and try again.')
+    throw new Error('Cannot reach Campus Coin. Check your connection and try again.')
   }
   if (response.status === 401 && !retried && !path.startsWith('/auth/login')) {
     const refreshed = await refreshAccess().catch(() => false)

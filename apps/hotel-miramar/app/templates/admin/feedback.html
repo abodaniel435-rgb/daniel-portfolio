@@ -1,33 +1,48 @@
 {% extends 'admin/base_admin.html' %}
 {% block title %}Feedback — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">Customer Feedback</h2>
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Guest voice</p>
+    <h1>Feedback</h1>
+    <p>Approve a note to publish it on the homepage. Ratings are shown alongside the quote.</p>
+  </div>
+</div>
+
 <div class="table-wrap">
   <table>
-    <thead><tr><th>Name</th><th>Rating</th><th>Message</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+    <thead>
+      <tr><th>Guest</th><th>Rating</th><th>Note</th><th>Received</th><th>Status</th><th>Actions</th></tr>
+    </thead>
     <tbody>
       {% for f in feedbacks %}
       <tr>
-        <td>{{ f.name }}</td>
-        <td>{{ f.rating }}★</td>
-        <td style="max-width:280px;">{{ f.message[:80] }}{% if f.message|length > 80 %}…{% endif %}</td>
-        <td>{{ f.created_at.strftime('%Y-%m-%d') }}</td>
-        <td>{% if f.is_approved %}<span class="badge badge-approved">Approved</span>{% else %}<span class="badge badge-pending">Pending</span>{% endif %}</td>
+        <td>
+          <div class="cell-with-thumb__name">{{ f.name }}</div>
+          <div class="cell-with-thumb__meta">{{ f.email or 'No email' }}</div>
+        </td>
+        <td><span class="stars" aria-label="{{ f.rating }} out of 5">{% for i in range(f.rating) %}&#9733;{% endfor %}</span></td>
+        <td class="cell-truncate">{{ f.message|truncate(110, true, '…') }}</td>
+        <td class="table-num">{{ f.created_at.strftime('%d %b %Y') }}</td>
+        <td>
+          {% if f.is_approved %}<span class="badge badge-approved">Published</span>
+          {% else %}<span class="badge badge-pending">Pending</span>{% endif %}
+        </td>
         <td>
           {% if not f.is_approved %}
-          <form method="post" action="{{ url_for('admin.approve_feedback', fb_id=f.id) }}" style="display:inline;">
+          <form method="post" action="{{ url_for('admin.approve_feedback', fb_id=f.id) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-sm btn-primary">Approve</button>
+            <button type="submit" class="btn btn--sm">Approve</button>
           </form>
           {% endif %}
-          <form method="post" action="{{ url_for('admin.delete_feedback', fb_id=f.id) }}" style="display:inline;" onsubmit="return confirm('Delete?');">
+          <form method="post" action="{{ url_for('admin.delete_feedback', fb_id=f.id) }}" onsubmit="return confirm('Delete this feedback?');">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-sm" style="background:var(--danger);color:#fff;border:none;">Delete</button>
+            <button type="submit" class="btn btn--danger btn--sm">Delete</button>
           </form>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="6" style="text-align:center;">No feedback yet</td></tr>
+      <tr><td colspan="6" class="cell-muted">No feedback yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>

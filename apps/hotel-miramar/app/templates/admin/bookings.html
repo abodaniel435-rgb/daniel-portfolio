@@ -1,34 +1,56 @@
 {% extends 'admin/base_admin.html' %}
 {% block title %}Bookings — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
-  <h2>Bookings</h2>
-  <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-    <a href="{{ url_for('admin.bookings') }}" class="btn btn-sm {% if not status_filter %}btn-primary{% else %}btn-navy{% endif %}">All</a>
-    {% for s in ['pending','approved','disapproved','cancelled'] %}
-    <a href="{{ url_for('admin.bookings', status=s) }}" class="btn btn-sm {% if status_filter==s %}btn-primary{% else %}btn-navy{% endif %}">{{ s|capitalize }}</a>
-    {% endfor %}
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Operations</p>
+    <h1>Bookings</h1>
+    <p>Every request and reservation, newest first. Open a booking to approve, decline or leave a note.</p>
+  </div>
+  <div class="admin-page-head__actions">
+    <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.bookings') }}">Refresh</a>
   </div>
 </div>
+
+<nav class="filter-tabs" aria-label="Filter bookings by status">
+  <a class="filter-tab{% if not status_filter %} is-active{% endif %}" href="{{ url_for('admin.bookings') }}">All</a>
+  {% for s in ['pending', 'approved', 'disapproved', 'cancelled'] %}
+  <a class="filter-tab{% if status_filter == s %} is-active{% endif %}" href="{{ url_for('admin.bookings', status=s) }}">{{ s|capitalize }}</a>
+  {% endfor %}
+</nav>
+
 <div class="table-wrap">
   <table>
-    <thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Dates</th><th>Guests</th><th>Total</th><th>Status</th><th></th></tr></thead>
+    <thead>
+      <tr>
+        <th>Reference</th><th>Guest</th><th>Room</th><th>Dates</th><th>Nights</th><th>Guests</th><th>Total</th><th>Status</th><th></th>
+      </tr>
+    </thead>
     <tbody>
       {% for b in bookings %}
       <tr>
-        <td>#{{ b.id }}</td>
-        <td>{{ b.user.full_name }}</td>
-        <td>{{ b.room.name }}</td>
-        <td>{{ b.check_in }} → {{ b.check_out }}</td>
-        <td>{{ b.num_guests }}</td>
-        <td>S${{ '%.2f'|format(b.total_price) }}</td>
+        <td class="table-num mono-ref">MMR-{{ '%05d'|format(b.id) }}</td>
+        <td>
+          <div class="cell-with-thumb__name">{{ b.user.full_name }}</div>
+          <div class="cell-with-thumb__meta">{{ b.user.email }}</div>
+        </td>
+        <td class="cell-muted">{{ b.room.name }}</td>
+        <td class="table-num">{{ b.check_in.strftime('%d %b %Y') }}<br><span class="cell-muted">to {{ b.check_out.strftime('%d %b %Y') }}</span></td>
+        <td class="table-num">{{ b.nights }}</td>
+        <td class="table-num">{{ b.num_guests }}</td>
+        <td class="table-num">S${{ '%.2f'|format(b.total_price) }}</td>
         <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
-        <td><a href="{{ url_for('admin.booking_detail', booking_id=b.id) }}" class="btn btn-sm btn-navy">Manage</a></td>
+        <td><a class="btn btn--ghost btn--sm" href="{{ url_for('admin.booking_detail', booking_id=b.id) }}">Manage</a></td>
       </tr>
       {% else %}
-      <tr><td colspan="8" style="text-align:center;">No bookings found</td></tr>
+      <tr><td colspan="9" class="cell-muted">No bookings match this filter.</td></tr>
       {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="admin-note" style="margin-top: 1.25rem;">
+  <span aria-hidden="true" style="color: var(--brass);">&#9670;</span>
+  <span>Bookings are requests until approved. Approving checks for overlapping stays and that the room is still available.</span>
 </div>
 {% endblock %}

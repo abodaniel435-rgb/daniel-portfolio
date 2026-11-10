@@ -24,12 +24,9 @@ function Protected({ children }) {
   return <Layout>{children}</Layout>
 }
 
-// Set by the server when the build is mounted under a sub-path (cPanel).
-const BASENAME = (typeof window !== 'undefined' && window.__CC_BASE__) || '/'
-
 export default function App() {
   return (
-    <BrowserRouter basename={BASENAME}>
+    <BrowserRouter>
       <SessionProvider>
         <Routes>
           <Route path="/" element={<Landing />} />

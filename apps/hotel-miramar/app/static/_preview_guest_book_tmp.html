@@ -1,0 +1,252 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="http://127.0.0.1:5001/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve Marina Deluxe — Hotel Miramar SG</title>
+  <meta name="description" content="Hotel Miramar SG — a quiet luxury hotel on Marina Bay, Singapore. Rooms and suites with harbour views, moments from Gardens by the Bay.">
+  <meta name="theme-color" content="#1e3a2e">
+  <link rel="stylesheet" href="/static/css/main.css">
+  
+</head>
+<body class="site-body">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <div class="container site-header__inner">
+      <a class="brand" href="/" aria-label="Hotel Miramar SG — home">
+        <span class="brand__monogram" aria-hidden="true">M</span>
+        <span class="brand__text">
+          <span class="brand__name">Miramar</span>
+          <span class="brand__loc">Singapore &middot; Marina Bay</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-nav-panel aria-label="Primary">
+        <a href="/" class="nav__link">Home</a>
+        <a href="/rooms" class="nav__link is-active" aria-current="page">Rooms</a>
+        <a href="/about" class="nav__link">The Hotel</a>
+        <a href="/attractions" class="nav__link">Neighbourhood</a>
+        <a href="/location" class="nav__link">Location</a>
+        <a href="/contact" class="nav__link">Contact</a>
+
+        
+          
+            <a href="/customer/bookings" class="nav__link is-active" aria-current="page">My stays</a>
+          
+          <a href="/auth/logout" class="nav__link nav__link--quiet">Sign out</a>
+        
+
+        <a href="/rooms" class="btn nav__cta">Check availability</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="nav-scrim" data-nav-scrim></div>
+
+  
+    
+  
+
+  <main id="main">
+    
+
+
+
+
+<div class="container">
+  <div class="page-intro" style="padding-bottom: 0;">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="color: var(--muted);">
+      <a href="/rooms" style="color: var(--muted);">Rooms</a>
+      <span aria-hidden="true">/</span>
+      <a href="/rooms/2" style="color: var(--muted);">Marina Deluxe</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page" style="color: var(--ink);">Reserve</span>
+    </nav>
+    <p class="eyebrow" style="margin-top: 1rem;">Reservation request</p>
+    <h1>Reserve your stay</h1>
+    <p>Three short steps. No payment is taken online — the desk confirms your room and rate.</p>
+  </div>
+
+  <div class="stepper" aria-label="Booking progress">
+    <div class="step is-done">
+      <span class="step__num" aria-hidden="true">&#10003;</span>
+      <span class="step__label">Choose room</span>
+    </div>
+    <div class="step is-active">
+      <span class="step__num" aria-hidden="true">2</span>
+      <span class="step__label">Dates &amp; guests</span>
+    </div>
+    <div class="step">
+      <span class="step__num" aria-hidden="true">3</span>
+      <span class="step__label">Confirmation</span>
+    </div>
+  </div>
+
+  <div class="detail-shell" style="padding-bottom: clamp(3rem, 6vw, 5rem);" data-price-root data-rate="280.00">
+    <div class="summary-card" style="padding: clamp(1.5rem, 3vw, 2.25rem);">
+      <div class="panel__head" style="margin-bottom: 1.5rem;">
+        <div>
+          <h2>Marina Deluxe</h2>
+          <p>Deluxe &middot; sleeps up to 2</p>
+        </div>
+        <span class="badge badge-approved">Available</span>
+      </div>
+
+      <form method="post" data-date-scope novalidate>
+        <input id="room_id" name="room_id" type="hidden" value="2">
+<input id="csrf_token" name="csrf_token" type="hidden" value="IjU1OGRkZDYzZTE5NGRmNjQxOTc1MDQwMDVkMzA0Njc1NWU0YmVhMDki.avG34Q.Ca7LD9kAUFhhh2RdYkbAfytsi9o">
+        <input id="room_id" name="room_id" type="hidden" value="2">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="check_in">Check-in</label>
+            <input class="input" id="check_in" name="check_in" required type="date" value="2026-12-10">
+            
+          </div>
+          <div class="form-group">
+            <label for="check_out">Check-out</label>
+            <input class="input" id="check_out" name="check_out" required type="date" value="2026-12-13">
+            
+          </div>
+          <div class="form-group">
+            <label for="num_guests">Number of Guests</label>
+            <input class="input" id="num_guests" max="2" min="1" name="num_guests" required type="number" value="2">
+            <p class="form-note">Maximum 2 guests for this room.</p>
+            
+          </div>
+          <div class="form-group">
+            <span class="field__label">Guest</span>
+            <p style="font-size: 0.9rem; color: var(--ink); padding-top: 0.6rem;">Amelia Tan</p>
+            <p class="form-note">amelia.tan.1109@example.com</p>
+          </div>
+          <div class="form-group form-group--full">
+            <label for="special_requests">Special Requests</label>
+            <textarea class="input" id="special_requests" maxlength="500" minlength="0" name="special_requests" placeholder="Early arrival, a quiet floor, dietary notes…" rows="4">
+</textarea>
+            <p class="form-note">Optional. We will do our best; requests are not guaranteed.</p>
+            
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <input class="btn btn--lg" id="submit" name="submit" type="submit" value="Request Booking">
+          <a class="btn btn--ghost btn--lg" href="/rooms/2">Back to room</a>
+        </div>
+        <p class="form-note" style="margin-top: 0.9rem;">Submitting sends a request, not a charge. Our team confirms availability by email, usually within a few hours.</p>
+      </form>
+    </div>
+
+    <aside class="book-panel" aria-label="Price summary">
+      <div class="summary-room">
+        <img src="/static/images/rooms/marina-deluxe.jpg" alt="Marina Deluxe">
+        <div>
+          <div class="summary-room__name">Marina Deluxe</div>
+          <div class="summary-room__meta">Deluxe &middot; sleeps 2</div>
+        </div>
+      </div>
+
+      <div class="summary-row"><span>Nightly rate</span><span data-rate-line>S$280.00</span></div>
+      <div class="summary-row"><span>Nights</span><span data-nights>3 nights</span></div>
+      
+      <div class="summary-row"><span>Guests</span><span>2</span></div>
+      
+      <div class="summary-row"><span>Taxes &amp; service</span><span>Included</span></div>
+
+      <div class="summary-total">
+        <span class="summary-total__label">Estimated total</span>
+        <span class="summary-total__value" data-total>S$840.00</span>
+      </div>
+
+      <p class="book-panel__note" style="margin-top: 1rem;">Payable at the hotel on arrival. Free cancellation up to 48 hours before check-in; contact the desk to amend.</p>
+
+      <div class="book-panel__facts" style="border-bottom: 0; padding-bottom: 0;">
+        <div><span>Check-in</span><strong>From 15:00</strong></div>
+        <div><span>Check-out</span><strong>By 12:00</strong></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="/">
+            <span class="brand__monogram" aria-hidden="true">M</span>
+            <span class="brand__text">
+              <span class="brand__name">Miramar</span>
+              <span class="brand__loc">Singapore &middot; Marina Bay</span>
+            </span>
+          </a>
+          <p class="footer-note">Luxury Stay in the Heart of Singapore. A calm address on the bay, with the city, the gardens and the water within a short walk.</p>
+        </div>
+
+        <div>
+          <h2 class="footer-title">Explore</h2>
+          <ul class="footer-links">
+            <li><a href="/rooms">Rooms &amp; suites</a></li>
+            <li><a href="/about">The hotel</a></li>
+            <li><a href="/attractions">Neighbourhood</a></li>
+            <li><a href="/location">Getting here</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-title">Guest services</h2>
+          <ul class="footer-links">
+            <li><a href="/contact">Enquiries</a></li>
+            <li><a href="/feedback">Share feedback</a></li>
+            <li><a href="/auth/login">Guest sign in</a></li>
+            <li><a href="/auth/register">Create an account</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-title">Reservations</h2>
+          <dl class="footer-contact">
+            <div>
+              <dt>Address</dt>
+              <dd>18 Marina Boulevard, Singapore 018980</dd>
+            </div>
+            <div>
+              <dt>Telephone</dt>
+              <dd><a href="tel:+6561234567">+65 6123 4567</a></dd>
+            </div>
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:reservations@hotelmiramarsg.com">reservations@hotelmiramarsg.com</a></dd>
+            </div>
+            <div>
+              <dt>Front desk</dt>
+              <dd>Open 24 hours, daily</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="footer-legal">
+        <span>&copy; 2026 Hotel Miramar SG. All rights reserved.</span>
+        <span class="footer-legal__line">Singapore &middot; Marina Bay &middot; Check-in 15:00 &middot; Check-out 12:00</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+  
+</body>
+</html>

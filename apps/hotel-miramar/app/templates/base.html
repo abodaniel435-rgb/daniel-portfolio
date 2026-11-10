@@ -1,98 +1,141 @@
+{% set current_endpoint = request.endpoint or '' %}
+{% set rooms_active = current_endpoint in ['public.rooms', 'public.room_detail', 'customer.search_rooms', 'customer.book_room'] %}
+{% set account_active = current_endpoint.startswith('customer.') %}
+{% set admin_active = current_endpoint.startswith('admin.') %}
+{% set login_active = current_endpoint in ['auth.login', 'auth.password_recovery', 'auth.reset_password', 'auth.register'] %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{{ hotel_name }}{% endblock %}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css">
+  <meta name="description" content="{% block meta_description %}Hotel Miramar SG — a quiet luxury hotel on Marina Bay, Singapore. Rooms and suites with harbour views, moments from Gardens by the Bay.{% endblock %}">
+  <meta name="theme-color" content="#1e3a2e">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   {% block extra_css %}{% endblock %}
 </head>
-<body>
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <a href="{{ url_for('public.index') }}" class="nav-brand">Miramar <span>SG</span></a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
-      {% set current_endpoint = request.endpoint or '' %}
-      {% set rooms_active = current_endpoint in ['public.rooms', 'public.room_detail', 'customer.search', 'customer.book_room'] %}
-      {% set account_active = current_endpoint.startswith('customer.') %}
-      {% set admin_active = current_endpoint.startswith('admin.') %}
-      {% set login_active = current_endpoint in ['auth.login', 'auth.password_recovery', 'auth.reset_password'] %}
-      <ul class="nav-links" id="navLinks">
-        <li><a href="{{ url_for('public.index') }}" class="{% if current_endpoint == 'public.index' %}active{% endif %}" {% if current_endpoint == 'public.index' %}aria-current="page"{% endif %}>Home</a></li>
-        <li><a href="{{ url_for('public.about') }}" class="{% if current_endpoint == 'public.about' %}active{% endif %}" {% if current_endpoint == 'public.about' %}aria-current="page"{% endif %}>About</a></li>
-        <li><a href="{{ url_for('public.rooms') }}" class="{% if rooms_active %}active{% endif %}" {% if rooms_active %}aria-current="page"{% endif %}>Rooms</a></li>
-        <li><a href="{{ url_for('public.attractions') }}" class="{% if current_endpoint == 'public.attractions' %}active{% endif %}" {% if current_endpoint == 'public.attractions' %}aria-current="page"{% endif %}>Attractions</a></li>
-        <li><a href="{{ url_for('public.location') }}" class="{% if current_endpoint == 'public.location' %}active{% endif %}" {% if current_endpoint == 'public.location' %}aria-current="page"{% endif %}>Location</a></li>
-        <li><a href="{{ url_for('public.contact') }}" class="{% if current_endpoint in ['public.contact', 'public.feedback'] %}active{% endif %}" {% if current_endpoint in ['public.contact', 'public.feedback'] %}aria-current="page"{% endif %}>Contact</a></li>
+<body class="{% block body_class %}site-body{% endblock %}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <div class="container site-header__inner">
+      <a class="brand" href="{{ url_for('public.index') }}" aria-label="{{ hotel_name }} — home">
+        <span class="brand__monogram" aria-hidden="true">M</span>
+        <span class="brand__text">
+          <span class="brand__name">Miramar</span>
+          <span class="brand__loc">Singapore &middot; Marina Bay</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-nav-panel aria-label="Primary">
+        <a href="{{ url_for('public.index') }}" class="nav__link{% if current_endpoint == 'public.index' %} is-active{% endif %}"{% if current_endpoint == 'public.index' %} aria-current="page"{% endif %}>Home</a>
+        <a href="{{ url_for('public.rooms') }}" class="nav__link{% if rooms_active %} is-active{% endif %}"{% if rooms_active %} aria-current="page"{% endif %}>Rooms</a>
+        <a href="{{ url_for('public.about') }}" class="nav__link{% if current_endpoint == 'public.about' %} is-active{% endif %}"{% if current_endpoint == 'public.about' %} aria-current="page"{% endif %}>The Hotel</a>
+        <a href="{{ url_for('public.attractions') }}" class="nav__link{% if current_endpoint == 'public.attractions' %} is-active{% endif %}"{% if current_endpoint == 'public.attractions' %} aria-current="page"{% endif %}>Neighbourhood</a>
+        <a href="{{ url_for('public.location') }}" class="nav__link{% if current_endpoint == 'public.location' %} is-active{% endif %}"{% if current_endpoint == 'public.location' %} aria-current="page"{% endif %}>Location</a>
+        <a href="{{ url_for('public.contact') }}" class="nav__link{% if current_endpoint in ['public.contact', 'public.feedback'] %} is-active{% endif %}"{% if current_endpoint in ['public.contact', 'public.feedback'] %} aria-current="page"{% endif %}>Contact</a>
+
         {% if current_user.is_authenticated %}
           {% if current_user.is_admin %}
-            <li><a href="{{ url_for('admin.dashboard') }}" class="{% if admin_active %}active{% endif %}" {% if admin_active %}aria-current="page"{% endif %}>Admin</a></li>
+            <a href="{{ url_for('admin.dashboard') }}" class="nav__link{% if admin_active %} is-active{% endif %}"{% if admin_active %} aria-current="page"{% endif %}>Console</a>
           {% else %}
-            <li><a href="{{ url_for('customer.dashboard') }}" class="{% if account_active %}active{% endif %}" {% if account_active %}aria-current="page"{% endif %}>My Account</a></li>
+            <a href="{{ url_for('customer.my_bookings') }}" class="nav__link{% if account_active %} is-active{% endif %}"{% if account_active %} aria-current="page"{% endif %}>My stays</a>
           {% endif %}
-          <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+          <a href="{{ url_for('auth.logout') }}" class="nav__link nav__link--quiet">Sign out</a>
         {% else %}
-          <li><a href="{{ url_for('auth.login') }}" class="{% if login_active %}active{% endif %}" {% if login_active %}aria-current="page"{% endif %}>Login</a></li>
-          <li><a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm {% if current_endpoint == 'auth.register' %}active{% endif %}" {% if current_endpoint == 'auth.register' %}aria-current="page"{% endif %}>Register</a></li>
+          <a href="{{ url_for('auth.login') }}" class="nav__link nav__link--quiet{% if current_endpoint == 'auth.login' %} is-active{% endif %}"{% if current_endpoint == 'auth.login' %} aria-current="page"{% endif %}>Sign in</a>
         {% endif %}
-      </ul>
+
+        <a href="{{ url_for('public.rooms') }}" class="btn nav__cta">Check availability</a>
+      </nav>
     </div>
-  </nav>
+  </header>
+
+  <div class="nav-scrim" data-nav-scrim></div>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      <div class="container" style="padding-top: 5.5rem; position: relative; z-index: 50;">
+      <div class="flash-stack" role="status" aria-live="polite">
         {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">{{ message }}</div>
+          <div class="alert alert-{{ category }}" data-tone="{{ category }}">
+            <span>{{ message }}</span>
+            <button type="button" class="alert__close" aria-label="Dismiss message">&times;</button>
+          </div>
         {% endfor %}
       </div>
     {% endif %}
   {% endwith %}
 
-  {% block content %}{% endblock %}
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
-        <div>
-          <h4>{{ hotel_name }}</h4>
-          <p style="margin-bottom:1rem; opacity:0.85;">{{ hotel_tagline }}</p>
-          <p style="font-size:0.9rem;">{{ hotel_address }}</p>
-          <p style="font-size:0.9rem;">{{ hotel_phone }}</p>
-          <p style="font-size:0.9rem;">{{ hotel_email }}</p>
+        <div class="footer-brand">
+          <a class="brand" href="{{ url_for('public.index') }}">
+            <span class="brand__monogram" aria-hidden="true">M</span>
+            <span class="brand__text">
+              <span class="brand__name">Miramar</span>
+              <span class="brand__loc">Singapore &middot; Marina Bay</span>
+            </span>
+          </a>
+          <p class="footer-note">{{ hotel_tagline }}. A calm address on the bay, with the city, the gardens and the water within a short walk.</p>
         </div>
+
         <div>
-          <h4>Explore</h4>
-          <ul style="list-style:none; line-height:2;">
-            <li><a href="{{ url_for('public.rooms') }}">Rooms & Suites</a></li>
-            <li><a href="{{ url_for('public.about') }}">About Us</a></li>
-            <li><a href="{{ url_for('public.attractions') }}">Attractions</a></li>
-            <li><a href="{{ url_for('public.location') }}">Location</a></li>
+          <h2 class="footer-title">Explore</h2>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('public.rooms') }}">Rooms &amp; suites</a></li>
+            <li><a href="{{ url_for('public.about') }}">The hotel</a></li>
+            <li><a href="{{ url_for('public.attractions') }}">Neighbourhood</a></li>
+            <li><a href="{{ url_for('public.location') }}">Getting here</a></li>
           </ul>
         </div>
+
         <div>
-          <h4>Guest Services</h4>
-          <ul style="list-style:none; line-height:2;">
-            <li><a href="{{ url_for('public.contact') }}">Contact Us</a></li>
-            <li><a href="{{ url_for('public.feedback') }}">Leave Feedback</a></li>
-            <li><a href="{{ url_for('auth.login') }}">Guest Login</a></li>
-            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Quick Links</h4>
-          <ul style="list-style:none; line-height:2;">
-            <li><a href="{{ url_for('public.rooms') }}">Book a Room</a></li>
+          <h2 class="footer-title">Guest services</h2>
+          <ul class="footer-links">
             <li><a href="{{ url_for('public.contact') }}">Enquiries</a></li>
+            <li><a href="{{ url_for('public.feedback') }}">Share feedback</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Guest sign in</a></li>
+            <li><a href="{{ url_for('auth.register') }}">Create an account</a></li>
           </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-title">Reservations</h2>
+          <dl class="footer-contact">
+            <div>
+              <dt>Address</dt>
+              <dd>{{ hotel_address }}</dd>
+            </div>
+            <div>
+              <dt>Telephone</dt>
+              <dd><a href="tel:{{ hotel_phone|replace(' ', '') }}">{{ hotel_phone }}</a></dd>
+            </div>
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:{{ hotel_email }}">{{ hotel_email }}</a></dd>
+            </div>
+            <div>
+              <dt>Front desk</dt>
+              <dd>Open 24 hours, daily</dd>
+            </div>
+          </dl>
         </div>
       </div>
-      <div class="footer-bottom">
-        &copy; {{ 2026 }} {{ hotel_name }}. All rights reserved. | Aptech eProject
+
+      <div class="footer-legal">
+        <span>&copy; 2026 {{ hotel_name }}. All rights reserved.</span>
+        <span class="footer-legal__line">Singapore &middot; Marina Bay &middot; Check-in 15:00 &middot; Check-out 12:00</span>
       </div>
     </div>
   </footer>

@@ -1,62 +1,106 @@
 {% extends 'base.html' %}
-{% block title %}Rooms & Suites — {{ hotel_name }}{% endblock %}
+{% block title %}Rooms &amp; Suites — {{ hotel_name }}{% endblock %}
+{% block meta_description %}Browse rooms and suites at Hotel Miramar SG, with live nightly rates, occupancy and amenities. Check availability for your dates.{% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1920&q=80');">
-  <div class="page-header">
-    <h1>Rooms & Suites</h1>
-    <div class="gold-line"></div>
-    <p>Find your perfect sanctuary</p>
+<section class="page-hero">
+  <div class="page-hero__media">
+    <img src="{{ url_for('static', filename='images/rooms/executive-suite.jpg') }}" alt="Executive Suite at Hotel Miramar SG" fetchpriority="high">
   </div>
-</div>
-<section class="section">
+  <div class="container page-hero__inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ url_for('public.index') }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Rooms &amp; suites</span>
+    </nav>
+    <h1>Rooms &amp; suites</h1>
+    <p>Five ways to stay, from courtyard rooms to the Presidential Suite. Rates below are live from our reservations desk.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
   <div class="container">
-    <form method="get" class="search-bar mb-4">
-      <div class="form-group" style="margin:0;">
-        <label for="check_in">Check-in</label>
-        <input id="check_in" type="date" name="check_in" value="{{ request.args.get('check_in', '') }}" class="form-control">
+    <form method="get" class="booking-bar mb-4" data-date-scope aria-label="Filter rooms by date and type">
+      <div class="booking-bar__field">
+        <label for="rooms-check-in">Arrival</label>
+        <input id="rooms-check-in" class="input" type="date" name="check_in" value="{{ request.args.get('check_in', '') }}">
       </div>
-      <div class="form-group" style="margin:0;">
-        <label for="check_out">Check-out</label>
-        <input id="check_out" type="date" name="check_out" value="{{ request.args.get('check_out', '') }}" class="form-control">
+      <div class="booking-bar__field">
+        <label for="rooms-check-out">Departure</label>
+        <input id="rooms-check-out" class="input" type="date" name="check_out" value="{{ request.args.get('check_out', '') }}">
       </div>
-      <div class="form-group" style="margin:0;">
-        <label>Type</label>
-        <select name="room_type" class="form-control">
-          <option value="">Any Type</option>
-          {% for t in ['Standard','Deluxe','Suite','Presidential'] %}
-          <option value="{{ t }}" {% if request.args.get('room_type')==t %}selected{% endif %}>{{ t }}</option>
+      <div class="booking-bar__field">
+        <label for="rooms-guests">Guests</label>
+        <select id="rooms-guests" class="input" name="guests">
+          {% for i in range(1, 7) %}
+          <option value="{{ i }}" {% if request.args.get('guests')|int == i %}selected{% endif %}>{{ i }} {{ 'guest' if i == 1 else 'guests' }}</option>
           {% endfor %}
         </select>
       </div>
-      <div class="form-group" style="margin:0;">
-        <label>Guests</label>
-        <select name="guests" class="form-control">
-          {% for i in range(1,7) %}
-          <option value="{{ i }}" {% if request.args.get('guests')|int == i %}selected{% endif %}>{{ i }}</option>
+      <div class="booking-bar__field">
+        <label for="rooms-type">Room type</label>
+        <select id="rooms-type" class="input" name="room_type">
+          <option value="">Any room</option>
+          {% for t in ['Standard', 'Deluxe', 'Suite', 'Presidential'] %}
+          <option value="{{ t }}" {% if request.args.get('room_type') == t %}selected{% endif %}>{{ t }}</option>
           {% endfor %}
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Filter</button>
+      <div class="booking-bar__submit">
+        <button type="submit" class="btn">Update search</button>
+      </div>
     </form>
+
+    <div class="section-head" style="margin-bottom: 2rem;">
+      <div class="section-head__text">
+        <p class="eyebrow">{{ rooms|length }} {{ 'room' if rooms|length == 1 else 'rooms' }} shown</p>
+        <h2 style="font-size: clamp(1.6rem, 2.6vw, 2.1rem);">
+          {% if request.args.get('room_type') %}{{ request.args.get('room_type') }} rooms{% else %}All accommodation{% endif %}
+        </h2>
+      </div>
+      {% if request.args.get('check_in') or request.args.get('check_out') or request.args.get('guests') or request.args.get('room_type') %}
+      <div class="section-head__aside">
+        <a class="link-arrow" href="{{ url_for('public.rooms') }}">Clear filters</a>
+      </div>
+      {% endif %}
+    </div>
+
     <div class="grid-3">
       {% for room in rooms %}
-      <div class="card">
-        <div class="card-img">
-          <img src="{% if room.image_filename %}{{ url_for('static', filename='images/rooms/' + room.image_filename) }}{% else %}https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80{% endif %}"
-               alt="{{ room.name }}" onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80'">
-        </div>
-        <div class="card-body">
-          <h3>{{ room.name }}</h3>
-          <p style="color:var(--grey); font-size:0.9rem;">{{ room.room_type }} · Max {{ room.max_occupancy }} guests</p>
-          <p style="margin-top:0.5rem; font-size:0.9rem;">{{ room.description[:100] }}…</p>
-          <div class="card-meta">
-            <span class="price">S${{ '%.0f'|format(room.price_per_night) }} <small>/ night</small></span>
-            <a href="{{ url_for('public.room_detail', room_id=room.id) }}" class="btn btn-navy btn-sm">Details</a>
+      {% set amenities = room.amenities.split(',') if room.amenities else [] %}
+      <article class="room-card reveal">
+        <a class="room-card__media" href="{{ url_for('public.room_detail', room_id=room.id) }}" tabindex="-1" aria-hidden="true">
+          <img src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}"
+               alt="{{ room.name }}" loading="lazy">
+          <span class="room-card__flag">{{ room.room_type }}</span>
+        </a>
+        <div class="room-card__body">
+          <span class="room-card__type">{{ room.room_type }}</span>
+          <h3 class="room-card__title"><a href="{{ url_for('public.room_detail', room_id=room.id) }}">{{ room.name }}</a></h3>
+          <p class="room-card__copy">{{ room.description|truncate(120, true, '…') if room.description else 'A calm, considered room with harbour or courtyard outlook.' }}</p>
+          <div class="room-card__meta">
+            <span>Sleeps {{ room.max_occupancy }}</span>
+            <span>Harbour or courtyard</span>
+          </div>
+          {% if amenities %}
+          <p class="room-card__amenities">{{ amenities[:3]|map('trim')|join(' · ') }}</p>
+          {% endif %}
+          <div class="room-card__footer">
+            <div class="rate">S${{ '%.0f'|format(room.price_per_night) }}<span class="rate__unit">per night</span></div>
+            <a class="btn btn--ghost btn--sm" href="{{ url_for('public.room_detail', room_id=room.id) }}">View room</a>
           </div>
         </div>
-      </div>
+      </article>
       {% else %}
-      <p class="text-center" style="grid-column:1/-1; padding:3rem;">No rooms match your criteria.</p>
+      <div class="empty-state" style="grid-column: 1 / -1;">
+        <p class="eyebrow" style="justify-content: center;">No match</p>
+        <h2 style="margin-top: 0.75rem;">Nothing available for those dates</h2>
+        <p>Try a different arrival or departure date, or widen the room type. Our desk can also hold a room for you directly.</p>
+        <div class="form-actions" style="justify-content: center;">
+          <a class="btn" href="{{ url_for('public.rooms') }}">See all rooms</a>
+          <a class="btn btn--ghost" href="{{ url_for('public.contact') }}">Contact the desk</a>
+        </div>
+      </div>
       {% endfor %}
     </div>
   </div>

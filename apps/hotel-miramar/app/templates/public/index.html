@@ -1,170 +1,313 @@
 {% extends 'base.html' %}
-{% block title %}{{ hotel_name }} — Luxury Stay in Singapore{% endblock %}
+{% block title %}{{ hotel_name }} — A quiet luxury on Marina Bay{% endblock %}
+{% block meta_description %}Hotel Miramar SG: rooms and suites with harbour views on Marina Bay, Singapore. Check availability, view rates and reserve directly.{% endblock %}
 
 {% block content %}
+{% set hero_slide = sliders[0] if sliders else None %}
+{% set hero_src = url_for('static', filename='images/slider/' + hero_slide.image_filename) if hero_slide else url_for('static', filename='images/attractions/marina-bay-header.jpg') %}
+{% set hero_alt = hero_slide.title if hero_slide and hero_slide.title else 'Marina Bay at dusk, Singapore' %}
+
 <!-- Hero -->
-<section class="hero" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80');">
-  <div class="hero-content">
-    <h1>Hotel Miramar SG</h1>
-    <p class="tagline">{{ hotel_tagline }}</p>
-    <div class="hero-cta">
-      <a href="{{ url_for('public.rooms') }}" class="btn btn-primary btn-lg">Explore Rooms</a>
-      <a href="{{ url_for('auth.register') }}" class="btn btn-outline btn-lg">Book Your Stay</a>
+<section class="home-hero">
+  <div class="home-hero__media">
+    <img src="{{ hero_src }}" alt="{{ hero_alt }}" fetchpriority="high">
+  </div>
+  <span class="home-hero__scroll" aria-hidden="true">Marina Bay, Singapore</span>
+  <div class="container home-hero__inner">
+    <div class="home-hero__content">
+      <p class="eyebrow">Marina Bay &middot; Singapore</p>
+      <h1 class="home-hero__title">A quieter kind of<br><em>luxury</em>, on the bay.</h1>
+      {% if hero_slide and hero_slide.caption %}
+        <p class="home-hero__lede">{{ hero_slide.caption }}</p>
+      {% else %}
+        <p class="home-hero__lede">Five room categories, warm Singaporean service and the water at your doorstep. Reserved for travellers who prefer the calm side of the city.</p>
+      {% endif %}
+      <div class="home-hero__meta">
+        <span>Est. Marina Bay</span>
+        <span>5 minutes to Bayfront MRT</span>
+        {% if featured_rooms %}<span>From S${{ '%.0f'|format(featured_rooms|map(attribute='price_per_night')|min) }} per night</span>{% endif %}
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Search -->
-<section class="section" style="padding-top: 0; margin-top: -3rem; position: relative; z-index: 10;">
-  <div class="container">
-    <form action="{{ url_for('public.rooms') }}" method="get" class="search-bar">
-      <div class="form-group" style="margin:0;">
-        <label>Check-in</label>
-        <input type="date" name="check_in" class="form-control" required>
-      </div>
-      <div class="form-group" style="margin:0;">
-        <label>Check-out</label>
-        <input type="date" name="check_out" class="form-control" required>
-      </div>
-      <div class="form-group" style="margin:0;">
-        <label>Guests</label>
-        <select name="guests" class="form-control">
-          {% for i in range(1, 7) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
-        </select>
-      </div>
-      <div class="form-group" style="margin:0;">
-        <label>Type</label>
-        <select name="room_type" class="form-control">
-          <option value="">Any Type</option>
-          <option>Standard</option>
-          <option>Deluxe</option>
-          <option>Suite</option>
-          <option>Presidential</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-  </div>
-</section>
+<!-- Booking widget -->
+<div class="container booking-bar-wrap">
+  <form class="booking-bar" method="get" action="{{ url_for('public.rooms') }}" data-date-scope aria-label="Check room availability">
+    <div class="booking-bar__field">
+      <label for="home-check-in">Arrival</label>
+      <input id="home-check-in" class="input" type="date" name="check_in" required>
+    </div>
+    <div class="booking-bar__field">
+      <label for="home-check-out">Departure</label>
+      <input id="home-check-out" class="input" type="date" name="check_out" required>
+    </div>
+    <div class="booking-bar__field">
+      <label for="home-guests">Guests</label>
+      <select id="home-guests" class="input" name="guests">
+        {% for i in range(1, 7) %}<option value="{{ i }}">{{ i }} {{ 'guest' if i == 1 else 'guests' }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="booking-bar__field">
+      <label for="home-room-type">Room type</label>
+      <select id="home-room-type" class="input" name="room_type">
+        <option value="">Any room</option>
+        <option value="Standard">Standard</option>
+        <option value="Deluxe">Deluxe</option>
+        <option value="Suite">Suite</option>
+        <option value="Presidential">Presidential</option>
+      </select>
+    </div>
+    <div class="booking-bar__submit">
+      <button type="submit" class="btn">Check availability</button>
+    </div>
+  </form>
+</div>
 
-<!-- Featured Rooms -->
+<!-- Editorial introduction -->
 <section class="section">
   <div class="container">
-    <div class="section-title">
-      <h2>Featured Rooms & Suites</h2>
-      <div class="gold-line"></div>
-      <p>Discover our carefully curated selection of luxury accommodations</p>
-    </div>
-    <div class="grid-3">
-      {% for room in featured_rooms %}
-      <div class="card">
-        <div class="card-img">
-          <img src="{% if room.image_filename %}{{ url_for('static', filename='images/rooms/' + room.image_filename) }}{% else %}https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80{% endif %}"
-               alt="{{ room.name }}"
-               onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80'">
-        </div>
-        <div class="card-body">
-          <h3>{{ room.name }}</h3>
-          <p style="color:var(--grey); font-size:0.9rem;">{{ room.room_type }} · Up to {{ room.max_occupancy }} guests</p>
-          <p style="margin-top:0.6rem; font-size:0.92rem;">{{ room.description[:110] }}{% if room.description|length > 110 %}…{% endif %}</p>
-          <div class="card-meta">
-            <span class="price">S${{ '%.0f'|format(room.price_per_night) }} <small>/ night</small></span>
-            <a href="{{ url_for('public.room_detail', room_id=room.id) }}" class="btn btn-navy btn-sm">View</a>
+    <div class="split intro-split">
+      <div>
+        <p class="eyebrow">The hotel</p>
+        <h2 class="display" style="font-size: clamp(2.1rem, 3.8vw, 3.2rem); margin-top: 1rem;">A sanctuary of warm timber, sea light and unhurried service.</h2>
+        <div class="intro-facts">
+          {% if featured_rooms %}
+          <div class="intro-fact">
+            <div class="intro-fact__value">S${{ '%.0f'|format(featured_rooms|map(attribute='price_per_night')|min) }}</div>
+            <div class="intro-fact__label">Nightly, from</div>
+          </div>
+          {% endif %}
+          <div class="intro-fact">
+            <div class="intro-fact__value">24h</div>
+            <div class="intro-fact__label">Front desk</div>
+          </div>
+          <div class="intro-fact">
+            <div class="intro-fact__value">05 min</div>
+            <div class="intro-fact__label">Walk to MRT</div>
           </div>
         </div>
       </div>
+      <div class="stack">
+        <p class="pull-quote">Hotel Miramar SG is an address for people who like their luxury <em>low-lit</em>: dark timber, ivory linen, brass details and the bay moving quietly outside.</p>
+        <p class="muted">Set on Marina Boulevard, the hotel keeps the city close but the noise at arm's length. Rooms open onto harbour light, the rooftop pool faces the skyline, and the front desk knows your name by the second night.</p>
+        <p class="muted">Breakfast is served until eleven. Cars are parked for you. Nothing is rushed.</p>
+        <a class="link-arrow" href="{{ url_for('public.about') }}">Our story</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Rooms showcase -->
+<section class="section section--sand section--hairline">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <p class="eyebrow">Stay</p>
+        <h2>Rooms &amp; suites</h2>
+        <p>Each room is finished in warm timber and natural cloth, with harbour or courtyard outlooks and rates shown live from our reservations desk.</p>
+      </div>
+      <div class="section-head__aside">
+        <a class="link-arrow" href="{{ url_for('public.rooms') }}">All rooms</a>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      {% for room in featured_rooms %}
+      {% set amenities = room.amenities.split(',') if room.amenities else [] %}
+      <article class="room-card reveal">
+        <a class="room-card__media" href="{{ url_for('public.room_detail', room_id=room.id) }}" tabindex="-1" aria-hidden="true">
+          <img src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}"
+               alt="{{ room.name }}" loading="lazy">
+          <span class="room-card__flag">{{ room.room_type }}</span>
+        </a>
+        <div class="room-card__body">
+          <span class="room-card__type">{{ room.room_type }}</span>
+          <h3 class="room-card__title"><a href="{{ url_for('public.room_detail', room_id=room.id) }}">{{ room.name }}</a></h3>
+          <p class="room-card__copy">{{ room.description|truncate(112, true, '…') if room.description else 'A calm, light-filled room with everything considered.' }}</p>
+          <div class="room-card__meta">
+            <span>Sleeps {{ room.max_occupancy }}</span>
+            <span>Harbour or courtyard</span>
+          </div>
+          {% if amenities %}
+          <p class="room-card__amenities">{{ amenities[:3]|map('trim')|join(' · ') }}</p>
+          {% endif %}
+          <div class="room-card__footer">
+            <div class="rate">S${{ '%.0f'|format(room.price_per_night) }}<span class="rate__unit">per night</span></div>
+            <a class="btn btn--ghost btn--sm" href="{{ url_for('public.room_detail', room_id=room.id) }}">View room</a>
+          </div>
+        </div>
+      </article>
       {% else %}
-      <p class="text-center" style="grid-column:1/-1;">Rooms will appear here once added by the administrator.</p>
+      <div class="empty-state" style="grid-column: 1 / -1;">
+        <h2>Rooms are being prepared</h2>
+        <p>Our reservations team is updating availability. Please check back shortly.</p>
+        <a class="btn" href="{{ url_for('public.contact') }}">Contact reservations</a>
+      </div>
       {% endfor %}
     </div>
-    <div class="text-center mt-4">
-      <a href="{{ url_for('public.rooms') }}" class="btn btn-navy">View All Rooms</a>
-    </div>
   </div>
 </section>
 
-<!-- Facilities -->
-<section class="section" style="background: var(--ivory-dark);">
-  <div class="container">
-    <div class="section-title">
-      <h2>Hotel Facilities</h2>
-      <div class="gold-line"></div>
-      <p>Everything you need for a refined stay</p>
-    </div>
-    <div class="grid-3">
-      <div class="facility-item">
-        <div class="facility-icon">🏊</div>
-        <h3 style="font-size:1.1rem;">Infinity Pool</h3>
-        <p style="font-size:0.9rem; color:var(--grey);">Rooftop pool with panoramic Marina Bay views</p>
-      </div>
-      <div class="facility-item">
-        <div class="facility-icon">🍽</div>
-        <h3 style="font-size:1.1rem;">Fine Dining</h3>
-        <p style="font-size:0.9rem; color:var(--grey);">Award-winning restaurants and 24-hour room service</p>
-      </div>
-      <div class="facility-item">
-        <div class="facility-icon">💆</div>
-        <h3 style="font-size:1.1rem;">Spa & Wellness</h3>
-        <p style="font-size:0.9rem; color:var(--grey);">Full-service spa, fitness centre and sauna</p>
-      </div>
-      <div class="facility-item">
-        <div class="facility-icon">💼</div>
-        <h3 style="font-size:1.1rem;">Business Centre</h3>
-        <p style="font-size:0.9rem; color:var(--grey);">Meeting rooms and high-speed connectivity</p>
-      </div>
-      <div class="facility-item">
-        <div class="facility-icon">🚗</div>
-        <h3 style="font-size:1.1rem;">Valet Parking</h3>
-        <p style="font-size:0.9rem; color:var(--grey);">Complimentary valet for all suite guests</p>
-      </div>
-      <div class="facility-item">
-        <div class="facility-icon">🌐</div>
-        <h3 style="font-size:1.1rem;">Free Wi-Fi</h3>
-        <p style="font-size:0.9rem; color:var(--grey);">Premium high-speed internet throughout</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- About teaser -->
+<!-- Amenities -->
 <section class="section">
   <div class="container">
-    <div class="grid-2" style="align-items:center;">
-      <div>
-        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80"
-             alt="Hotel lobby" style="border-radius:var(--radius-lg); box-shadow:var(--shadow-lg);"
-             onerror="this.style.display='none'">
+    <div class="amenity-layout">
+      <div class="amenity-aside">
+        <p class="eyebrow">Facilities</p>
+        <h2 style="margin-top: 1rem;">Everything kept ready, nothing overdone.</h2>
+        <p class="muted" style="margin-top: 1rem;">Six things we do properly, from the rooftop pool at dusk to a car waiting before you ask.</p>
+        <a class="link-arrow" href="{{ url_for('public.contact') }}" style="margin-top: 1.75rem;">Enquire with the desk</a>
       </div>
-      <div>
-        <h2>A Sanctuary in the City</h2>
-        <div class="gold-line" style="margin:1rem 0;"></div>
-        <p style="color:var(--grey); margin-bottom:1.25rem;">
-          Nestled in the heart of Singapore’s Marina Bay district, Hotel Miramar SG offers an unparalleled blend of contemporary luxury and warm hospitality. Every detail has been thoughtfully designed for the discerning traveller.
-        </p>
-        <a href="{{ url_for('public.about') }}" class="btn btn-navy">Discover More</a>
+      <div class="amenity-list">
+        <div class="amenity">
+          <span class="amenity__num">01</span>
+          <div>
+            <div class="amenity__name">Rooftop infinity pool</div>
+            <p class="amenity__copy">A quiet edge of water above Marina Bay, open from six in the morning until late.</p>
+          </div>
+        </div>
+        <div class="amenity">
+          <span class="amenity__num">02</span>
+          <div>
+            <div class="amenity__name">Miramar Table</div>
+            <p class="amenity__copy">Seasonal Singaporean cooking and a short wine list, served indoors or on the terrace.</p>
+          </div>
+        </div>
+        <div class="amenity">
+          <span class="amenity__num">03</span>
+          <div>
+            <div class="amenity__name">Spa &amp; wellness</div>
+            <p class="amenity__copy">Treatment rooms, a steam room and a small gym with harbour light.</p>
+          </div>
+        </div>
+        <div class="amenity">
+          <span class="amenity__num">04</span>
+          <div>
+            <div class="amenity__name">Executive lounge</div>
+            <p class="amenity__copy">A calm floor for suite guests: breakfast, evening canapés and a desk if you must.</p>
+          </div>
+        </div>
+        <div class="amenity">
+          <span class="amenity__num">05</span>
+          <div>
+            <div class="amenity__name">Valet &amp; airport transfers</div>
+            <p class="amenity__copy">Cars met at the door, parked for you, and a transfer arranged to Changi on request.</p>
+          </div>
+        </div>
+        <div class="amenity">
+          <span class="amenity__num">06</span>
+          <div>
+            <div class="amenity__name">Fibre Wi-Fi throughout</div>
+            <p class="amenity__copy">Fast, quiet and complimentary in every room, the lobby and the meeting floor.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Testimonials -->
-{% if testimonials %}
-<section class="section" style="background: var(--navy); color: var(--ivory);">
+<!-- Neighbourhood -->
+<section class="section section--sand section--hairline">
   <div class="container">
-    <div class="section-title">
-      <h2 style="color:var(--ivory);">Guest Experiences</h2>
-      <div class="gold-line"></div>
-    </div>
-    <div class="grid-3">
-      {% for t in testimonials %}
-      <div style="background:rgba(255,255,255,0.06); border-radius:var(--radius); padding:1.75rem; border:1px solid rgba(201,168,76,0.2);">
-        <div style="color:var(--gold); margin-bottom:0.75rem;">{% for i in range(t.rating) %}★{% endfor %}</div>
-        <p style="font-style:italic; opacity:0.9; margin-bottom:1rem;">“{{ t.message }}”</p>
-        <strong style="color:var(--gold);">{{ t.name }}</strong>
+    <div class="split" style="align-items: stretch;">
+      <div class="neighbourhood-media reveal">
+        <img src="{{ url_for('static', filename='images/attractions/gardens-by-the-bay.jpg') }}" alt="Gardens by the Bay at dusk" loading="lazy">
       </div>
+      <div>
+        <p class="eyebrow">The neighbourhood</p>
+        <h2 style="margin-top: 1rem;">The bay is the front garden.</h2>
+        <p class="muted" style="margin-top: 1rem;">Walk out and the city arranges itself around you: gardens to the north, the waterfront to the south, the MRT one block east.</p>
+        <div class="distance-list">
+          <div class="distance">
+            <div class="distance__name">Bayfront MRT <small>Circle &amp; Downtown lines</small></div>
+            <div class="distance__time">5 min walk</div>
+          </div>
+          <div class="distance">
+            <div class="distance__name">Gardens by the Bay <small>Supertree Grove &amp; conservatories</small></div>
+            <div class="distance__time">8 min walk</div>
+          </div>
+          <div class="distance">
+            <div class="distance__name">Marina Bay Sands <small>SkyPark, mall &amp; waterfront dining</small></div>
+            <div class="distance__time">10 min walk</div>
+          </div>
+          <div class="distance">
+            <div class="distance__name">Changi Airport <small>By taxi, traffic dependent</small></div>
+            <div class="distance__time">25 min drive</div>
+          </div>
+        </div>
+        <a class="link-arrow" href="{{ url_for('public.location') }}" style="margin-top: 1.75rem;">Location &amp; directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Film -->
+<section class="section section--ink">
+  <div class="container">
+    <div class="section-head" style="justify-content: center; text-align: center;">
+      <div class="section-head__text">
+        <p class="eyebrow" style="justify-content: center;">A film</p>
+        <h2 style="color: var(--ivory); margin-top: 1rem;">See the rooms before you arrive</h2>
+        <p style="color: rgba(251, 247, 239, 0.7); margin-inline: auto;">A short walk through the lobby, the rooms and the bay at dusk.</p>
+      </div>
+    </div>
+    <div class="video-frame">
+      <video controls playsinline preload="none"
+             poster="{{ url_for('static', filename='images/hero/hero-poster.jpg') }}">
+        <source src="{{ url_for('static', filename='videos/hotel-miramar-tour.mp4') }}" type="video/mp4">
+        Your browser does not support the video element.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- Guest voices -->
+{% if testimonials %}
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <p class="eyebrow">Guest voices</p>
+        <h2>In their words</h2>
+      </div>
+      <div class="section-head__aside">
+        <a class="link-arrow" href="{{ url_for('public.feedback') }}">Leave feedback</a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="quote-grid">
+      {% for t in testimonials %}
+      <article class="quote-card">
+        <div class="quote-mark" aria-hidden="true">&ldquo;</div>
+        <blockquote>{{ t.message }}</blockquote>
+        <div class="quote-card__foot">
+          <span class="quote-card__name">{{ t.name }}</span>
+          <span class="stars" aria-label="{{ t.rating }} out of 5">{% for i in range(t.rating) %}&#9733;{% endfor %}</span>
+        </div>
+      </article>
       {% endfor %}
     </div>
   </div>
 </section>
 {% endif %}
+
+<!-- Closing CTA -->
+<section class="cta-band">
+  <div class="cta-band__media" aria-hidden="true">
+    <img src="{{ url_for('static', filename='images/hero/hero-poster.jpg') }}" alt="" loading="lazy">
+  </div>
+  <div class="container cta-band__inner">
+    <div>
+      <p class="eyebrow" style="color: var(--brass-bright);">Reservations</p>
+      <h2>Your room is waiting.</h2>
+      <p>Book directly with us for the best available rate, a flexible arrival time and a room chosen with care.</p>
+    </div>
+    <div class="cta-band__actions">
+      <a class="btn btn--brass" href="{{ url_for('public.rooms') }}">Check availability</a>
+      <a class="btn btn--light" href="{{ url_for('public.contact') }}">Speak to the desk</a>
+    </div>
+  </div>
+</section>
 {% endblock %}

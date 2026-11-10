@@ -1,48 +1,70 @@
 {% extends 'base.html' %}
-{% block title %}Register — {{ hotel_name }}{% endblock %}
+{% block title %}Create an account — {{ hotel_name }}{% endblock %}
+
 {% block content %}
-<div class="auth-page" style="background-image:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80');">
-  <div class="auth-card" style="max-width:480px;">
-    <h2>Create Account</h2>
-    <p class="subtitle">Join us for exclusive rates and easy booking</p>
-    <form method="post">
-      {{ form.hidden_tag() }}
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-        <div class="form-group">
-          {{ form.first_name.label }}
-          {{ form.first_name(class='form-control') }}
-          {% for e in form.first_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+<div class="auth-shell">
+  <div class="auth-media">
+    <img src="{{ url_for('static', filename='images/rooms/executive-suite.jpg') }}" alt="Executive Suite living area">
+    <div class="auth-media__caption">
+      <p class="eyebrow">Join the house</p>
+      <h2>Direct rates, held dates, no fuss.</h2>
+      <p>An account keeps your details on file and your reservations in one quiet place.</p>
+    </div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-card__head">
+        <p class="eyebrow">New guest</p>
+        <h1>Create an account</h1>
+        <p>It takes less than a minute and costs nothing.</p>
+      </div>
+
+      <form method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-grid">
+          <div class="form-group">
+            {{ form.first_name.label }}
+            {{ form.first_name(class='input', autocomplete='given-name', **({'aria-invalid': 'true'} if form.first_name.errors else {})) }}
+            {% for e in form.first_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.last_name.label }}
+            {{ form.last_name(class='input', autocomplete='family-name', **({'aria-invalid': 'true'} if form.last_name.errors else {})) }}
+            {% for e in form.last_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group form-group--full">
+            {{ form.email.label }}
+            {{ form.email(class='input', autocomplete='email', **({'aria-invalid': 'true'} if form.email.errors else {})) }}
+            {% for e in form.email.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group form-group--full">
+            {{ form.phone.label }}
+            {{ form.phone(class='input', autocomplete='tel') }}
+            {% for e in form.phone.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(class='input', autocomplete='new-password', **({'aria-invalid': 'true'} if form.password.errors else {})) }}
+            {% for e in form.password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password(class='input', autocomplete='new-password', **({'aria-invalid': 'true'} if form.confirm_password.errors else {})) }}
+            {% for e in form.confirm_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+          </div>
         </div>
-        <div class="form-group">
-          {{ form.last_name.label }}
-          {{ form.last_name(class='form-control') }}
-          {% for e in form.last_name.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        <div class="form-actions" style="margin-top: 1.25rem;">
+          {{ form.submit(class='btn btn--block') }}
         </div>
+        <p class="form-note">Passwords are stored securely; we never display them back to you.</p>
+      </form>
+
+      <div class="auth-alt">
+        <span>Already registered?</span>
+        <a href="{{ url_for('auth.login') }}">Sign in</a>
       </div>
-      <div class="form-group">
-        {{ form.email.label }}
-        {{ form.email(class='form-control') }}
-        {% for e in form.email.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
-      </div>
-      <div class="form-group">
-        {{ form.phone.label }}
-        {{ form.phone(class='form-control') }}
-      </div>
-      <div class="form-group">
-        {{ form.password.label }}
-        {{ form.password(class='form-control') }}
-        {% for e in form.password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
-      </div>
-      <div class="form-group">
-        {{ form.confirm_password.label }}
-        {{ form.confirm_password(class='form-control') }}
-        {% for e in form.confirm_password.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
-      </div>
-      {{ form.submit(class='btn btn-primary btn-block') }}
-    </form>
-    <p class="text-center mt-3" style="font-size:0.9rem;">
-      Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a>
-    </p>
+    </div>
   </div>
 </div>
 {% endblock %}

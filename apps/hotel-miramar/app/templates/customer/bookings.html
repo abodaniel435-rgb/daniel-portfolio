@@ -1,46 +1,92 @@
 {% extends 'base.html' %}
-{% block title %}My Bookings — {{ hotel_name }}{% endblock %}
+{% block title %}My stays — {{ hotel_name }}{% endblock %}
+
 {% block content %}
-<div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1920&q=80'); min-height:auto;">
-  <div class="page-header" style="padding:8rem 0 3rem;">
-    <h1>My Bookings</h1>
-    <div class="gold-line"></div>
+<div class="container">
+  <div class="page-intro">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="color: var(--muted);">
+      <a href="{{ url_for('customer.dashboard') }}" style="color: var(--muted);">My account</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page" style="color: var(--ink);">My stays</span>
+    </nav>
+    <p class="eyebrow" style="margin-top: 1rem;">Reservations</p>
+    <h1>My stays</h1>
+    <p>Every request you have made, with its reference and current status.</p>
   </div>
-</div>
-<section class="section" style="padding-top:2rem;">
-  <div class="container">
-    {% if bookings %}
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Room</th><th>Check-in</th><th>Check-out</th><th>Guests</th><th>Total</th><th>Status</th><th>Action</th></tr>
-        </thead>
-        <tbody>
-          {% for b in bookings %}
-          <tr>
-            <td>{{ b.room.name }}</td>
-            <td>{{ b.check_in }}</td>
-            <td>{{ b.check_out }}</td>
-            <td>{{ b.num_guests }}</td>
-            <td>S${{ '%.2f'|format(b.total_price) }}</td>
-            <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
-            <td>
-              {% if b.status in ('pending', 'approved') %}
-              <form method="post" action="{{ url_for('customer.cancel_booking', booking_id=b.id) }}" style="display:inline;"
-                    onsubmit="return confirm('Cancel this booking?');">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn btn-sm" style="background:var(--danger); color:#fff; border:none;">Cancel</button>
-              </form>
-              {% else %}—{% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+  {% set confirmed_id = request.args.get('confirmed', 0)|int %}
+  {% set confirmed = (bookings|selectattr('id', 'equalto', confirmed_id)|first) if confirmed_id else None %}
+
+  {% if confirmed %}
+  <div class="stepper" aria-label="Booking progress">
+    <div class="step is-done"><span class="step__num" aria-hidden="true">&#10003;</span><span class="step__label">Choose room</span></div>
+    <div class="step is-done"><span class="step__num" aria-hidden="true">&#10003;</span><span class="step__label">Dates &amp; guests</span></div>
+    <div class="step is-active"><span class="step__num" aria-hidden="true">3</span><span class="step__label">Confirmation</span></div>
+  </div>
+
+  <div class="confirmation">
+    <div class="confirmation__seal" aria-hidden="true">&#10003;</div>
+    <div>
+      <p class="eyebrow">Request received</p>
+      <h2>Thank you, {{ current_user.first_name }}. Your room is reserved pending confirmation.</h2>
+      <p>{{ confirmed.room.name }} &middot; {{ confirmed.check_in.strftime('%d %B') }} to {{ confirmed.check_out.strftime('%d %B %Y') }} &middot; {{ confirmed.num_guests }} {{ 'guest' if confirmed.num_guests == 1 else 'guests' }} &middot; S${{ '%.2f'|format(confirmed.total_price) }}</p>
+      <p>Our reservations team will email {{ current_user.email }} once the room is confirmed, usually within a few hours. You can amend or cancel below.</p>
     </div>
-    {% else %}
-    <p class="text-center" style="color:var(--grey); padding:3rem;">No bookings yet. <a href="{{ url_for('customer.search_rooms') }}">Search rooms</a></p>
-    {% endif %}
+    <dl class="confirmation__ref">
+      <dt>Reference</dt>
+      <dd>MMR-{{ '%05d'|format(confirmed.id) }}</dd>
+      <dt style="margin-top: 0.6rem;">Status</dt>
+      <dd style="font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.3rem;">{{ confirmed.status|capitalize }}</dd>
+    </dl>
   </div>
-</section>
+  {% endif %}
+
+  <div class="portal-actions">
+    <a class="btn btn--ghost" href="{{ url_for('customer.search_rooms') }}">Search rooms</a>
+    <a class="btn btn--ghost" href="{{ url_for('customer.profile') }}">My profile</a>
+  </div>
+
+  {% if bookings %}
+  <div class="booking-list" style="padding-bottom: clamp(2.5rem, 5vw, 4rem);">
+    {% for b in bookings %}
+    <article class="booking-card" style="grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto;">
+      <div>
+        <p class="booking-card__ref">MMR-{{ '%05d'|format(b.id) }} &middot; {{ b.room.room_type }}</p>
+        <h2 class="booking-card__room">{{ b.room.name }}</h2>
+        <p class="booking-card__dates">
+          <strong>{{ b.check_in.strftime('%a %d %b') }}</strong> to <strong>{{ b.check_out.strftime('%a %d %b %Y') }}</strong>
+          &middot; {{ b.nights }} {{ 'night' if b.nights == 1 else 'nights' }} &middot; {{ b.num_guests }} {{ 'guest' if b.num_guests == 1 else 'guests' }}
+        </p>
+        {% if b.special_requests %}
+        <p class="muted" style="font-size: 0.78rem; margin-top: 0.5rem;">Request: {{ b.special_requests|truncate(80, true, '…') }}</p>
+        {% endif %}
+      </div>
+      <div>
+        <span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span>
+        <div class="booking-card__dates" style="margin-top: 0.5rem;">Submitted {{ b.created_at.strftime('%d %b %Y') }}</div>
+      </div>
+      <div>
+        <div class="booking-card__total">S${{ '%.2f'|format(b.total_price) }}<small>Total stay</small></div>
+        <div class="booking-card__foot" style="margin-top: 0.75rem;">
+          <a class="btn btn--ghost btn--sm" href="{{ url_for('public.room_detail', room_id=b.room.id) }}">View room</a>
+          {% if b.status in ('pending', 'approved') %}
+          <form method="post" action="{{ url_for('customer.cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Cancel this booking?');">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn--danger btn--sm">Cancel</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state" style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
+    <p class="eyebrow" style="justify-content: center;">No stays yet</p>
+    <h2 style="margin-top: 0.75rem;">Your first room is waiting</h2>
+    <p>Search available rooms by date and reserve in a minute. Nothing is charged online.</p>
+    <a class="btn" href="{{ url_for('customer.search_rooms') }}">Search rooms</a>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

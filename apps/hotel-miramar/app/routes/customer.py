@@ -149,7 +149,7 @@ def book_room(room_id):
         db.session.commit()
         send_booking_status_email(booking)
         flash('Booking request submitted! Awaiting admin approval.', 'success')
-        return redirect(url_for('customer.my_bookings'))
+        return redirect(url_for('customer.my_bookings', confirmed=booking.id))
 
     return render_template('customer/book.html', form=form, room=room)
 

@@ -1,33 +1,48 @@
 {% extends 'admin/base_admin.html' %}
 {% block title %}Messages — {{ hotel_name }}{% endblock %}
 {% block admin_content %}
-<h2 class="mb-3">Contact Messages</h2>
+<div class="admin-page-head">
+  <div>
+    <p class="eyebrow">Guest voice</p>
+    <h1>Contact messages</h1>
+    <p>Enquiries from the public contact form. Unread messages are marked with a brass rule.</p>
+  </div>
+</div>
+
 <div class="table-wrap">
   <table>
-    <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th><th>Actions</th></tr></thead>
+    <thead>
+      <tr><th>Guest</th><th>Subject</th><th>Message</th><th>Received</th><th>Status</th><th>Actions</th></tr>
+    </thead>
     <tbody>
       {% for m in messages %}
-      <tr style="{% if not m.is_read %}font-weight:600;{% endif %}">
-        <td>{{ m.name }}</td>
-        <td>{{ m.email }}</td>
+      <tr>
+        <td>
+          <div class="cell-with-thumb__name">{{ m.name }}</div>
+          <div class="cell-with-thumb__meta">{{ m.email }}</div>
+        </td>
         <td>{{ m.subject or '—' }}</td>
-        <td style="max-width:240px;">{{ m.message[:60] }}…</td>
-        <td>{{ m.created_at.strftime('%Y-%m-%d') }}</td>
+        <td class="cell-truncate cell-muted">{{ m.message|truncate(100, true, '…') }}</td>
+        <td class="table-num">{{ m.created_at.strftime('%d %b %Y') }}</td>
+        <td>
+          {% if m.is_read %}<span class="badge badge-cancelled">Read</span>
+          {% else %}<span class="badge badge-pending">Unread</span>{% endif %}
+        </td>
         <td>
           {% if not m.is_read %}
-          <form method="post" action="{{ url_for('admin.mark_message_read', msg_id=m.id) }}" style="display:inline;">
+          <form method="post" action="{{ url_for('admin.mark_message_read', msg_id=m.id) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-sm btn-navy">Mark Read</button>
+            <button type="submit" class="btn btn--ghost btn--sm">Mark read</button>
           </form>
           {% endif %}
-          <form method="post" action="{{ url_for('admin.delete_message', msg_id=m.id) }}" style="display:inline;" onsubmit="return confirm('Delete?');">
+          <form method="post" action="{{ url_for('admin.delete_message', msg_id=m.id) }}" onsubmit="return confirm('Delete this message?');">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-sm" style="background:var(--danger);color:#fff;border:none;">Delete</button>
+            <button type="submit" class="btn btn--danger btn--sm">Delete</button>
           </form>
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="6" style="text-align:center;">No messages</td></tr>
+      <tr><td colspan="6" class="cell-muted">No messages yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>
