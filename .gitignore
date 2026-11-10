@@ -5,6 +5,9 @@ desktop.ini
 .env
 *.log
 *.sqlite3
+*.db
+*.db-journal
+database/*.db
 storage/*.lock
 storage/installed.lock
 __pycache__/
