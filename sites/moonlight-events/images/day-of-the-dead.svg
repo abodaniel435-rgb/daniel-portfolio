@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Day of the Dead illustration</title>
+  <desc id="desc">Marigolds, candles and a decorated skull for Mexico's Day of the Dead.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#35104f"/>
+      <stop offset="100%" stop-color="#0c2444"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="180" cy="130" r="7" fill="#ffd166"/>
+  <circle cx="280" cy="94" r="10" fill="#ff9f1c"/>
+  <circle cx="980" cy="128" r="8" fill="#ffd166"/>
+  <circle cx="1080" cy="188" r="7" fill="#ff9f1c"/>
+  <g transform="translate(600 430)">
+    <path d="M0-182c132 0 220 84 220 200 0 146-89 246-220 246S-220 164-220 18C-220-98-132-182 0-182z" fill="#fff7ef"/>
+    <circle cx="-80" cy="-34" r="48" fill="#1c2947"/>
+    <circle cx="80" cy="-34" r="48" fill="#1c2947"/>
+    <path d="M0 0l34 56h-68z" fill="#ff8b38"/>
+    <path d="M-74 100c50 44 98 64 146 64s96-20 146-64" fill="none" stroke="#c83f3f" stroke-width="16" stroke-linecap="round"/>
+    <g fill="#ffb703">
+      <circle cx="-118" cy="-134" r="18"/>
+      <circle cx="-70" cy="-160" r="16"/>
+      <circle cx="0" cy="-170" r="16"/>
+      <circle cx="70" cy="-160" r="16"/>
+      <circle cx="118" cy="-134" r="18"/>
+    </g>
+  </g>
+  <g fill="#ffbf3c">
+    <circle cx="184" cy="590" r="22"/>
+    <circle cx="224" cy="620" r="22"/>
+    <circle cx="264" cy="590" r="22"/>
+    <circle cx="934" cy="590" r="22"/>
+    <circle cx="974" cy="620" r="22"/>
+    <circle cx="1014" cy="590" r="22"/>
+  </g>
+  <rect x="148" y="442" width="122" height="110" rx="12" fill="#f8e8c5"/>
+  <rect x="930" y="442" width="122" height="110" rx="12" fill="#f8e8c5"/>
+  <rect x="198" y="390" width="22" height="72" fill="#ffb703"/>
+  <rect x="980" y="390" width="22" height="72" fill="#ffb703"/>
+  <text x="76" y="96" fill="#fff0ca" font-size="56" font-family="Georgia, serif" letter-spacing="4">DAY OF THE DEAD</text>
+  <text x="80" y="140" fill="#ffbf3c" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Marigolds, candles and remembrance</text>
+</svg>

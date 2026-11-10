@@ -1,0 +1,980 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ThatGuys Fitness - Workouts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body><nav class="site-nav">
+  <div class="nav-logo" onclick="location.href='index.html'"><span>That</span>Guys Fitness</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a class="nav-active" href="workouts.html">Workouts</a></li>
+    <li><a href="demos.html">Demos</a></li>
+    <li><a href="guide.html">Guide</a></li>
+  </ul>
+</nav><main class="page-shell">
+  <header class="page-hero">
+    <div>
+      <div class="page-kicker">Weekly Training Split</div>
+      <h1 class="page-title">Workouts</h1>
+      <p class="page-copy">Pick a day, open an exercise, and use the built-in demo panel before your first set.</p>
+    </div>
+  </header><section class="schedule-section" id="schedule">
+  <div class="section-header fade-in">
+    <span class="section-tag">Weekly Training Split — Home Edition</span>
+    <h2 class="section-title">YOUR <span class="outline">WEEK</span></h2>
+    <div class="divider"></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="day-tabs fade-in">
+    <button class="day-tab active" id="tab-monday"    onclick="switchDay('monday')"   >Mon — Back, Triceps &amp; Abs</button>
+    <button class="day-tab"        id="tab-tuesday"   onclick="switchDay('tuesday')"  >Tue — Biceps, Shoulders &amp; Chest</button>
+    <button class="day-tab"        id="tab-wednesday" onclick="switchDay('wednesday')">Wed — Shoulders, Triceps &amp; Abs</button>
+    <button class="day-tab"        id="tab-thursday"  onclick="switchDay('thursday')" >Thu — Biceps &amp; Back</button>
+    <button class="day-tab"        id="tab-friday"    onclick="switchDay('friday')"   >Fri — Legs 🦵</button>
+  </div>
+
+  <!-- ===== MONDAY ===== -->
+  <div class="day-panel active" id="monday">
+    <div class="day-header">
+      <div>
+        <div class="day-name">Monday</div>
+        <div class="day-focus">Back · Triceps · Abs</div>
+        <div class="day-badges"><span class="muscle-badge">Back</span><span class="muscle-badge">Triceps</span><span class="muscle-badge">Abs</span></div>
+      </div>
+    </div>
+    <div class="cardio-banner">
+      <div class="cardio-icon">🔥</div>
+      <div class="cardio-text"><strong>Warm-Up Cardio — 10 mins</strong>Shadow Jump Rope × 3 min · High Knees × 2 min · Mountain Climbers × 2 min · Jumping Jacks × 3 min</div>
+    </div>
+
+    <!-- BACK A -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🏋️</span> Back — Session A</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Superman Hold</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-row demo-superman" aria-label="Superman Hold demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Superman Hold</strong><span>Pull the elbows back, pause, then return with control.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie on your tummy on the floor. Stretch your arms out in front of you, like Superman flying. Lift your arms, chest, and legs off the floor at the same time. Hold it for 2 seconds. Lower back down slowly. Do it again.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Squeeze your back muscles tight when you lift up. Keep your head looking down, not up.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Reverse Snow Angel</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 15 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-row demo-snowangel" aria-label="Reverse Snow Angel demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Reverse Snow Angel</strong><span>Pull the elbows back, pause, then return with control.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie on your tummy. Put your arms by your sides, palms down. Lift your chest a little off the floor. Sweep your arms out and up over your head, like making a snow angel. Bring them back down. That's one rep.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Make your arms go in a big circle. Keep your chest up the whole time.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Table Row (Inverted Row)</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 10 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-row demo-table-row" aria-label="Table Row (Inverted Row) demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Table Row (Inverted Row)</strong><span>Pull the elbows back, pause, then return with control.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie under a strong table. Grab the edge with both hands. Keep your body straight like a board — only your heels touch the floor. Pull your chest up to the table. Squeeze your shoulder blades together. Lower back down slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>This is like doing a pull-up sideways. If it's too easy, put your feet up on a chair.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TRICEPS A -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>⚡</span> Triceps — Session A</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Diamond Push-Up</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-push demo-diamond" aria-label="Diamond Push-Up demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Diamond Push-Up</strong><span>Lower your chest with control, press back to a strong lockout.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Get in push-up position. Put your thumbs and pointer fingers together to make a diamond shape under your chest. Keep your elbows close to your body. Lower your chest down to your hands. Push back up.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>This makes your arms work extra hard. If it's too hard, do it on your knees.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Chair Dips</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 15 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-dip demo-chair-dip" aria-label="Chair Dips demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Chair Dips</strong><span>Bend the elbows, keep shoulders down, press back up.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Sit on the edge of a sturdy chair. Put your hands next to your hips, holding the edge. Slide your bottom off the chair. Bend your elbows and lower your body down. Push back up until your arms are straight.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Keep your shoulders down, away from your ears. Bend your knees to make it easier.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ABS A -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🎯</span> Abs — Session A</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Plank</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 45 sec</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-core demo-plank" aria-label="Plank demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Plank</strong><span>Brace your abs and move slowly without swinging.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie on your tummy, then prop yourself up on your forearms and toes. Your body should make one straight line from your head to your feet. Squeeze your stomach and your bottom. Hold still and breathe.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Don't let your hips droop down. If it's hard, drop to your knees.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Crunches</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 20 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-core demo-crunch" aria-label="Crunches demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Crunches</strong><span>Brace your abs and move slowly without swinging.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie on your back with your knees bent. Put your hands gently behind your ears. Curl your shoulders up off the floor. Hold for 1 second. Lower back down slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Breathe out hard when you curl up. Don't pull on your neck with your hands.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Leg Raises</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 15 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-core demo-leg-raise" aria-label="Leg Raises demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Leg Raises</strong><span>Brace your abs and move slowly without swinging.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie flat on your back. Put your hands under your bottom. Keep your legs straight and lift them up to point at the ceiling. Lower them back down slowly, stopping just before they touch the floor.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Keep your lower back flat on the floor. Going slower makes it harder.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- end monday -->
+
+  <!-- ===== TUESDAY ===== -->
+  <div class="day-panel" id="tuesday">
+    <div class="day-header">
+      <div>
+        <div class="day-name">Tuesday</div>
+        <div class="day-focus">Biceps · Shoulders · Chest</div>
+        <div class="day-badges"><span class="muscle-badge">Biceps</span><span class="muscle-badge">Shoulders</span><span class="muscle-badge">Chest</span></div>
+      </div>
+    </div>
+    <div class="cardio-banner">
+      <div class="cardio-icon">🔥</div>
+      <div class="cardio-text"><strong>Warm-Up Cardio — 10 mins</strong>High Knees × 3 min · Burpees × 5 reps × 3 sets · Jump Squats × 10 reps · Mountain Climbers × 2 min</div>
+    </div>
+
+    <!-- BICEPS A -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🦾</span> Biceps — Session A</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Towel Curl (Door Curl)</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 10 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-curl demo-towel-curl" aria-label="Towel Curl (Door Curl) demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Towel Curl (Door Curl)</strong><span>Curl with control, squeeze at the top, lower slowly.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Loop a towel around a door handle. Hold one end in each hand. Lean back with your arms straight, feet against the bottom of the door. Bend your elbows to pull yourself up, like doing a curl. Lower back down slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>The more you lean back, the harder it gets. Keep your elbows still — only your forearms move.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Backpack Curl</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-curl demo-backpack-curl" aria-label="Backpack Curl demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Backpack Curl</strong><span>Curl with control, squeeze at the top, lower slowly.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Put some books or water bottles in a backpack. Hold the backpack by its handle. Stand up straight with your upper arms close to your sides. Curl the backpack up towards your shoulders. Squeeze, then lower slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Add more weight to the backpack as it gets easy.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SHOULDERS A -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>💪</span> Shoulders — Session A</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Pike Push-Up</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-shoulder demo-pike" aria-label="Pike Push-Up demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Pike Push-Up</strong><span>Press or raise smoothly while keeping the core tight.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Get into an upside-down V shape, like a triangle, with your hands on the floor and your hips up high. Bend your elbows and lower the top of your head towards the floor. Push back up.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>The more your body points straight up and down, the more it works your shoulders.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Lateral Raise (Backpack or Bottles)</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 15 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-shoulder demo-lateral-raise" aria-label="Lateral Raise (Backpack or Bottles) demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Lateral Raise (Backpack or Bottles)</strong><span>Press or raise smoothly while keeping the core tight.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Hold a water bottle or small bag in each hand, arms down by your sides. With a little bend in your elbows, lift both arms out to the sides until they're at shoulder height, like the letter T. Hold for 1 second. Lower slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Lead with your elbows, not your hands. Don't shrug your shoulders up.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Wall Handstand Hold</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 20 sec hold</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-shoulder demo-handstand" aria-label="Wall Handstand Hold demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Wall Handstand Hold</strong><span>Press or raise smoothly while keeping the core tight.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Face a wall. Put your hands on the floor near the wall. Walk your feet up the wall until your body is standing straight up, upside down. Hold still, arms straight, stomach tight. Walk back down carefully.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Not ready for this yet? Practice holding the pike position on the floor first.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CHEST A -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🫁</span> Chest — Session A (Upper Focus)</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Decline Push-Up</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 15 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-push demo-decline-push" aria-label="Decline Push-Up demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Decline Push-Up</strong><span>Lower your chest with control, press back to a strong lockout.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Put your feet up on a chair or bed. Put your hands on the floor. Do a push-up like normal — lower your chest down and push back up.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Higher feet make it harder and work your upper chest more.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Standard Push-Up</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 20 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-push demo-standard-push" aria-label="Standard Push-Up demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Standard Push-Up</strong><span>Lower your chest with control, press back to a strong lockout.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Put your hands on the floor, a little wider than your shoulders. Keep your body in a straight line. Lower your chest close to the floor. Push back up hard.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Squeeze your chest muscles at the top of every push-up.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Wide Push-Up</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-push demo-wide-push" aria-label="Wide Push-Up demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Wide Push-Up</strong><span>Lower your chest with control, press back to a strong lockout.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Do a push-up, but put your hands extra wide — wider than your shoulders. Lower your chest between your hands. Push back up.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>You'll feel a big stretch in your chest at the bottom. That's normal.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- end tuesday -->
+
+  <!-- ===== WEDNESDAY ===== -->
+  <div class="day-panel" id="wednesday">
+    <div class="day-header">
+      <div>
+        <div class="day-name">Wednesday</div>
+        <div class="day-focus">Shoulders · Triceps · Abs</div>
+        <div class="day-badges"><span class="muscle-badge">Shoulders</span><span class="muscle-badge">Triceps</span><span class="muscle-badge">Abs</span></div>
+      </div>
+    </div>
+    <div class="cardio-banner">
+      <div class="cardio-icon">🔥</div>
+      <div class="cardio-text"><strong>Warm-Up Cardio — 10 mins</strong>Jump Squats × 15 · Burpees × 5 · High Knees × 2 min · Shadow Jump Rope × 3 min</div>
+    </div>
+
+    <!-- SHOULDERS B -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>💪</span> Shoulders — Session B</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Elevated Pike Push-Up</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 10 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-shoulder demo-elevated-pike" aria-label="Elevated Pike Push-Up demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Elevated Pike Push-Up</strong><span>Press or raise smoothly while keeping the core tight.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Put your feet up on a chair. Get into the upside-down V pike position with your hands on the floor. Lower your head towards the floor. Push back up.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>This is harder than the regular pike push-up because your feet are higher.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Front Raise (Water Bottles)</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-shoulder demo-front-raise" aria-label="Front Raise (Water Bottles) demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Front Raise (Water Bottles)</strong><span>Press or raise smoothly while keeping the core tight.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Hold a water bottle in each hand at your legs. With a slight bend in your elbows, lift both arms straight out in front of you up to shoulder height. Hold for 1 second. Lower slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Don't swing your body to help lift — only your arms should move.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Wall Handstand Push-Up (Partial)</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 6 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-shoulder demo-handstand" aria-label="Wall Handstand Push-Up (Partial) demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Wall Handstand Push-Up (Partial)</strong><span>Press or raise smoothly while keeping the core tight.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Get into a full wall handstand, upside down against the wall. Bend your elbows just a little to lower your head a few inches. Push back up to straight arms.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>If this is too hard, just hold the handstand still instead.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TRICEPS B -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>⚡</span> Triceps — Session B</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Tricep Push-Up (Elbows In)</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-push demo-tricep-push" aria-label="Tricep Push-Up (Elbows In) demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Tricep Push-Up (Elbows In)</strong><span>Lower your chest with control, press back to a strong lockout.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Get in push-up position with your hands under your shoulders. Keep your elbows close to your ribs the whole time. Lower your chest down. Push back up using your arms, not your chest.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>If your elbows stick out to the sides, it turns into a chest exercise instead.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Chair Dips — Slow Tempo</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 12 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-dip demo-chair-dip" aria-label="Chair Dips — Slow Tempo demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Chair Dips — Slow Tempo</strong><span>Bend the elbows, keep shoulders down, press back up.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Do a chair dip like before, but lower yourself down super slowly — count to 4 in your head. Push back up quickly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Going slow on the way down makes your muscles work way harder.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Diamond Push-Up — To Failure</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × max reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-push demo-diamond" aria-label="Diamond Push-Up — To Failure demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Diamond Push-Up — To Failure</strong><span>Lower your chest with control, press back to a strong lockout.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Get into diamond push-up position. Do as many good push-ups as you can, until you can't do one more with good form.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Stop when your push-ups start to look sloppy, not before.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ABS B -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🎯</span> Abs — Session B</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Bicycle Crunches</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 20 each side</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-core demo-bicycle" aria-label="Bicycle Crunches demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Bicycle Crunches</strong><span>Brace your abs and move slowly without swinging.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie on your back with your hands behind your head and legs lifted. Bring your right elbow towards your left knee while you straighten your right leg. Switch sides, like you're pedaling a bike.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Twist your body, don't just move your elbow.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Reverse Crunch</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 15 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-core demo-reverse-crunch" aria-label="Reverse Crunch demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Reverse Crunch</strong><span>Brace your abs and move slowly without swinging.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie on your back with your knees bent up at 90 degrees. Use your lower belly muscles to curl your hips up off the floor. Lower back down slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>The movement is small. Don't swing your legs.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Russian Twists</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 20 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-core demo-russian-twist" aria-label="Russian Twists demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Russian Twists</strong><span>Brace your abs and move slowly without swinging.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Sit on the floor with your knees bent, leaning back a little. Clasp your hands together. Twist your body to touch the floor on one side, then the other side.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Twist from your waist, not just your arms.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">04</span><span class="ex-name">Hollow Body Hold</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 30 sec</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-core demo-hollow" aria-label="Hollow Body Hold demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Hollow Body Hold</strong><span>Brace your abs and move slowly without swinging.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Lie on your back. Press your lower back flat into the floor. Lift your shoulders and legs off the floor at the same time, arms stretched overhead. Hold still, like a banana shape.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Too hard? Bend your knees in towards your chest instead of keeping legs straight.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- end wednesday -->
+
+  <!-- ===== THURSDAY ===== -->
+  <div class="day-panel" id="thursday">
+    <div class="day-header">
+      <div>
+        <div class="day-name">Thursday</div>
+        <div class="day-focus">Biceps · Back</div>
+        <div class="day-badges"><span class="muscle-badge">Biceps</span><span class="muscle-badge">Back</span></div>
+      </div>
+    </div>
+    <div class="cardio-banner">
+      <div class="cardio-icon">🔥</div>
+      <div class="cardio-text"><strong>Warm-Up Cardio — 10 mins</strong>Mountain Climbers × 2 min · Jump Squats × 15 · Shadow Jump Rope × 3 min · High Knees × 2 min</div>
+    </div>
+
+    <!-- BICEPS B -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🦾</span> Biceps — Session B</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Towel Curl — Slow Negative</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 8 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-curl demo-towel-curl" aria-label="Towel Curl — Slow Negative demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Towel Curl — Slow Negative</strong><span>Curl with control, squeeze at the top, lower slowly.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Set up the towel curl like before. Curl yourself up. This time, take 4 whole seconds to lower back down.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Going slow on the way down is the whole point of this one.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Chin-Up (Doorframe or Bar)</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × max reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-curl demo-chinup" aria-label="Chin-Up (Doorframe or Bar) demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Chin-Up (Doorframe or Bar)</strong><span>Curl with control, squeeze at the top, lower slowly.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Hang from a pull-up bar with your palms facing you, hands shoulder-width apart. Pull yourself up until your chin is above the bar. Lower back down slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Can't do one yet? Jump up to the top and lower yourself down as slowly as you can.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Backpack Curl — Heavy</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 10 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-curl demo-backpack-curl" aria-label="Backpack Curl — Heavy demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Backpack Curl — Heavy</strong><span>Curl with control, squeeze at the top, lower slowly.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Fill your backpack heavier than last time. Curl it up to your shoulders like before. Squeeze at the top, then lower slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Add more weight each week to keep getting stronger.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BACK B -->
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🏋️</span> Back — Session B</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Table Row — Feet Elevated</span></div>
+            <div class="ex-right"><span class="ex-sets">5 × 8 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-row demo-table-row" aria-label="Table Row — Feet Elevated demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Table Row — Feet Elevated</strong><span>Pull the elbows back, pause, then return with control.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Do a table row like before, but put your feet up on a chair instead of the floor. Pull your chest up to the table. Lower back down slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>This one is much harder because your body is flatter.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Superman — Pause Reps</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 10 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-row" aria-label="Superman — Pause Reps demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Superman — Pause Reps</strong><span>Pull the elbows back, pause, then return with control.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Do a superman hold like before. This time, hold at the top for 3 whole seconds before lowering down.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>The pause stops you from swinging, so your back does all the work.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Reverse Snow Angel — Drop Set</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 15 + max hold</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-row demo-snowangel" aria-label="Reverse Snow Angel — Drop Set demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Reverse Snow Angel — Drop Set</strong><span>Pull the elbows back, pause, then return with control.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Do 15 reverse snow angels. Then, without resting, hold your arms and chest up in the air for as long as you can.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Rest for 90 seconds, then do it all again.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- end thursday -->
+
+  <!-- ===== FRIDAY ===== -->
+  <div class="day-panel" id="friday">
+    <div class="day-header">
+      <div>
+        <div class="day-name">Friday</div>
+        <div class="day-focus">Legs — End The Week Strong</div>
+        <div class="day-badges"><span class="muscle-badge">Quads</span><span class="muscle-badge">Hamstrings</span><span class="muscle-badge">Glutes</span><span class="muscle-badge">Calves</span></div>
+      </div>
+    </div>
+    <div class="cardio-banner">
+      <div class="cardio-icon">🔥</div>
+      <div class="cardio-text"><strong>Warm-Up Cardio — 10 mins</strong>Jump Squats × 10 · High Knees × 2 min · Mountain Climbers × 2 min · Shadow Jump Rope × 3 min · Bodyweight Lunges × 10 each leg</div>
+    </div>
+    <div class="info-note">
+      <strong>🏠 Home Leg Day — Zero Equipment, Maximum Output</strong>
+      Without a barbell, the goal is volume, tempo and single-leg work. Bodyweight leg exercises done correctly — with slow eccentrics, full range of motion and high reps — build serious muscle. Bulgarian split squats alone are one of the most effective leg exercises that exist, with or without weight.
+    </div>
+
+    <div class="muscle-block">
+      <div class="muscle-block-title"><span>🦵</span> Legs — Bodyweight</div>
+      <div class="exercise-grid">
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">01</span><span class="ex-name">Bulgarian Split Squat</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 12 each leg</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-legs demo-split-squat" aria-label="Bulgarian Split Squat demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Bulgarian Split Squat</strong><span>Lower under control, drive through the working leg.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Stand about two big steps in front of a chair. Put one foot behind you, resting on the chair. Bend your front knee to lower your body down. Push back up through your front foot.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Keep your body tall and straight. Do all your reps on one leg, then switch.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">02</span><span class="ex-name">Single-Leg Romanian Deadlift</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 10 each leg</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-legs demo-single-rdl" aria-label="Single-Leg Romanian Deadlift demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Single-Leg Romanian Deadlift</strong><span>Lower under control, drive through the working leg.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Stand on one leg with a little bend in your knee. Bend forward at your hips, letting your other leg stretch out behind you like an airplane. Stand back up straight.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Keep your back flat, not curved. Look at a spot on the floor to help you balance.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">03</span><span class="ex-name">Jump Squat — Finisher</span></div>
+            <div class="ex-right"><span class="ex-sets">3 × 15 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-legs demo-jump-squat" aria-label="Jump Squat — Finisher demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Jump Squat — Finisher</strong><span>Lower under control, drive through the working leg.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Stand with your feet apart. Bend your knees like you're sitting in a chair. Jump straight up as high as you can. Land softly and go straight into the next squat.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Land quietly, like a cat, to protect your knees.</p>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="exercise-header" onclick="toggleEx(this)">
+            <div class="ex-left"><span class="ex-num">04</span><span class="ex-name">Standing Calf Raise</span></div>
+            <div class="ex-right"><span class="ex-sets">4 × 25 reps</span><span class="ex-arrow">▼</span></div>
+          </div>
+          <div class="exercise-body">
+            <div class="demo-card demo-legs demo-calf-raise" aria-label="Standing Calf Raise demonstration">
+              <div class="demo-screen">
+                <div class="demo-floor"></div>
+                <div class="demo-person"><span class="demo-head"></span><span class="demo-body"></span><span class="demo-arm demo-arm-a"></span><span class="demo-arm demo-arm-b"></span><span class="demo-leg demo-leg-a"></span><span class="demo-leg demo-leg-b"></span></div>
+                <div class="demo-prop"></div>
+                <div class="demo-play">Play</div>
+              </div>
+              <div class="demo-copy"><strong>Standing Calf Raise</strong><span>Lower under control, drive through the working leg.</span></div>
+            </div>
+            <p><strong>How to do it:</strong> Stand with your feet apart. Rise up onto your tiptoes as high as you can. Hold for 1-2 seconds. Lower back down slowly.</p>
+            <span class="tips-label">💡 Tip</span>
+            <p>Do one foot at a time if you want it extra hard.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- end friday -->
+
+</section>
+</main>
+<footer>
+  <div class="logo"><span>That</span>Guys Fitness</div>
+  <p>Built for the guys who show up - with or without a gym.</p>
+  <p style="margin-top:16px; font-size:.75rem; color:#444;">(c) 2025 ThatGuys Fitness - Home Edition. Train smart. Stay consistent.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

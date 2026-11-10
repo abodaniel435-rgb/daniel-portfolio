@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — ABOSODION Farm</title>
+<meta name="description" content="Reach ABOSODION Farm directly on WhatsApp to order broilers, layers and graded eggs. Farm location, opening hours and order enquiry form.">
+<meta name="theme-color" content="#14532d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand" aria-label="ABOSODION Farm, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21c0-5 3-8 8-8 0 5-3 8-8 8Z" fill="currentColor"/><path d="M12 21c0-5-3-8-8-8 0 5 3 8 8 8Z" fill="currentColor" opacity=".6"/><path d="M12 20.5v-7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      <span class="brand-name">ABOSODION<span>Farm · Lagos</span></span>
+    </a>
+    <nav class="nav" id="siteNav" aria-label="Primary">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="products.html">Products</a>
+      <a class="nav-link" href="contact.html" aria-current="page">Contact</a>
+      <a class="btn btn-dark" href="https://wa.me/2348165595620" target="_blank" rel="noopener" data-wa-msg="Hello ABOSODION Farm, I'd like to place an order. Please share today's prices and availability.">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+        WhatsApp
+      </a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Get in touch</span>
+      <h1>Tell us what you need. We'll confirm today's price.</h1>
+      <p class="lede">Orders are confirmed on WhatsApp, but you can draft the whole thing here first. Fill in the form, check it over, and send it straight into a chat with the farm.</p>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="wrap contact-grid">
+
+      <div class="panel">
+        <h2>Order enquiry</h2>
+        <p class="panel-lede">Fields marked <span class="req" aria-hidden="true">*</span> are required. Nothing is sent to a server — the finished message opens in WhatsApp.</p>
+
+        <form id="enquiryForm" novalidate>
+          <div class="form-row">
+            <div class="field" id="field-name">
+              <label for="name">Your name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" autocomplete="name" aria-describedby="err-name" required>
+              <p class="error" id="err-name">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                <span>Enter your name so we know who we're replying to.</span>
+              </p>
+            </div>
+
+            <div class="field" id="field-phone">
+              <label for="phone">Phone / WhatsApp number <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="0803 000 0000" aria-describedby="err-phone" required>
+              <p class="error" id="err-phone">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                <span>Enter a Nigerian mobile number — e.g. 0803 123 4567 or +234 803 123 4567.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field" id="field-email">
+              <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" aria-describedby="err-email" required>
+              <p class="error" id="err-email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                <span>Check the email address — it needs an @ and a domain.</span>
+              </p>
+            </div>
+
+            <div class="field" id="field-interest">
+              <label for="interest">Product interest <span class="req" aria-hidden="true">*</span></label>
+              <select id="interest" name="interest" aria-describedby="err-interest" required>
+                <option value="">Choose one…</option>
+                <option value="Eggs — by the crate">Eggs — by the crate</option>
+                <option value="Broilers">Broilers</option>
+                <option value="Layers (live birds)">Layers (live birds)</option>
+                <option value="Bulk / weekly supply">Bulk / weekly supply</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+              <p class="error" id="err-interest">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                <span>Pick the closest option so we can price it correctly.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="field" id="field-message">
+            <label for="message">What do you need? <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" placeholder="e.g. 2 crates of big eggs and 3 medium broilers, dressed, delivered to Festac on Saturday morning." aria-describedby="hint-message err-message" required></textarea>
+            <p class="hint" id="hint-message">Include quantities, whether birds should be dressed, and your delivery area.</p>
+            <p class="error" id="err-message">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              <span>Add a few details — at least 10 characters.</span>
+            </p>
+          </div>
+
+          <p class="form-status" id="formStatus" role="alert" hidden></p>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+            Review &amp; send on WhatsApp
+          </button>
+          <p class="form-note">This site has no server. Submitting builds your message and gives you a WhatsApp link — you still press send in WhatsApp.</p>
+        </form>
+
+        <div class="success-panel" id="successPanel" tabindex="-1" aria-labelledby="successTitle">
+          <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5L20 6.5"/></svg>
+          </div>
+          <h3 id="successTitle">Your message is ready</h3>
+          <p>Everything checked out. Send it on WhatsApp to reach the farm, or keep a copy by email. We reply within the hour during the day.</p>
+
+          <dl class="summary-list" id="summaryList"></dl>
+
+          <div class="success-actions">
+            <a class="btn btn-primary" id="successWhatsapp" href="https://wa.me/2348165595620" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+              Open WhatsApp with this order
+            </a>
+            <a class="btn btn-ghost" id="successEmail" href="mailto:">Email me a copy</a>
+            <button type="button" class="btn btn-ghost" id="editForm">Edit details</button>
+          </div>
+          <p class="form-note" style="margin-top:1rem">The email option opens your mail app with the same message filled in, addressed to you — no farm email address is published, so WhatsApp stays the live channel.</p>
+        </div>
+      </div>
+
+      <div class="aside-stack">
+        <div class="side-card side-card-dark">
+          <h2>Prefer to just chat?</h2>
+          <p>WhatsApp is the fastest way to order — no form needed. Tell us what you want and how many.</p>
+          <div class="side-phone">+234 816 559 5620</div>
+          <a class="btn btn-primary btn-block" href="https://wa.me/2348165595620" target="_blank" rel="noopener" data-wa-msg="Hello ABOSODION Farm, I'd like to place an order. Please share today's prices and availability.">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+            Start a chat
+          </a>
+        </div>
+
+        <div class="side-card">
+          <div class="info-row">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 13-9 13s-9-7-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <div>
+              <h3>Location</h3>
+              <p>Abomalu Farm, Ojo Barracks, Lagos, Nigeria</p>
+              <p style="margin-top:0.4rem"><a href="https://www.google.com/maps/search/?api=1&amp;query=Abomalu%20Farm%2C%20Ojo%20Barracks%2C%20Lagos%2C%20Nigeria" target="_blank" rel="noopener">Open in Google Maps</a></p>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </span>
+            <div style="flex:1">
+              <h3>Opening hours</h3>
+              <table class="hours-table">
+                <tbody>
+                  <tr><th scope="row">Mon – Fri</th><td>8am – 7pm</td></tr>
+                  <tr><th scope="row">Saturday</th><td>8am – 7pm</td></tr>
+                  <tr class="closed"><th scope="row">Sunday</th><td>Closed · confirmed for Monday</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <span class="ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            <div>
+              <h3>Response time</h3>
+              <p>We typically reply within the hour during the day. Sunday orders are confirmed for Monday delivery.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="ABOSODION Farm, home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 21c0-5 3-8 8-8 0 5-3 8-8 8Z" fill="currentColor"/><path d="M12 21c0-5-3-8-8-8 0 5 3 8 8 8Z" fill="currentColor" opacity=".6"/><path d="M12 20.5v-7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <span class="brand-name">ABOSODION<span>Farm · Lagos</span></span>
+        </a>
+        <p>Farm-direct broilers, layers and hand-graded eggs. Ordering is simple — send one message and we take it from there.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Visit</h3>
+        <p>Abomalu Farm, Ojo Barracks, Lagos, Nigeria</p>
+        <p>Mon – Sat, 8am – 7pm</p>
+      </div>
+      <div class="footer-col">
+        <h3>Order</h3>
+        <a href="https://wa.me/2348165595620" target="_blank" rel="noopener">WhatsApp only</a>
+        <a href="tel:+2348165595620">+234 816 559 5620</a>
+        <p>Replies within the hour during the day</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ABOSODION Farm. All rights reserved.</p>
+      <p>Orders taken strictly via WhatsApp.</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/2348165595620" target="_blank" rel="noopener" aria-label="Chat with ABOSODION Farm on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3C8.5 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3C4.4 15 4 13.5 4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.6-2-1.1-2.8-2.4-.2-.3 0-.5.1-.6.2-.2.4-.5.6-.7.1-.2.1-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c1.4 1.9 2.9 2.6 4.7 3.2.6.2 1.1.2 1.5.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3z"/></svg>
+</a>
+
+<script>
+(function () {
+  var WA_NUMBER = '2348165595620';
+
+  /* ---------- header ---------- */
+  var header = document.getElementById('siteHeader');
+  var nav = document.getElementById('siteNav');
+  var menuBtn = document.getElementById('menuBtn');
+
+  function setOpen(open) {
+    nav.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    header.classList.toggle('menu-open', open);
+  }
+
+  menuBtn.addEventListener('click', function () {
+    setOpen(menuBtn.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('open')) {
+      setOpen(false);
+      menuBtn.focus();
+    }
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 900) setOpen(false);
+  });
+
+  var ticking = false;
+  function onScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  document.querySelectorAll('[data-wa-msg]').forEach(function (link) {
+    link.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(link.getAttribute('data-wa-msg'));
+  });
+
+  /* ---------- enquiry form ---------- */
+  var form = document.getElementById('enquiryForm');
+  var status = document.getElementById('formStatus');
+  var successPanel = document.getElementById('successPanel');
+  var summaryList = document.getElementById('summaryList');
+  var waLink = document.getElementById('successWhatsapp');
+  var mailLink = document.getElementById('successEmail');
+  var editBtn = document.getElementById('editForm');
+
+  var fields = {
+    name: document.getElementById('name'),
+    phone: document.getElementById('phone'),
+    email: document.getElementById('email'),
+    interest: document.getElementById('interest'),
+    message: document.getElementById('message')
+  };
+
+  var validators = {
+    name: function (value) {
+      if (!value.trim()) return 'Enter your name so we know who we\'re replying to.';
+      if (value.trim().length < 2) return 'That looks too short — please enter your full name.';
+      if (!/^[\p{L}\s.'-]+$/u.test(value.trim())) return 'Use letters only — no numbers or symbols in a name.';
+      return '';
+    },
+    phone: function (value) {
+      var cleaned = value.replace(/[\s().-]/g, '');
+      if (!cleaned) return 'Enter a phone number we can reach you on.';
+      if (!/^(?:\+?234|0)?[789][01]\d{8}$/.test(cleaned)) {
+        return 'Enter a Nigerian mobile number — e.g. 0803 123 4567 or +234 803 123 4567.';
+      }
+      return '';
+    },
+    email: function (value) {
+      if (!value.trim()) return 'Enter an email address for your copy of this enquiry.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim())) return 'That email looks incomplete — check for the @ and the domain.';
+      return '';
+    },
+    interest: function (value) {
+      return value ? '' : 'Choose the product you\'re interested in.';
+    },
+    message: function (value) {
+      if (!value.trim()) return 'Tell us what you need — quantities and delivery area help.';
+      if (value.trim().length < 10) return 'Add a little more detail — at least 10 characters.';
+      return '';
+    }
+  };
+
+  function fieldWrap(name) {
+    return document.getElementById('field-' + name);
+  }
+
+  function setFieldError(name, message) {
+    var wrap = fieldWrap(name);
+    var input = fields[name];
+    var error = wrap.querySelector('.error span');
+    var hasError = Boolean(message);
+    wrap.classList.toggle('has-error', hasError);
+    input.setAttribute('aria-invalid', String(hasError));
+    if (message) error.textContent = message;
+  }
+
+  function validateField(name) {
+    var message = validators[name](fields[name].value);
+    setFieldError(name, message);
+    return !message;
+  }
+
+  Object.keys(fields).forEach(function (name) {
+    fields[name].addEventListener('blur', function () { validateField(name); });
+    fields[name].addEventListener('input', function () {
+      if (fieldWrap(name).classList.contains('has-error')) validateField(name);
+    });
+    fields[name].addEventListener('change', function () {
+      if (fieldWrap(name).classList.contains('has-error')) validateField(name);
+    });
+  });
+
+  function buildMessage(data) {
+    return 'Hello ABOSODION Farm, I\'d like to place an order.\n\n' +
+      'Name: ' + data.name + '\n' +
+      'Phone: ' + data.phone + '\n' +
+      'Email: ' + data.email + '\n' +
+      'Interested in: ' + data.interest + '\n\n' +
+      'Order details: ' + data.message + '\n\n' +
+      'Please confirm today\'s price and availability.';
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var invalid = [];
+    Object.keys(fields).forEach(function (name) {
+      if (!validateField(name)) invalid.push(name);
+    });
+
+    if (invalid.length) {
+      status.hidden = false;
+      status.textContent = invalid.length === 1
+        ? 'One field needs attention before this can be sent.'
+        : invalid.length + ' fields need attention before this can be sent.';
+      fields[invalid[0]].focus();
+      return;
+    }
+
+    status.hidden = true;
+
+    var data = {
+      name: fields.name.value.trim(),
+      phone: fields.phone.value.trim(),
+      email: fields.email.value.trim(),
+      interest: fields.interest.value,
+      message: fields.message.value.trim()
+    };
+
+    var text = buildMessage(data);
+    waLink.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
+    mailLink.href = 'mailto:?subject=' + encodeURIComponent('ABOSODION Farm order enquiry — ' + data.name) +
+      '&body=' + encodeURIComponent(text);
+
+    summaryList.innerHTML =
+      '<div><dt>Name</dt><dd>' + escapeHtml(data.name) + '</dd></div>' +
+      '<div><dt>Phone</dt><dd>' + escapeHtml(data.phone) + '</dd></div>' +
+      '<div><dt>Email</dt><dd>' + escapeHtml(data.email) + '</dd></div>' +
+      '<div><dt>Interest</dt><dd>' + escapeHtml(data.interest) + '</dd></div>' +
+      '<div><dt>Details</dt><dd>' + escapeHtml(data.message) + '</dd></div>';
+
+    form.style.display = 'none';
+    successPanel.classList.add('is-visible');
+    successPanel.focus();
+  });
+
+  editBtn.addEventListener('click', function () {
+    successPanel.classList.remove('is-visible');
+    form.style.display = '';
+    fields.name.focus();
+  });
+
+  function escapeHtml(value) {
+    return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+})();
+</script>
+
+</body>
+</html>

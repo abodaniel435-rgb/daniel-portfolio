@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">New Yam Festival illustration</title>
+  <desc id="desc">Harvest baskets and celebratory cloth for Nigeria's New Yam Festival.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4e3a3"/>
+      <stop offset="100%" stop-color="#d5f0b1"/>
+    </linearGradient>
+    <linearGradient id="basket" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8e5b34"/>
+      <stop offset="100%" stop-color="#6d4224"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <path d="M0 620c136-42 278-50 418-24 148 28 248 42 392 26 133-15 255-11 390 12v166H0z" fill="#6d8f46"/>
+  <rect x="88" y="122" width="1024" height="70" rx="18" fill="#b13c2f"/>
+  <g fill="#f7dc6f">
+    <circle cx="170" cy="157" r="16"/>
+    <circle cx="310" cy="157" r="16"/>
+    <circle cx="450" cy="157" r="16"/>
+    <circle cx="590" cy="157" r="16"/>
+    <circle cx="730" cy="157" r="16"/>
+    <circle cx="870" cy="157" r="16"/>
+    <circle cx="1010" cy="157" r="16"/>
+  </g>
+  <g transform="translate(366 500)">
+    <ellipse cx="0" cy="110" rx="170" ry="62" fill="url(#basket)"/>
+    <rect x="-150" y="-8" width="300" height="120" rx="30" fill="url(#basket)"/>
+    <ellipse cx="-66" cy="-40" rx="42" ry="100" fill="#f3d087"/>
+    <ellipse cx="8" cy="-56" rx="42" ry="112" fill="#f0c777"/>
+    <ellipse cx="84" cy="-42" rx="42" ry="102" fill="#e8be69"/>
+  </g>
+  <g transform="translate(846 462)">
+    <circle cx="0" cy="0" r="86" fill="#c6533c"/>
+    <rect x="-20" y="-132" width="40" height="56" rx="14" fill="#4b8b3b"/>
+    <path d="M0-76c40-38 88-44 116-28-18 44-72 70-116 66z" fill="#5aa347"/>
+    <path d="M0-76c-40-38-88-44-116-28 18 44 72 70 116 66z" fill="#5aa347"/>
+  </g>
+  <text x="78" y="96" fill="#68421f" font-size="58" font-family="Georgia, serif" letter-spacing="4">NEW YAM FESTIVAL</text>
+  <text x="80" y="140" fill="#8a5c24" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Harvest thanksgiving, dance and sharing</text>
+</svg>

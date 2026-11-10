@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Easter festival illustration</title>
+  <desc id="desc">Dawn light over a spring landscape with rolling hills, blossom branches and tulips.</desc>
+  <defs>
+    <linearGradient id="dawn" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8d9b0"/>
+      <stop offset="45%" stop-color="#f2b8a0"/>
+      <stop offset="75%" stop-color="#d9a3b7"/>
+      <stop offset="100%" stop-color="#a68fbe"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff7e2" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#ffe7b8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffe7b8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hillBack" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8fae7f"/>
+      <stop offset="100%" stop-color="#5f8563"/>
+    </linearGradient>
+    <linearGradient id="hillFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6f9a67"/>
+      <stop offset="100%" stop-color="#3f6649"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#dawn)"/>
+  <circle cx="600" cy="330" r="230" fill="url(#sun)"/>
+  <circle cx="600" cy="330" r="88" fill="#fff3d6" opacity="0.92"/>
+  <path d="M0 520c150-74 292-92 430-64 128 26 244 78 376 64 142-15 263-64 394-46v326H0z" fill="url(#hillBack)" opacity="0.85"/>
+  <path d="M0 610c132-52 246-58 372-32 138 28 252 76 404 62 156-15 276-58 424-30v190H0z" fill="url(#hillFront)"/>
+  <g stroke="#5b3a2c" stroke-width="10" fill="none" stroke-linecap="round">
+    <path d="M120 700c6-92 2-150-16-212"/>
+    <path d="M120 560c34-34 66-44 104-40"/>
+    <path d="M120 588c-30-26-58-34-92-30"/>
+    <path d="M1010 720c-4-88 2-146 22-206"/>
+    <path d="M1032 596c32-30 64-38 100-33"/>
+  </g>
+  <g fill="#e9a7bd">
+    <circle cx="232" cy="516" r="17"/><circle cx="248" cy="502" r="13"/><circle cx="256" cy="524" r="12"/>
+    <circle cx="42" cy="554" r="15"/><circle cx="58" cy="540" r="12"/><circle cx="18" cy="538" r="11"/>
+    <circle cx="1124" cy="558" r="16"/><circle cx="1140" cy="544" r="12"/><circle cx="1106" cy="542" r="11"/>
+  </g>
+  <g fill="#f7efe2">
+    <circle cx="232" cy="516" r="6"/><circle cx="42" cy="554" r="5"/><circle cx="1124" cy="558" r="5"/>
+  </g>
+  <g fill="#f2c2cf">
+    <path d="M300 760c0-26 18-44 40-44s40 18 40 44z"/>
+    <path d="M840 756c0-22 15-38 34-38s34 16 34 38z"/>
+  </g>
+  <g stroke="#3f6649" stroke-width="6">
+    <path d="M340 760v-52"/><path d="M874 756v-44"/>
+  </g>
+  <g fill="#f6d365" opacity="0.9">
+    <circle cx="500" cy="690" r="6"/><circle cx="530" cy="706" r="4"/><circle cx="472" cy="712" r="4"/>
+    <circle cx="700" cy="676" r="5"/><circle cx="730" cy="694" r="4"/>
+  </g>
+</svg>

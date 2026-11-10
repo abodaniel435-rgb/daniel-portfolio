@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Festa Junina illustration</title>
+  <desc id="desc">Brazilian bunting, bonfire and rural festival atmosphere for Festa Junina.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#183153"/>
+      <stop offset="100%" stop-color="#50235f"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5b351e"/>
+      <stop offset="100%" stop-color="#3b2314"/>
+    </linearGradient>
+    <radialGradient id="fire" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#fff6a0"/>
+      <stop offset="55%" stop-color="#ffb347"/>
+      <stop offset="100%" stop-color="#e85b1a"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <path d="M0 610c122-39 260-47 417-17 145 28 257 40 396 20 124-18 246-10 387 23v164H0z" fill="url(#ground)"/>
+  <path d="M120 142h960" stroke="#f8e6b7" stroke-width="6" stroke-linecap="round"/>
+  <g>
+    <path d="M180 145l34 54 34-54z" fill="#ff6b6b"/>
+    <path d="M270 145l34 54 34-54z" fill="#ffd166"/>
+    <path d="M360 145l34 54 34-54z" fill="#06d6a0"/>
+    <path d="M450 145l34 54 34-54z" fill="#4dabf7"/>
+    <path d="M540 145l34 54 34-54z" fill="#ff9f1c"/>
+    <path d="M630 145l34 54 34-54z" fill="#ff6b6b"/>
+    <path d="M720 145l34 54 34-54z" fill="#ffd166"/>
+    <path d="M810 145l34 54 34-54z" fill="#06d6a0"/>
+    <path d="M900 145l34 54 34-54z" fill="#4dabf7"/>
+  </g>
+  <g transform="translate(600 535)">
+    <rect x="-10" y="-60" width="20" height="110" fill="#5a351c" transform="rotate(-20)"/>
+    <rect x="-10" y="-60" width="20" height="110" fill="#5a351c" transform="rotate(20)"/>
+    <path d="M0-165c34 56 62 84 62 126 0 51-28 87-62 87s-62-36-62-87c0-42 28-70 62-126z" fill="url(#fire)"/>
+  </g>
+  <g transform="translate(260 485)">
+    <circle cx="0" cy="0" r="74" fill="#f4c542"/>
+    <circle cx="0" cy="0" r="40" fill="#6d3a10"/>
+    <g fill="#f8e6b7">
+      <circle cx="-28" cy="-28" r="8"/>
+      <circle cx="28" cy="-14" r="8"/>
+      <circle cx="-12" cy="24" r="8"/>
+      <circle cx="22" cy="28" r="8"/>
+    </g>
+  </g>
+  <g transform="translate(940 472)">
+    <rect x="-85" y="-90" width="170" height="160" rx="10" fill="#d2643a"/>
+    <polygon points="-95,-90 0,-160 95,-90" fill="#f0b25d"/>
+    <rect x="-20" y="-28" width="40" height="98" fill="#7f3f1f"/>
+    <rect x="-62" y="-32" width="34" height="34" fill="#fcefe0"/>
+    <rect x="28" y="-32" width="34" height="34" fill="#fcefe0"/>
+  </g>
+  <text x="78" y="94" fill="#fff0ca" font-size="56" font-family="Georgia, serif" letter-spacing="4">FESTA JUNINA</text>
+  <text x="80" y="138" fill="#ffd166" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Bonfires, bunting and June celebrations</text>
+</svg>

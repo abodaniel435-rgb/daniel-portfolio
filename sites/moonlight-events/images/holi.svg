@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Holi festival illustration</title>
+  <desc id="desc">Bright clouds of color bursting across the air for Holi.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3d5"/>
+      <stop offset="100%" stop-color="#fff7fb"/>
+    </linearGradient>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <g opacity="0.9" filter="url(#softBlur)">
+    <circle cx="210" cy="270" r="130" fill="#ff5a8c"/>
+    <circle cx="355" cy="212" r="108" fill="#ffc146"/>
+    <circle cx="468" cy="312" r="140" fill="#24c4ff"/>
+    <circle cx="626" cy="248" r="120" fill="#9e48ff"/>
+    <circle cx="812" cy="298" r="150" fill="#42d872"/>
+    <circle cx="988" cy="228" r="122" fill="#ff7b39"/>
+  </g>
+  <path d="M0 620c120-64 271-94 433-71 139 20 208 72 357 74 156 2 287-43 410-86v263H0z" fill="#ffffff" opacity="0.82"/>
+  <path d="M176 628c54-42 114-65 180-65s126 23 180 65" fill="none" stroke="#483d8b" stroke-width="18" stroke-linecap="round"/>
+  <path d="M665 640c54-42 114-65 180-65s126 23 180 65" fill="none" stroke="#483d8b" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="352" cy="640" r="34" fill="#483d8b"/>
+  <circle cx="844" cy="650" r="34" fill="#483d8b"/>
+  <path d="M311 694c26-92 89-164 179-201-32 99-96 166-179 201z" fill="#ff5a8c"/>
+  <path d="M805 702c-22-91-83-159-171-194 28 95 87 160 171 194z" fill="#24c4ff"/>
+  <circle cx="282" cy="540" r="18" fill="#ff5a8c"/>
+  <circle cx="738" cy="486" r="16" fill="#42d872"/>
+  <circle cx="926" cy="530" r="14" fill="#ff7b39"/>
+  <circle cx="512" cy="480" r="16" fill="#9e48ff"/>
+  <text x="82" y="98" fill="#742f76" font-size="60" font-family="Georgia, serif" letter-spacing="4">HOLI</text>
+  <text x="82" y="142" fill="#8e5a1a" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">A joyful burst of spring colors</text>
+</svg>

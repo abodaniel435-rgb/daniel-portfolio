@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RentJury — know the rent before you pay</title>
+<meta name="description" content="Check a quoted annual rent and agent fee against real Nigerian rent bands. Fair, watch or overpriced in seconds — before you pay a kobo.">
+<meta name="theme-color" content="#FAF6EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/hero-lagos.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="RentJury home">
+      <span class="brand__mark" aria-hidden="true">₦</span>
+      <span class="brand__text">
+        <span class="brand__name">RentJury</span>
+        <span class="brand__sub">Know before you pay</span>
+      </span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Primary">
+      <a class="nav__link" href="index.html" aria-current="page">Home</a>
+      <a class="nav__link" href="check-price.html">Check a price</a>
+      <a class="nav__link" href="community.html">Community reports</a>
+      <button class="theme-btn" type="button" data-theme-toggle aria-label="Toggle light or dark theme">● Dark</button>
+      <a class="btn btn--primary btn--sm nav__cta" href="check-price.html">Check a price <span class="arrow" aria-hidden="true">→</span></a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 01 · HERO -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow">Rent &amp; agent-fee reference · 36 states + FCT</p>
+        <h1>Before you pay,<br><em>know the number.</em></h1>
+        <p class="lede">RentJury grades a quoted annual rent against the band people actually pay in that area, then checks the agent’s cut against the 10% standard. Ten seconds, no sign-up, and nothing leaves your browser.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="check-price.html">Check a price <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="community.html">See what others paid</a>
+        </div>
+        <ul class="hero__facts">
+          <li>48 reference areas</li>
+          <li>10 property types</li>
+          <li>Runs offline in your browser</li>
+        </ul>
+      </div>
+
+      <figure class="hero__figure">
+        <div class="hero__media">
+          <img src="assets/img/hero-lagos.webp" width="1376" height="768" fetchpriority="high" decoding="async"
+               alt="A modern five-storey apartment block in Lagos with planted balconies and palm trees, photographed at sunset.">
+          <div class="ticket" aria-hidden="true">
+            <div class="ticket__kicker"><span>Last graded</span><span>Lagos</span></div>
+            <p class="ticket__place">Lekki Phase 1 · 2 Bedroom Flat</p>
+            <p class="ticket__amount" id="ticketAmount">₦3,800,000 / year</p>
+            <span class="badge" id="ticketBadge"><span class="badge__dot"></span>Grading…</span>
+          </div>
+        </div>
+        <figcaption class="hero__caption">Lekki Phase 1, Lagos. A 2-bedroom asking ₦3.8m a year sits about 50% above the local band — the kind of gap this tool is built to catch.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- quick check -->
+  <section class="quickcheck panel-dark" id="quick-check" aria-labelledby="qcTitle">
+    <div class="wrap">
+      <div class="quickcheck__grid">
+        <div class="quickcheck__intro">
+          <p class="eyebrow" style="color:var(--on-ink-muted)">Quick check</p>
+          <h2 id="qcTitle">What were you quoted?</h2>
+          <p>Three fields, one honest answer. We compare the annual rent to the band for that area and property type — no email, no account, no listing fee.</p>
+          <ul class="quickcheck__points">
+            <li>Built from 48 reference areas across the 36 states and the FCT</li>
+            <li>Grades against the median, not a national average</li>
+            <li>Nothing you type is uploaded or shared</li>
+          </ul>
+        </div>
+
+        <form class="qc-form" id="qcForm" novalidate>
+          <div class="field">
+            <label class="field__label" for="qcArea">Area <span class="field__opt">grouped by state</span></label>
+            <select id="qcArea" name="area" aria-describedby="qcHint"></select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="qcType">Property type</label>
+            <select id="qcType" name="type" aria-describedby="qcHint"></select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="qcAmount">Annual rent quoted</label>
+            <div class="input-money">
+              <input type="number" id="qcAmount" name="amount" inputmode="numeric" min="0" step="10000" placeholder="900000" aria-describedby="qcHint">
+            </div>
+            <p class="field__hint" id="qcHint">Naira, per year. Leave out the fee for now — we check that separately.</p>
+          </div>
+          <button class="btn btn--accent btn--block" type="submit">Stamp it</button>
+          <p class="form-note">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l5.5 3v3c0 3-2.3 4.6-5.5 5-3.2-.4-5.5-2-5.5-5v-3L7 1.5z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Nothing you type is uploaded. Reports are only saved if you choose to add one.
+          </p>
+        </form>
+      </div>
+
+      <div class="qc-result" id="qcResult" aria-live="polite" aria-atomic="false">
+        <p class="qc-result__empty">Pick an area, a property type and a rent. Your verdict appears here — <strong>nothing leaves your device.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · HOW THE BANDS WORK -->
+  <section class="section" id="how-bands" data-reveal>
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow">How the bands work</p>
+          <h2>A reference range, not a single price.</h2>
+        </div>
+        <p>Every area and property type has a low, a median and a high — because two flats on the same street rarely go for the same money.</p>
+      </div>
+
+      <div class="bands">
+        <div class="bands__viz">
+          <div class="bands__example">
+            <span>Example · <strong>2 Bedroom Flat, Yaba</strong></span>
+            <span class="mono" id="bandMedianLabel">median —</span>
+          </div>
+          <div class="zonebar" id="bandViz" role="img" aria-label="Reference band for a 2 bedroom flat in Yaba, split into below-band, fair, watch and overpriced zones."></div>
+          <div class="zonebar-ticks" id="bandTicks"></div>
+          <div class="bands__legend">
+            <span><i style="background:var(--surface-2)"></i>Below the band · good deal</span>
+            <span><i style="background:var(--fair-bg)"></i>Within 8% · fair</span>
+            <span><i style="background:var(--watch-bg)"></i>8–25% over · watch</span>
+            <span><i style="background:var(--over-bg)"></i>25%+ over · overpriced</span>
+          </div>
+          <p class="rangebar__note" style="margin-top:var(--s-5);font-size:.82rem;color:var(--muted);line-height:1.6;max-width:46ch;">
+            Bands come from the RentJury reference dataset for each area and property type. They describe the rental market, not a valuation of the specific flat — condition, security and servicing still move a price.
+          </p>
+          <p style="margin-top:var(--s-4)">
+            <button class="linkish" type="button" data-open-modal="methodModal">Read the method</button>
+          </p>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__num">01</span>
+            <div>
+              <h3>We place your quote on the band</h3>
+              <p>Your annual rent is measured against the median for that exact area and property type. A 2-bedroom in Yaba runs <em>₦1.12m – ₦1.96m</em>, with a <em>₦1.54m</em> median.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__num">02</span>
+            <div>
+              <h3>We grade the gap</h3>
+              <p>Within 8% of the median is <em>fair</em>. Between 8% and 25% above is <em>watch it</em>. More than 25% above is <em>overpriced</em>. Below the range? A good deal — but inspect carefully, because cheap usually hides a reason.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__num">03</span>
+            <div>
+              <h3>We check the fee separately</h3>
+              <p>Agency and legal fees are capped at 10% of annual rent in the widely accepted standard. Caution deposits above 50% get flagged. A fair rent with a stacked fee is still a bad deal.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__num">04</span>
+            <div>
+              <h3>You get a next step, not just a colour</h3>
+              <p>Every verdict carries guidance: what to counter with, what to ask in writing, and when to walk. A number is only useful if you know what to do with it.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · LISTING GALLERY -->
+  <section class="section section--alt" id="listings" data-reveal>
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow">The gallery · Lagos</p>
+          <h2>Five addresses, graded by the same engine.</h2>
+        </div>
+        <p>Asking rents from the RentJury reference set. Open any card and the checker loads with those numbers already in place.</p>
+      </div>
+
+      <div class="listings" id="listingGrid"></div>
+
+      <div class="gallery-foot">
+        <p>Prices are annual and illustrative of the Lagos market. Condition, servicing and security are not priced in.</p>
+        <a class="btn btn--ghost btn--sm" href="check-price.html">Grade your own quote <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · COMMUNITY PROOF -->
+  <section class="section" id="community-proof" data-reveal>
+    <div class="wrap proof">
+      <div>
+        <p class="eyebrow">Community proof</p>
+        <h2 style="font-size:clamp(1.9rem,3.2vw,2.6rem);margin:var(--s-4) 0 var(--s-4);">Renters caught it before they paid.</h2>
+        <p class="lede">Forty-eight reference areas, three hundred-plus reported rents, and a checklist of eight red flags. The point is not to accuse agents — it is to give one renter a number to hold.</p>
+
+        <div class="proof__stats">
+          <div class="proof__stat"><b data-counter="37">0</b><span>States &amp; FCT covered</span></div>
+          <div class="proof__stat"><b data-counter="48">0</b><span>Areas with rent bands</span></div>
+          <div class="proof__stat"><b data-counter="10">0</b><span>Property types</span></div>
+          <div class="proof__stat"><b data-counter="8">0</b><span>Red flags tracked</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="quotes" id="quoteList"></div>
+        <div class="recent" id="recentReports" aria-label="Recent community reports"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · CTA -->
+  <section class="cta">
+    <div class="wrap">
+      <div class="cta__inner">
+        <div>
+          <h2>That quote sitting in your <em>WhatsApp</em> right now.</h2>
+          <p>Run it through the full checker before you reply: rent band, fee compliance, and a rent-to-income read if you want one. It takes about ten seconds.</p>
+          <div class="cta__actions">
+            <a class="btn btn--primary" href="check-price.html">Check a price <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href="community.html">Browse community reports</a>
+          </div>
+        </div>
+        <div class="cta__aside">
+          <p>The test</p>
+          <strong>If an agent can’t explain the gap, you shouldn’t pay it.</strong>
+          <span>Free, no sign-up, and no report is tied to your name.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <a class="brand" href="index.html" aria-label="RentJury home">
+          <span class="brand__mark" aria-hidden="true">₦</span>
+          <span class="brand__text"><span class="brand__name">RentJury</span><span class="brand__sub">Know before you pay</span></span>
+        </a>
+        <p>A community rent and agent-fee reference for Nigeria. Built for the renter who has been quoted a number and has no way to check it.</p>
+      </div>
+      <div class="foot__col">
+        <h3>Product</h3>
+        <ul>
+          <li><a href="check-price.html">Check a price</a></li>
+          <li><a href="community.html">Community reports</a></li>
+          <li><a href="check-price.html#redflags">Red flag checklist</a></li>
+          <li><a href="community.html#add-report">Add a report</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Coverage</h3>
+        <ul>
+          <li><a href="check-price.html?area=Lekki%20Phase%201&amp;type=2%20Bedroom%20Flat">Lagos</a></li>
+          <li><a href="check-price.html?area=Abuja%20(Central)&amp;type=2%20Bedroom%20Flat">Abuja (FCT)</a></li>
+          <li><a href="check-price.html?area=Port%20Harcourt&amp;type=3%20Bedroom%20Flat">Port Harcourt</a></li>
+          <li><a href="check-price.html">All 36 states + FCT</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Small print</h3>
+        <ul>
+          <li><a href="#" data-open-modal="methodModal">How bands are built</a></li>
+          <li><a href="community.html#faq">FAQ</a></li>
+          <li><a href="community.html#faq">Privacy</a></li>
+          <li><a href="community.html#faq">Not legal advice</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span id="kw-year">2026</span> RentJury — a community reference, not a valuation or legal advice.</span>
+      <span>Lagos · Abuja · Port Harcourt · 34 more states + FCT</span>
+    </div>
+  </div>
+</footer>
+
+<dialog class="modal" id="methodModal" aria-labelledby="methodTitle">
+  <div class="modal__head">
+    <h2 id="methodTitle">How the bands are built</h2>
+    <button class="modal__close" type="button" data-close-modal aria-label="Close">✕</button>
+  </div>
+  <div class="modal__body">
+    <p>Each of the 48 covered areas has a multiplier against a baseline rent for every property type. Lagos is covered at neighbourhood level — from Egbeda at the baseline through to Ikoyi at roughly four times it. Every other state is covered at its capital or main commercial hub.</p>
+    <p>Those multipliers produce a <b>low</b>, <b>median</b> and <b>high</b> annual rent for each area and property type. They are reference bands, built to describe a market, not a formal valuation of a specific flat.</p>
+    <p>Grading is deliberately simple:</p>
+    <ul>
+      <li><b>Fair</b> — within 8% of the area median.</li>
+      <li><b>Watch it</b> — 8% to 25% above the median.</li>
+      <li><b>Overpriced</b> — more than 25% above the median.</li>
+      <li><b>Below the band</b> — a good deal, but inspect for the reason.</li>
+    </ul>
+    <p>Fees are checked separately: agency and legal fees against a 10% ceiling each, caution deposits against a 50% watch line. None of this replaces reading a tenancy agreement before you sign.</p>
+  </div>
+</dialog>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ---- hero ticket: a real grade from the dataset ---- */
+  var heroArea = "Lekki Phase 1";
+  var heroType = "2 Bedroom Flat";
+  var heroRent = 3800000;
+  var heroResult = computeVerdict(heroArea, heroType, heroRent);
+  var ticketBadge = document.getElementById("ticketBadge");
+  if (heroResult) {
+    ticketBadge.className = "badge badge--" + heroResult.verdict;
+    ticketBadge.innerHTML = '<span class="badge__dot"></span>' + verdictName(heroResult.verdict) +
+      " · " + (heroResult.pct > 0 ? "+" : "") + heroResult.pct + "%";
+  }
+
+  /* ---- quick check ---- */
+  var qcArea = document.getElementById("qcArea");
+  var qcType = document.getElementById("qcType");
+  var qcAmount = document.getElementById("qcAmount");
+  var qcResult = document.getElementById("qcResult");
+  populateAreaSelect(qcArea, "Select area", false);
+  populateSelect(qcType, PROPERTY_TYPES, "Select property type");
+
+  function emptyResult() {
+    qcResult.innerHTML = '<p class="qc-result__empty">Pick an area, a property type and a rent. Your verdict appears here — <strong>nothing leaves your device.</strong></p>';
+  }
+
+  function runQuickCheck(announce) {
+    var area = qcArea.value, type = qcType.value, amount = Number(qcAmount.value);
+    if (!area || !type || !amount) {
+      if (announce) {
+        showToast("Fill in the area, property type and rent first.");
+        (!area ? qcArea : !type ? qcType : qcAmount).focus();
+      }
+      emptyResult();
+      return;
+    }
+    var result = computeVerdict(area, type, amount);
+    if (!result) { emptyResult(); return; }
+    var guide = verdictGuidance(result, area, type, amount);
+    var href = "check-price.html?area=" + encodeURIComponent(area) +
+      "&type=" + encodeURIComponent(type) + "&rent=" + amount;
+
+    qcResult.innerHTML =
+      '<div class="qc-result__body">' +
+        stampMarkup(result) +
+        '<div class="qc-result__text">' +
+          '<p class="qc-result__verdict">' + verdictName(result.verdict) + '</p>' +
+          '<p class="qc-result__meta">' + area + " · " + type + " · " + nairaFmt(amount) + '</p>' +
+          '<p class="qc-result__line">' + guide.summary + '</p>' +
+          '<a class="qc-result__link" href="' + href + '">Open the full checker <span aria-hidden="true">→</span></a>' +
+        '</div>' +
+      '</div>';
+  }
+
+  document.getElementById("qcForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    runQuickCheck(true);
+  });
+
+  var qcTimer = null;
+  [qcArea, qcType].forEach(function (el) {
+    el.addEventListener("change", function () { clearTimeout(qcTimer); qcTimer = setTimeout(runQuickCheck, 120); });
+  });
+  qcAmount.addEventListener("input", function () {
+    clearTimeout(qcTimer);
+    qcTimer = setTimeout(function () { runQuickCheck(false); }, 240);
+  });
+
+  /* ---- band explainer (real numbers) ---- */
+  var band = AREA_DATA["Yaba"]["2 Bedroom Flat"];
+  var avg = band.avg;
+  var dMin = avg * 0.6, dMax = avg * 1.5;
+  function pos(n) { return ((n - dMin) / (dMax - dMin)) * 100; }
+  var zones = [
+    { cls: "below", from: dMin, to: avg * 0.92, label: "Below band" },
+    { cls: "fair", from: avg * 0.92, to: avg * 1.08, label: "Fair" },
+    { cls: "watch", from: avg * 1.08, to: avg * 1.25, label: "Watch" },
+    { cls: "over", from: avg * 1.25, to: dMax, label: "Overpriced" }
+  ];
+  document.getElementById("bandViz").innerHTML = zones.map(function (z) {
+    return '<div class="zonebar__seg zonebar__seg--' + z.cls + '" style="flex:0 0 ' +
+      (pos(z.to) - pos(z.from)).toFixed(2) + '%">' + z.label + '</div>';
+  }).join("");
+  document.getElementById("bandTicks").innerHTML =
+    '<span class="zonebar-tick" style="left:0">' + nairaFmt(band.min) + '</span>' +
+    '<span class="zonebar-tick" style="left:' + pos(avg).toFixed(2) + '%">median ' + nairaFmt(avg) + '</span>' +
+    '<span class="zonebar-tick" style="left:100%">' + nairaFmt(band.max) + '</span>';
+  document.getElementById("bandMedianLabel").textContent = "median " + nairaFmt(avg);
+
+  /* ---- listing gallery ---- */
+  var listings = [
+    {
+      img: "assets/img/listing-compound.webp",
+      alt: "Gated low-rise apartment compound with paved parking and tropical planting in Lagos.",
+      area: "Ikeja GRA", type: "3 Bedroom Flat", rent: 3900000
+    },
+    {
+      img: "assets/img/listing-bedroom.webp",
+      alt: "Bedroom with a wooden bed frame, linen bedding and tall windows onto palm trees.",
+      area: "Lekki Phase 1", type: "2 Bedroom Flat", rent: 3800000
+    },
+    {
+      img: "assets/img/listing-duplex.webp",
+      alt: "Modern detached duplex with a covered carport, clipped lawn and palm trees.",
+      area: "Magodo", type: "Terrace Duplex", rent: 4600000
+    },
+    {
+      img: "assets/img/listing-living-room.webp",
+      alt: "Living room with floor-to-ceiling windows overlooking the Lagos waterfront.",
+      area: "Victoria Island", type: "2 Bedroom Flat", rent: 4400000
+    },
+    {
+      img: "assets/img/listing-studio.webp",
+      alt: "Studio apartment combining a double bed, sofa and compact fitted kitchen.",
+      area: "Yaba", type: "Studio Apartment", rent: 480000
+    }
+  ];
+
+  document.getElementById("listingGrid").innerHTML = listings.map(function (l) {
+    var r = computeVerdict(l.area, l.type, l.rent);
+    var v = r ? r.verdict : "fair";
+    var pct = r ? (r.pct > 0 ? "+" : "") + r.pct + "%" : "";
+    var href = "check-price.html?area=" + encodeURIComponent(l.area) +
+      "&type=" + encodeURIComponent(l.type) + "&rent=" + l.rent;
+    return '<article class="listing">' +
+      '<a class="listing__media" href="' + href + '" aria-label="Open ' + l.type + ' in ' + l.area + ' in the price checker">' +
+        '<img src="' + l.img + '" width="1264" height="848" loading="lazy" decoding="async" alt="' + l.alt + '">' +
+        verdictBadgeMarkup(v) +
+      '</a>' +
+      '<div class="listing__body">' +
+        '<p class="listing__place">' + l.area + ' · ' + (AREA_STATE[l.area] || "Nigeria") + '</p>' +
+        '<h3 class="listing__title">' + l.type + '</h3>' +
+        '<div class="listing__foot">' +
+          '<span class="listing__price">' + nairaFmt(l.rent) + '</span>' +
+          '<span class="listing__delta listing__delta--' + v + '">' + pct + ' vs median</span>' +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }).join("");
+
+  /* ---- testimonials ---- */
+  document.getElementById("quoteList").innerHTML = TESTIMONIALS.map(function (t) {
+    return '<figure class="quote"><blockquote>“' + t.quote + '”</blockquote>' +
+      '<figcaption><b>' + t.name + '</b> · ' + t.context + '</figcaption></figure>';
+  }).join("");
+
+  /* ---- recent community reports ---- */
+  var stored = readLocalReports();
+  var recent = (stored.length ? stored : SEED_REPORTS.slice()).sort(function (a, b) {
+    return reportDateValue(b.date) - reportDateValue(a.date);
+  }).slice(0, 3);
+
+  document.getElementById("recentReports").innerHTML =
+    '<p class="eyebrow eyebrow--plain" style="padding:16px 0 10px">Latest reports</p>' +
+    recent.map(function (r) {
+      var result = computeVerdict(r.area, r.type, r.amount);
+      return '<a class="recent__row" href="community.html">' +
+        '<span class="recent__place">' + r.area + ' <span>· ' + r.type + '</span></span>' +
+        '<span class="recent__amount">' + nairaFmt(r.amount) + '</span>' +
+        verdictBadgeMarkup(verdictKey(result)) +
+      '</a>';
+    }).join("");
+
+  /* ---- modal ---- */
+  var modal = document.getElementById("methodModal");
+  document.querySelectorAll("[data-open-modal]").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (typeof modal.showModal === "function") modal.showModal();
+      else modal.setAttribute("open", "");
+    });
+  });
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal || e.target.closest("[data-close-modal]")) modal.close();
+  });
+})();
+</script>
+</body>
+</html>

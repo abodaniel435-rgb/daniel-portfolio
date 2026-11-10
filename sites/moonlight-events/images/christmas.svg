@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Christmas festival illustration</title>
+  <desc id="desc">A decorated Christmas tree beneath a winter night sky.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#07182f"/>
+      <stop offset="100%" stop-color="#103a52"/>
+    </linearGradient>
+    <linearGradient id="snow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#edf7ff"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="starGlow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="1020" cy="120" r="54" fill="#f3f9ff" opacity="0.85"/>
+  <circle cx="140" cy="140" r="4" fill="#ffffff"/>
+  <circle cx="230" cy="80" r="6" fill="#ffffff"/>
+  <circle cx="340" cy="130" r="3" fill="#ffffff"/>
+  <circle cx="900" cy="190" r="5" fill="#ffffff"/>
+  <circle cx="1080" cy="200" r="4" fill="#ffffff"/>
+  <path d="M0 650c140-30 289-40 446-19 145 19 221 31 382 16 132-13 233-8 372 22v131H0z" fill="url(#snow)"/>
+  <rect x="558" y="430" width="84" height="172" rx="16" fill="#5a321d"/>
+  <polygon points="600,165 360,510 840,510" fill="#154d35"/>
+  <polygon points="600,240 395,545 805,545" fill="#1b6a46"/>
+  <polygon points="600,315 430,580 770,580" fill="#218555"/>
+  <circle cx="520" cy="320" r="12" fill="#f5d34f"/>
+  <circle cx="662" cy="350" r="11" fill="#ef5b5b"/>
+  <circle cx="566" cy="410" r="13" fill="#72c9ff"/>
+  <circle cx="650" cy="450" r="10" fill="#f48fb1"/>
+  <circle cx="528" cy="505" r="11" fill="#ffdf72"/>
+  <circle cx="688" cy="510" r="13" fill="#ef5b5b"/>
+  <polyline points="485,345 552,392 482,455 610,502 528,558" fill="none" stroke="#ffd877" stroke-width="10" stroke-linecap="round"/>
+  <path d="M600 118l16 39 42 3-32 24 11 41-37-23-37 23 11-41-32-24 42-3z" fill="#ffdf72" filter="url(#starGlow)"/>
+  <rect x="195" y="540" width="118" height="78" rx="12" fill="#cb3d3d"/>
+  <rect x="222" y="540" width="15" height="78" fill="#ffd877"/>
+  <rect x="195" y="571" width="118" height="15" fill="#ffd877"/>
+  <rect x="870" y="555" width="140" height="92" rx="12" fill="#2f67c9"/>
+  <rect x="928" y="555" width="16" height="92" fill="#ffd877"/>
+  <rect x="870" y="592" width="140" height="15" fill="#ffd877"/>
+  <text x="76" y="94" fill="#ffffff" font-size="58" font-family="Georgia, serif" letter-spacing="4">CHRISTMAS</text>
+  <text x="80" y="138" fill="#cfeaff" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Winter lights and celebration</text>
+</svg>

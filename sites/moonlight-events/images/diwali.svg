@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Diwali festival illustration</title>
+  <desc id="desc">Golden lamps glowing at night during Diwali.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#12091f"/>
+      <stop offset="55%" stop-color="#2f114d"/>
+      <stop offset="100%" stop-color="#5c1c3e"/>
+    </linearGradient>
+    <linearGradient id="lamp" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5a623"/>
+      <stop offset="100%" stop-color="#d76b00"/>
+    </linearGradient>
+    <radialGradient id="flame" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fff4b1"/>
+      <stop offset="50%" stop-color="#ffbf3f"/>
+      <stop offset="100%" stop-color="#ff7a00"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="160" cy="130" r="6" fill="#ffd36f"/>
+  <circle cx="310" cy="90" r="9" fill="#ffdd88" opacity="0.9"/>
+  <circle cx="410" cy="180" r="7" fill="#ffd36f"/>
+  <circle cx="1020" cy="140" r="8" fill="#ffd36f"/>
+  <circle cx="900" cy="95" r="5" fill="#ffdd88" opacity="0.9"/>
+  <circle cx="770" cy="180" r="7" fill="#ffd36f"/>
+  <circle cx="600" cy="110" r="75" fill="#ffd36f" opacity="0.12" filter="url(#glow)"/>
+  <path d="M0 620c130-55 228-70 344-48 120 23 245 89 364 83 116-6 190-73 288-92 89-16 140-4 204 15v222H0z" fill="#110715"/>
+  <g transform="translate(140 455)">
+    <ellipse cx="120" cy="155" rx="140" ry="40" fill="#5e1f0e"/>
+    <path d="M0 140c38 30 79 42 120 42s82-12 120-42c-10-54-37-96-63-114-20 10-38 15-57 15s-37-5-57-15c-26 18-53 60-63 114z" fill="url(#lamp)"/>
+    <path d="M105 18c8-24 30-42 15-66 27 10 45 35 45 61 0 31-18 55-45 55s-45-24-45-55c0-18 9-34 30-52-5 18 1 35 0 57z" fill="url(#flame)" filter="url(#glow)"/>
+  </g>
+  <g transform="translate(480 395) scale(1.15)">
+    <ellipse cx="120" cy="155" rx="140" ry="40" fill="#5e1f0e"/>
+    <path d="M0 140c38 30 79 42 120 42s82-12 120-42c-10-54-37-96-63-114-20 10-38 15-57 15s-37-5-57-15c-26 18-53 60-63 114z" fill="url(#lamp)"/>
+    <path d="M105 18c8-24 30-42 15-66 27 10 45 35 45 61 0 31-18 55-45 55s-45-24-45-55c0-18 9-34 30-52-5 18 1 35 0 57z" fill="url(#flame)" filter="url(#glow)"/>
+  </g>
+  <g transform="translate(815 455) scale(0.95)">
+    <ellipse cx="120" cy="155" rx="140" ry="40" fill="#5e1f0e"/>
+    <path d="M0 140c38 30 79 42 120 42s82-12 120-42c-10-54-37-96-63-114-20 10-38 15-57 15s-37-5-57-15c-26 18-53 60-63 114z" fill="url(#lamp)"/>
+    <path d="M105 18c8-24 30-42 15-66 27 10 45 35 45 61 0 31-18 55-45 55s-45-24-45-55c0-18 9-34 30-52-5 18 1 35 0 57z" fill="url(#flame)" filter="url(#glow)"/>
+  </g>
+  <text x="80" y="92" fill="#fff2bf" font-size="62" font-family="Georgia, serif" letter-spacing="4">DIWALI</text>
+  <text x="82" y="138" fill="#ffd36f" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Festival of Lights</text>
+</svg>

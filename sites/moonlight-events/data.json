@@ -1,0 +1,244 @@
+[
+  {
+    "name": "Pongal",
+    "country": "India",
+    "religion": "Hindu",
+    "month": "January",
+    "description": "A four-day Tamil harvest festival honoring the sun, fresh crops, and gratitude for abundance.",
+    "history": "Pongal is one of South India's oldest harvest celebrations. Families cook newly harvested rice with milk, decorate homes with kolam patterns, and thank nature, cattle, and the sun for a successful farming season."
+  },
+  {
+    "name": "Sinulog",
+    "country": "Philippines",
+    "religion": "Christian",
+    "month": "January",
+    "description": "A major Cebu festival filled with street dancing, drumbeats, and colorful devotion to the Santo Nino.",
+    "history": "Sinulog honors the Child Jesus and blends Catholic devotion with local cultural traditions. Processions, dance competitions, and rhythmic parades make it one of the Philippines' most recognized January festivals."
+  },
+  {
+    "name": "Carnival",
+    "country": "Brazil",
+    "religion": "Cultural",
+    "month": "February",
+    "description": "World-famous celebrations with samba dancing, costumes, music trucks, and massive street parades.",
+    "history": "Brazilian Carnival grew from Portuguese pre-Lenten customs and transformed through African, Indigenous, and local Brazilian influence. Rio's samba school parades became an international symbol of the festival."
+    ,
+    "image": "images/carnival.svg"
+  },
+  {
+    "name": "Sapporo Snow Festival",
+    "country": "Japan",
+    "religion": "Cultural",
+    "month": "February",
+    "description": "A winter festival known for giant snow sculptures, ice art, evening lights, and snowy city displays.",
+    "history": "The Sapporo Snow Festival began when local students built snow statues in Odori Park. It grew into one of Japan's best-known winter festivals, drawing visitors for large-scale snow and ice creations."
+  },
+  {
+    "name": "Holi",
+    "country": "India",
+    "religion": "Hindu",
+    "month": "March",
+    "description": "The festival of colors celebrating spring, joy, and the triumph of good over evil.",
+    "history": "Holi is linked to the stories of Krishna, Radha, and the legend of Prahlad and Holika. Communities celebrate by throwing colored powders, singing, dancing, and sharing festive food."
+    ,
+    "image": "images/holi.svg"
+  },
+  {
+    "name": "Las Fallas",
+    "country": "Spain",
+    "religion": "Cultural",
+    "month": "March",
+    "description": "Valencia's fiery March festival featuring towering satirical sculptures, fireworks, music, and street celebrations.",
+    "history": "Las Fallas evolved from old carpenters' spring bonfires and became a major city tradition. Neighborhood groups build giant artistic figures called fallas, then burn many of them during the climactic night of La Crema."
+  },
+  {
+    "name": "Sakura Festival",
+    "country": "Japan",
+    "religion": "Cultural",
+    "month": "April",
+    "description": "A spring blossom celebration centered on hanami picnics, soft pink cherry trees, and seasonal gatherings.",
+    "history": "Hanami has been practiced in Japan for more than a thousand years. What began among the imperial court spread widely and remains a cherished way to welcome spring under blooming cherry trees."
+    ,
+    "image": "images/sakura.svg"
+  },
+  {
+    "name": "Eid al-Fitr",
+    "country": "Global",
+    "religion": "Islamic",
+    "month": "April",
+    "description": "A joyful celebration marking the end of Ramadan with prayers, charity, family visits, and shared meals.",
+    "history": "Eid al-Fitr was established in the early Islamic community and is observed worldwide. Families gather for prayer, festive clothing, generous giving, and meals that mark the close of the fasting month."
+    ,
+    "image": "images/eid-al-fitr.svg"
+  },
+  {
+    "name": "Easter",
+    "country": "Global",
+    "religion": "Christian",
+    "month": "April",
+    "description": "A major Christian festival celebrating the resurrection of Jesus with worship services, music, shared meals, and joyful spring gatherings.",
+    "history": "Easter is the central feast of the Christian calendar, observed across many cultures with church services, processions, and family traditions. In 2026, Easter Sunday falls on April 5."
+    ,
+    "image": "images/easter.svg"
+  },
+  {
+    "name": "Aoi Matsuri",
+    "country": "Japan",
+    "religion": "Cultural",
+    "month": "May",
+    "description": "A historic Kyoto procession of court costumes, ox-drawn carts, and hollyhock decorations.",
+    "history": "Aoi Matsuri is one of Kyoto's oldest festivals, with roots in imperial rituals held to pray for peace and a good harvest. Its elegant parade recreates the atmosphere of Japan's classical court era."
+  },
+  {
+    "name": "Cinco de Mayo",
+    "country": "Mexico",
+    "religion": "Cultural",
+    "month": "May",
+    "description": "A commemorative festival marking the Mexican victory at Puebla with music, food, and civic pride.",
+    "history": "Cinco de Mayo remembers the Battle of Puebla in 1862, when Mexican forces defeated a larger French army. It remains especially associated with Puebla and with cultural celebrations of Mexican identity."
+  },
+  {
+    "name": "Festa Junina",
+    "country": "Brazil",
+    "religion": "Cultural",
+    "month": "June",
+    "description": "A cheerful June festival of bonfires, folk dancing, plaid costumes, and traditional corn dishes.",
+    "history": "Festa Junina developed from European midsummer traditions and became deeply tied to Brazilian rural life. Communities celebrate with quadrilha dances, paper flags, bonfires, and harvest-themed foods."
+    ,
+    "image": "images/festa-junina.svg"
+  },
+  {
+    "name": "Midsummer",
+    "country": "Sweden",
+    "religion": "Cultural",
+    "month": "June",
+    "description": "A bright summer celebration with flower crowns, dancing around a maypole, and long evenings outdoors.",
+    "history": "Swedish Midsummer grew from ancient seasonal customs celebrating light, fertility, and the height of summer. It remains one of Sweden's most beloved traditions, centered on gatherings in nature."
+  },
+  {
+    "name": "Gion Matsuri",
+    "country": "Japan",
+    "religion": "Cultural",
+    "month": "July",
+    "description": "Kyoto's famous summer festival known for towering floats, lantern-lit streets, and grand processions.",
+    "history": "Gion Matsuri began in 869 as a ritual response to epidemic disease. Over centuries it expanded into one of Japan's largest traditional festivals, centered around the Yasaka Shrine and elaborate float parades."
+    ,
+    "image": "images/gion-matsuri.svg"
+  },
+  {
+    "name": "Durbar Festival",
+    "country": "Nigeria",
+    "religion": "Cultural",
+    "month": "July",
+    "description": "A regal northern Nigerian festival of horse parades, drumming, robes, and ceremonial pageantry.",
+    "history": "Durbar developed from Hausa royal cavalry displays and remains a striking showcase of horsemanship, leadership, and regional heritage. Riders in vivid attire perform before crowds and traditional rulers."
+    ,
+    "image": "images/durbar.svg"
+  },
+  {
+    "name": "Guelaguetza",
+    "country": "Mexico",
+    "religion": "Cultural",
+    "month": "July",
+    "description": "Oaxaca's major cultural festival featuring Indigenous dance, music, regional dress, and community sharing.",
+    "history": "Guelaguetza comes from Zapotec traditions of reciprocity and offering. It grew into a major gathering where communities across Oaxaca present dances, songs, and gifts that celebrate local identity."
+    ,
+    "image": "images/guelaguetza.svg"
+  },
+  {
+    "name": "Obon",
+    "country": "Japan",
+    "religion": "Cultural",
+    "month": "August",
+    "description": "A summer festival of lanterns, ancestral remembrance, bon odori dancing, and homecoming gatherings.",
+    "history": "Obon is rooted in Buddhist remembrance traditions and is widely observed across Japan. Families return home, visit graves, light lanterns, and join community dances honoring ancestors."
+  },
+  {
+    "name": "New Yam Festival",
+    "country": "Nigeria",
+    "religion": "Cultural",
+    "month": "August",
+    "description": "A harvest thanksgiving celebrating the arrival of new yams with feasting, dance, and masquerades.",
+    "history": "The New Yam Festival is celebrated across many communities in southern Nigeria, especially among the Igbo. It marks gratitude for the harvest and the ceremonial beginning of eating newly gathered yams."
+    ,
+    "image": "images/new-yam.svg"
+  },
+  {
+    "name": "Oktoberfest",
+    "country": "Germany",
+    "religion": "Cultural",
+    "month": "September",
+    "description": "Munich's world-famous folk festival with tents, brass bands, rides, and Bavarian food traditions.",
+    "history": "Oktoberfest began in 1810 with celebrations for the marriage of Crown Prince Ludwig and Princess Therese. It grew into a globally recognized festival that traditionally opens in September."
+  },
+  {
+    "name": "La Merce",
+    "country": "Spain",
+    "religion": "Cultural",
+    "month": "September",
+    "description": "Barcelona's city festival filled with giants, human towers, music, fireworks, and street performance.",
+    "history": "La Merce honors Barcelona's patron saint and has become one of the city's signature festivals. It combines civic celebration with traditional Catalan culture, modern arts, and spectacular closing fireworks."
+  },
+  {
+    "name": "Navratri",
+    "country": "India",
+    "religion": "Hindu",
+    "month": "October",
+    "description": "A nine-night festival of devotion, dance, music, and celebration of the divine feminine.",
+    "history": "Navratri is observed in different forms across India and centers on worship of the goddess in her many forms. Garba and dandiya dance events make it especially vibrant in western India."
+  },
+  {
+    "name": "MassKara Festival",
+    "country": "Philippines",
+    "religion": "Cultural",
+    "month": "October",
+    "description": "A smiling street festival with masks, dance performances, bright costumes, and energetic parades.",
+    "history": "MassKara emerged in Bacolod during a difficult economic period as a celebration of resilience and community spirit. Its iconic smiling masks and lively processions remain central to the festival."
+  },
+  {
+    "name": "Diwali",
+    "country": "India",
+    "religion": "Hindu",
+    "month": "November",
+    "description": "A festival of lights celebrating hope, renewal, and the triumph of light over darkness.",
+    "history": "Diwali has been celebrated for centuries and is associated with stories such as Rama's return to Ayodhya. Homes glow with lamps, families exchange sweets, and many worship Lakshmi for prosperity."
+    ,
+    "image": "images/diwali.svg"
+  },
+  {
+    "name": "Day of the Dead",
+    "country": "Mexico",
+    "religion": "Cultural",
+    "month": "November",
+    "description": "A remembrance festival with marigolds, candles, altars, parades, and family gatherings.",
+    "history": "Day of the Dead blends Indigenous remembrance traditions with Catholic observances. Families build ofrendas, visit cemeteries, and celebrate enduring ties with loved ones who have died."
+    ,
+    "image": "images/day-of-the-dead.svg"
+  },
+  {
+    "name": "Christmas",
+    "country": "Global",
+    "religion": "Christian",
+    "month": "December",
+    "description": "A December celebration of the birth of Jesus Christ with gifts, music, lights, and family gatherings.",
+    "history": "Christmas has been observed since the early centuries of Christianity and developed many local traditions over time. Seasonal lights, decorated trees, nativity scenes, and shared meals became central customs in many places."
+    ,
+    "image": "images/christmas.svg"
+  },
+  {
+    "name": "St. Lucia's Day",
+    "country": "Sweden",
+    "religion": "Christian",
+    "month": "December",
+    "description": "A candlelit winter festival of songs, white robes, saffron buns, and light in the darkest season.",
+    "history": "St. Lucia's Day became a cherished Swedish winter tradition combining saintly remembrance with seasonal customs of light, music, and hospitality. Processions often feature crowns of candles and choral singing."
+  },
+  {
+    "name": "Christmas Markets",
+    "country": "Germany",
+    "religion": "Cultural",
+    "month": "December",
+    "description": "Festive town squares filled with lights, wooden stalls, ornaments, warm drinks, and holiday music.",
+    "history": "German Christmas markets date back to the late Middle Ages and became a beloved Advent tradition. They bring together crafts, food, lights, and winter atmosphere in city centers across the country."
+  }
+]

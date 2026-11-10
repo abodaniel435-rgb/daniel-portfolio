@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Durbar Festival illustration</title>
+  <desc id="desc">Riders in ceremonial robes during Nigeria's Durbar Festival.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f6c26b"/>
+      <stop offset="100%" stop-color="#f2e3a2"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d88a43"/>
+      <stop offset="100%" stop-color="#b76b2f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="952" cy="110" r="64" fill="#fff4c7" opacity="0.88"/>
+  <path d="M0 614c128-37 272-39 417-15 159 27 257 32 404 14 118-15 240-13 379 16v171H0z" fill="url(#ground)"/>
+  <g transform="translate(342 505)">
+    <ellipse cx="0" cy="76" rx="118" ry="58" fill="#5a341e"/>
+    <rect x="-104" y="-26" width="188" height="52" rx="18" fill="#7a4728"/>
+    <circle cx="-72" cy="-18" r="30" fill="#5a341e"/>
+    <path d="M-2-110c34 0 62 22 62 50s-28 50-62 50-62-22-62-50 28-50 62-50z" fill="#1d4e89"/>
+    <rect x="-24" y="-75" width="48" height="108" rx="16" fill="#1d4e89"/>
+    <path d="M-6-136h12l10 38H-16z" fill="#f1d17e"/>
+  </g>
+  <g transform="translate(826 485)">
+    <ellipse cx="0" cy="92" rx="126" ry="60" fill="#4e2e1a"/>
+    <rect x="-110" y="-10" width="196" height="56" rx="18" fill="#6b3f22"/>
+    <circle cx="-76" cy="-2" r="32" fill="#4e2e1a"/>
+    <path d="M-8-122c34 0 62 22 62 50s-28 50-62 50-62-22-62-50 28-50 62-50z" fill="#7a1f35"/>
+    <rect x="-26" y="-82" width="52" height="116" rx="16" fill="#7a1f35"/>
+    <path d="M-8-150h16l12 42H-20z" fill="#f1d17e"/>
+  </g>
+  <text x="78" y="96" fill="#603813" font-size="58" font-family="Georgia, serif" letter-spacing="4">DURBAR FESTIVAL</text>
+  <text x="80" y="140" fill="#8a4d1f" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Royal horse parades and northern pageantry</text>
+</svg>

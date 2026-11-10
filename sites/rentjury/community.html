@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community reports — RentJury</title>
+<meta name="description" content="Real rents Nigerians actually paid, filtered by state, area and property type. Add your own report to keep the reference honest.">
+<meta name="theme-color" content="#FAF6EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="RentJury home">
+      <span class="brand__mark" aria-hidden="true">₦</span>
+      <span class="brand__text">
+        <span class="brand__name">RentJury</span>
+        <span class="brand__sub">Know before you pay</span>
+      </span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Primary">
+      <a class="nav__link" href="index.html">Home</a>
+      <a class="nav__link" href="check-price.html">Check a price</a>
+      <a class="nav__link" href="community.html" aria-current="page">Community reports</a>
+      <button class="theme-btn" type="button" data-theme-toggle aria-label="Toggle light or dark theme">● Dark</button>
+      <a class="btn btn--primary btn--sm nav__cta" href="check-price.html">Check a price <span class="arrow" aria-hidden="true">→</span></a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+
+  <header class="page-head">
+    <div class="wrap page-head__grid">
+      <div>
+        <p class="eyebrow">Evidence · community reports</p>
+        <h1>What people actually paid.</h1>
+        <p>Every entry below comes from someone who paid, or was quoted and walked away. Filter by state, search an area, and add your own — the reference only works when renters keep it current.</p>
+      </div>
+      <div class="page-head__aside" aria-label="About the data">
+        <div><b>Anonymous</b><span>No names, no addresses</span></div>
+        <div><b>Local</b><span>Saved on this device</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section aria-label="Report statistics" style="padding-top:var(--s-5)">
+    <div class="wrap">
+      <div class="stats" id="communityStats">
+        <div class="stat"><b class="stat__value">—</b><span class="stat__label">Total reports</span></div>
+        <div class="stat"><b class="stat__value">—</b><span class="stat__label">Median annual rent</span></div>
+        <div class="stat"><b class="stat__value">—</b><span class="stat__label">Most reported area</span></div>
+        <div class="stat"><b class="stat__value">—</b><span class="stat__label">Average agency fee</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="community" aria-label="Reports and submission">
+    <div class="wrap community__grid">
+
+      <!-- data view -->
+      <div>
+        <div class="toolbar" role="search" aria-label="Filter community reports">
+          <div class="field toolbar__search">
+            <label class="field__label" for="search">Search</label>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M10.8 10.8L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <input type="search" id="search" placeholder="Area, type or note" autocomplete="off">
+          </div>
+          <div class="field">
+            <label class="field__label" for="filterState">State</label>
+            <select id="filterState"><option value="">All states</option></select>
+          </div>
+          <div class="field field--type">
+            <label class="field__label" for="filterType">Property type</label>
+            <select id="filterType"><option value="">All types</option></select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="sortBy">Sort by</label>
+            <select id="sortBy">
+              <option value="recent">Newest first</option>
+              <option value="lowest">Lowest rent</option>
+              <option value="highest">Highest rent</option>
+            </select>
+          </div>
+          <button class="btn btn--ghost btn--sm" type="button" id="clearFilters">Reset</button>
+        </div>
+
+        <div class="list-meta">
+          <p><b id="resultCount">0</b> reports shown</p>
+          <p id="filterSummary" aria-live="polite">All states · all property types</p>
+        </div>
+
+        <div class="reports__head" aria-hidden="true">
+          <span>Verdict</span><span>Area &amp; property</span><span>Annual rent</span><span>Date</span>
+        </div>
+
+        <div class="reports" id="reportList"></div>
+      </div>
+
+      <!-- aside -->
+      <aside class="community__aside" id="add-report">
+        <form class="panel aside-card" id="reportForm" novalidate aria-labelledby="addReportTitle" tabindex="-1">
+          <div class="aside-card__head">
+            <h2 id="addReportTitle">Add a report</h2>
+            <span>Anonymous</span>
+          </div>
+
+          <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+            <span class="form-success__icon" aria-hidden="true">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.2 3.2L11 1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <h3>Report added</h3>
+              <p id="successText">It is at the top of the list now.</p>
+            </div>
+          </div>
+
+          <div class="field" id="fieldSubState">
+            <label class="field__label" for="subState">State</label>
+            <select id="subState" aria-describedby="errSubState"></select>
+            <p class="field__error" id="errSubState"></p>
+          </div>
+          <div class="field" id="fieldSubArea">
+            <label class="field__label" for="subArea">Area / city</label>
+            <select id="subArea" aria-describedby="errSubArea"></select>
+            <p class="field__error" id="errSubArea"></p>
+          </div>
+          <div class="field" id="fieldSubType">
+            <label class="field__label" for="subType">Property type</label>
+            <select id="subType" aria-describedby="errSubType"></select>
+            <p class="field__error" id="errSubType"></p>
+          </div>
+
+          <div class="field-row">
+            <div class="field" id="fieldSubAmount">
+              <label class="field__label" for="subAmount">Annual rent</label>
+              <div class="input-money">
+                <input type="number" id="subAmount" inputmode="numeric" min="0" step="10000" placeholder="850000" aria-describedby="errSubAmount">
+              </div>
+              <p class="field__error" id="errSubAmount"></p>
+            </div>
+            <div class="field" id="fieldSubAgency">
+              <label class="field__label" for="subAgency">Agency fee</label>
+              <div class="input-unit">
+                <input type="number" id="subAgency" inputmode="decimal" min="0" max="100" step="0.5" value="10" aria-describedby="errSubAgency">
+                <span class="unit" aria-hidden="true">%</span>
+              </div>
+              <p class="field__error" id="errSubAgency"></p>
+            </div>
+          </div>
+
+          <div class="field" id="fieldSubDate">
+            <label class="field__label" for="subDate">Date paid or quoted</label>
+            <input type="date" id="subDate" aria-describedby="errSubDate">
+            <p class="field__error" id="errSubDate"></p>
+          </div>
+
+          <details class="form-extra">
+            <summary>Other fees <span class="field__opt">optional</span></summary>
+            <div class="field-row">
+              <div class="field" id="fieldSubLegal">
+                <label class="field__label" for="subLegal">Legal fee</label>
+                <div class="input-unit">
+                  <input type="number" id="subLegal" inputmode="decimal" min="0" max="100" step="0.5" value="10" aria-describedby="errSubLegal">
+                  <span class="unit" aria-hidden="true">%</span>
+                </div>
+                <p class="field__error" id="errSubLegal"></p>
+              </div>
+              <div class="field" id="fieldSubCaution">
+                <label class="field__label" for="subCaution">Caution</label>
+                <div class="input-unit">
+                  <input type="number" id="subCaution" inputmode="decimal" min="0" max="200" step="5" value="0" aria-describedby="errSubCaution">
+                  <span class="unit" aria-hidden="true">%</span>
+                </div>
+                <p class="field__error" id="errSubCaution"></p>
+              </div>
+            </div>
+          </details>
+
+          <div class="field">
+            <label class="field__label" for="subNote">Note <span class="field__opt">optional</span></label>
+            <input type="text" id="subNote" maxlength="120" placeholder="Anything worth flagging?">
+          </div>
+
+          <button class="btn btn--accent btn--block" type="submit" id="submitReportBtn">Submit report</button>
+          <p class="form-note">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l5.5 3v3c0 3-2.3 4.6-5.5 5-3.2-.4-5.5-2-5.5-5v-3L7 1.5z" stroke="currentColor" stroke-width="1.2"/></svg>
+            Stored on this device only. No name, phone number or street address is collected.
+          </p>
+        </form>
+
+        <div class="panel aside-card">
+          <div class="aside-card__head">
+            <h2>Most expensive areas</h2>
+            <span>2-bed median</span>
+          </div>
+          <div class="leaderboard" id="leaderboard"></div>
+        </div>
+
+        <div class="panel aside-card">
+          <div class="aside-card__head">
+            <h2>Fee compliance</h2>
+            <span>Reported</span>
+          </div>
+          <div class="compliance-row"><span>Reports at or under 10%</span><b id="compliantCount">—</b></div>
+          <div class="compliance-row"><span>Reports above 10%</span><b id="aboveCount">—</b></div>
+          <div class="compliance-row"><span>Average agency fee</span><b id="avgFee">—</b></div>
+          <p class="rangebar__note" style="margin-top:var(--s-3)">The widely accepted ceiling is 10% of annual rent for the agency fee, and 10% for legal. Anything above that is worth questioning before you pay.</p>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--alt" id="faq" data-reveal>
+    <div class="wrap">
+      <div class="section-head" style="text-align:center;margin-inline:auto">
+        <p class="eyebrow" style="justify-content:center">Questions</p>
+        <h2>Frequently asked</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is my submitted data anonymous?</summary>
+          <p>Yes. RentJury asks for the state, area, property type, rent and fees — never your name, phone number or street address. Reports are stored in your browser’s local storage on this device; nothing is uploaded while Firebase is unconfigured.</p>
+        </details>
+        <details>
+          <summary>How is “fair” calculated?</summary>
+          <p>Each area and property type has a reference band with a low, median and high annual rent. A quote within 8% of the median is stamped fair; 8–25% above is “slightly high”; above 25% is overpriced. The band describes a market, not a formal valuation of one flat.</p>
+        </details>
+        <details>
+          <summary>Why is the agency fee checked separately?</summary>
+          <p>Because a fair rent can still hide a stacked fee. Agency and legal fees are checked against a 10% ceiling each, and caution deposits above 50% of rent are flagged. The fee is usually the easiest part of a quote to renegotiate.</p>
+        </details>
+        <details>
+          <summary>Can an agent get a report removed?</summary>
+          <p>No individual can request removal of someone else’s report. The goal is an honest, crowdsourced reference, not a complaints channel against any one agent — so reports carry an area and property type, never an address or a name.</p>
+        </details>
+        <details>
+          <summary>Is this legal advice?</summary>
+          <p>No. RentJury is a pricing reference built from community reports and reference bands. For anything contractual, have the tenancy agreement reviewed properly before you sign or pay.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <a class="brand" href="index.html" aria-label="RentJury home">
+          <span class="brand__mark" aria-hidden="true">₦</span>
+          <span class="brand__text"><span class="brand__name">RentJury</span><span class="brand__sub">Know before you pay</span></span>
+        </a>
+        <p>A community rent and agent-fee reference for Nigeria. Built for the renter who has been quoted a number and has no way to check it.</p>
+      </div>
+      <div class="foot__col">
+        <h3>Product</h3>
+        <ul>
+          <li><a href="check-price.html">Check a price</a></li>
+          <li><a href="community.html">Community reports</a></li>
+          <li><a href="check-price.html#redflags">Red flag checklist</a></li>
+          <li><a href="community.html#add-report">Add a report</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Coverage</h3>
+        <ul>
+          <li><a href="check-price.html?area=Lekki%20Phase%201&amp;type=2%20Bedroom%20Flat">Lagos</a></li>
+          <li><a href="check-price.html?area=Abuja%20(Central)&amp;type=2%20Bedroom%20Flat">Abuja (FCT)</a></li>
+          <li><a href="check-price.html?area=Port%20Harcourt&amp;type=3%20Bedroom%20Flat">Port Harcourt</a></li>
+          <li><a href="check-price.html">All 36 states + FCT</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Small print</h3>
+        <ul>
+          <li><a href="index.html#how-bands">How bands are built</a></li>
+          <li><a href="community.html#faq">FAQ</a></li>
+          <li><a href="community.html#faq">Privacy</a></li>
+          <li><a href="community.html#faq">Not legal advice</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span id="kw-year">2026</span> RentJury — a community reference, not a valuation or legal advice.</span>
+      <span>Lagos · Abuja · Port Harcourt · 34 more states + FCT</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ---- data ---- */
+  if (!readLocalReports().length) seedLocalReports(SEED_REPORTS);
+  var reports = readLocalReports();
+  var remoteReports = [];
+
+  var searchInput = document.getElementById("search");
+  var filterState = document.getElementById("filterState");
+  var filterType = document.getElementById("filterType");
+  var sortBy = document.getElementById("sortBy");
+  var list = document.getElementById("reportList");
+  var resultCount = document.getElementById("resultCount");
+  var filterSummary = document.getElementById("filterSummary");
+
+  /* ---- filter options ---- */
+  filterState.innerHTML = '<option value="">All states</option>' +
+    STATE_GROUPS.map(function (g) { return '<option value="' + g.state + '">' + g.state + '</option>'; }).join("");
+  filterType.innerHTML = '<option value="">All types</option>' +
+    PROPERTY_TYPES.map(function (t) { return '<option value="' + t + '">' + t + '</option>'; }).join("");
+
+  /* ---- submission form selects ---- */
+  var subState = document.getElementById("subState");
+  var subArea = document.getElementById("subArea");
+  var subType = document.getElementById("subType");
+  var subAmount = document.getElementById("subAmount");
+  var subAgency = document.getElementById("subAgency");
+  var subLegal = document.getElementById("subLegal");
+  var subCaution = document.getElementById("subCaution");
+  var subDate = document.getElementById("subDate");
+  var subNote = document.getElementById("subNote");
+  var form = document.getElementById("reportForm");
+  var success = document.getElementById("formSuccess");
+  var successText = document.getElementById("successText");
+  var submitBtn = document.getElementById("submitReportBtn");
+
+  subState.innerHTML = '<option value="" disabled selected>Select state</option>' +
+    STATE_GROUPS.map(function (g) { return '<option value="' + g.state + '">' + g.state + '</option>'; }).join("");
+  populateSelect(subType, PROPERTY_TYPES, "Select property type");
+
+  function fillSubAreas(state, selected) {
+    var group = STATE_GROUPS.filter(function (g) { return g.state === state; })[0];
+    if (!group) {
+      subArea.innerHTML = '<option value="" disabled selected>Select area</option>';
+      return;
+    }
+    var areas = Object.keys(group.areas);
+    subArea.innerHTML = '<option value="" disabled' + (selected ? "" : " selected") + '>Select area</option>' +
+      areas.map(function (a) { return '<option value="' + a + '">' + a + '</option>'; }).join("");
+    if (selected && areas.indexOf(selected) !== -1) subArea.value = selected;
+  }
+
+  subState.addEventListener("change", function () {
+    fillSubAreas(subState.value);
+    clearError("fieldSubState");
+    if (!subArea.value) clearError("fieldSubArea");
+  });
+  fillSubAreas("Lagos");
+
+  function todayISO() {
+    return new Date().toISOString().slice(0, 10);
+  }
+  subDate.value = todayISO();
+  subDate.max = todayISO();
+
+  /* ---- stats ---- */
+  function renderStats() {
+    var all = reports;
+    var total = all.length;
+    var amounts = all.map(function (r) { return Number(r.amount) || 0; }).filter(Boolean).sort(function (a, b) { return a - b; });
+    var median = amounts.length
+      ? (amounts.length % 2 ? amounts[(amounts.length - 1) / 2] : Math.round((amounts[amounts.length / 2 - 1] + amounts[amounts.length / 2]) / 2))
+      : 0;
+    var feeReports = all.filter(function (r) { return Number(r.agencyFee) > 0; });
+    var avgFee = feeReports.length
+      ? Math.round(feeReports.reduce(function (s, r) { return s + Number(r.agencyFee); }, 0) / feeReports.length)
+      : 0;
+
+    var counts = {};
+    all.forEach(function (r) { counts[r.area] = (counts[r.area] || 0) + 1; });
+    var topArea = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; })[0] || "—";
+
+    var stats = document.getElementById("communityStats");
+    stats.innerHTML =
+      '<div class="stat"><b class="stat__value">' + total + '</b><span class="stat__label">Total reports</span></div>' +
+      '<div class="stat"><b class="stat__value">' + (median ? nairaFmt(median) : "—") + '</b><span class="stat__label">Median annual rent</span></div>' +
+      '<div class="stat"><b class="stat__value">' + topArea + '</b><span class="stat__label">Most reported area</span></div>' +
+      '<div class="stat"><b class="stat__value">' + (avgFee ? avgFee + "%" : "—") + '</b><span class="stat__label">Average agency fee</span></div>';
+
+    var compliant = all.filter(function (r) { return Number(r.agencyFee) <= FEE_STANDARDS.agencyFeeMaxPct; }).length;
+    document.getElementById("compliantCount").textContent = compliant + " of " + total;
+    document.getElementById("aboveCount").textContent = (total - compliant) + " of " + total;
+    document.getElementById("avgFee").textContent = avgFee ? avgFee + "%" : "—";
+  }
+
+  /* ---- list ---- */
+  function reportMarkup(r) {
+    var result = computeVerdict(r.area, r.type, Number(r.amount));
+    var v = verdictKey(result);
+    var state = AREA_STATE[r.area] || "";
+    var area = escapeHtml(r.area);
+    var type = escapeHtml(r.type);
+    var note = r.note ? escapeHtml(r.note) : "";
+    return '<article class="report" data-id="' + escapeHtml(r.id || "") + '">' +
+      '<div class="report__verdict">' + verdictBadgeMarkup(v) + '</div>' +
+      '<div class="report__main">' +
+        '<h3 class="report__title">' + area + (state ? ' <span>· ' + escapeHtml(state) + '</span>' : "") + '</h3>' +
+        '<p class="report__type">' + type + '</p>' +
+        (note ? '<p class="report__note">“' + note + '”</p>' : "") +
+        '<p class="report__fees">Agency <b>' + (Number(r.agencyFee) || 0) + '%</b> · Legal <b>' + (Number(r.legalFee) || 0) + '%</b> · Caution <b>' + (Number(r.cautionFee) || 0) + '%</b></p>' +
+      '</div>' +
+      '<div class="report__money"><strong>' + nairaFmt(Number(r.amount) || 0) + '</strong><span>annual rent</span></div>' +
+      '<p class="report__date">' + reportDateLabel(r.date) + '</p>' +
+    '</article>';
+  }
+
+  function currentFilters() {
+    var q = searchInput.value.trim().toLowerCase();
+    var st = filterState.value;
+    var ty = filterType.value;
+    var rows = reports.filter(function (r) {
+      if (st && AREA_STATE[r.area] !== st) return false;
+      if (ty && r.type !== ty) return false;
+      if (q) {
+        var hay = (r.area + " " + (AREA_STATE[r.area] || "") + " " + r.type + " " + (r.note || "")).toLowerCase();
+        if (hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+
+    var sort = sortBy.value;
+    rows.sort(function (a, b) {
+      if (sort === "lowest") return (Number(a.amount) || 0) - (Number(b.amount) || 0);
+      if (sort === "highest") return (Number(b.amount) || 0) - (Number(a.amount) || 0);
+      return reportDateValue(b.date) - reportDateValue(a.date);
+    });
+    return rows;
+  }
+
+  function renderList() {
+    var rows = currentFilters();
+    resultCount.textContent = rows.length;
+
+    var bits = [];
+    if (filterState.value) bits.push(filterState.value);
+    if (filterType.value) bits.push(filterType.value);
+    if (searchInput.value.trim()) bits.push('“' + searchInput.value.trim() + '”');
+    filterSummary.textContent = bits.length ? "Filtered by " + bits.join(" · ") : "All states · all property types";
+
+    if (!rows.length) {
+      list.innerHTML =
+        '<div class="empty" style="min-height:280px;margin-top:var(--s-4)">' +
+          '<span class="empty__mark" aria-hidden="true">∅</span>' +
+          '<h3>No reports match that.</h3>' +
+          '<p>Try a different state or a shorter search — or add the report yourself so the next renter finds it.</p>' +
+          '<div class="empty__actions"><button class="btn btn--primary btn--sm" type="button" data-reset>Reset filters</button></div>' +
+        '</div>';
+      return;
+    }
+
+    list.innerHTML = rows.map(reportMarkup).join("");
+  }
+
+  /* ---- leaderboard ---- */
+  function renderLeaderboard() {
+    var type = "2 Bedroom Flat";
+    var rows = AREAS.map(function (a) {
+      return { a: a, state: AREA_STATE[a], avg: AREA_DATA[a][type].avg };
+    }).sort(function (x, y) { return y.avg - x.avg; }).slice(0, 6);
+    var max = rows[0].avg;
+    document.getElementById("leaderboard").innerHTML = rows.map(function (r, i) {
+      return '<div class="lb-row">' +
+        '<span class="lb-row__rank">' + (i + 1) + '</span>' +
+        '<div><div class="lb-row__name">' + r.a + '<span>' + r.state + '</span></div>' +
+        '<div class="lb-row__track"><i style="width:' + (r.avg / max * 100) + '%"></i></div></div>' +
+        '<span class="lb-row__val">' + nairaFmt(r.avg) + '</span>' +
+      '</div>';
+    }).join("");
+  }
+
+  function renderAll() {
+    renderStats();
+    renderList();
+  }
+
+  /* ---- filters ---- */
+  [searchInput, filterState, filterType, sortBy].forEach(function (el) {
+    el.addEventListener("input", renderList);
+    el.addEventListener("change", renderList);
+  });
+  document.getElementById("clearFilters").addEventListener("click", function () {
+    searchInput.value = "";
+    filterState.value = "";
+    filterType.value = "";
+    sortBy.value = "recent";
+    renderList();
+  });
+  list.addEventListener("click", function (e) {
+    if (e.target.closest("[data-reset]")) {
+      searchInput.value = "";
+      filterState.value = "";
+      filterType.value = "";
+      sortBy.value = "recent";
+      renderList();
+      searchInput.focus();
+    }
+  });
+
+  /* ---- validation ---- */
+  var FIELDS = {
+    fieldSubState: "errSubState",
+    fieldSubArea: "errSubArea",
+    fieldSubType: "errSubType",
+    fieldSubAmount: "errSubAmount",
+    fieldSubAgency: "errSubAgency",
+    fieldSubDate: "errSubDate",
+    fieldSubLegal: "errSubLegal",
+    fieldSubCaution: "errSubCaution"
+  };
+
+  function clearError(fieldId) {
+    var field = document.getElementById(fieldId);
+    if (!field) return;
+    field.classList.remove("is-invalid");
+    var input = field.querySelector("input, select");
+    if (input) input.removeAttribute("aria-invalid");
+    var err = field.querySelector(".field__error");
+    if (err) err.textContent = "";
+  }
+
+  function setError(fieldId, message) {
+    var field = document.getElementById(fieldId);
+    if (!field) return;
+    field.classList.add("is-invalid");
+    var input = field.querySelector("input, select");
+    if (input) input.setAttribute("aria-invalid", "true");
+    var err = field.querySelector(".field__error");
+    if (err) err.textContent = message;
+  }
+
+  Object.keys(FIELDS).forEach(function (fieldId) {
+    var field = document.getElementById(fieldId);
+    if (!field) return;
+    field.addEventListener("input", function () { clearError(fieldId); });
+    field.addEventListener("change", function () { clearError(fieldId); });
+  });
+
+  function validate() {
+    Object.keys(FIELDS).forEach(clearError);
+    var firstBad = null;
+
+    function fail(fieldId, msg) {
+      setError(fieldId, msg);
+      if (!firstBad) firstBad = fieldId;
+    }
+
+    if (!subState.value) fail("fieldSubState", "Choose the state where the property is.");
+    if (!subArea.value) fail("fieldSubArea", "Choose the area or city.");
+    if (!subType.value) fail("fieldSubType", "Choose the property type.");
+
+    var rent = Number(subAmount.value);
+    if (!subAmount.value || !isFinite(rent) || rent <= 0) {
+      fail("fieldSubAmount", "Enter the annual rent in naira — numbers only.");
+    } else if (rent < 50000) {
+      fail("fieldSubAmount", "That looks too low for a year’s rent. Check the amount.");
+    } else if (rent > 100000000) {
+      fail("fieldSubAmount", "That looks too high. Enter naira, not kobo.");
+    }
+
+    var fee = Number(subAgency.value);
+    if (subAgency.value === "" || !isFinite(fee)) {
+      fail("fieldSubAgency", "Enter the agency fee as a percentage.");
+    } else if (fee < 0 || fee > 100) {
+      fail("fieldSubAgency", "Agency fee should be between 0 and 100%.");
+    }
+
+    var legal = Number(subLegal.value);
+    if (subLegal.value !== "" && (!isFinite(legal) || legal < 0 || legal > 100)) {
+      fail("fieldSubLegal", "Legal fee should be between 0 and 100%.");
+    }
+    var caution = Number(subCaution.value);
+    if (subCaution.value !== "" && (!isFinite(caution) || caution < 0 || caution > 200)) {
+      fail("fieldSubCaution", "Caution deposit should be between 0 and 200%.");
+    }
+
+    if (!subDate.value) {
+      fail("fieldSubDate", "Choose the date you paid or were quoted.");
+    } else if (subDate.value > todayISO()) {
+      fail("fieldSubDate", "The date can’t be in the future.");
+    } else if (subDate.value < "2000-01-01") {
+      fail("fieldSubDate", "Enter a date from 2000 onwards.");
+    }
+
+    if (firstBad) {
+      var field = document.getElementById(firstBad);
+      var input = field && field.querySelector("input, select");
+      if (input) input.focus({ preventScroll: false });
+    }
+    return !firstBad;
+  }
+
+  /* ---- submit ---- */
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!validate()) {
+      showToast("Check the highlighted fields before submitting.");
+      return;
+    }
+
+    var entry = saveReportLocal({
+      area: subArea.value,
+      type: subType.value,
+      amount: Number(subAmount.value),
+      agencyFee: Number(subAgency.value),
+      legalFee: Number(subLegal.value) || 0,
+      cautionFee: Number(subCaution.value) || 0,
+      note: subNote.value.trim(),
+      date: subDate.value
+    });
+
+    reports = readLocalReports();
+    renderAll();
+
+    successText.textContent = entry.area + " · " + entry.type + " at " + nairaFmt(entry.amount) +
+      " a year has been added to the list.";
+    success.classList.add("is-visible");
+    form.scrollIntoView({ block: "start", behavior: "smooth" });
+    form.focus({ preventScroll: true });
+
+    // Reset the form but keep the state, which makes a second report quicker.
+    subType.selectedIndex = 0;
+    subAmount.value = "";
+    subAgency.value = "10";
+    subLegal.value = "10";
+    subCaution.value = "0";
+    subDate.value = todayISO();
+    subNote.value = "";
+    subArea.selectedIndex = 0;
+    Object.keys(FIELDS).forEach(clearError);
+
+    showToast("Report added — " + entry.area + ", " + nairaFmt(entry.amount) + ".");
+
+    getFirebase().then(function (fb) {
+      if (!fb || !fb.submitReport) return;
+      fb.submitReport(entry).catch(function () { /* optional; the local copy stands */ });
+    });
+  });
+
+  /* ---- optional Firebase (only when a real config is present) ---- */
+  getFirebase().then(function (fb) {
+    if (!fb || !fb.subscribeReports) return;
+    fb.subscribeReports(function (remote, err) {
+      if (err || !remote) return;
+      remoteReports = remote;
+      reports = mergeReports(remoteReports, readLocalReports());
+      renderAll();
+    });
+  });
+
+  /* ---- boot ---- */
+  renderStats();
+  renderList();
+  renderLeaderboard();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Gion Matsuri illustration</title>
+  <desc id="desc">A grand Kyoto festival float under lanterns for Gion Matsuri.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b2038"/>
+      <stop offset="100%" stop-color="#183a5a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d78d"/>
+      <stop offset="100%" stop-color="#d89c2b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="980" cy="112" r="54" fill="#fff0c4" opacity="0.85"/>
+  <path d="M0 640c140-28 278-36 430-11 144 24 260 36 397 17 130-19 251-16 373 11v143H0z" fill="#111d29"/>
+  <g transform="translate(600 500)">
+    <rect x="-165" y="-40" width="330" height="155" rx="12" fill="#8a2930"/>
+    <rect x="-188" y="-74" width="376" height="44" rx="10" fill="#d8a133"/>
+    <rect x="-108" y="-244" width="216" height="170" rx="12" fill="#f3e5b0"/>
+    <rect x="-86" y="-218" width="172" height="122" fill="#a62b36"/>
+    <rect x="-28" y="-332" width="56" height="88" fill="#7a5224"/>
+    <path d="M0-392l58 60H-58z" fill="url(#gold)"/>
+    <g fill="#d8a133">
+      <circle cx="-82" cy="-10" r="20"/>
+      <circle cx="82" cy="-10" r="20"/>
+      <circle cx="-110" cy="96" r="20"/>
+      <circle cx="110" cy="96" r="20"/>
+    </g>
+  </g>
+  <g fill="#ffd58b">
+    <circle cx="204" cy="190" r="16"/>
+    <circle cx="286" cy="150" r="16"/>
+    <circle cx="365" cy="190" r="16"/>
+    <circle cx="855" cy="184" r="16"/>
+    <circle cx="935" cy="146" r="16"/>
+    <circle cx="1010" cy="186" r="16"/>
+  </g>
+  <text x="78" y="96" fill="#fff2c8" font-size="58" font-family="Georgia, serif" letter-spacing="4">GION MATSURI</text>
+  <text x="80" y="140" fill="#f4d786" font-size="24" font-family="Arial, sans-serif" letter-spacing="3">Kyoto floats, lanterns and summer processions</text>
+</svg>
