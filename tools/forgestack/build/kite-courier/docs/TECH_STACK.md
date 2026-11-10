@@ -1,0 +1,103 @@
+# Technical specification — Kite Courier
+
+**Industry profile:** Logistics & courier operator · **Tone:** confident
+**Palette:** Midnight indigo & signal amber · **Type:** Space Grotesk / Inter
+**Generated:** 2026-11-09T14:01:21+01:00 · **Build:** `kite-courier`
+
+## Purpose
+
+Same-day parcel delivery across Lagos with live tracking.
+
+Problem addressed: Small businesses cannot promise delivery times because couriers give no visibility after pickup.
+
+Audience: Online sellers and small offices in Lagos mainland who ship daily.
+
+## Stack
+
+- PHP 8.1+ (built and tested on 8.2), plain classes with no framework and no Composer.
+- MySQL 5.7+/8.x or MariaDB 10.3+, utf8mb4, InnoDB, PDO prepared statements.
+- Apache with `mod_rewrite` and `mod_headers`; `.htaccess` provides routing and headers.
+- Server-rendered views, one hand-written CSS design system and one small progressive JS file.
+- No Node build step, no Redis, no queue worker, no external SaaS requirement.
+- cPanel cron (CLI preferred, HTTP fallback) for scheduled automation.
+
+## Feature modules
+
+- auth: enabled
+- admin: enabled
+- bookings: enabled
+- orders: not included
+- payments: not included
+- messaging: enabled
+- reports: enabled
+
+Intake features: auth, admin, bookings, messaging, reports.
+
+## Data model
+
+| Table | Purpose | Key fields |
+|---|---|---|
+| users | Accounts, password hashes and roles (admin / member). | name, email, phone, password_hash, role, is_active, last_login_at |
+| login_attempts | Throttling failed sign-ins by email and IP. | email, ip, attempted_at |
+| email_outbox | Every notification is queued before delivery is attempted. | recipient, subject, body_html, message_type, status, created_at, sent_at |
+| audit_log | Who changed what, with IP and timestamp. | user_id, action, detail, ip, created_at |
+| shipments | Primary requests: date, time, choices, quantity, status and payment state. | reference, customer_name, customer_email, customer_phone, request_date, request_time, choice_a, choice_b, quantity, notes, amount, status |
+| record_events | Immutable status timeline shown on the public tracking page. | record_id, status, note, source, created_at |
+| messages | Contact-form submissions with a handled state. | name, email, phone, subject, body, status, created_at |
+
+Indexes cover status, date and customer lookups. Foreign keys use `ON DELETE SET NULL` for
+people and `ON DELETE CASCADE` for child rows. Stock decrements run inside a transaction with
+`SELECT ... FOR UPDATE` and a conditional `UPDATE` so the last item cannot oversell.
+
+## Routes
+
+- `GET /` → `home_index()`
+- `GET /book` → `book_form()`
+- `POST /book` → `book_store()`
+- `GET /track` → `track_show()`
+- `GET /login` → `auth_login_form()`
+- `POST /login` → `auth_login()`
+- `GET /register` → `auth_register_form()`
+- `POST /register` → `auth_register()`
+- `POST /logout` → `auth_logout()`
+- `GET /portal` → `portal_index()`
+- `GET /admin` → `admin_dashboard()`
+- `GET /admin/records` → `admin_records()`
+- `POST /admin/records/{id}/status` → `admin_record_status()`
+- `GET /admin/users` → `admin_users()`
+- `POST /admin/users/{id}/toggle` → `admin_user_toggle()`
+- `GET /admin/outbox` → `admin_outbox()`
+- `POST /admin/automation` → `admin_run_automation()`
+- `GET /contact` → `contact_form()`
+- `POST /contact` → `contact_store()`
+- `GET /admin/messages` → `admin_messages()`
+- `POST /admin/messages/{id}/handled` → `admin_message_handled()`
+- `GET /admin/reports` → `admin_reports()`
+
+
+## Security
+
+- `password_hash()` / `password_verify()` with automatic rehash; no plain-text passwords.
+- Login throttling by email + IP using `login_attempts`.
+- `session_regenerate_id(true)` on sign-in; CSRF token verified on every POST.
+- Role checks happen server-side in controllers, not in navigation only.
+- Output escaped through `e()`; SQL only through prepared statements.
+- Uploads are not part of this build; no user-controlled files are executed.
+- Security headers and dotfile/SQL denial in `public/.htaccess`.
+
+## Automation
+
+Each task is idempotent and writes a line to `storage/automation.log`:
+- **Upcoming reminders** (Every 15 minutes): Emails a reminder for confirmed shipments due tomorrow and stamps reminder_sent_at so it never repeats.
+- **Close past requests** (Daily): Closes past open shipments as “Failed”, writes a timeline event and emails the customer.
+- **Daily operations digest** (Daily): One summary email to the active administrator: volume, pending work, new enquiries and delivery failures.
+
+## Operational notes
+
+- `docs/DEPLOYMENT.md` lists every environment variable and the cPanel steps.
+- `docs/technical-report.html` is a printable report for the client.
+- Seed data is reference content, clearly named, and can be removed before launch.
+- The generated application is self-contained: `core/` is copied in, pinned to
+  ForgeStack core `1.0.0 (core 1.0.0)`.
+
+Generated by ForgeStack 1.0.0 (core 1.0.0).

@@ -1,0 +1,266 @@
+{
+    "generator": "ForgeStack 1.0.0",
+    "core": "1.0.0",
+    "slug": "kite-courier",
+    "generated_at": "2026-11-09T14:01:34+01:00",
+    "count": 64,
+    "bytes": 271968,
+    "files": {
+        ".env.example": {
+            "bytes": 1535,
+            "sha256": "3f2e2a80770f609ef4625d489a1dd0abdb0c76f94d3644722de38116bd9209ba"
+        },
+        ".gitignore": {
+            "bytes": 72,
+            "sha256": "92a1350f5a4bfb068e22de518bd5ad8e8c052298423d05ae744302cb3ae48661"
+        },
+        "README.md": {
+            "bytes": 1644,
+            "sha256": "1b1c046642dbb0d2097391d3ab8bce94c076256bd5467547df76ab3af9175ea2"
+        },
+        "app/automation.php": {
+            "bytes": 7352,
+            "sha256": "e702f80e13d69cdabfb8ef2b9f2c5ec4c49511236280bba987ae12005cdc6dbc"
+        },
+        "app/config.php": {
+            "bytes": 16631,
+            "sha256": "b93eac127331774662afa620950f7874f7df05366a13ab874d2cd85733547268"
+        },
+        "app/controllers/admin.php": {
+            "bytes": 17302,
+            "sha256": "dfb9f261bc0b0e6f258152c08739abba48c3ba59e0e66c0846a3335c20f3b99a"
+        },
+        "app/controllers/auth.php": {
+            "bytes": 2766,
+            "sha256": "322362ca03c8609226289b5d38a7a9f5e2c15ae69d9d1eebea49a537bf413314"
+        },
+        "app/controllers/home.php": {
+            "bytes": 8898,
+            "sha256": "805c7de800b1e7a11e287e37e7494490aa5dbf31b0fa31ef9b5305d6260dd7a0"
+        },
+        "app/routes.php": {
+            "bytes": 2137,
+            "sha256": "d7979cb9a33122eeca787f7c12703e9e40d331b3be530cd941760edd18dce7e1"
+        },
+        "app/services.php": {
+            "bytes": 12287,
+            "sha256": "3a1c8bf765346f1bdf43f49dfe0e7df805a8abe00145d4bd723f5c02288788ea"
+        },
+        "core/Auth.php": {
+            "bytes": 4946,
+            "sha256": "d4dd8a7d774c1e54cc76598770e64d74f495968e82d14a7620dab336b39b2a52"
+        },
+        "core/Automation.php": {
+            "bytes": 1559,
+            "sha256": "b1170578debc803434dc03d8d5bc96108e4fbe76d17eca9e0235bf415129cc93"
+        },
+        "core/Db.php": {
+            "bytes": 2910,
+            "sha256": "7f20e9f9e4e29df05b77d56e453043b1f166ec2b4fe54fcc29b64b194e030fe5"
+        },
+        "core/Installer.php": {
+            "bytes": 3838,
+            "sha256": "799ab8b26cc79d9ecf8a783a8be2c266709a0a2aecae03b03c0e7d150b5047aa"
+        },
+        "core/Mailer.php": {
+            "bytes": 3068,
+            "sha256": "ab6e41ac0a74d7e9b55f5c5cbc083413fee39696bb5fa0386bcadad3d32bc24b"
+        },
+        "core/Router.php": {
+            "bytes": 2079,
+            "sha256": "e093a8b5e5f38d8be79ecf0eec5e3a1996fcbc72f5d1c6210cd025776feea6c7"
+        },
+        "core/Validator.php": {
+            "bytes": 4258,
+            "sha256": "adc590d3d965477f354a092d78351860cf32a9471a31fedf89f646ffd648321c"
+        },
+        "core/bootstrap.php": {
+            "bytes": 4072,
+            "sha256": "c4b50fc6589e20a1c0a1f0a100f29d908ab754ee9a0711d420f56b5d1ced3975"
+        },
+        "core/cli/install.php": {
+            "bytes": 1941,
+            "sha256": "7989fd57e44e97cb848032dc41e476732a48f37e46ed09fc049366f517518edf"
+        },
+        "core/helpers.php": {
+            "bytes": 6258,
+            "sha256": "be2c9c14c08cd27bd7ce07ef0c5898358e833296eae0957e585c6a18a208e2cc"
+        },
+        "core/views/errors/403.php": {
+            "bytes": 313,
+            "sha256": "e1f8d181f438ef6cdbcb24a329da2d736c79e6c2d423f77d093c142799544529"
+        },
+        "core/views/errors/404.php": {
+            "bytes": 294,
+            "sha256": "93c177287cc62915a393ca3381a0873853ece7573dff763c048dab0787d05794"
+        },
+        "core/views/errors/419.php": {
+            "bytes": 332,
+            "sha256": "04145b6b6aafa018315f13b1340f7d61a63b2395320897f8f8736ea6840d45d1"
+        },
+        "core/views/install.php": {
+            "bytes": 3198,
+            "sha256": "a29ea9bb9c3e62e1034b9262d7ef99183f9ebeda35dad8dbe92d6efccedb4c74"
+        },
+        "cron/run.php": {
+            "bytes": 634,
+            "sha256": "a317826718888d575a3a563e1ca45023b6acdf24b75915e1f379235ae92f2ca2"
+        },
+        "database/messages.sql": {
+            "bytes": 525,
+            "sha256": "02b8c686dd0fdeb82dcbe64a28d692858578b6b63a9049e674be1783195b110b"
+        },
+        "database/orders.sql": {
+            "bytes": 1962,
+            "sha256": "18461130bdf29ee6b615785b60628dc3f3dc41829571d29023cdf37bce734ff4"
+        },
+        "database/payments.sql": {
+            "bytes": 734,
+            "sha256": "c6d955fae28b0a85b010095cc35442ff85c77aa7ce51ff6b375582697a2bf345"
+        },
+        "database/schema.sql": {
+            "bytes": 4469,
+            "sha256": "f66fed7a049559165ef4b72c1a981f3f215552fce37134f7bf2e3db8823f2624"
+        },
+        "database/seed.sql": {
+            "bytes": 4788,
+            "sha256": "456a5d414325d349370736bba5a6b1e7a52c5952a643527f6957c4f4ce42375c"
+        },
+        "docs/DEPLOYMENT.md": {
+            "bytes": 6716,
+            "sha256": "7a86d1c9ce85e753de48d0749416ca2676761722b92a8f8d71dcddf0769ea232"
+        },
+        "docs/TECH_STACK.md": {
+            "bytes": 4964,
+            "sha256": "f70a17e8940cce6c2c58a6b5f1eb2b358620ac1b85258c4591bd1f51c1273147"
+        },
+        "docs/technical-report.html": {
+            "bytes": 14344,
+            "sha256": "22644080dfca410a7be585498c6b5a822d944ef9bee7fbc5001b11a7a8462dc8"
+        },
+        "portfolio-entry.json": {
+            "bytes": 798,
+            "sha256": "0cb270023bd03c1856363f2d506d38f31be4058a9082f86ecbe87769d1c701a9"
+        },
+        "public/.htaccess": {
+            "bytes": 1038,
+            "sha256": "62ad2adf0d1b30f7bcf1ed078eb477298f4c1ff730a8c459831a372ab6b8a3e1"
+        },
+        "public/assets/css/app.css": {
+            "bytes": 37046,
+            "sha256": "673075c40f149809131e09357a1a34d0a09b12baf602dad9b1943f4623bbdc3d"
+        },
+        "public/assets/js/app.js": {
+            "bytes": 4731,
+            "sha256": "87d58759f59973c7d1a3a6bda671542f458f4359a9c12778e81eb38022515a4b"
+        },
+        "public/index.php": {
+            "bytes": 535,
+            "sha256": "1689fc6a10a4d616f3a5d7adae73d7612abdaab061e219631a97478f35048127"
+        },
+        "public/install.php": {
+            "bytes": 1960,
+            "sha256": "ea11560278a5e99341576805be26e0b43873317375b2c85e8e7aa14e6112bb85"
+        },
+        "public/router.php": {
+            "bytes": 326,
+            "sha256": "86f1a256b0fd8c1c50b5fe3263fe49a675769e158f2fca62a3557118b1f3d69a"
+        },
+        "storage/README.txt": {
+            "bytes": 336,
+            "sha256": "18d710796045ee76c7bd8519594fec28fed8ad58c88c98945b889434edf4bcd4"
+        },
+        "views/admin/dashboard.php": {
+            "bytes": 5457,
+            "sha256": "cf2c86ec0641010fa86f9a012183b5642f54ad3ee18351f501976ca1fca7f12f"
+        },
+        "views/admin/messages.php": {
+            "bytes": 1931,
+            "sha256": "9fe3a156391a291474250f82af46951bada22024aa6c640f8c968cfb347917fe"
+        },
+        "views/admin/orders.php": {
+            "bytes": 2689,
+            "sha256": "e7e78b76d284980fef6f56650bb7c525ec248a7512b471b59e54135b3c4a5710"
+        },
+        "views/admin/outbox.php": {
+            "bytes": 1606,
+            "sha256": "cdfc71b3cc7bb7ca86dee545ea04c7a69cad4577de81d389e3cdba3afd310bad"
+        },
+        "views/admin/payments.php": {
+            "bytes": 3152,
+            "sha256": "da2b3e043961f28d8d77d1c28a2df40826b14ef2c2b3c3e673341b4b72ed87c0"
+        },
+        "views/admin/products.php": {
+            "bytes": 2654,
+            "sha256": "ddaafc2a048d1833e19d4241b75b6299c244d95adcc46d9b700da019fc49a259"
+        },
+        "views/admin/records.php": {
+            "bytes": 5549,
+            "sha256": "fc315ec0342a97e06dcb2b374a1a7bb9d32cd5b320c4cc296a2edcfc0db7f477"
+        },
+        "views/admin/reports.php": {
+            "bytes": 3609,
+            "sha256": "e460ee0836e9a470739eaee934d042ea1a0d9cccac40d2bc34231b16db97c55f"
+        },
+        "views/admin/users.php": {
+            "bytes": 2029,
+            "sha256": "d0be60a154a4ad40337bd21182a8730df026f08c84d7e5d1787a41bf03537e59"
+        },
+        "views/auth/login.php": {
+            "bytes": 1999,
+            "sha256": "4f459bce360a8387d7d7e062e5d8df069bde7e364570d767dfac76f329857350"
+        },
+        "views/auth/register.php": {
+            "bytes": 2034,
+            "sha256": "5d5b742de90e0fcdd5543cfc96c1ee969241ef309d51737fd3187e8e7352cad8"
+        },
+        "views/book.php": {
+            "bytes": 6161,
+            "sha256": "71973ea8e499a5ce8ee1915dd9a9f788e451320866e23ce434b751aca3924c9a"
+        },
+        "views/contact.php": {
+            "bytes": 2694,
+            "sha256": "aa3876ae95c20df6774297b5a59b5ef553d8d263d4e5458856c5ecaf1a4982ee"
+        },
+        "views/contact_limited.php": {
+            "bytes": 1538,
+            "sha256": "4887065ecd58aaceb7fbd09fd46af0fb150ff1cc24329647e03ca853e07f7c49"
+        },
+        "views/home.php": {
+            "bytes": 2670,
+            "sha256": "0d16bf20bff1e16913f5f25b3138072057dec74ac928250eaafa0851416dedef"
+        },
+        "views/install.php": {
+            "bytes": 3121,
+            "sha256": "6b3072a061939fef53fa341cef89157982c6abb67d1057189952ec0815ca44b1"
+        },
+        "views/layout.php": {
+            "bytes": 5927,
+            "sha256": "c8554003bdc4df6f166d637edc0a6809950c61687ec7b473d4983fd578dde300"
+        },
+        "views/page.php": {
+            "bytes": 855,
+            "sha256": "8215a517fcecb0e3320a6ed1f1ccffc5f73c7fa60f10705ce81e73e8505350c5"
+        },
+        "views/partials/admin_nav.php": {
+            "bytes": 2379,
+            "sha256": "dbe521e55efc8ddd015457aa4c5991af3f487c529b38bbe75af7a936e7dd36ef"
+        },
+        "views/partials/section.php": {
+            "bytes": 6459,
+            "sha256": "09140b16a8d13a00cc13704cb0bd3a6195cd54721ad7ccefd7312a8a69785dcc"
+        },
+        "views/portal.php": {
+            "bytes": 4039,
+            "sha256": "ea9849e32e930898c1628b97108342ec36bac5894fdf3ee6562302b780d81ba4"
+        },
+        "views/shop.php": {
+            "bytes": 3707,
+            "sha256": "76fb0690cbc968a23d1c0f974f2c55b6d6b4f315a46abc70af17b4331b58cd5e"
+        },
+        "views/track.php": {
+            "bytes": 4113,
+            "sha256": "a1e6c4e7272b585dcc9f2bfd86122dc1bb9ec24c905e97ecc5f190b96f8e183f"
+        }
+    }
+}

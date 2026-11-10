@@ -1,0 +1,25 @@
+{
+    "name": "Kite Courier",
+    "description": "Same-day courier, without the guesswork. Same-day parcel delivery across Lagos with live tracking.",
+    "category": "Logistics & courier operator",
+    "problem": "Small businesses cannot promise delivery times because couriers give no visibility after pickup.",
+    "technologies": [
+        "PHP 8",
+        "MySQL",
+        "Apache",
+        "cPanel",
+        "Vanilla CSS",
+        "Vanilla JS"
+    ],
+    "key_features": [
+        "Account authentication",
+        "Admin dashboard",
+        "Bookings & tracking",
+        "Contact inbox",
+        "Reports"
+    ],
+    "thumbnail": "assets/kite-courier.png",
+    "live_link": "http://127.0.0.1:8125",
+    "source_link": "build/kite-courier",
+    "generated_at": "2026-11-09T14:01:21+01:00"
+}

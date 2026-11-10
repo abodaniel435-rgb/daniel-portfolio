@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Technical report — Kite Courier</title>
+<style>
+  :root { --ink:#17211d; --muted:#5b6a63; --line:#dbe3dc; --paper:#f6f4ee; --brand:#146b5a; --soft:#edf3ee; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.65 "Segoe UI",system-ui,sans-serif; }
+  main { max-width:920px; margin:0 auto; padding:48px 30px 70px; }
+  header { border-bottom:3px solid var(--brand); padding-bottom:22px; margin-bottom:30px; }
+  .kicker { letter-spacing:.16em; text-transform:uppercase; font-size:.7rem; font-weight:700; color:var(--brand); }
+  h1 { font-size:2rem; margin:.3em 0 .2em; letter-spacing:-.02em; }
+  h2 { font-size:1.15rem; margin:2.2em 0 .7em; padding-bottom:6px; border-bottom:1px solid var(--line); }
+  .meta { display:flex; flex-wrap:wrap; gap:8px 22px; color:var(--muted); font-size:.86rem; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:16px 0; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .card b { display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:4px; }
+  table { width:100%; border-collapse:collapse; background:#fff; font-size:.85rem; }
+  th,td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { background:var(--soft); font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; }
+  code { font:0.88em ui-monospace,Consolas,monospace; background:#eef3ef; padding:1px 5px; border-radius:4px; }
+  ul { padding-left:20px; }
+  .st { display:inline-block; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:2px 7px; border-radius:99px; background:#e8eee9; }
+  .st.done { background:#dff1e8; color:#0c5a43; }
+  .st.skipped { background:#fdf1d8; color:#7a5208; }
+  .st.failed { background:#fbe3e1; color:#8a2118; }
+  .swatches { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .sw { width:52px; height:34px; border-radius:7px; border:1px solid rgba(0,0,0,.08); }
+  footer { margin-top:36px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:.78rem; }
+  .noprint { margin:0 0 22px; }
+  button { font:600 .85rem system-ui,sans-serif; padding:9px 16px; border:0; border-radius:8px; background:var(--brand); color:#fff; cursor:pointer; }
+  @media print { body{background:#fff} main{padding:0} .noprint{display:none} .card,table{break-inside:avoid} }
+</style>
+</head>
+<body>
+<main>
+  <button class="noprint" onclick="window.print()">Print this report</button>
+  <header>
+    <p class="kicker">ForgeStack technical report</p>
+    <h1>Kite Courier</h1>
+    <div class="meta">
+      <span>Build <strong>kite-courier</strong></span>
+      <span>Courier &amp; logistics</span>
+      <span>Logistics &amp; courier operator</span>
+      <span>Generated 2026-11-09T14:01:34+01:00</span>
+    </div>
+  </header>
+
+  <h2>1. Brief</h2>
+  <p>Same-day parcel delivery across Lagos with live tracking.</p>
+  <p><strong>Problem:</strong> Small businesses cannot promise delivery times because couriers give no visibility after pickup.</p>
+  <p><strong>Who experiences it:</strong> Online sellers and small offices in Lagos mainland who ship daily.</p>
+  <p><strong>Tone:</strong> confident · <strong>Palette:</strong> Midnight indigo &amp; signal amber · <strong>Type:</strong> Space Grotesk / Inter</p>
+
+  <h2>2. Deliverables</h2>
+  <div class="grid">
+    <div class="card"><b>Files</b>64 deployed files · 251.6 KB</div>
+    <div class="card"><b>Database</b>Installed into 127.0.0.1:3307/forge_kite_courier.</div>
+    <div class="card"><b>Pages</b>16 routed pages</div>
+    <div class="card"><b>Automation</b>3 idempotent tasks</div>
+  </div>
+  <p>Tables: audit_log, email_outbox, login_attempts, messages, record_events, shipments, users</p>
+
+  <h2>3. Page map</h2>
+  <table><thead><tr><th>Path</th><th>Title</th><th>Purpose</th><th>Status</th></tr></thead><tbody><tr><td><code>/</code></td><td>Home</td><td>Industry-specific landing page: hero, services, proof, process and conversion path.</td><td>Generated</td></tr><tr><td><code>/book</code></td><td>Book a pickup</td><td>Public request form with server-side validation, reference generation and email outbox.</td><td>Generated</td></tr><tr><td><code>/track</code></td><td>Track a shipment</td><td>Reference lookup with status timeline; exposes no contact details to the public.</td><td>Generated</td></tr><tr><td><code>/about</code></td><td>About</td><td>Editorial story, numbers and the people behind the business.</td><td>Generated</td></tr><tr><td><code>/services</code></td><td>Services &amp; pricing</td><td>Service detail, process and indicative pricing.</td><td>Generated</td></tr><tr><td><code>/faq</code></td><td>FAQ</td><td>Objection-handling questions with operator-written answers.</td><td>Generated</td></tr><tr><td><code>/contact</code></td><td>Contact</td><td>Validated enquiry form persisted to the database and answered from the admin inbox.</td><td>Generated</td></tr><tr><td><code>/login</code></td><td>Sign in</td><td>Throttled login with CSRF and session regeneration.</td><td>Generated</td></tr><tr><td><code>/register</code></td><td>Create account</td><td>Public account registration for the customer role.</td><td>Generated</td></tr><tr><td><code>/portal</code></td><td>Shipper portal</td><td>Customer-owned records and orders.</td><td>Generated</td></tr><tr><td><code>/admin</code></td><td>Dispatch desk</td><td>Operations dashboard with live counts, 7-day volume and recent activity.</td><td>Generated</td></tr><tr><td><code>/admin/records</code></td><td>All shipments</td><td>Search, filter and update the status of every record.</td><td>Generated</td></tr><tr><td><code>/admin/users</code></td><td>People</td><td>Accounts and activation state; administrator-only.</td><td>Generated</td></tr><tr><td><code>/admin/outbox</code></td><td>Email outbox</td><td>Every queued message with delivery state and error.</td><td>Generated</td></tr><tr><td><code>/admin/messages</code></td><td>Enquiries</td><td>Inbox for contact-form submissions.</td><td>Generated</td></tr><tr><td><code>/admin/reports</code></td><td>Reports</td><td>Aggregates over real rows: volume, status mix, revenue and demand.</td><td>Generated</td></tr></tbody></table>
+  
+
+  <h2>4. Features in scope</h2>
+  <ul><li><strong>Account authentication</strong> — Register, sign in, password hashing, throttled logins and a private portal.</li><li><strong>Admin dashboard</strong> — Operations console with live counts, status controls and an audit trail.</li><li><strong>Bookings &amp; tracking</strong> — A public request form with a reference, an email outbox entry and a public status lookup.</li><li><strong>Contact inbox</strong> — A validated enquiry form that persists to the database and an admin inbox.</li><li><strong>Reports</strong> — Live aggregates over real rows: volume, status mix, revenue and demand.</li></ul>
+
+  <h2>5. Data model</h2>
+  <table><thead><tr><th>Table</th><th>Purpose</th></tr></thead><tbody><tr><td><code>users</code></td><td>Accounts, password hashes and roles (admin / member).</td></tr><tr><td><code>login_attempts</code></td><td>Throttling failed sign-ins by email and IP.</td></tr><tr><td><code>email_outbox</code></td><td>Every notification is queued before delivery is attempted.</td></tr><tr><td><code>audit_log</code></td><td>Who changed what, with IP and timestamp.</td></tr><tr><td><code>shipments</code></td><td>Primary requests: date, time, choices, quantity, status and payment state.</td></tr><tr><td><code>record_events</code></td><td>Immutable status timeline shown on the public tracking page.</td></tr><tr><td><code>messages</code></td><td>Contact-form submissions with a handled state.</td></tr></tbody></table>
+
+  <h2>6. Roles</h2>
+  <ul><li><strong>Administrator</strong> — Full access to every record, person, payment, inbox, report and automation run. (seeded)</li><li><strong>Shipper</strong> — Own portal, own records and own orders only.</li><li><strong>Public visitor</strong> — Home, request form, catalogue and reference lookup. No access to other people’s data. (seeded)</li></ul>
+
+  <h2>7. Automation</h2>
+  <ul><li><strong>Upcoming reminders</strong> (Every 15 minutes) — Emails a reminder for confirmed shipments due tomorrow and stamps reminder_sent_at so it never repeats.</li><li><strong>Close past requests</strong> (Daily) — Closes past open shipments as “Failed”, writes a timeline event and emails the customer.</li><li><strong>Daily operations digest</strong> (Daily) — One summary email to the active administrator: volume, pending work, new enquiries and delivery failures.</li></ul>
+
+  <h2>8. Quality checks</h2>
+  <ul><li><span class="st done">Pass</span> PHP syntax — 48 PHP files passed php -l.</li><li><span class="st done">Pass</span> Template tokens — No unresolved {{ … }} tokens in the generated tree.</li><li><span class="st done">Pass</span> Secret isolation — The generated admin password is not present outside .env; no private keys or hardcoded credentials found.</li><li><span class="st done">Pass</span> Environment template — 17/17 environment variables documented in .env.example and DEPLOYMENT.md.</li><li><span class="st done">Pass</span> Required files — 21 required files present.</li><li><span class="st done">Pass</span> Schema composition — Base tables plus the selected module fragments are present (auth, admin, bookings, messaging, reports).</li></ul>
+
+  <h2>9. Generation log</h2>
+  <table><thead><tr><th>#</th><th>Step</th><th>Status</th><th>Log</th><th>Time</th></tr></thead><tbody><tr><td>1</td><td>Intake captured</td><td><span class="st done">Done</span></td><td>Kite Courier · Courier &amp; logistics · pages requested: home, about, services, pricing, faq, contact · features: auth, admin, bookings, messaging, reports.</td><td>14:01:20</td></tr><tr><td>2</td><td>Research notes stored</td><td><span class="st done">Done</span></td><td>Operator competitor notes stored with the project: Reviewed GIG, Kwik and DHL Express local pages.</td><td>14:01:20</td></tr><tr><td>3</td><td>Architecture derived</td><td><span class="st done">Done</span></td><td>16 pages, 7 entities, 3 roles and 3 automation tasks derived from the intake.</td><td>14:01:20</td></tr><tr><td>4</td><td>cPanel preflight</td><td><span class="st done">Done</span></td><td>PHP 8.2.12 · extensions pdo_mysql present · MySQL reachable at 127.0.0.1:3307 · overall PASS.</td><td>14:01:20</td></tr><tr><td>5</td><td>Design system</td><td><span class="st done">Done</span></td><td>Midnight indigo &amp; signal amber palette (Operations-grade indigo with an amber signal colour.) with Space Grotesk / Inter. Responsive to 390px, visible focus, reduced-motion rules.</td><td>14:01:20</td></tr><tr><td>6</td><td>Frontend generated</td><td><span class="st done">Done</span></td><td>42 templates copied: responsive layout, 8 curated sections, industry copy and accessible forms.</td><td>14:01:20</td></tr><tr><td>7</td><td>Backend generated</td><td><span class="st done">Done</span></td><td>22 routes wired through Router; 14 shared core files copied; single front controller at public/index.php.</td><td>14:01:20</td></tr><tr><td>8</td><td>Database prepared</td><td><span class="st done">Done</span></td><td>Installed into 127.0.0.1:3307/forge_kite_courier. — Created database forge_kite_courier (utf8mb4). Applied schema: 7 statements. Applied reference seed: 12 statements.</td><td>14:01:21</td></tr><tr><td>9</td><td>Authentication &amp; roles</td><td><span class="st done">Done</span></td><td>password_hash/password_verify, login throttling, session regeneration, CSRF on every POST, server-side role checks and a seeded administrator from .env.</td><td>14:01:21</td></tr><tr><td>10</td><td>Automation configured</td><td><span class="st done">Done</span></td><td>3 idempotent tasks: Upcoming reminders, Close past requests, Daily operations digest. Cron entry documented.</td><td>14:01:21</td></tr><tr><td>11</td><td>QA &amp; security scan</td><td><span class="st done">Done</span></td><td>php -l passed on every PHP file; no unresolved tokens; generated credentials isolated to .env; all environment variables documented; required files and schema composition verified.</td><td>14:01:34</td></tr><tr><td>12</td><td>Defects fixed</td><td><span class="st done">Done</span></td><td>No blocking defects were found, so no files were rewritten.</td><td>14:01:34</td></tr><tr><td>13</td><td>Optimisation</td><td><span class="st done">Done</span></td><td>Hand-written CSS 36.2 KB and JS 4.6 KB; no framework, no Node build, no external script dependency. Images are lazy-loaded Unsplash URLs.</td><td>14:01:34</td></tr><tr><td>14</td><td>Deployment package</td><td><span class="st done">Done</span></td><td>Build folder, DEPLOYMENT.md, TECH_STACK.md, .env.example and checksums prepared. No zip extension is required; upload the folder via cPanel File Manager.</td><td>14:01:34</td></tr><tr><td>15</td><td>Portfolio entry</td><td><span class="st done">Done</span></td><td>Portfolio JSON written for Kite Courier with technologies, key features and links.</td><td>14:01:34</td></tr><tr><td>16</td><td>Technical report</td><td><span class="st done">Done</span></td><td>Printable report written to docs/technical-report.html (16 steps recorded).</td><td>14:01:34</td></tr></tbody></table>
+
+  <h2>10. Deployment</h2>
+  <p>Upload the build, point the document root at <code>public/</code>, create a MySQL database
+  in cPanel, copy <code>.env.example</code> to <code>.env</code>, run
+  <code>install.php?key=…</code>, delete the installer and add the cron entries. The full
+  guide with every environment variable is in <code>docs/DEPLOYMENT.md</code>.</p>
+  <p><strong>Out of scope:</strong> card payments and gateway integration, image uploads/gallery,
+  blog CMS, SMS, multi-language, and migrations after launch.</p>
+
+  <footer>Generated by ForgeStack 1.0.0 (core 1.0.0) · fs_261109_140134_b914c2 · This report contains no passwords or secrets.</footer>
+</main>
+</body>
+</html>
