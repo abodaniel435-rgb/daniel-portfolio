@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PayRite — Nigerian payroll, PAYE and net pay in one pass</title>
+<meta name="description" content="Calculate PAYE, pension, NHF and net pay for Nigerian staff, compare the take-home impact of rent relief, and keep a payroll roster you can export. Runs entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css">
+<link rel="stylesheet" href="payrite.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23146b5a'/><path d='M9 22V10h7a4 4 0 010 8H9' stroke='white' stroke-width='2.4' fill='none'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#calculator">Skip to the calculator</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">₦</span><span>PayRite<small>Nigerian payroll maths</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#calculator">Calculate</a>
+      <a href="#breakdown">Breakdown</a>
+      <a href="#roster">Roster</a>
+      <a href="#rules">Rules used</a>
+      <a class="btn btn-ink btn-sm" href="#calculator">Start payroll</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Payroll · PAYE · pension · NHF</p>
+      <h1>Stop guessing what<br><em>₦480,000 a month</em> actually pays.</h1>
+      <p class="lede">Small businesses in Nigeria get this wrong constantly: rent relief forgotten, pension applied to the wrong base, PAYE banded by hand. PayRite runs the whole monthly computation — gross to net, employee and employer side — and shows every step so you can defend the number.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#calculator">Calculate a salary</a>
+        <a class="btn btn-ghost" href="#roster">See the roster <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="7" data-suffix="%–24%">0</b><span>PAYE bands, marginal, not flat</span></div>
+        <div class="stat"><b data-count="200000" data-prefix="₦">0</b><span>fixed relief plus 20% of gross</span></div>
+        <div class="stat"><b data-count="0" data-decimals="0" data-suffix=" ms">0</b><span>nothing leaves your browser</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame float"><img src="../_media/payrite-hero.webp" width="1536" height="1024" alt="A Nigerian business owner reviewing payslips with a staff member at her desk" fetchpriority="high"></div>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="calculator">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">01 · Monthly computation</p>
+      <h2>Enter the package once. Everything updates live.</h2>
+      <p class="lede">Components follow the PITA structure most Nigerian payroll runs still use: basic, housing, transport, other allowances. Change any field and the net, the tax and the employer cost recompute immediately.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="pay-form" autocomplete="off">
+        <div class="field">
+          <label for="employee">Employee name</label>
+          <input id="employee" name="employee" maxlength="60" placeholder="e.g. Adaeze Obi">
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="basic">Basic salary <span class="tiny">/ month</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="basic" name="basic" type="number" min="0" step="1000" value="280000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="housing">Housing allowance</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="housing" name="housing" type="number" min="0" step="1000" value="84000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="transport">Transport allowance</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="transport" name="transport" type="number" min="0" step="1000" value="56000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="other">Other allowances</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="other" name="other" type="number" min="0" step="1000" value="20000" inputmode="numeric"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="rent">Annual rent paid <span class="tiny">optional — unlocks the 20% rent relief</span></label>
+          <div class="input-group"><span class="prefix">₦</span><input id="rent" name="rent" type="number" min="0" step="50000" value="1800000" inputmode="numeric"></div>
+          <p class="help">Relief is 20% of annual rent, capped at ₦6,250,000 a year, and is deducted before PAYE.</p>
+        </div>
+
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="use-rent" name="use-rent" checked><span class="track"></span><span>Claim rent relief</span></label>
+          <label class="switch"><input type="checkbox" id="use-pension" name="use-pension" checked><span class="track"></span><span>Pension (8% employee / 10% employer)</span></label>
+          <label class="switch"><input type="checkbox" id="use-nhf" name="use-nhf" checked><span class="track"></span><span>NHF (2.5% each side)</span></label>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="pension-rate">Employee pension rate</label>
+            <input id="pension-rate" name="pension-rate" type="number" min="0" max="20" step="0.5" value="8">
+            <p class="help">Some sectors (state agencies) run 10% employee.</p>
+          </div>
+          <div class="field">
+            <label for="staff">Staff count <span class="tiny">for the roster</span></label>
+            <input id="staff" name="staff" type="number" min="1" max="500" value="1">
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="add-employee">Add to roster</button>
+          <button class="btn btn-ghost" type="reset" id="reset-form">Reset</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Net pay this month</span>
+          <b id="net">₦0</b>
+          <span id="net-note">from ₦0 gross</span>
+        </div>
+
+        <div class="readout">
+          <div class="line"><span>Gross pay</span><b id="r-gross">—</b></div>
+          <div class="line"><span>Consolidated relief allowance</span><b id="r-cra">—</b></div>
+          <div class="line"><span>Rent relief</span><b id="r-rent">—</b></div>
+          <div class="line"><span>Taxable pay (annualised / 12)</span><b id="r-taxable">—</b></div>
+          <div class="line line-strong"><span>PAYE</span><b id="r-paye">—</b></div>
+          <div class="line"><span>Pension (employee)</span><b id="r-pension">—</b></div>
+          <div class="line"><span>NHF (employee)</span><b id="r-nhf">—</b></div>
+        </div>
+
+        <div class="verdict" id="verdict">
+          <h4 id="verdict-title">Enter a package</h4>
+          <p id="verdict-body">The effective rate and marginal band appear here.</p>
+        </div>
+
+        <div class="mini">
+          <div><span>Effective tax rate</span><b id="r-eff">—</b></div>
+          <div><span>Employer monthly cost</span><b id="r-cost">—</b></div>
+          <div><span>Annual take-home</span><b id="r-annual">—</b></div>
+        </div>
+        <p class="tiny">Employer cost includes the employer pension and NHF contributions, not only gross.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="breakdown">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Where the money goes</p>
+      <h2>Every deduction, drawn to scale.</h2>
+    </div>
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Monthly split</h3>
+        <p class="muted">Same gross, different destinations. Hover the payroll numbers above to see them move here.</p>
+        <div id="split-bars"></div>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Take-home share</h3>
+        <div class="donut-wrap">
+          <div id="split-donut"></div>
+          <div>
+            <p class="tiny">Net pay as a share of gross</p>
+            <b class="big-num" id="donut-label">—</b>
+            <p class="muted small-copy" id="donut-note">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal compare-card">
+      <h3>What the reliefs are worth</h3>
+      <p class="muted">The same package, computed with and without each relief. This is the conversation to have before you file.</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Relief comparison</caption>
+          <thead><tr><th>Scenario</th><th class="num">PAYE / month</th><th class="num">Net pay</th><th class="num">Difference</th></tr></thead>
+          <tbody id="compare-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="roster">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Payroll roster</p>
+      <h2>Keep the whole month on one screen.</h2>
+      <p class="lede">Saved to this browser only. Export it as CSV for your accountant, or print it as a schedule.</p>
+    </div>
+    <div class="roster-tools reveal">
+      <button class="btn btn-accent btn-sm" type="button" id="export-csv">Export CSV</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="print-roster">Print schedule</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="clear-roster">Clear roster</button>
+      <span class="tiny roster-count" id="roster-count">0 employees</span>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only">Saved employees</caption>
+        <thead><tr><th>Employee</th><th class="num">Gross</th><th class="num">PAYE</th><th class="num">Pension</th><th class="num">NHF</th><th class="num">Net</th><th class="num">Employer cost</th><th></th></tr></thead>
+        <tbody id="roster-body"></tbody>
+        <tfoot id="roster-foot"></tfoot>
+      </table>
+    </div>
+    <p class="tiny roster-empty" id="roster-empty">No one saved yet. Fill the calculator and press <b>Add to roster</b>.</p>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · The maths, in the open</p>
+      <h2>The rules this tool applies.</h2>
+      <p class="lede">Nothing is hidden inside a black box. Change the bands if your state or your assessor uses a different table — the computation follows.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>PAYE bands (per year, after reliefs)</summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable PAYE bands</caption>
+                <thead><tr><th>Band</th><th class="num">Next ₦</th><th>Rate</th></tr></thead>
+                <tbody id="band-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Rates are editable. Tax is applied progressively: each slice is taxed at its own rate, never the whole salary at the top rate.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-bands">Restore default bands</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Consolidated relief allowance</summary>
+          <div class="acc-body"><p>₦200,000 plus 20% of annual gross earnings, deducted before PAYE. It is the single most-missed line in a small payroll.</p></div>
+        </details>
+        <details class="acc">
+          <summary>Rent relief</summary>
+          <div class="acc-body"><p>20% of the annual rent actually paid, capped at ₦6,250,000 of relief a year. Requires the tenancy evidence to be retained by the employer.</p></div>
+        </details>
+        <details class="acc">
+          <summary>Pension and NHF</summary>
+          <div class="acc-body"><p>Employee pension is a percentage of gross (default 8%), employer adds 10%. NHF is 2.5% each side. Employee pension reduces taxable pay; employer contributions do not.</p></div>
+        </details>
+        <details class="acc">
+          <summary>What this tool does not do</summary>
+          <div class="acc-body"><p>No VAT, no state-specific levies, no benefit-in-kind valuation, no withholding on dividends, and no filing. It is a computation aid — confirm the final figures with your tax adviser or FIRS guidance before paying anyone.</p></div>
+        </details>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h3>Worked example</h3>
+        <p class="muted">₦440,000 gross a month, ₦1.8m annual rent, 8% pension, NHF on:</p>
+        <ol class="steps" id="worked"></ol>
+        <p class="tiny">Recomputed live from whatever you typed above.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">₦</span><span style="color:#fff">PayRite<small style="color:rgba(255,255,255,.6)">Nigerian payroll maths</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Built for the small business owner who signs the payroll and has to answer for it. No account, no upload, no server.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#calculator">Calculate</a><br><a href="#breakdown">Breakdown</a><br><a href="#roster">Roster</a><br><a href="#rules">Rules used</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../suncost/">Solar sizing</a><br><a href="../sealcheck/">Medicine check</a><br><a href="../marketrate/">Fair price today</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Figures are indicative. Not tax advice.</span><span class="mono">PayRite · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
