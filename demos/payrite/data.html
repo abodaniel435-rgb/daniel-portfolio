@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nigerian PAYE bands, reliefs and statutory deductions — PayRite reference</title>
+<meta name="description" content="The exact band widths, relief formulas, deduction bases and remittance deadlines PayRite applies to Nigerian salaries, in sortable tables you can check against your own board's guidance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="payrite.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23146b5a'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%82%A6</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">₦</span><span>PayRite<small>Nigerian payroll maths</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Calculator</a>
+      <a href="data.html" class="is-here" aria-current="page">Rates &amp; rules</a>
+      <a href="playbook.html">Payroll playbook</a>
+      <a href="record.html">Payroll log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#calculator">Run payroll</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">PayRite</a> <span aria-hidden="true">/</span> <span aria-current="page">Rates &amp; rules</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · 2026 filing year</p>
+    <h1 class="reveal" data-delay="1">The numbers behind every payslip,<br>in one place.</h1>
+    <p class="lede reveal" data-delay="2">PayRite does not invent rates. Every figure it applies is published here with its base, its cap and the date it is due — so when a payslip is questioned you can show the rule, not just the result.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>7% → 24%</b> marginal PAYE, six bands</span><span><b>₦200,000 + 20%</b> consolidated relief allowance</span><span><b>10th</b> PAYE is due to the state board</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="fixed">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · What the law fixes</p>
+          <h2 id="fixed-h">Six figures you cannot negotiate</h2>
+          <p class="lede">These are the hard numbers. Everything else on a Nigerian payslip is a design choice by the employer.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>8%</b><span>employee pension, of the monthly package</span></div>
+      <div class="metric"><b>10%</b><span>employer pension, for 10+ staff</span></div>
+      <div class="metric"><b>2.5% + 2.5%</b><span>NHF, employee and employer</span></div>
+      <div class="metric"><b>₦6.25m</b><span>rent relief cap (20% of annual rent)</span></div>
+      <div class="metric"><b>₦70,000</b><span>national minimum wage since 2024</span></div>
+      <div class="metric"><b>10×</b><span>group life cover, annual emoluments</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="bands">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · PAYE bands</p>
+          <h2 id="bands-h">The bands are annual. Applied monthly.</h2>
+          <p class="lede">Taxable income is sliced across these widths. Only the slice inside a band is taxed at that band's rate — that is what makes the top rate feel far smaller than 24% in practice.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a band</span><input id="bands-q" type="search" placeholder="rate, band number or threshold" autocomplete="off"></label>
+          
+          <span class="filter-count" id="bands-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="bands-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Band</th>
+            <th data-sort="1" class="n">Annual taxable from</th>
+            <th data-sort="2" class="n">Annual taxable to</th>
+            <th data-sort="3" class="n">Rate</th>
+            <th data-sort="4" class="n">Tax on this slice</th>
+            <th data-sort="5" class="n">Cumulative tax</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>1 · First tranche</td><td class="n">₦0</td><td class="n">₦300,000</td><td class="n">7%</td><td class="n">₦21,000</td><td class="n">₦21,000</td></tr>
+            <tr><td>2 · Second</td><td class="n">₦300,001</td><td class="n">₦600,000</td><td class="n">11%</td><td class="n">₦33,000</td><td class="n">₦54,000</td></tr>
+            <tr><td>3 · Third</td><td class="n">₦600,001</td><td class="n">₦1,100,000</td><td class="n">15%</td><td class="n">₦75,000</td><td class="n">₦129,000</td></tr>
+            <tr><td>4 · Fourth</td><td class="n">₦1,100,001</td><td class="n">₦1,600,000</td><td class="n">19%</td><td class="n">₦95,000</td><td class="n">₦224,000</td></tr>
+            <tr><td>5 · Fifth</td><td class="n">₦1,600,001</td><td class="n">₦3,200,000</td><td class="n">21%</td><td class="n">₦336,000</td><td class="n">₦560,000</td></tr>
+            <tr><td>6 · Top</td><td class="n">₦3,200,001</td><td class="n">and above</td><td class="n">24%</td><td class="n">₦24 per ₦100</td><td class="n">₦560,000 +</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Widths are per year, per employee. PayRite divides the annual result by twelve, which is how a monthly payslip is built.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="deductions">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Every deduction on the slip</p>
+          <h2 id="deductions-h">Who takes what, from which base, by when</h2>
+          <p class="lede">The single most common payroll error in Nigeria is applying a percentage to the wrong base. Pension and NHF are not charged on gross in most interpretations — and the deadline column is where penalties are born.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Filter deductions</span><input id="deductions-q" type="search" placeholder="name or authority" autocomplete="off"></label>
+          
+          <span class="filter-count" id="deductions-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="deductions-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Deduction</th>
+            <th data-sort="1">Charged on</th>
+            <th data-sort="2" class="n">Employee</th>
+            <th data-sort="3" class="n">Employer</th>
+            <th data-sort="4">Remit by</th>
+            <th data-sort="5">To</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>PAYE</td><td>gross less CRA, rent relief and pension</td><td class="n">variable</td><td class="n">—</td><td>10th of the next month</td><td>State board of revenue</td></tr>
+            <tr><td>Pension (PRA 2014)</td><td>basic + housing + transport</td><td class="n">8%</td><td class="n">10%</td><td>7 working days</td><td>PFA, via PenCom</td></tr>
+            <tr><td>NHF (2022)</td><td>monthly package</td><td class="n">2.5%</td><td class="n">2.5%</td><td>monthly</td><td>Nigeria Housing Fund</td></tr>
+            <tr><td>Group life</td><td>employee's annual emoluments</td><td class="n">—</td><td class="n">premium</td><td>at renewal</td><td>licensed insurer, 10× cover</td></tr>
+            <tr><td>NSITF</td><td>total monthly payroll</td><td class="n">—</td><td class="n">1%</td><td>monthly</td><td>Nigeria Social Insurance Trust Fund</td></tr>
+            <tr><td>WHT on contracts</td><td>invoice value</td><td class="n">—</td><td class="n">5% / 10%</td><td>21st of month 2</td><td>FIRS or state</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Establishments with fewer than ten staff may run the 8%-only pension option. Confirm the base your PFA applies before you copy a colleague's payslip.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="reliefs">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · Reliefs and exemptions</p>
+          <h2 id="reliefs-h">The four levers that change your tax</h2>
+          <p class="lede">Reliefs are subtracted before the bands are applied, which is why two people on the same salary can owe different PAYE.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Filter reliefs</span><input id="reliefs-q" type="search" placeholder="relief name" autocomplete="off"></label>
+          
+          <span class="filter-count" id="reliefs-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="reliefs-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Relief</th>
+            <th data-sort="1">How it is computed</th>
+            <th data-sort="2" class="n">Ceiling</th>
+            <th data-sort="3">Watch out for</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Consolidated relief (CRA)</td><td>₦200,000 + 20% of annual gross</td><td class="n">no cap</td><td>every employee gets it, including the highest paid</td></tr>
+            <tr><td>Rent relief</td><td>20% of the annual rent you actually pay</td><td class="n">₦6.25m</td><td>only if the employee owns the property or pays the rent</td></tr>
+            <tr><td>Pension</td><td>the employee's 8% of the package</td><td class="n">8% of gross</td><td>it reduces taxable income, not just the payslip</td></tr>
+            <tr><td>NHF</td><td>2.5% employee contribution</td><td class="n">—</td><td>recoverable loan, not a gift — treat it as such</td></tr>
+            <tr><td>National security exemption</td><td>certain security personnel are exempt</td><td class="n">full</td><td>rare in private payroll; do not assume it applies</td></tr>
+            <tr><td>SME company rate</td><td>turnover at or below ₦25m pays 0% CIT</td><td class="n">₦25m</td><td>company tax, not PAYE — but it changes what you can afford to pay</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="verify">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Where these numbers can differ</p>
+          <h2 id="verify-h">Three places a correct payslip still gets challenged</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box warn"><h3>Your state board</h3><p>PAYE is collected by the state where the employee works, and several boards publish their own forms, deadlines and rounding. The bands are federal; the filing is not.</p></div>
+        <div class="note-box "><h3>The package definition</h3><p>Basic, housing and transport are the statutory core. A 'other benefits' line can be argued in or out of the pension base — write your policy down and apply it the same way every month.</p></div>
+        <div class="note-box bad"><h3>Mid-year changes</h3><p>A raise in June means two different annual averages. Recompute the year to date instead of changing only the next slip, or the employee will be over- or under-deducted until March.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · What to check these against</p>
+          <h2 id="sources-h">Sources worth opening before you file</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>Personal Income Tax Act (as amended by the Finance Acts) — the band widths and the relief formula.</li>
+        <li>Pension Reform Act 2014 and PenCom guidelines — contribution rates, the 7-working-day rule, RSA transfer rules.</li>
+        <li>Nigeria Housing Fund Act 2022 — the 2.5% employee and employer contributions and the loan terms.</li>
+        <li>Your state's board of revenue — the PAYE return form, the remittance date and any state levy.</li>
+        <li>FIRS company income tax guidance — the ₦25m small-company threshold and the ITF position.</li>
+        <li>The National Minimum Wage Act 2024 — the floor every package in this tool must clear.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Ready to put the numbers to work?</h2>
+        <p class="lede">The calculator applies every rate on this page to a real package, shows the working line by line, and keeps a roster you can export.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#calculator">Calculate a salary</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the payroll log</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">₦</span><span style="color:#fff">PayRite<small style="color:rgba(255,255,255,.6)">Nigerian payroll maths</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one job: make Nigerian payroll maths something you can check, defend and repeat every month.</p>
+      </div>
+      <div>
+        <h4>PayRite pages</h4>
+        <p><a href="index.html">Calculator</a><br><a href="data.html">Rates &amp; rules</a><br><a href="playbook.html">Payroll playbook</a><br><a href="record.html">Payroll log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../suncost/">SunCost — solar vs generator</a><br><a href="../feesplan/">FeesPlan — school fees, planned</a><br><a href="../marketrate/">MarketRate — fair price today</a><br><a href="../recircle/">ReCircle — waste that pays</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Figures are indicative and published as general guidance. Not tax advice — confirm with your state board or a licensed practitioner.</span><span class="mono">PayRite · Rates &amp; rules · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#bands-tbl');
+  pages.filter('#bands-tbl', { input: '#bands-q', count: '#bands-count', empty: "No row here matches that search." });
+  pages.sortable('#deductions-tbl');
+  pages.filter('#deductions-tbl', { input: '#deductions-q', count: '#deductions-count', empty: "No row here matches that search." });
+  pages.sortable('#reliefs-tbl');
+  pages.filter('#reliefs-tbl', { input: '#reliefs-q', count: '#reliefs-count', empty: "No row here matches that search." });
+});
+</script>
+</body>
+</html>

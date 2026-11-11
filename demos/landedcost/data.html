@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nigerian import duty bands, port charges, demurrage rates and Incoterms: LandedCost reference</title>
+<meta name="description" content="The duty bands by commodity class, the fixed versus percentage port and documentation charges, the demurrage and detention brackets, and where each Incoterm puts your cost responsibility: every rate LandedCost applies, with its base.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="landedcost.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%232b4a63'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>LC</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">LC</span><span>LandedCost<small>Quote to landed, in one pass</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Calculator</a>
+      <a href="data.html" class="is-here" aria-current="page">Duty and charges</a>
+      <a href="playbook.html">Import playbook</a>
+      <a href="record.html">Shipment log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#quote">Cost a shipment</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">LandedCost</a> <span aria-hidden="true">/</span> <span aria-current="page">Duty and charges</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · the defaults the tool applies</p>
+    <h1 class="reveal" data-delay="1">What sits between the<br>invoice and the shelf.</h1>
+    <p class="lede reveal" data-delay="2">You are quoted one number and you pay six different bases. Duty sits on the assessable value, the surcharge sits on the duty, VAT sits on everything added so far, NIMASA sits on the freight, and the terminal sits on the box. Here is each one, with the naira result for the worked example on the calculator page.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>0% to 20%</b> duty bands the tool carries</span><span><b>20%</b> surcharge, of the duty, not of the goods</span><span><b>7.5%</b> VAT on the duty-inclusive value</span><span><b>7 days</b> rent-free before the clock starts charging</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="bases">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Six bases, not one</p>
+          <h2 id="bases-h">What each charge is actually calculated on</h2>
+          <p class="lede">Most arguments at the agent's office are about the base, not the percentage. A percentage applied to the wrong base is the whole reason a quotation and an assessment disagree.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>Assessable value</b><span>duty, ETLS, CISS and stamp are charged on it</span></div>
+      <div class="metric"><b>The duty itself</b><span>the surcharge is 20% of this line</span></div>
+      <div class="metric"><b>CIF + duty + levies</b><span>this is what VAT is charged on</span></div>
+      <div class="metric"><b>The freight</b><span>NIMASA and the Shipping Council take 3% of it</span></div>
+      <div class="metric"><b>The box, or the CBM</b><span>terminal handling ignores the value of the goods</span></div>
+      <div class="metric"><b>167 kg per CBM</b><span>the air volumetric divisor: chargeable weight is the greater</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="bands">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Import duty bands</p>
+          <h2 id="bands-h">Which goods sit in which band, and what the band does to a carton</h2>
+          <p class="lede">These are the ten commodity classes the calculator offers, plus the catch-all. A band is a range of HS lines collapsed into one indicative figure, which is why the tool lets you overrule it.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a class</span><input id="bands-q" type="search" placeholder="goods, band or naira figure" autocomplete="off"></label>
+          
+          <span class="filter-count" id="bands-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="bands-tbl">
+            <caption>Money column assumes the worked example: USD 8,000 of goods at ₦1,520, FOB, USD 1,400 freight and USD 120 insurance, so an assessable value of ₦14,470,400 across 40 cartons. Surcharge and stamp switched on, VAT not reclaimed.</caption>
+            <thead><tr>
+            <th data-sort="0">Commodity class</th>
+            <th data-sort="1" class="n">Duty</th>
+            <th data-sort="2" class="n">Excise</th>
+            <th data-sort="3">What usually sits on this line</th>
+            <th data-sort="4" class="n">Duty on ₦14,470,400</th>
+            <th data-sort="5" class="n">Duty + surcharge + levies + VAT</th>
+            <th data-sort="6" class="n">Added per carton</th>
+            <th data-sort="7">What to check</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Raw materials and industrial inputs</td><td class="n">0%</td><td class="n">none</td><td>resins, components, unbranded parts, packaging</td><td class="n">₦0</td><td class="n">₦1,396,394</td><td class="n">₦34,910</td><td>Zero duty is not zero cost: ETLS, CISS, stamp and VAT still arrive.</td></tr>
+            <tr><td>Machinery, pumps and spares</td><td class="n">5%</td><td class="n">none</td><td>borehole pumps, motors, mill parts, generators</td><td class="n">₦723,520</td><td class="n">₦2,329,734</td><td class="n">₦58,243</td><td>A spare and a whole machine are not the same HS line, and the agent will not always tell you which one he used.</td></tr>
+            <tr><td>Food and processed essentials</td><td class="n">5%</td><td class="n">none</td><td>oil, rice, flour, tinned goods, ingredients</td><td class="n">₦723,520</td><td class="n">₦2,329,734</td><td class="n">₦58,243</td><td>Your enemy is time, not the band. Perishables and a nine-day dwell do not mix.</td></tr>
+            <tr><td>Building materials, cement and steel</td><td class="n">5%</td><td class="n">none</td><td>tiles, fittings, rebar, hardware</td><td class="n">₦723,520</td><td class="n">₦2,329,734</td><td class="n">₦58,243</td><td>Dense loads hit the container's weight limit long before its volume, so the truck and the crane move before the duty does.</td></tr>
+            <tr><td>Electronics and phone accessories</td><td class="n">10%</td><td class="n">none</td><td>chargers, cases, cables, small appliances</td><td class="n">₦1,447,040</td><td class="n">₦3,263,075</td><td class="n">₦81,577</td><td>The tool's default class. An accessory and a finished handset are assessed on different lines.</td></tr>
+            <tr><td>Anything else: check the HS line</td><td class="n">10%</td><td class="n">none</td><td>mixed cartons, unclear goods, new products</td><td class="n">₦1,447,040</td><td class="n">₦3,263,075</td><td class="n">₦81,577</td><td>If you are using this row, you have not asked for the HS line yet. Do that before you transfer.</td></tr>
+            <tr><td>Garments, bags and footwear</td><td class="n">20%</td><td class="n">none</td><td>clothing, shoes, handbags, synthetic bags</td><td class="n">₦2,894,080</td><td class="n">₦5,129,757</td><td class="n">₦128,244</td><td>The band that turns a 12% margin on the invoice into about 4% at the shop counter.</td></tr>
+            <tr><td>Household goods and plastics</td><td class="n">20%</td><td class="n">none</td><td>cups, buckets, furniture, plastic ware</td><td class="n">₦2,894,080</td><td class="n">₦5,129,757</td><td class="n">₦128,244</td><td>Bulky and light: you pay handling on air you cannot sell, and duty on the whole thing.</td></tr>
+            <tr><td>Cosmetics, soaps and toiletries</td><td class="n">20%</td><td class="n">5%</td><td>cream, soap, perfume, hair products</td><td class="n">₦2,894,080</td><td class="n">₦5,907,541</td><td class="n">₦147,689</td><td>Excise only appears when the line is flagged, but the flag is not yours to decline.</td></tr>
+            <tr><td>Vehicles and motorcycle parts</td><td class="n">20%</td><td class="n">5%</td><td>cars, motorcycles, tyres, assemblies</td><td class="n">₦2,894,080</td><td class="n">₦5,907,541</td><td class="n">₦147,689</td><td>MSON at ₦15,000 a unit sits on top here, and the tool counts units rather than cartons for it, so price the file by the unit.</td></tr>
+            <tr><td>Beverages, spirits and tobacco</td><td class="n">20%</td><td class="n">20%</td><td>drinks, spirits, cigarettes</td><td class="n">₦2,894,080</td><td class="n">₦8,240,893</td><td class="n">₦206,022</td><td>The heaviest stack in the table: government charges come to about 57% of the assessable value before a single box moves.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Duty, surcharge, ETLS, CISS, stamp and excise all scale with the assessable value, so every naira figure above moves with the exchange rate. The carton column divides the total by the 40 cartons in the worked example.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="charges">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Port, documents and lines</p>
+          <h2 id="charges-h">Which charges are fixed and which are percentages</h2>
+          <p class="lede">Filter the kind column and look at what is left. A fixed charge is only small on a big container, and a percentage is only honest about the value you declared. Most surprises are fixed charges nobody quoted.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a charge</span><input id="charges-q" type="search" placeholder="Form M, SONCAP, THC, agent or CISS" autocomplete="off"></label>
+          <label class="field"><span>Charged as</span><select id="charges-f"><option value="all">All</option><option>Fixed per shipment</option><option>Per container</option><option>Per CBM</option><option>Per 100 kg</option><option>Per invoice line</option><option>Per unit</option><option>Percentage</option></select></label>
+          <span class="filter-count" id="charges-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="charges-tbl">
+            <caption>Reference column: the worked example, shipped as groupage (3.36 CBM), one invoice line, no vehicles, freight of ₦2,128,000.</caption>
+            <thead><tr>
+            <th data-sort="0">Charge</th>
+            <th data-sort="1">Charged on</th>
+            <th data-sort="2" class="n">Default rate</th>
+            <th data-sort="3">Charged as</th>
+            <th data-sort="4" class="n">On the reference load</th>
+            <th data-sort="5">How it behaves</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Form M / MACIS application</td><td>one per consignment</td><td class="n">₦12,500</td><td>Fixed per shipment</td><td class="n">₦12,500</td><td>Small fee, huge leverage: nothing moves without it, and an amendment costs days, not naira.</td></tr>
+            <tr><td>Clearing agent professional fee</td><td>one per consignment</td><td class="n">₦150,000</td><td>Fixed per shipment</td><td class="n">₦150,000</td><td>Negotiable and flat. It costs the same on a half-empty box as on a full one, so it is worst on small loads.</td></tr>
+            <tr><td>SONCAP / product certificate</td><td>each product line on the invoice</td><td class="n">₦75,000 per line</td><td>Per invoice line</td><td class="n">₦75,000</td><td>Five lines means five fees. Ask the supplier to consolidate lines that belong to the same class.</td></tr>
+            <tr><td>MSON</td><td>each vehicle or machinery unit</td><td class="n">₦15,000 each</td><td>Per unit</td><td class="n">₦0</td><td>Only switches on when you ship vehicles or machines; the tool counts them separately for this reason.</td></tr>
+            <tr><td>Terminal handling (THC), 20ft</td><td>each container</td><td class="n">₦260,000 per box</td><td>Per container</td><td class="n">₦0</td><td>Charged on the box. A container of cheap goods pays the same THC as one of expensive goods.</td></tr>
+            <tr><td>Terminal handling (THC), 40ft high cube</td><td>each container</td><td class="n">₦420,000 per box</td><td>Per container</td><td class="n">₦0</td><td>About 2.4 times the usable volume of a 20ft for roughly 1.6 times the charge. The bigger box is usually the better deal per CBM.</td></tr>
+            <tr><td>Delivery order / dock warrant</td><td>each container</td><td class="n">₦45,000 per box</td><td>Per container</td><td class="n">₦0</td><td>Issued by the shipping line, not the terminal. It is the charge most often missing from a freight quote.</td></tr>
+            <tr><td>Empty box evacuation deposit</td><td>each container</td><td class="n">₦120,000 per box</td><td>Per container</td><td class="n">₦0</td><td>The word on the invoice is deposit. Ask in writing what releases it and when, before you treat it as cost.</td></tr>
+            <tr><td>Wharfage and council charges</td><td>each container</td><td class="n">₦35,000 per box</td><td>Per container</td><td class="n">₦0</td><td>Small, flat, easy to leave out when you compare two forwarders. Compare the whole list instead.</td></tr>
+            <tr><td>LCL CFS / warehouse handling</td><td>each cubic metre</td><td class="n">₦14,000 per CBM</td><td>Per CBM</td><td class="n">₦47,040</td><td>What groupage pays instead of box charges. It grows with volume and never with value.</td></tr>
+            <tr><td>Airline and air terminal handling</td><td>each 100 kg of chargeable weight</td><td class="n">₦85,000 per 100 kg</td><td>Per 100 kg</td><td class="n">₦0</td><td>Chargeable kg is the greater of actual weight and CBM times 167, so a light bulky carton is charged as if it were heavy.</td></tr>
+            <tr><td>NIMASA / Shipping Council levy</td><td>the freight you pay</td><td class="n">3%</td><td>Percentage</td><td class="n">₦63,840</td><td>On freight only. Cheap freight means a small levy, which is one reason a delivered-in-price quote hides so much.</td></tr>
+            <tr><td>ECOWAS / ETLS levy</td><td>the assessable (CIF) value</td><td class="n">0.5%</td><td>Percentage</td><td class="n">₦72,352</td><td>Half a percent that nobody argues about, and it is charged on your freight as well as your goods.</td></tr>
+            <tr><td>CISS surveillance fee</td><td>the assessable (CIF) value</td><td class="n">1%</td><td>Percentage</td><td class="n">₦144,704</td><td>One percent of everything that made it to the CIF, which is why under-declaring shows up here too.</td></tr>
+            <tr><td>Stamp duty</td><td>the assessable (CIF) value</td><td class="n">0.5%</td><td>Percentage</td><td class="n">₦72,352</td><td>A switch in the tool because treatment differs by file. Ask your agent whether it is on yours.</td></tr>
+            <tr><td>Import duty surcharge</td><td>the duty line</td><td class="n">20% of the duty</td><td>Percentage</td><td class="n">₦289,408</td><td>A percentage of a percentage. The switch exists so you can see what it costs you, not so you can decline it.</td></tr>
+            <tr><td>VAT on import</td><td>CIF + duty + surcharge + levies</td><td class="n">7.5%</td><td>Percentage</td><td class="n">₦1,237,219</td><td>Charged on the duty-inclusive value, so it is the only line that grows when the band above it grows. Reclaimable if you are registered.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Box charges for one 20ft container total ₦460,000 (THC + dock warrant + evacuation deposit + wharfage); a 40ft high cube totals ₦620,000. Both sit on the same carton load you could ship as groupage.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="clock">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · The clock</p>
+          <h2 id="clock-h">Free days, brackets, and the day a cleared box becomes a loss</h2>
+          <p class="lede">Demurrage escalates in weekly brackets once the free period is spent, and the shipping line bills container detention alongside it. Both are per box. Your own money sitting in the goods is the third clock and the one nobody invoices.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a day</span><input id="clock-q" type="search" placeholder="day 21, bracket or rate" autocomplete="off"></label>
+          
+          <span class="filter-count" id="clock-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="clock-tbl">
+            <caption>One container, 7 rent-free days, detention at ₦12,000 a day from the day after the free period, capital carried at 4% a month on a landed cost of ₦18,617,835. Gross profit on the load, at a 35% target margin, is about ₦6,516,000.</caption>
+            <thead><tr>
+            <th data-sort="0">Days in the terminal</th>
+            <th data-sort="1">Rate in that bracket</th>
+            <th data-sort="2" class="n">Demurrage, cumulative</th>
+            <th data-sort="3" class="n">Detention, cumulative</th>
+            <th data-sort="4" class="n">Capital carried</th>
+            <th data-sort="5" class="n">Total cost of the clock</th>
+            <th data-sort="6" class="n">Of the load's gross profit</th>
+            <th data-sort="7">What usually causes it</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Day 7</td><td>free</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦171,000</td><td class="n">₦171,000</td><td class="n">3%</td><td>Clear inside the free period and the only clock you pay for is your own money.</td></tr>
+            <tr><td>Day 10</td><td>₦18,000 / day / box</td><td class="n">₦54,000</td><td class="n">₦36,000</td><td class="n">₦245,000</td><td class="n">₦335,000</td><td class="n">5%</td><td>A signature that was with somebody who was away.</td></tr>
+            <tr><td>Day 14</td><td>₦18,000 / day / box</td><td class="n">₦126,000</td><td class="n">₦84,000</td><td class="n">₦343,000</td><td class="n">₦553,000</td><td class="n">8%</td><td>The PA form waiting on a bank response.</td></tr>
+            <tr><td>Day 21</td><td>₦32,000 / day / box</td><td class="n">₦350,000</td><td class="n">₦168,000</td><td class="n">₦514,000</td><td class="n">₦1,032,000</td><td class="n">16%</td><td>The first bracket step. This is where a low-value carton load stops being profitable.</td></tr>
+            <tr><td>Day 28</td><td>₦48,000 / day / box</td><td class="n">₦686,000</td><td class="n">₦252,000</td><td class="n">₦685,000</td><td class="n">₦1,623,000</td><td class="n">25%</td><td>Valuation argued at the window, or a document that arrived with the wrong marks.</td></tr>
+            <tr><td>Day 35</td><td>₦62,000 / day / box</td><td class="n">₦1,120,000</td><td class="n">₦336,000</td><td class="n">₦856,000</td><td class="n">₦2,312,000</td><td class="n">35%</td><td>The top bracket, and the queue for a truck that was never booked.</td></tr>
+            <tr><td>Day 42</td><td>₦62,000 / day / box</td><td class="n">₦1,554,000</td><td class="n">₦420,000</td><td class="n">₦1,028,000</td><td class="n">₦3,002,000</td><td class="n">46%</td><td>Empty box still not returned, so detention runs while the paperwork does.</td></tr>
+            <tr><td>Day 49</td><td>₦62,000 / day / box</td><td class="n">₦1,988,000</td><td class="n">₦504,000</td><td class="n">₦1,199,000</td><td class="n">₦3,691,000</td><td class="n">57%</td><td>A second attachment, or a consignment held while somebody checks the value again.</td></tr>
+            <tr><td>Day 60</td><td>₦62,000 / day / box</td><td class="n">₦2,670,000</td><td class="n">₦636,000</td><td class="n">₦1,468,000</td><td class="n">₦4,774,000</td><td class="n">73%</td><td>Two months in: the goods are cleared on paper and the profit is not.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Detention ends when the empty box is back with the line, not when your truck leaves the gate. Groupage cargo is charged cargo rent instead of these brackets, so ask the consolidator for the free period in writing.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="inco">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Incoterms</p>
+          <h2 id="inco-h">Where your responsibility starts under each term</h2>
+          <p class="lede">The term on the proforma decides two things at once: who pays for each element below, and what ends up inside the value customs assesses. Getting it wrong either inflates your duty or leaves your own freight out of the arithmetic.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find an element</span><input id="inco-q" type="search" placeholder="freight, insurance, duty or truck" autocomplete="off"></label>
+          
+          <span class="filter-count" id="inco-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="inco-tbl">
+            <caption>You = invoiced to you. Seller = included in the price quoted to you. Only the elements marked yes enter the assessable value that duty, ETLS, CISS and stamp are charged on.</caption>
+            <thead><tr>
+            <th data-sort="0">Cost element</th>
+            <th data-sort="1">EXW</th>
+            <th data-sort="2">FOB</th>
+            <th data-sort="3">CIF</th>
+            <th data-sort="4">DDP</th>
+            <th data-sort="5">In the assessable value?</th>
+            <th data-sort="6">When the money leaves you</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>The goods, packed</td><td>You</td><td>You</td><td>You</td><td>Inside their price</td><td>Yes, in every term</td><td>At order, or against the bank documents</td></tr>
+            <tr><td>Loading and inland haulage to the origin port</td><td>You</td><td>Seller</td><td>Seller</td><td>Seller</td><td>Yes, but only under EXW</td><td>Before the vessel sails</td></tr>
+            <tr><td>Origin terminal handling</td><td>You</td><td>Seller</td><td>Seller</td><td>Seller</td><td>Yes, but only under EXW</td><td>Before the vessel sails</td></tr>
+            <tr><td>Ocean or air freight</td><td>You</td><td>You</td><td>Seller</td><td>Seller</td><td>Yes under EXW and FOB. No under CIF or DDP, where it is already inside the invoice</td><td>At booking for air, on arrival for sea</td></tr>
+            <tr><td>Marine insurance</td><td>You</td><td>You</td><td>Seller</td><td>Seller</td><td>Same rule as freight</td><td>At cover, usually a small line</td></tr>
+            <tr><td>Nigerian terminal handling, delivery order, wharfage</td><td>You</td><td>You</td><td>You</td><td>Seller, if they really deliver</td><td>No: handling is not part of the customs value</td><td>At discharge, and it is cash, not credit</td></tr>
+            <tr><td>Import duty, surcharge, ETLS, CISS, stamp, excise</td><td>You</td><td>You</td><td>You</td><td>Buried in their number</td><td>No: they are charged on the value, they are not part of it</td><td>Between the assessment and the release</td></tr>
+            <tr><td>VAT on the duty-inclusive value</td><td>You</td><td>You</td><td>You</td><td>Buried in their number</td><td>No, but it is charged on everything above it</td><td>Same window as duty</td></tr>
+            <tr><td>Form M, SONCAP and the clearing agent</td><td>You</td><td>You</td><td>You</td><td>Rarely you, so rarely quoted</td><td>No</td><td>Days before the goods arrive</td></tr>
+            <tr><td>Demurrage and detention</td><td>You</td><td>You</td><td>You</td><td>Whoever is slow</td><td>No, and that is why it is invisible on a valuation</td><td>At release, or at the invoice three weeks later</td></tr>
+            <tr><td>Truck, porters and storage</td><td>You</td><td>You</td><td>You</td><td>You, unless the door really is included</td><td>No</td><td>On the day the box leaves</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">The tool's own warning, repeated here: adding freight and insurance to a CIF or DDP invoice a second time inflates the duty you model by 15 to 30%.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="verify">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Where these numbers can still be wrong</p>
+          <h2 id="verify-h">Three places a correct calculation still meets a different invoice</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>The value is contested, not the rate</h3><p>An assessment can substitute its own figure for your invoice value. No table on this page anticipates that; it is a revaluation, and it can exceed every margin figure the tool shows.</p></div>
+        <div class="note-box warn"><h3>Terminal and line tariffs move without notice</h3><p>THC, delivery orders and council charges are revised by operators. Update the defaults in section 10 from the invoice you were actually handed, not from a page, including this one.</p></div>
+        <div class="note-box "><h3>The rate you priced at is not the rate you fund at</h3><p>The naira on the day the bank releases is the naira that matters. The percentage columns above are stable; every naira figure in them is not.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="check">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · What to check these against</p>
+          <h2 id="check-h">Documents, not opinions</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>The proforma invoice and the supplier's packing list: carton count, carton dimensions and gross weight per carton.</li>
+        <li>The bill of lading or airway bill, for the freight, the Incoterm actually shipped on, and the discharge date that starts your free days.</li>
+        <li>The Form M / MACIS printout and the bank's rate, for the naira figure you will really convert at.</li>
+        <li>The assessment on the file: line by line, with the base of each line shown, so you can compare it with the trail in section 04 of the calculator.</li>
+        <li>The terminal's current tariff card and the shipping line's free-time and detention schedule, both of which change more often than the duty bands do.</li>
+        <li>The SONCAP or product certificate for each invoice line you are paying the per-line fee on.</li>
+        <li>Your own last three landed costs in the shipment log, which is the only table that describes your supplier and your agent rather than somebody else's.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own carton through these tables</h2>
+        <p class="lede">The calculator applies every base and bracket on this page to a real consignment, shows the assessment line by line, and solves for the naira rate where your margin disappears.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#quote">Cost a shipment</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the shipment log</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">LC</span><span style="color:#fff">LandedCost<small style="color:rgba(255,255,255,.6)">Quote to landed, in one pass</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one job: turn a supplier's price into a landed number you can defend, then into a shelf price that still works when the naira moves.</p>
+      </div>
+      <div>
+        <h4>LandedCost pages</h4>
+        <p><a href="index.html">Calculator</a><br><a href="data.html">Duty and charges</a><br><a href="playbook.html">Import playbook</a><br><a href="record.html">Shipment log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../suncost/">SunCost: solar vs generator</a><br><a href="../marketrate/">MarketRate: fair price today</a><br><a href="../fuelmeter/">FuelMeter: true cost per kilometre</a><br><a href="../payrite/">PayRite: payroll and PAYE</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Every figure here is the tool's own indicative default and is editable in section 10 of the calculator. Not a customs valuation, not clearing advice: your HS line, your terminal and your line decide the truth.</span><span class="mono">LandedCost · Duty and charges · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#bands-tbl');
+  pages.filter('#bands-tbl', { input: '#bands-q', count: '#bands-count', empty: "No commodity class here matches that." });
+  pages.sortable('#charges-tbl');
+  pages.filter('#charges-tbl', { input: '#charges-q', select: '#charges-f', count: '#charges-count', empty: "No charge here matches that name." });
+  pages.sortable('#clock-tbl');
+  pages.filter('#clock-tbl', { input: '#clock-q', count: '#clock-count', empty: "No checkpoint here matches that." });
+  pages.sortable('#inco-tbl');
+  pages.filter('#inco-tbl', { input: '#inco-q', count: '#inco-count', empty: "No cost element here matches that." });
+  var chgSel = document.getElementById('charges-f'); if (chgSel) chgSel.dataset.col = '3';
+});
+</script>
+</body>
+</html>

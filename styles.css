@@ -280,6 +280,10 @@ img { display: block; max-width: 100%; }
 .case-link-primary { background: var(--lime); border-color: var(--lime); }
 .case-link-primary:hover { background: #d9ff7a; border-color: #d9ff7a; }
 .case-note { margin: 0 0 4px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.case-pages-label { margin: 10px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.case-pages { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.case-page-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-size: 13px; font-weight: 600; text-decoration: none; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+.case-page-link:hover, .case-page-link:focus-visible { border-color: var(--ink); background: var(--lime); transform: translateY(-2px); }
 .case-next { margin-top: 64px; padding-top: 34px; border-top: 1px solid var(--line); }
 .case-next-link { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 22px; padding: 26px 28px; background: var(--ink); color: var(--paper); transition: background .2s ease; }
 .case-next-link:hover, .case-next-link:focus-visible { background: #22332c; }

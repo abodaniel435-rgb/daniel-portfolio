@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nigerian scrap and recyclable prices, piece weights and trip economics - ReCircle reference</title>
+<meta name="description" content="Buy price per kilogram by material and grade, how many pieces make a kilogram, what contamination does to a load, and the minimum naira a pickup must return before it is worth driving. Every figure ReCircle uses, in sortable tables.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="recircle.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2316704f'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%86%BB</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">↻</span><span>ReCircle<small>Waste that pays you back</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Waste counter</a>
+      <a href="data.html" class="is-here" aria-current="page">Prices &amp; weights</a>
+      <a href="playbook.html">Sorting playbook</a>
+      <a href="record.html">Earnings ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#count">Count my waste</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">ReCircle</a> <span aria-hidden="true">/</span> <span aria-current="page">Prices &amp; weights</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · the numbers the counter uses</p>
+    <h1 class="reveal" data-delay="1">What a kilogram is worth,<br>and what it is worth after he weighs it.</h1>
+    <p class="lede reveal" data-delay="2">Nobody is cheating with a secret price list. The gap is that you do not know the rate, the deduction or the break-even weight, and he does. These are the four tables ReCircle runs on, dated and editable.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>₦45</b> default mixed plastic rate, per kg</span><span><b>12%</b> count-versus-scale gap that raises a dispute flag</span><span><b>+25%</b> margin over trip cost before a load is worth a call</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="fixed">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · The six figures that decide a load</p>
+          <h2 id="fixed-h">Hard numbers, no adjectives</h2>
+          <p class="lede">Every verdict on this tool comes out of these. Change them to match your buyer and the whole page follows.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>₦45/kg</b><span>the rate a mixed, unsorted pile is offered at</span></div>
+      <div class="metric"><b>₦120/kg</b><span>clear PET, dry and separated</span></div>
+      <div class="metric"><b>₦300/kg</b><span>aluminium cans, kept away from tin</span></div>
+      <div class="metric"><b>₦4,200/kg</b><span>bright copper, the only scrap worth a long trip</span></div>
+      <div class="metric"><b>0.4 kg</b><span>an empty 20 L HDPE jerrycan, dry</span></div>
+      <div class="metric"><b>₦360</b><span>a keke trip of 3 km at ₦120/km - the number your load must beat</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="prices">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Buy price by material and grade</p>
+          <h2 id="prices-h">Sorted and dry against what a mixed load actually gets</h2>
+          <p class="lede">The middle columns are the argument. Your material does not have one price; it has a price at the grade you presented it in, and a much lower one at the grade the buyer found it in. The last column is the quantity most buyers refuse to cross town for.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a material</span><input id="prices-q" type="search" placeholder="pet, carton, copper, sachet" autocomplete="off"></label>
+          <label class="field"><span>Filter by family</span><select id="prices-f"><option value="all">All</option><option>Plastic</option><option>Fibre</option><option>Metal</option><option>E-waste &amp; other</option></select></label>
+          <span class="filter-count" id="prices-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="prices-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Material</th>
+            <th data-sort="1">Family</th>
+            <th data-sort="2" class="n">Sorted and dry</th>
+            <th data-sort="3" class="n">If it goes out mixed or dirty</th>
+            <th data-sort="4" class="n">Buyer's deduction</th>
+            <th data-sort="5" class="n">Smallest quantity he will come for</th>
+            <th data-sort="6">What moves the price</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>PET bottles - clear</td><td>Plastic</td><td class="n">₦120</td><td class="n">₦45</td><td class="n">4%</td><td class="n">2 kg</td><td>labels and water left inside read as weight you are paid for and he re-dries</td></tr>
+            <tr><td>PET bottles - coloured</td><td>Plastic</td><td class="n">₦80</td><td class="n">₦45</td><td class="n">5%</td><td class="n">2 kg</td><td>one green bottle in a clear bag pulls the whole bag to the coloured rate</td></tr>
+            <tr><td>HDPE jerrycans and bottles</td><td>Plastic</td><td class="n">₦200</td><td class="n">₦45</td><td class="n">6%</td><td class="n">2 kg</td><td>the highest-paying plastic in the house; never bury it under sachets</td></tr>
+            <tr><td>Mixed plastic</td><td>Plastic</td><td class="n">₦45</td><td class="n">₦45</td><td class="n">10%</td><td class="n">5 kg</td><td>this is the floor. Everything you fail to separate lands here</td></tr>
+            <tr><td>Soft plastic and water sachets</td><td>Plastic</td><td class="n">₦15</td><td class="n">₦15</td><td class="n">14%</td><td class="n">5 kg</td><td>only pays baled or heavily compressed; loose it is air and dirt</td></tr>
+            <tr><td>Carton - white stock, flat, dry</td><td>Fibre</td><td class="n">₦50</td><td class="n">₦35</td><td class="n">8%</td><td class="n">5 kg</td><td>office and packaging carton without tape or plastic liner</td></tr>
+            <tr><td>OCC - brown corrugated</td><td>Fibre</td><td class="n">₦35</td><td class="n">₦35</td><td class="n">8%</td><td class="n">5 kg</td><td>the tool's single carton line. Store carton, egg crates, boxes</td></tr>
+            <tr><td>Kraft sacks and paper bags</td><td>Fibre</td><td class="n">₦30</td><td class="n">₦25</td><td class="n">9%</td><td class="n">5 kg</td><td>cement and flour sacks pay less when the dust is still inside them</td></tr>
+            <tr><td>Newsprint</td><td>Fibre</td><td class="n">₦60</td><td class="n">₦45</td><td class="n">6%</td><td class="n">3 kg</td><td>the best fibre rate. Keep it out of the wet pile or it becomes pulp</td></tr>
+            <tr><td>Aluminium drink cans</td><td>Metal</td><td class="n">₦300</td><td class="n">₦45</td><td class="n">3%</td><td class="n">0.5 kg</td><td>the whole load is repriced to iron if tin cans are mixed in</td></tr>
+            <tr><td>Scrap iron and tin cans</td><td>Metal</td><td class="n">₦45</td><td class="n">₦45</td><td class="n">5%</td><td class="n">5 kg</td><td>clean of dirt and sand; wet rust is deducted before the weight</td></tr>
+            <tr><td>Copper - bright</td><td>Metal</td><td class="n">₦4,200</td><td class="n">₦2,600</td><td class="n">4%</td><td class="n">0.2 kg</td><td>bright and bare. Tinned, lacquered or burnt copper is another grade</td></tr>
+            <tr><td>Brass</td><td>Metal</td><td class="n">₦2,600</td><td class="n">₦1,800</td><td class="n">5%</td><td class="n">0.2 kg</td><td>tap bodies and fittings; a handful pays for a keke trip on its own</td></tr>
+            <tr><td>Zinc offcuts</td><td>Metal</td><td class="n">₦450</td><td class="n">₦180</td><td class="n">5%</td><td class="n">5 kg</td><td>not in the default table. Add it as a row and price it with your buyer</td></tr>
+            <tr><td>E-waste - cable</td><td>E-waste &amp; other</td><td class="n">₦180</td><td class="n">₦120</td><td class="n">6%</td><td class="n">1 kg</td><td>stripped copper is priced as copper; unstripped cable is priced as this</td></tr>
+            <tr><td>E-waste - old phone</td><td>E-waste &amp; other</td><td class="n">₦700 each</td><td class="n">₦300</td><td class="n">none</td><td class="n">1 pc</td><td>per piece, not per kg. A working screen changes the number completely</td></tr>
+            <tr><td>E-waste - laptop board</td><td>E-waste &amp; other</td><td class="n">₦3,500 each</td><td class="n">₦1,200</td><td class="n">none</td><td class="n">1 pc</td><td>the buyer wants the board, not the plastic casing</td></tr>
+            <tr><td>Glass bottles</td><td>E-waste &amp; other</td><td class="n">₦30</td><td class="n">₦0</td><td class="n">12%</td><td class="n">10 kg</td><td>many buyers charge you to take it. Negative prices are allowed in the table</td></tr>
+            <tr><td>Used cooking oil</td><td>E-waste &amp; other</td><td class="n">₦350</td><td class="n">₦180</td><td class="n">10%</td><td class="n">2 kg</td><td>food scraps and water at the bottom of the keg are deducted first</td></tr>
+            <tr><td>Tyres</td><td>E-waste &amp; other</td><td class="n">₦250 each</td><td class="n">₦0</td><td class="n">none</td><td class="n">4 pc</td><td>priced per piece, heavy to move, and often refused on a small trip</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Sorted prices are the tool's editable default table. The mixed column is what the same material returns when it arrives unsorted, wet or mixed with a lower grade. Correct both to your buyer's numbers and keep the as-of date honest.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="pieces">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Pieces per kilogram</p>
+          <h2 id="pieces-h">The sanity check when there is no scale you trust</h2>
+          <p class="lede">If you counted the pieces, you already know the weight within a few percent. This is the table the counter runs on, and the reason your item count can argue with his scale. Weights are averages for dry, ordinary Nigerian packaging.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find an item</span><input id="pieces-q" type="search" placeholder="bottle, can, carton, jerrycan" autocomplete="off"></label>
+          
+          <span class="filter-count" id="pieces-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="pieces-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Item</th>
+            <th data-sort="1" class="n">Weight each</th>
+            <th data-sort="2" class="n">Pieces in 1 kg</th>
+            <th data-sort="3">Crushed or whole</th>
+            <th data-sort="4" class="n">100 pieces weigh</th>
+            <th data-sort="5" class="n">100 pieces are worth</th>
+            <th data-sort="6">What it catches</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Water sachet</td><td class="n">3 g</td><td class="n">333</td><td>no difference</td><td class="n">0.3 kg</td><td class="n">₦5</td><td>why a full sack of sachets is a chore, not a payday</td></tr>
+            <tr><td>500 ml PET bottle</td><td class="n">10 g</td><td class="n">100</td><td>crush to halve the volume</td><td class="n">1 kg</td><td class="n">₦120</td><td>a bag he calls 2 kg that counts out at 1 kg</td></tr>
+            <tr><td>1.5 L PET bottle</td><td class="n">30 g</td><td class="n">33</td><td>crush to halve the volume</td><td class="n">3 kg</td><td class="n">₦360</td><td>the default count: 40 bottles is about 1.2 kg</td></tr>
+            <tr><td>Milk pouch</td><td class="n">12 g</td><td class="n">83</td><td>rinse and dry or it stinks and drops grade</td><td class="n">1.2 kg</td><td class="n">₦18</td><td>wet pouches counted as dry weight</td></tr>
+            <tr><td>Aluminium drink can</td><td class="n">14 g</td><td class="n">71</td><td>crush; whole cans are air</td><td class="n">1.4 kg</td><td class="n">₦420</td><td>a 'kilogram' of cans that is really 40 pieces</td></tr>
+            <tr><td>Tin can (food)</td><td class="n">60 g</td><td class="n">17</td><td>flatten or you pay for volume</td><td class="n">6 kg</td><td class="n">₦270</td><td>dirt and residue left inside, charged at iron prices</td></tr>
+            <tr><td>Carton box (small)</td><td class="n">180 g</td><td class="n">5.5</td><td>flatten and tie</td><td class="n">18 kg</td><td class="n">₦630</td><td>boxes counted standing up in a heap that collapses</td></tr>
+            <tr><td>Carton sheet about 1 m squared</td><td class="n">1 kg</td><td class="n">1</td><td>flat, dry, off the ground</td><td class="n">100 kg</td><td class="n">₦3,500</td><td>a 'sheet' that is really half a metre of thin card</td></tr>
+            <tr><td>Newspaper, bundled</td><td class="n">400 g</td><td class="n">2.5</td><td>keep dry; wet newsprint is worthless</td><td class="n">40 kg</td><td class="n">₦2,400</td><td>ads and glossy inserts priced as fibre you cannot sell</td></tr>
+            <tr><td>20 L HDPE jerrycan, empty</td><td class="n">400 g</td><td class="n">2.5</td><td>dry, no liquid left in it</td><td class="n">40 kg</td><td class="n">₦8,000</td><td>jerrycans weighed with the oil still inside them</td></tr>
+            <tr><td>Glass bottle</td><td class="n">320 g</td><td class="n">3</td><td>no crushing; it is already dense</td><td class="n">32 kg</td><td class="n">₦960</td><td>the weight everyone forgets: caps, labels and leftover liquid</td></tr>
+            <tr><td>Cable, per metre</td><td class="n">90 g</td><td class="n">11</td><td>coiled, weighed with a hook</td><td class="n">9 kg</td><td class="n">₦1,620</td><td>a coil hung on the hook to add grams you did not sell</td></tr>
+            <tr><td>Used cooking oil, 1 L bottle</td><td class="n">950 g</td><td class="n">1.05</td><td>let the solids settle out</td><td class="n">95 kg</td><td class="n">₦33,250</td><td>water or food at the bottom of the keg, paid at oil prices</td></tr>
+            <tr><td>Old phone</td><td class="n">180 g</td><td class="n">5.5</td><td>priced per piece, not per kg</td><td class="n">18 kg</td><td class="n">₦70,000</td><td>someone selling a phone by the kilogram</td></tr>
+            <tr><td>Old laptop</td><td class="n">2.1 kg</td><td class="n">0.5</td><td>priced per piece, not per kg</td><td class="n">210 kg</td><td class="n">₦350,000</td><td>weight-based offers on board-priced items</td></tr>
+            <tr><td>Car tyre</td><td class="n">7 kg</td><td class="n">0.14</td><td>priced per piece, heavy to move</td><td class="n">700 kg</td><td class="n">₦25,000</td><td>a load that eats a truck's capacity for very little money</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Carry one sealed 1 litre bottle of water. It weighs 1 kg. Put it on his scale before he puts your material on it, and the conversation changes.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="contam">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · What contamination costs</p>
+          <h2 id="contam-h">The deduction is a percentage, applied silently</h2>
+          <p class="lede">These are the exact penalty percentages in the tool's price table. A wet, oily or dirty load does not get refused in words; it gets a smaller number written on it. The last column is the loss on a single 20 kg sack.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a material</span><input id="contam-q" type="search" placeholder="carton, sachet, copper" autocomplete="off"></label>
+          
+          <span class="filter-count" id="contam-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="contam-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Material</th>
+            <th data-sort="1" class="n">Clean rate, per kg</th>
+            <th data-sort="2" class="n">Deduction</th>
+            <th data-sort="3" class="n">After the deduction</th>
+            <th data-sort="4" class="n">Lost on a 20 kg sack</th>
+            <th data-sort="5">What earns the deduction</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>PET bottles - clear</td><td class="n">₦120</td><td class="n">4%</td><td class="n">₦115</td><td class="n">₦96</td><td>labels, caps, liquid left inside, dusty from the store room floor</td></tr>
+            <tr><td>PET bottles - coloured</td><td class="n">₦80</td><td class="n">5%</td><td class="n">₦76</td><td class="n">₦80</td><td>mixed with clear, or sun-faded and brittle</td></tr>
+            <tr><td>HDPE</td><td class="n">₦200</td><td class="n">6%</td><td class="n">₦188</td><td class="n">₦240</td><td>oil or garri dust inside the jerrycan, plus non-HDPE plastic in the bag</td></tr>
+            <tr><td>Mixed plastic</td><td class="n">₦45</td><td class="n">10%</td><td class="n">₦40</td><td class="n">₦90</td><td>the already-low rate, then a further cut for the dirt in it</td></tr>
+            <tr><td>Sachets and soft plastic</td><td class="n">₦15</td><td class="n">14%</td><td class="n">₦13</td><td class="n">₦42</td><td>water, milk residue, mud, string. The worst ratio of effort to money</td></tr>
+            <tr><td>Carton</td><td class="n">₦35</td><td class="n">8%</td><td class="n">₦32</td><td class="n">₦56</td><td>rain, a damp wall, sweat from a head load. Wet fibre also loses grade, not just weight</td></tr>
+            <tr><td>Mixed paper</td><td class="n">₦45</td><td class="n">9%</td><td class="n">₦41</td><td class="n">₦81</td><td>glossy inserts, carbon paper, food-stained takeout bags</td></tr>
+            <tr><td>Newsprint</td><td class="n">₦60</td><td class="n">6%</td><td class="n">₦56</td><td class="n">₦72</td><td>one rainy afternoon turns a bundle into pulp</td></tr>
+            <tr><td>Aluminium cans</td><td class="n">₦300</td><td class="n">3%</td><td class="n">₦291</td><td class="n">₦180</td><td>sand, stones and steel rivets thrown in to bulk the bag</td></tr>
+            <tr><td>Scrap iron and tin</td><td class="n">₦45</td><td class="n">5%</td><td class="n">₦43</td><td class="n">₦45</td><td>mud in the can, rust scale, concrete still on the rebar</td></tr>
+            <tr><td>Copper - bright</td><td class="n">₦4,200</td><td class="n">4%</td><td class="n">₦4,032</td><td class="n">₦3,360</td><td>varnish, tin plating, burnt insulation. The largest single money item on this table</td></tr>
+            <tr><td>Brass</td><td class="n">₦2,600</td><td class="n">5%</td><td class="n">₦2,470</td><td class="n">₦2,600</td><td>iron screws and inserts left in the fittings</td></tr>
+            <tr><td>E-waste cable</td><td class="n">₦180</td><td class="n">6%</td><td class="n">₦169</td><td class="n">₦216</td><td>dirt, dust and the coil hung on the hook during weighing</td></tr>
+            <tr><td>Glass bottles</td><td class="n">₦30</td><td class="n">12%</td><td class="n">₦26</td><td class="n">₦72</td><td>caps, liquid, broken cullet. Broken glass is often refused outright</td></tr>
+            <tr><td>Used cooking oil</td><td class="n">₦350</td><td class="n">10%</td><td class="n">₦315</td><td class="n">₦700</td><td>water and food solids at the bottom of the keg, settled and decanted away</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Per-piece lines - phones, laptop boards, tyres - carry no percentage. They are simply repriced or refused, which is why the counter shows them separately. No receipt, no record: a deduction you cannot name is a deduction you cannot argue with.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="trip">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Is it worth the trip?</p>
+          <h2 id="trip-h">The minimum naira a pickup has to return</h2>
+          <p class="lede">Trip cost is one-way kilometres times the vehicle's rate, exactly as the scheduler computes it: push cart ₦40/km, keke ₦120/km, 3-ton truck ₦320/km. Divide that by the price you are being offered and you get the smallest load worth a phone call. The last column is the tool's own test for a comfortable trip: value at least 25% above the cost.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a trip</span><input id="trip-q" type="search" placeholder="keke, truck, cart, km" autocomplete="off"></label>
+          <label class="field"><span>Filter by vehicle</span><select id="trip-f"><option value="all">All</option><option>Push / hand cart</option><option>Tricycle (keke)</option><option>3-ton truck</option></select></label>
+          <span class="filter-count" id="trip-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="trip-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Vehicle</th>
+            <th data-sort="1" class="n">₦ per km</th>
+            <th data-sort="2" class="n">One way</th>
+            <th data-sort="3" class="n">Trip cost</th>
+            <th data-sort="4" class="n">Kg needed at ₦45 mixed</th>
+            <th data-sort="5" class="n">Kg needed at ₦120 sorted PET</th>
+            <th data-sort="6" class="n">Kg needed at ₦300 aluminium</th>
+            <th data-sort="7" class="n">Return this much to call it a good trip</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Push / hand cart</td><td class="n">₦40</td><td class="n">1 km</td><td class="n">₦40</td><td class="n">0.9 kg</td><td class="n">0.3 kg</td><td class="n">0.1 kg</td><td class="n">₦50</td></tr>
+            <tr><td>Push / hand cart</td><td class="n">₦40</td><td class="n">2 km</td><td class="n">₦80</td><td class="n">1.8 kg</td><td class="n">0.7 kg</td><td class="n">0.3 kg</td><td class="n">₦100</td></tr>
+            <tr><td>Push / hand cart</td><td class="n">₦40</td><td class="n">3 km</td><td class="n">₦120</td><td class="n">2.7 kg</td><td class="n">1 kg</td><td class="n">0.4 kg</td><td class="n">₦150</td></tr>
+            <tr><td>Tricycle (keke)</td><td class="n">₦120</td><td class="n">2 km</td><td class="n">₦240</td><td class="n">5.3 kg</td><td class="n">2 kg</td><td class="n">0.8 kg</td><td class="n">₦300</td></tr>
+            <tr><td>Tricycle (keke)</td><td class="n">₦120</td><td class="n">3 km</td><td class="n">₦360</td><td class="n">8 kg</td><td class="n">3 kg</td><td class="n">1.2 kg</td><td class="n">₦450</td></tr>
+            <tr><td>Tricycle (keke)</td><td class="n">₦120</td><td class="n">6 km</td><td class="n">₦720</td><td class="n">16 kg</td><td class="n">6 kg</td><td class="n">2.4 kg</td><td class="n">₦900</td></tr>
+            <tr><td>Tricycle (keke)</td><td class="n">₦120</td><td class="n">10 km</td><td class="n">₦1,200</td><td class="n">26.7 kg</td><td class="n">10 kg</td><td class="n">4 kg</td><td class="n">₦1,500</td></tr>
+            <tr><td>Tricycle (keke)</td><td class="n">₦120</td><td class="n">15 km</td><td class="n">₦1,800</td><td class="n">40 kg</td><td class="n">15 kg</td><td class="n">6 kg</td><td class="n">₦2,250</td></tr>
+            <tr><td>3-ton truck</td><td class="n">₦320</td><td class="n">5 km</td><td class="n">₦1,600</td><td class="n">35.6 kg</td><td class="n">13.3 kg</td><td class="n">5.3 kg</td><td class="n">₦2,000</td></tr>
+            <tr><td>3-ton truck</td><td class="n">₦320</td><td class="n">10 km</td><td class="n">₦3,200</td><td class="n">71 kg</td><td class="n">26.7 kg</td><td class="n">10.7 kg</td><td class="n">₦4,000</td></tr>
+            <tr><td>3-ton truck</td><td class="n">₦320</td><td class="n">20 km</td><td class="n">₦6,400</td><td class="n">142 kg</td><td class="n">53 kg</td><td class="n">21.3 kg</td><td class="n">₦8,000</td></tr>
+            <tr><td>3-ton truck</td><td class="n">₦320</td><td class="n">35 km</td><td class="n">₦11,200</td><td class="n">249 kg</td><td class="n">93 kg</td><td class="n">37 kg</td><td class="n">₦14,000</td></tr>
+            <tr><td>3-ton truck to the aggregator</td><td class="n">₦320</td><td class="n">60 km</td><td class="n">₦19,200</td><td class="n">427 kg</td><td class="n">160 kg</td><td class="n">64 kg</td><td class="n">₦24,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">This is why un-crushed volume is a price problem: a keke that would take 40 kg of flattened carton fills up on 8 kg of standing boxes, and the trip cost is the same. Below break-even the right answer is to hold the material a week or combine households, and the scheduler tells you how many more you need.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="verify">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Where these numbers go wrong</p>
+          <h2 id="verify-h">Three honest limits on this reference</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box warn"><h3>Your street is not my table</h3><p>Prices move with fuel, the naira, and what the aggregator in Apapa is short of this month. The as-of date is your only defence. Open the price table in the tool, type your buyer's number, and use his rate from that day.</p></div>
+        <div class="note-box "><h3>A grade you did not present is a grade you did not get</h3><p>Every sorted price above assumes the buyer sees a separated, dry, tied pile. Bring the same material in one sack and you are being quoted the mixed column, honestly, by his standards.</p></div>
+        <div class="note-box bad"><h3>Per-piece lines are the softest numbers here</h3><p>Phones, laptop boards, tyres and oil depend on condition more than weight. Treat them as starting points for a negotiation, never as a valuation.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · Check these against</p>
+          <h2 id="sources-h">Five things worth doing before you sell</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>Your own buyer's quoted rate, today, said out loud and then written into the tool's editable price table.</li>
+        <li>Two more depots on the same line. Same grade, different price, is a margin conversation; different grade, same price, is a warning.</li>
+        <li>A sealed 1 litre bottle of water on his scale, before your material goes on it.</li>
+        <li>The collector's real trip cost: the kilometres you both know, times the vehicle he is arriving in.</li>
+        <li>The tool's default table, restoreable in one click, so a bad week of quotes does not permanently bend your expectations.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own load through these prices</h2>
+        <p class="lede">The counter takes your piece counts, applies this table, and shows the load sorted, dumped as mixed, and handed over wet - plus the break-even weight for the trip.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#count">Count my waste</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the sorting playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the earnings ledger</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">↻</span><span style="color:#fff">ReCircle<small style="color:rgba(255,255,255,.6)">Waste that pays you back</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one job: name the material, agree the price, weigh it where you can see it, and keep a record that survives a meeting.</p>
+      </div>
+      <div>
+        <h4>ReCircle pages</h4>
+        <p><a href="index.html">Waste counter</a><br><a href="data.html">Prices &amp; weights</a><br><a href="playbook.html">Sorting playbook</a><br><a href="record.html">Earnings ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../marketrate/">MarketRate - fair price today</a><br><a href="../fuelmeter/">FuelMeter - true cost per kilometre</a><br><a href="../cropkeep/">CropKeep - post-harvest loss maths</a><br><a href="../payrite/">PayRite - payroll and PAYE</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Prices are what buyers quoted around Lagos, Ibadan, Abuja and Onitsha as of October 2026. Indicative, editable, and wrong for your street until you correct them.</span><span class="mono">ReCircle · Prices &amp; weights · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#prices-tbl');
+  pages.filter('#prices-tbl', { input: '#prices-q', select: '#prices-f', count: '#prices-count', empty: "No row here matches that search." });
+  pages.sortable('#pieces-tbl');
+  pages.filter('#pieces-tbl', { input: '#pieces-q', count: '#pieces-count', empty: "No row here matches that search." });
+  pages.sortable('#contam-tbl');
+  pages.filter('#contam-tbl', { input: '#contam-q', count: '#contam-count', empty: "No row here matches that search." });
+  pages.sortable('#trip-tbl');
+  pages.filter('#trip-tbl', { input: '#trip-q', select: '#trip-f', count: '#trip-count', empty: "No row here matches that search." });
+});
+</script>
+</body>
+</html>

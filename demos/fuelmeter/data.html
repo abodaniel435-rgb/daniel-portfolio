@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pump prices, km/L, wear and fares: the Nigerian driving numbers FuelMeter uses</title>
+<meta name="description" content="Petrol and diesel per state, real km/L for Nigerian-market vehicles split by city and highway, cost per kilometre by class, service intervals and prices, tyre sizes and life, travel-mode fares and the routes the planner knows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="fuelmeter.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23c0451f'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>km</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">km</span><span>FuelMeter<small>cost per kilometre, Nigeria</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Price a trip</a>
+      <a href="data.html" class="is-here" aria-current="page">Reference data</a>
+      <a href="playbook.html">Driver playbook</a>
+      <a href="record.html">Fuel log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#trip">Price a trip</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">FuelMeter</a> <span aria-hidden="true">/</span> <span aria-current="page">Reference data</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · the numbers you are expected to edit</p>
+    <h1 class="reveal" data-delay="1">Every figure the calculator<br>will not invent for you.</h1>
+    <p class="lede reveal" data-delay="2">FuelMeter computes from reference values you can see and change. Here they are in full: thirteen state pump rows, the consumption each vehicle class is assumed to have, what servicing, tyres and oil cost per kilometre, and the fare comparators drive-versus-hail runs on. Check them against the pump you use and the mechanic you trust, then edit them inside the tool.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>₦1,610 to ₦1,690</b> petrol per litre across the 13 default states</span><span><b>₦80</b> the spread between the cheapest and dearest petrol row</span><span><b>9 vehicle classes</b> from a dispatch bike to a 33-seat coaster</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="fixed">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · What is fixed and what is yours</p>
+          <h2 id="fixed-h">Seven numbers that shape every result</h2>
+          <p class="lede">These are the shipped defaults. All of them are editable in the Assumptions section of the calculator, and the calculator remembers your version in this browser.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>₦1,610 / ₦1,330</b><span>default petrol / diesel per litre, Lagos row</span></div>
+      <div class="metric"><b>₦1,690 / ₦1,395</b><span>default petrol / diesel per litre, Kano row</span></div>
+      <div class="metric"><b>0.6 L per hour</b><span>petrol idling rate, 0.8 of it for diesel</span></div>
+      <div class="metric"><b>1.12 and 1.25</b><span>city stop-go and go-slow consumption multipliers</span></div>
+      <div class="metric"><b>+8% and +2.5%</b><span>A/C penalty, and load penalty per 100 kg</span></div>
+      <div class="metric"><b>1,400 km</b><span>the default month used to amortise insurance and park levies</span></div>
+      <div class="metric"><b>12%</b><span>the fall below your own baseline that flags a service</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="prices">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Pump prices</p>
+          <h2 id="prices-h">Petrol and diesel per state, and what the gap costs you per fill</h2>
+          <p class="lede">The same litre is not the same price. Below is the shipped reference table, the gap against the cheapest row, and what that gap adds to one 50 litre fill of petrol. Distances from the coast, how many stations compete for your traffic, and whether tankers were queued when the price moved all push a row up or down. Update the rows from the pump you actually use.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a state</span><input id="prices-q" type="search" placeholder="state, city or price" autocomplete="off"></label>
+          
+          <span class="filter-count" id="prices-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="prices-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">State / corridor</th>
+            <th data-sort="1" class="n">Petrol ₦/L</th>
+            <th data-sort="2" class="n">Petrol gap vs cheapest</th>
+            <th data-sort="3" class="n">Added to a 50 L fill</th>
+            <th data-sort="4" class="n">Diesel ₦/L</th>
+            <th data-sort="5" class="n">Diesel gap vs cheapest</th>
+            <th data-sort="6">What usually sits behind the gap</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Lagos</td><td class="n">₦1,610</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦1,330</td><td class="n">₦0</td><td>The cheapest row in the table: nearest the loading point, most stations competing, most tanker turns</td></tr>
+            <tr><td>Rivers (Port Harcourt)</td><td class="n">₦1,620</td><td class="n">₦10</td><td class="n">₦500</td><td class="n">₦1,340</td><td class="n">₦10</td><td>Also near the coast, but queue time and depot access move a station more than another</td></tr>
+            <tr><td>Oyo (Ibadan)</td><td class="n">₦1,630</td><td class="n">₦20</td><td class="n">₦1,000</td><td class="n">₦1,350</td><td class="n">₦20</td><td>Short haul from Lagos on a good corridor; competition on the Ibadan end keeps it close</td></tr>
+            <tr><td>Enugu</td><td class="n">₦1,635</td><td class="n">₦25</td><td class="n">₦1,250</td><td class="n">₦1,360</td><td class="n">₦30</td><td>Served overland from the coast; fewer tankers per kilometre of road than on the Lagos corridor</td></tr>
+            <tr><td>Ogun (Abeokuta / Sango)</td><td class="n">₦1,640</td><td class="n">₦30</td><td class="n">₦1,500</td><td class="n">₦1,355</td><td class="n">₦25</td><td>On the corridor but priced by which station is short when the Sango traffic clears</td></tr>
+            <tr><td>Anambra (Onitsha)</td><td class="n">₦1,640</td><td class="n">₦30</td><td class="n">₦1,500</td><td class="n">₦1,365</td><td class="n">₦35</td><td>Huge volume and huge competition, offset by the extra haul and the congestion at the crossing</td></tr>
+            <tr><td>Abia (Aba)</td><td class="n">₦1,645</td><td class="n">₦35</td><td class="n">₦1,750</td><td class="n">₦1,368</td><td class="n">₦38</td><td>Commercial traffic keeps demand high; the row sits between Rivers and Anambra</td></tr>
+            <tr><td>Abuja (FCT)</td><td class="n">₦1,650</td><td class="n">₦40</td><td class="n">₦2,000</td><td class="n">₦1,360</td><td class="n">₦30</td><td>Long overland haul from the coast, and a market where a few stations set the tone</td></tr>
+            <tr><td>Edo (Benin City / Ore)</td><td class="n">₦1,655</td><td class="n">₦45</td><td class="n">₦2,250</td><td class="n">₦1,370</td><td class="n">₦40</td><td>Mid-corridor: you pay the part of the distance already travelled and the part still to come</td></tr>
+            <tr><td>Bauchi</td><td class="n">₦1,660</td><td class="n">₦50</td><td class="n">₦2,500</td><td class="n">₦1,378</td><td class="n">₦48</td><td>Far from the coast, thin station coverage, so the haul rides inside the price</td></tr>
+            <tr><td>Kogi (Lokoja)</td><td class="n">₦1,665</td><td class="n">₦55</td><td class="n">₦2,750</td><td class="n">₦1,380</td><td class="n">₦50</td><td>A junction town: prices track whichever corridor the tanker came down</td></tr>
+            <tr><td>Kaduna</td><td class="n">₦1,670</td><td class="n">₦60</td><td class="n">₦3,000</td><td class="n">₦1,375</td><td class="n">₦45</td><td>The northern end of the Abuja corridor; the last cheap fill is below it, so fill before you climb</td></tr>
+            <tr><td>Kano</td><td class="n">₦1,690</td><td class="n">₦80</td><td class="n">₦4,000</td><td class="n">₦1,395</td><td class="n">₦65</td><td>The dearest petrol row shipped: maximum haulage distance, and a market that absorbs it</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Petrol runs ₦1,610 to ₦1,690 in this table, diesel ₦1,330 to ₦1,395. On a 50 litre fill that is a ₦4,000 difference between the cheapest and dearest row, which is why the planner lets you price the same trip at both ends. These are reference values with an as-of date you set: there is no live feed and no pretending.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="kml">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Consumption</p>
+          <h2 id="kml-h">km/L for Nigerian-market vehicles, split by open road, city and go-slow</h2>
+          <p class="lede">The profile figure is the open-road number. The planner divides it by the road multiplier, never the distance, so the same car on the same kilometres reads lower in traffic. City is the open-road figure at multiplier 1.12, go-slow at 1.25, both editable in Assumptions.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a vehicle</span><input id="kml-q" type="search" placeholder="vehicle, engine or km/L" autocomplete="off"></label>
+          <label class="field"><span>Fuel</span><select id="kml-f"><option value="all">All</option><option>Petrol</option><option>Diesel</option></select></label>
+          <span class="filter-count" id="kml-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="kml-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Vehicle</th>
+            <th data-sort="1">Fuel</th>
+            <th data-sort="2" class="n">Open road km/L</th>
+            <th data-sort="3" class="n">City stop-go</th>
+            <th data-sort="4" class="n">Go-slow</th>
+            <th data-sort="5" class="n">Tank L</th>
+            <th data-sort="6">In the shipped list?</th>
+            <th data-sort="7">What moves it most</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Dispatch motorcycle, 100 to 200cc</td><td>Petrol</td><td class="n">48</td><td class="n">42.9</td><td class="n">38.4</td><td class="n">4</td><td>Yes</td><td>A pillion and a load; the tank is only 4 L, so a long trip is several fills</td></tr>
+            <tr><td>Keke NLP tricycle</td><td>Petrol</td><td class="n">21</td><td class="n">18.7</td><td class="n">16.8</td><td class="n">18</td><td>Yes</td><td>Three seats and a heavy body; short hops with passengers on and off are the worst case</td></tr>
+            <tr><td>Aygo / Kia Picanto</td><td>Petrol</td><td class="n">18</td><td class="n">16.1</td><td class="n">14.4</td><td class="n">35</td><td>Yes</td><td>Small engine working hard in traffic; A/C is a visible share of the burn</td></tr>
+            <tr><td>Toyota Corolla</td><td>Petrol</td><td class="n">12</td><td class="n">10.7</td><td class="n">9.6</td><td class="n">50</td><td>Yes</td><td>The reference family car. Owners quote 11 to 13; go-slow with A/C is where it lands under 10</td></tr>
+            <tr><td>Toyota Camry</td><td>Petrol</td><td class="n">10</td><td class="n">8.9</td><td class="n">8</td><td class="n">60</td><td>Yes</td><td>Bigger engine and heavier car; owners quote 9 to 11</td></tr>
+            <tr><td>Sienna / Hiace, petrol</td><td>Petrol</td><td class="n">8</td><td class="n">7.1</td><td class="n">6.4</td><td class="n">70</td><td>Yes</td><td>Six or seven seats: half-empty is the same burn, so the seat figure is the one that matters</td></tr>
+            <tr><td>Pickup, Hilux / Dyna</td><td>Diesel</td><td class="n">8</td><td class="n">7.1</td><td class="n">6.4</td><td class="n">80</td><td>Yes</td><td>Load in the bed, tyres, and whether you are in 2WD or grinding through 4L</td></tr>
+            <tr><td>3 to 5 ton truck</td><td>Diesel</td><td class="n">5</td><td class="n">4.5</td><td class="n">4</td><td class="n">100</td><td>Yes</td><td>Gross weight, not the engine. Loaded and empty are different vehicles</td></tr>
+            <tr><td>Bus / coaster, 33 seats</td><td>Diesel</td><td class="n">4</td><td class="n">3.6</td><td class="n">3.2</td><td class="n">120</td><td>Yes</td><td>Doors, standing passengers and stop-start; the per-seat figure is the honest one</td></tr>
+            <tr><td>Hiace 14-seater, Kiss density bus</td><td>Diesel</td><td class="n">6</td><td class="n">5.4</td><td class="n">4.8</td><td class="n">70</td><td>No, add it</td><td>Seats people beyond the plate count and carries cargo on the roof; both show up in the burn</td></tr>
+            <tr><td>Mid-size SUV, 2.5 to 3.0</td><td>Petrol</td><td class="n">9</td><td class="n">8</td><td class="n">7.2</td><td class="n">60</td><td>No, add it</td><td>Weight and tyre width; in traffic the A/C is most of the gap between 9 and 7</td></tr>
+            <tr><td>Corolla 1.6 manual, driven gently</td><td>Petrol</td><td class="n">13</td><td class="n">11.6</td><td class="n">10.4</td><td class="n">50</td><td>No, add it</td><td>The best-case version of the shipped car. If your log says 13, edit the profile</td></tr>
+            <tr><td>250cc motorcycle</td><td>Petrol</td><td class="n">33</td><td class="n">29.5</td><td class="n">26.4</td><td class="n">17</td><td>No, add it</td><td>Bigger cylinder and more weight than a dispatch bike; do not price it at 48</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Nine of these rows are the profiles the calculator ships with, and their open-road figures are the ones in its tables. The last four are indicative extras people add for their own road. Your log beats all of them: two consecutive full-tank readings of the same vehicle produce a real km/L, and the learned economy panel compares it to the claimed one.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="perkm">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · Cost per kilometre</p>
+          <h2 id="perkm-h">The whole stack per class, at the default pump prices</h2>
+          <p class="lede">Fuel is only part of the number. This is the arithmetic the calculator runs per vehicle class: fuel at the default Lagos row, then servicing, tyres and oil amortised per kilometre, then insurance and park levies spread over a 1,400 km month. The last column is what a fuel-only quote forgets.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a class</span><input id="perkm-q" type="search" placeholder="vehicle or ₦/km" autocomplete="off"></label>
+          
+          <span class="filter-count" id="perkm-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="perkm-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Vehicle</th>
+            <th data-sort="1" class="n">km/L</th>
+            <th data-sort="2" class="n">Fuel ₦/km</th>
+            <th data-sort="3" class="n">Wear ₦/km (service + tyres + oil)</th>
+            <th data-sort="4" class="n">Fixed ₦/km at 1,400 km/month</th>
+            <th data-sort="5" class="n">TOTAL ₦/km, Lagos prices</th>
+            <th data-sort="6" class="n">TOTAL ₦/km, Kano prices</th>
+            <th data-sort="7" class="n">Fuel as share of total</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Dispatch motorcycle</td><td class="n">48</td><td class="n">₦33.5</td><td class="n">₦25.6</td><td class="n">₦5.7</td><td class="n">₦64.9</td><td class="n">₦66.5</td><td class="n">52%</td></tr>
+            <tr><td>Keke NLP</td><td class="n">21</td><td class="n">₦76.7</td><td class="n">₦44.3</td><td class="n">₦11.4</td><td class="n">₦132.3</td><td class="n">₦136.2</td><td class="n">58%</td></tr>
+            <tr><td>Aygo / Picanto</td><td class="n">18</td><td class="n">₦89.4</td><td class="n">₦18.2</td><td class="n">₦12.9</td><td class="n">₦120.5</td><td class="n">₦124.9</td><td class="n">74%</td></tr>
+            <tr><td>Toyota Corolla</td><td class="n">12</td><td class="n">₦134.2</td><td class="n">₦25.6</td><td class="n">₦21.4</td><td class="n">₦181.2</td><td class="n">₦187.8</td><td class="n">74%</td></tr>
+            <tr><td>Toyota Camry</td><td class="n">10</td><td class="n">₦161.0</td><td class="n">₦36.2</td><td class="n">₦27.1</td><td class="n">₦224.3</td><td class="n">₦232.3</td><td class="n">72%</td></tr>
+            <tr><td>Sienna / Hiace</td><td class="n">8</td><td class="n">₦201.3</td><td class="n">₦47.4</td><td class="n">₦39.3</td><td class="n">₦287.9</td><td class="n">₦297.9</td><td class="n">70%</td></tr>
+            <tr><td>Pickup, diesel</td><td class="n">8</td><td class="n">₦166.3</td><td class="n">₦54.0</td><td class="n">₦50.0</td><td class="n">₦270.2</td><td class="n">₦278.4</td><td class="n">61%</td></tr>
+            <tr><td>3 to 5 ton truck</td><td class="n">5</td><td class="n">₦266.0</td><td class="n">₦98.0</td><td class="n">₦114.3</td><td class="n">₦478.3</td><td class="n">₦491.3</td><td class="n">56%</td></tr>
+            <tr><td>Bus / coaster</td><td class="n">4</td><td class="n">₦332.5</td><td class="n">₦140.1</td><td class="n">₦200.0</td><td class="n">₦672.6</td><td class="n">₦688.9</td><td class="n">49%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Wear is the profile's servicing ₦/km plus the tyre set divided by its life plus the oil service divided by its interval. Fixed is the profile's monthly insurance, registration and park total divided by 1,400 km. On a Corolla at these defaults, ₦47 of every ₦181 per kilometre is not fuel, and the Kano column shows the same trip costing ₦6.6 more per kilometre before you touch a single assumption.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="service">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Servicing and repairs</p>
+          <h2 id="service-h">Intervals, indicative street prices, and what each item costs per kilometre</h2>
+          <p class="lede">Amortised cost is the middle of the price range divided by the middle of the interval, which is exactly how the calculator's per-kilometre wear lines are built. Prices are street averages for a small to mid-size petrol car unless the row says otherwise, and they move with the same exchange-rate weather as the pump.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find an item</span><input id="service-q" type="search" placeholder="part, fluid or job" autocomplete="off"></label>
+          
+          <span class="filter-count" id="service-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="service-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Item</th>
+            <th data-sort="1">Interval, or sooner</th>
+            <th data-sort="2" class="n">From ₦</th>
+            <th data-sort="3" class="n">To ₦</th>
+            <th data-sort="4" class="n">₦ per km amortised</th>
+            <th data-sort="5">What it costs you to postpone</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Engine oil and filter, small petrol car</td><td>5,000 km or 4 months</td><td class="n">₦20,000</td><td class="n">₦26,000</td><td class="n">₦4.60</td><td>The profile figure for a Corolla is ₦20,000 over 5,000 km; thick oil shows up as a slow fall in your learned km/L</td></tr>
+            <tr><td>Engine oil and filters, diesel pickup</td><td>7,000 km</td><td class="n">₦40,000</td><td class="n">₦50,000</td><td class="n">₦6.40</td><td>Diesel tolerates longer intervals than petrol, but not when the load is constant</td></tr>
+            <tr><td>Air filter, dusty roads</td><td>12,500 km</td><td class="n">₦8,000</td><td class="n">₦15,000</td><td class="n">₦0.92</td><td>A blocked filter is the cheapest thing on this list and the most common reason a car feels down on power</td></tr>
+            <tr><td>Fuel filter, petrol</td><td>20,000 km</td><td class="n">₦7,000</td><td class="n">₦12,000</td><td class="n">₦0.47</td><td>Replacing it after a stumble costs more than replacing it on the interval</td></tr>
+            <tr><td>Spark plugs, set of four</td><td>35,000 km</td><td class="n">₦18,000</td><td class="n">₦30,000</td><td class="n">₦0.69</td><td>Misfires burn fuel you paid for and did not use to move the car</td></tr>
+            <tr><td>Front brake pads</td><td>30,000 km</td><td class="n">₦25,000</td><td class="n">₦40,000</td><td class="n">₦1.08</td><td>Pads run into discs, and discs are a bigger line than pads</td></tr>
+            <tr><td>Brake fluid</td><td>40,000 km or 2 years</td><td class="n">₦9,000</td><td class="n">₦14,000</td><td class="n">₦0.29</td><td>Old fluid holds water, and water in a brake line is a soft pedal on a long downgrade</td></tr>
+            <tr><td>Coolant flush</td><td>40,000 km or 2 years</td><td class="n">₦10,000</td><td class="n">₦18,000</td><td class="n">₦0.35</td><td>Top-up with water only dilutes what is already there; a head gasket is not on this price list</td></tr>
+            <tr><td>Front shock absorbers, pair</td><td>70,000 km</td><td class="n">₦60,000</td><td class="n">₦110,000</td><td class="n">₦1.21</td><td>Worn shocks eat tyres, so the leak shows up twice: in comfort and in the tyre line</td></tr>
+            <tr><td>Timing belt and water pump</td><td>75,000 km</td><td class="n">₦70,000</td><td class="n">₦140,000</td><td class="n">₦1.40</td><td>It fails suddenly, not gradually, and the engine is the repair</td></tr>
+            <tr><td>Automatic transmission fluid</td><td>40,000 km</td><td class="n">₦25,000</td><td class="n">₦55,000</td><td class="n">₦1.00</td><td>Heat and go-slow are what age the fluid; a slipping box is a new conversation entirely</td></tr>
+            <tr><td>Wheel alignment and balancing</td><td>10,000 km, and after a hard pothole</td><td class="n">₦6,000</td><td class="n">₦12,000</td><td class="n">₦0.90</td><td>The cheapest line here, and the one that decides whether your tyre set lasts its mileage</td></tr>
+            <tr><td>Battery</td><td>60,000 km or about 2.5 years</td><td class="n">₦45,000</td><td class="n">₦75,000</td><td class="n">₦1.00</td><td>Heat kills plates quietly; a car that will not start at 5am is a hire, not a repair</td></tr>
+            <tr><td>Clutch kit, fitted</td><td>100,000 km, or when it slips</td><td class="n">₦85,000</td><td class="n">₦160,000</td><td class="n">₦1.23</td><td>Riding the clutch in traffic is what moves this row from 100,000 km to 40,000 km</td></tr>
+            <tr><td>Service labour, per visit</td><td>With each service</td><td class="n">₦12,000</td><td class="n">₦25,000</td><td class="n">₦3.70</td><td>Two quotes for the same job; the spread tells you more than either number</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Add the scheduled rows except oil and you get roughly ₦10.50 per kilometre on a small petrol car, about ₦14 once you include labour at every visit. FuelMeter's default servicing line for the Corolla is ₦18 per km. The remaining few naira is unscheduled repair, which is what Nigerian roads actually do to a car. If your mechanic is cheaper or your car is older, edit the servicing field in the profile table.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="tyres">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Tyres</p>
+          <h2 id="tyres-h">Sizes, the price the tool amortises, and the life it assumes on these roads</h2>
+          <p class="lede">A tyre is the only wear item that quietly raises your fuel bill as well as its own cost. The set price and the set life below are the figures in the shipped vehicle profiles; the per-tyre column is the set divided by the number of tyres, so you can check whether it matches the shop you use.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a size</span><input id="tyres-q" type="search" placeholder="size, vehicle or ₦/km" autocomplete="off"></label>
+          
+          <span class="filter-count" id="tyres-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="tyres-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Size</th>
+            <th data-sort="1">Fits</th>
+            <th data-sort="2" class="n">Tyres per set</th>
+            <th data-sort="3" class="n">Per tyre ₦</th>
+            <th data-sort="4" class="n">Set ₦</th>
+            <th data-sort="5" class="n">Set life assumed, km</th>
+            <th data-sort="6" class="n">₦/km</th>
+            <th data-sort="7">What shortens it</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>90/90-17 rear, 80/90-17 front</td><td>Dispatch motorcycle</td><td class="n">2</td><td class="n">₦15,000</td><td class="n">₦30,000</td><td class="n">15,000</td><td class="n">₦2.0</td><td>The rear does the work; a pillion and a load shorten it faster than the size does</td></tr>
+            <tr><td>4.00-12 front, 4.50-10 rear</td><td>Keke NLP</td><td class="n">3</td><td class="n">₦16,000</td><td class="n">₦48,000</td><td class="n">12,000</td><td class="n">₦4.0</td><td> kerb strikes and carrying more than three; the front takes the pothole hits</td></tr>
+            <tr><td>165/60 R14</td><td>Aygo / Kia Picanto</td><td class="n">4</td><td class="n">₦23,750</td><td class="n">₦95,000</td><td class="n">40,000</td><td class="n">₦2.4</td><td>Light car, narrow tyre: alignment loss after one hard hole shows as a feathering edge</td></tr>
+            <tr><td>195/65 R15</td><td>Toyota Corolla</td><td class="n">4</td><td class="n">₦37,500</td><td class="n">₦150,000</td><td class="n">42,000</td><td class="n">₦3.6</td><td>The common Nigerian size; a mixed set means you never know which corner is honest</td></tr>
+            <tr><td>215/60 R16</td><td>Toyota Camry</td><td class="n">4</td><td class="n">₦50,000</td><td class="n">₦200,000</td><td class="n">40,000</td><td class="n">₦5.0</td><td>Wider and heavier, so under-inflation costs more fuel than it does on the Corolla</td></tr>
+            <tr><td>215/65 R16</td><td>Sienna / Hiace, petrol</td><td class="n">4</td><td class="n">₦70,000</td><td class="n">₦280,000</td><td class="n">38,000</td><td class="n">₦7.4</td><td>Loaded weight plus infrequent movement; flat spots from standing with a full cabin</td></tr>
+            <tr><td>265/65 R17 all-terrain</td><td>Hilux / Dyna pickup</td><td class="n">4</td><td class="n">₦85,000</td><td class="n">₦340,000</td><td class="n">45,000</td><td class="n">₦7.6</td><td>Off-road use, load, and skipping rotation; chunky tread hides wear until it chunks</td></tr>
+            <tr><td>8.25 R16</td><td>3 to 5 ton truck</td><td class="n">6</td><td class="n">₦150,000</td><td class="n">₦900,000</td><td class="n">50,000</td><td class="n">₦18.0</td><td>Overloading is the whole story here, and a retread is a decision not a saving</td></tr>
+            <tr><td>225 R17.5</td><td>Bus / coaster</td><td class="n">6</td><td class="n">₦233,000</td><td class="n">₦1,400,000</td><td class="n">45,000</td><td class="n">₦31.1</td><td>Standing loads, kerb mounting at bus stops, and pressure checked once a month at most</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">₦/km is the set price divided by the set life, which is the tyre line in the calculator's wear stack. Check the pressure against the placard inside the driver's door, cold, before you blame the profile figure: the same set on a car with lost alignment will not reach the mileage in this table.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="modes">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · What the other options charge</p>
+          <h2 id="modes-h">The six travel-mode comparators, and where their minimum fare stops mattering</h2>
+          <p class="lede">These are arithmetic placeholders for negotiation, not market data. Each one is a minimum fare plus a rate per kilometre, priced either for the whole vehicle or for one seat. The last column is the distance at which the per-kilometre rate overtakes the minimum: below it, the minimum is the whole price.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a mode</span><input id="modes-q" type="search" placeholder="mode, basis or fare" autocomplete="off"></label>
+          
+          <span class="filter-count" id="modes-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="modes-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Mode</th>
+            <th data-sort="1">Priced per</th>
+            <th data-sort="2" class="n">Minimum fare</th>
+            <th data-sort="3" class="n">₦ per km</th>
+            <th data-sort="4" class="n">Seats</th>
+            <th data-sort="5" class="n">Minimum stops binding above</th>
+            <th data-sort="6">What it assumes about your trip</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Ride-hail, private car</td><td>Vehicle</td><td class="n">₦2,500</td><td class="n">₦230</td><td class="n">4</td><td class="n">about 10.9 km</td><td>You buy the whole car, door to door, and surge is not in this row</td></tr>
+            <tr><td>Ride-share seat, private car on a corridor</td><td>Seat</td><td class="n">₦1,500</td><td class="n">₦38</td><td class="n">4</td><td class="n">about 39.5 km</td><td>One seat sold; slower, and it detours for other pickups</td></tr>
+            <tr><td>Inter-city bus, VIP or first class</td><td>Seat</td><td class="n">₦1,500</td><td class="n">₦28</td><td class="n">1</td><td class="n">about 53.6 km</td><td>Park to park with a scheduled departure; the minimum dominates every short hop</td></tr>
+            <tr><td>Shared minibus, danfo or 14-seater</td><td>Seat</td><td class="n">₦1,200</td><td class="n">₦24</td><td class="n">1</td><td class="n">about 50.0 km</td><td>Leaves when full; luggage is by favour, not by ticket</td></tr>
+            <tr><td>Keke NLP hired whole</td><td>Vehicle</td><td class="n">₦700</td><td class="n">₦35</td><td class="n">3</td><td class="n">about 20.0 km</td><td>City and short hops; not your vehicle on an expressway</td></tr>
+            <tr><td>Okada</td><td>Seat</td><td class="n">₦800</td><td class="n">₦55</td><td class="n">1</td><td class="n">about 14.5 km</td><td>Fastest, highest risk, and restricted on many routes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Divide a whole-vehicle row by the people actually sharing it before you compare it to your own cost per kilometre: ₦230 per km for a hail car is ₦57.50 per km across four seats, which is why the planner asks how many of you are travelling. Edit any row in the fare table to match what your road charges, including the basis.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="routes">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">08 · The routes the planner already knows</p>
+          <h2 id="routes-h">Nine corridors, their distances, and the state it switches the price to</h2>
+          <p class="lede">Choosing a route sets the distance and points the pump price at the destination's row, which is a rough answer to a real question: you mostly fill at the far end. Litres are for the default Corolla profile at 12 km/L, on the open road and then at the city multiplier.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a route</span><input id="routes-q" type="search" placeholder="city or kilometres" autocomplete="off"></label>
+          
+          <span class="filter-count" id="routes-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="routes-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Route</th>
+            <th data-sort="1" class="n">km one way</th>
+            <th data-sort="2" class="n">Round trip km</th>
+            <th data-sort="3">Price row the planner switches to</th>
+            <th data-sort="4" class="n">Litres, open road</th>
+            <th data-sort="5" class="n">Litres at multiplier 1.12</th>
+            <th data-sort="6">What to check before you trust it</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Lagos to Ibadan</td><td class="n">130</td><td class="n">260</td><td>Oyo (Ibadan), ₦1,630 petrol</td><td class="n">21.7 L</td><td class="n">24.3 L</td><td>The distance you actually drive depends entirely on which end of the expressway you leave from</td></tr>
+            <tr><td>Lagos to Benin City</td><td class="n">245</td><td class="n">490</td><td>Edo (Benin City / Ore), ₦1,655</td><td class="n">40.8 L</td><td class="n">45.8 L</td><td>More than one tank on most cars; the planner will tell you how many fills the round trip is</td></tr>
+            <tr><td>Abuja to Kaduna</td><td class="n">170</td><td class="n">340</td><td>Kaduna, ₦1,670</td><td class="n">28.3 L</td><td class="n">31.7 L</td><td>The last cheap fill is on the Abuja side of the corridor; the return leg prices the same distance</td></tr>
+            <tr><td>Abuja to Lokoja</td><td class="n">240</td><td class="n">480</td><td>Kogi (Lokoja), ₦1,665</td><td class="n">40.0 L</td><td class="n">44.8 L</td><td>Long enough that A/C, load and one avoidable detour move the litres more than the price row does</td></tr>
+            <tr><td>Onitsha to Enugu</td><td class="n">65</td><td class="n">130</td><td>Enugu, ₦1,635</td><td class="n">10.8 L</td><td class="n">12.2 L</td><td>Short and busy: the go-slow multiplier is the honest one for this pair</td></tr>
+            <tr><td>Port Harcourt to Aba</td><td class="n">60</td><td class="n">120</td><td>Abia (Aba), ₦1,645</td><td class="n">10.0 L</td><td class="n">11.2 L</td><td>Under 20 km in places, so the minimum fare on the hail rows is what you are really comparing</td></tr>
+            <tr><td>Lagos to Abeokuta</td><td class="n">100</td><td class="n">200</td><td>Ogun (Abeokuta / Sango), ₦1,640</td><td class="n">16.7 L</td><td class="n">18.7 L</td><td>Sango congestion belongs in the idling field, not added to the distance</td></tr>
+            <tr><td>Kano to Bauchi</td><td class="n">180</td><td class="n">360</td><td>Bauchi, ₦1,660</td><td class="n">30.0 L</td><td class="n">33.6 L</td><td>Two of the dearer rows in the table; fill where you can and check both ends</td></tr>
+            <tr><td>Benin City to Ore</td><td class="n">130</td><td class="n">260</td><td>Edo (Benin City / Ore), ₦1,655</td><td class="n">21.7 L</td><td class="n">24.3 L</td><td>Same state at both ends, so the price row is settled; the road condition is the variable</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Reversing a pair keeps the same distance and switches the price row to the other town's state. Type any distance you like instead: these nine rows are only there so a Lagos to Ibadan trip does not need a map open in another window.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="check">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">09 · Where these numbers get argued</p>
+          <h2 id="check-h">Three places the table and the road disagree</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>The pump row you did not update</h3><p>The ₦80 spread across thirteen states is smaller than the difference between the row and the price at your station this morning. Set the as-of date in the tool and type the number from the display, then price your trip.</p></div>
+        <div class="note-box warn"><h3>The claimed km/L nobody achieves</h3><p>Profile figures are the open-road number owners repeat. Loaded, with A/C, in city stop-go, a Corolla is nearer 10 than 12. The log is how you find your own number instead of borrowing one.</p></div>
+        <div class="note-box "><h3>Wear averages that fit somebody else's car</h3><p>Servicing, tyre and oil lines are amortised averages. Your actual set of four, your actual mechanic and the suspension work you keep postponing will differ. Depreciation is not in any of these tables at all.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">10 · Check these against</p>
+          <h2 id="sources-h">Five places worth opening before you change a number</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>The pump display and the receipt from the station you actually use, against each editable state row and its as-of date.</li>
+        <li>Your own odometer and your own litres. Two consecutive full-tank fills give a km/L figure that describes your car, not the catalogue.</li>
+        <li>The placard inside the driver's door for tyre size and cold pressure, and the sidewall of the tyre you are standing next to.</li>
+        <li>Two or three mechanics for the same job on the same car. The spread between their quotes is more useful information than the cheapest one.</li>
+        <li>The fare table in the calculator, which is yours to edit: minimum, per-kilometre rate, and whether you are being charged for a vehicle or for a seat.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own numbers through it</h2>
+        <p class="lede">The trip planner prices litres, fuel, wear and the true cost per kilometre from the rows above, keeps everything in this browser, and shows the working line by line.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#trip">Price a trip</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the fuel log</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">km</span><span style="color:#fff">FuelMeter<small style="color:rgba(255,255,255,.6)">cost per kilometre, Nigeria</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one number: what a kilometre of your vehicle actually costs, from litres you measured and a pump price you set yourself.</p>
+      </div>
+      <div>
+        <h4>FuelMeter pages</h4>
+        <p><a href="index.html">Price a trip</a><br><a href="data.html">Reference data</a><br><a href="playbook.html">Driver playbook</a><br><a href="record.html">Fuel log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../riderpool/">RiderPool: fill the seat, split the fare</a><br><a href="../suncost/">SunCost: solar versus generator</a><br><a href="../payrite/">PayRite: payroll and PAYE</a><br><a href="../marketrate/">MarketRate: the fair price today</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Pump prices are the editable reference values shipped with the tool, not a live feed. Tyre, oil and servicing figures are indicative street averages. Nothing here is a quotation, a fare or a repair estimate.</span><span class="mono">FuelMeter · Reference data · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#prices-tbl');
+  pages.filter('#prices-tbl', { input: '#prices-q', count: '#prices-count', empty: "No row here matches that search." });
+  pages.sortable('#kml-tbl');
+  pages.filter('#kml-tbl', { input: '#kml-q', select: '#kml-f', count: '#kml-count', empty: "No row here matches that search." });
+  pages.sortable('#perkm-tbl');
+  pages.filter('#perkm-tbl', { input: '#perkm-q', count: '#perkm-count', empty: "No row here matches that search." });
+  pages.sortable('#service-tbl');
+  pages.filter('#service-tbl', { input: '#service-q', count: '#service-count', empty: "No row here matches that search." });
+  pages.sortable('#tyres-tbl');
+  pages.filter('#tyres-tbl', { input: '#tyres-q', count: '#tyres-count', empty: "No row here matches that search." });
+  pages.sortable('#modes-tbl');
+  pages.filter('#modes-tbl', { input: '#modes-q', count: '#modes-count', empty: "No row here matches that search." });
+  pages.sortable('#routes-tbl');
+  pages.filter('#routes-tbl', { input: '#routes-q', count: '#routes-count', empty: "No row here matches that search." });
+  var kmlFuel = document.getElementById('kml-f');
+  if (kmlFuel) kmlFuel.dataset.col = '1';
+});
+</script>
+</body>
+</html>

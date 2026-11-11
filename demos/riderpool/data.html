@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corridor distances, vehicle class costs, pump prices, split methods and seat adjustments: RiderPool reference</title>
+<meta name="description" content="Every number RiderPool works with, lifted out of its own reference tables: fourteen corridors with kilometres and driving hours, eight vehicle classes with seats and wear rates, ten city pump prices, the four split methods with what each one collects and drifts, the seat premium and discount board, the parcel rates and the sample stop sequence with detour economics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="riderpool.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%233c4a99'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%87%84</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">⇄</span><span>RiderPool<small>the empty seat, split fairly</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Trip builder</a>
+      <a href="data.html" class="is-here" aria-current="page">Fare data</a>
+      <a href="playbook.html">Park playbook</a>
+      <a href="record.html">Trip ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#build">Price a trip</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">RiderPool</a> <span aria-hidden="true">/</span> <span aria-current="page">Fare data</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference: the numbers behind the fare</p>
+    <h1 class="reveal" data-delay="1">The fare is arithmetic.<br>Habit is what stops<br>anybody doing it.</h1>
+    <p class="lede reveal" data-delay="2">A driver asked why a seat costs ₦9,000 has one answer and it is usually 'that is the price'. These are the inputs RiderPool uses instead: distances, litres, wear, tolls, levies, the driver's cut, and the six riders who rode different parts of the same road. Every table here is editable in section 09 of the tool, and your numbers replace these the moment you type them.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>₦89,922</b> the true cost of one Benin to Lagos leg</span><span><b>₦14,987</b> cost per seat in a six-seat Sienna</span><span><b>10 seats</b> what a ₦9,000 fare actually needs to sell</span><span><b>4 methods</b> of splitting, each measured in naira</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="worked">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · The worked example</p>
+          <h2 id="worked-h">One trip, priced line by line, before any rider pays</h2>
+          <p class="lede">This is the trip every table below refers to: Benin City to Lagos, 245 km, one leg, a Sienna with six seats on sale, 9 km to the litre, petrol at ₦1,650, wear at ₦49 a kilometre, ₦5,000 of tolls, ₦3,000 of park levy and a ₦25,000 driver's cut. Nothing here is a quote. It is the arithmetic the tool does when you change nothing.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>27.2 L</b><span>fuel burned, at 9 km per litre</span></div>
+      <div class="metric"><b>₦44,917</b><span>fuel, the line everybody remembers</span></div>
+      <div class="metric"><b>₦12,005</b><span>wear at ₦49 a kilometre, the line nobody adds</span></div>
+      <div class="metric"><b>₦8,000</b><span>tolls plus park levy, paid whether the car is full or not</span></div>
+      <div class="metric"><b>₦25,000</b><span>the driver's cut for the day</span></div>
+      <div class="metric"><b>₦89,922</b><span>trip cost, every line counted</span></div>
+      <div class="metric"><b>₦367.03</b><span>cost per kilometre of the trip</span></div>
+      <div class="metric"><b>₦14,987</b><span>cost per seat, six seats on sale</span></div>
+      <div class="metric"><b>₦61.17</b><span>cost per seat per kilometre</span></div>
+      <div class="metric"><b>₦15,000</b><span>the viable fare: cost per seat rounded up to the next ₦100</span></div>
+      <div class="metric"><b>10 seats</b><span>break-even at ₦9,000 a seat, and there are six</span></div>
+      <div class="metric"><b>-₦35,922</b><span>what a full car of six at ₦9,000 still leaves behind</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="corridors">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · The roads themselves</p>
+          <h2 id="corridors-h">Fourteen corridors, and what each one costs before a rider pays</h2>
+          <p class="lede">The kilometres and hours are the tool's own corridor table, the same figures it loads when you pick a route. The cost columns then assume one Sienna on one leg: six seats, 9 km per litre, petrol at ₦1,650, wear at ₦49 a kilometre, ₦5,000 of tolls, ₦3,000 of levy and a ₦25,000 driver. Change any of those and every row moves, which is the point of the table and not a weakness in it.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a corridor</span><input id="corridors-q" type="search" placeholder="benin, ibadan, abuja, onitsha" autocomplete="off"></label>
+          <label class="field"><span>Length band</span><select id="corridors-f"><option value="all">All</option><option>Short hop</option><option>Mid haul</option><option>Long haul</option></select></label>
+          <span class="filter-count" id="corridors-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="corridors-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Corridor</th>
+            <th data-sort="1">Length band</th>
+            <th data-sort="2" class="n">Km</th>
+            <th data-sort="3" class="n">Driving hours</th>
+            <th data-sort="4" class="n">Litres</th>
+            <th data-sort="5" class="n">Fuel</th>
+            <th data-sort="6" class="n">Trip cost</th>
+            <th data-sort="7" class="n">Cost per seat</th>
+            <th data-sort="8" class="n">Per seat-km</th>
+            <th data-sort="9" class="n">Seats needed at ₦9,000</th>
+            <th data-sort="10">What decides this fare</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Benin City → Lagos</td><td>Mid haul</td><td class="n">245</td><td class="n">4</td><td class="n">27.2</td><td class="n">₦44,917</td><td class="n">₦89,922</td><td class="n">₦14,987</td><td class="n">₦61.17</td><td class="n">10</td><td>the worked example. Mid-West road, then Ore and Ibadan-side traffic, then a toll gate and a levy at both ends</td></tr>
+            <tr><td>Lagos → Ibadan</td><td>Short hop</td><td class="n">130</td><td class="n">2</td><td class="n">14.4</td><td class="n">₦23,833</td><td class="n">₦63,203</td><td class="n">₦10,534</td><td class="n">₦81.03</td><td class="n">8</td><td>short and fast, so the fixed money is spread over only 130 km. The distance is cheap, the day rate is not</td></tr>
+            <tr><td>Ibadan → Abuja</td><td>Long haul</td><td class="n">485</td><td class="n">7</td><td class="n">53.9</td><td class="n">₦88,917</td><td class="n">₦145,682</td><td class="n">₦24,280</td><td class="n">₦50.06</td><td class="n">17</td><td>the longest clean tarmac haul here. Good average speed, but a driver for most of a day and a night away</td></tr>
+            <tr><td>Abuja → Kaduna</td><td>Mid haul</td><td class="n">190</td><td class="n">3</td><td class="n">21.1</td><td class="n">₦34,833</td><td class="n">₦77,143</td><td class="n">₦12,857</td><td class="n">₦67.67</td><td class="n">9</td><td>the expressway is short and smooth; the cost is the two park levies and six seats that rarely sell midweek</td></tr>
+            <tr><td>Abuja → Lafia</td><td>Mid haul</td><td class="n">195</td><td class="n">3.5</td><td class="n">21.7</td><td class="n">₦35,750</td><td class="n">₦78,305</td><td class="n">₦13,051</td><td class="n">₦66.93</td><td class="n">9</td><td>nearly Kaduna's kilometres and a full half-hour slower. The difference is road quality and it lands in wear</td></tr>
+            <tr><td>Abuja → Enugu</td><td>Mid haul</td><td class="n">280</td><td class="n">5</td><td class="n">31.1</td><td class="n">₦51,333</td><td class="n">₦98,053</td><td class="n">₦16,342</td><td class="n">₦58.37</td><td class="n">11</td><td>a long climb and corners. Low average speed means the trip costs time before it costs fuel</td></tr>
+            <tr><td>Port Harcourt → Lagos</td><td>Long haul</td><td class="n">470</td><td class="n">8</td><td class="n">52.2</td><td class="n">₦86,167</td><td class="n">₦142,197</td><td class="n">₦23,699</td><td class="n">₦50.42</td><td class="n">16</td><td>the eastern arc and the queues between its bridges. Eight hours makes the driver's cut a day rate, not a trip rate</td></tr>
+            <tr><td>Port Harcourt → Benin City</td><td>Mid haul</td><td class="n">210</td><td class="n">4</td><td class="n">23.3</td><td class="n">₦38,500</td><td class="n">₦81,790</td><td class="n">₦13,632</td><td class="n">₦64.91</td><td class="n">10</td><td>210 km at the slowest honest average on this table. Wear, not fuel, is what the traffic charges you</td></tr>
+            <tr><td>Onitsha → Lagos</td><td>Mid haul</td><td class="n">300</td><td class="n">6</td><td class="n">33.3</td><td class="n">₦55,000</td><td class="n">₦102,700</td><td class="n">₦17,117</td><td class="n">₦57.06</td><td class="n">12</td><td>the commercial run: goods as well as people, so parcels carry part of the fare, but market traffic decides the timetable</td></tr>
+            <tr><td>Kano → Abuja</td><td>Long haul</td><td class="n">330</td><td class="n">5.5</td><td class="n">36.7</td><td class="n">₦60,500</td><td class="n">₦109,670</td><td class="n">₦18,278</td><td class="n">₦55.39</td><td class="n">13</td><td>long northern haul at a dearer pump. Buy at Kano's ₦1,800 and the same litres cost ₦4,083 more than Lagos</td></tr>
+            <tr><td>Warri → Benin City</td><td>Short hop</td><td class="n">145</td><td class="n">3</td><td class="n">16.1</td><td class="n">₦26,583</td><td class="n">₦66,688</td><td class="n">₦11,115</td><td class="n">₦76.65</td><td class="n">8</td><td>the fewest hours on the table and no distance to hide behind: the fixed charges are a fifth of the trip</td></tr>
+            <tr><td>Abeokuta → Lagos</td><td>Short hop</td><td class="n">100</td><td class="n">2</td><td class="n">11.1</td><td class="n">₦18,333</td><td class="n">₦56,233</td><td class="n">₦9,372</td><td class="n">₦93.72</td><td class="n">7</td><td>the cheapest trip here and the most expensive per kilometre. Tolls, levy and driver are 59% of the cost on 100 km</td></tr>
+            <tr><td>Ilorin → Abuja</td><td>Mid haul</td><td class="n">295</td><td class="n">5</td><td class="n">32.8</td><td class="n">₦54,083</td><td class="n">₦101,538</td><td class="n">₦16,923</td><td class="n">₦57.37</td><td class="n">12</td><td>a long arc with thin return loads, which is why the recovery percentage matters more here than on the western roads</td></tr>
+            <tr><td>Uyo → Port Harcourt</td><td>Short hop</td><td class="n">150</td><td class="n">3</td><td class="n">16.7</td><td class="n">₦27,500</td><td class="n">₦67,850</td><td class="n">₦11,308</td><td class="n">₦75.39</td><td class="n">8</td><td>priced by the two parks rather than the fuel. Move the levy and the fare moves more than a litre price would</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Length bands are this page's own labels, not a classification: short hop is 150 km or less, long haul is over 300 km, mid haul is everything between. Driving hours are the tool's own corridor estimate; the ETA chain in section 05 of the builder works from 62 km per hour plus the minutes you allow at each stop. Tolls and the driver's cut vary most between parks, so read the last four columns as a comparison between routes, not as prices.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="classes">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · What is carrying you</p>
+          <h2 id="classes-h">Eight vehicle classes, matched to the rows the builder fills</h2>
+          <p class="lede">These are the class rows RiderPool ships with, in the shipped order. Picking one fills the seats, the kilometres per litre, the wear rate, the tolls and the levy in one motion. The seat count decides everything downstream: it is the denominator under the whole trip cost.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a class</span><input id="classes-q" type="search" placeholder="sienna, kiss, keke, bus" autocomplete="off"></label>
+          <label class="field"><span>How it is sold</span><select id="classes-f"><option value="all">All</option><option>seat pool</option><option>charter</option><option>short hop</option></select></label>
+          <span class="filter-count" id="classes-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="classes-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Class</th>
+            <th data-sort="1" class="n">Seats on sale</th>
+            <th data-sort="2" class="n">Km per litre</th>
+            <th data-sort="3" class="n">Wear per km</th>
+            <th data-sort="4" class="n">Tolls plus levy</th>
+            <th data-sort="5">How it is sold</th>
+            <th data-sort="6">What it is honestly good for</th>
+            <th data-sort="7">Where it lets you down</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Sienna / Hiace</td><td class="n">6</td><td class="n">9</td><td class="n">₦49</td><td class="n">₦8,000</td><td>seat pool</td><td>the inter-city shared ride: six seats to sell, cheap enough per seat to work on a 245 km run</td><td>one overloaded row and the wear figure is a lie, and the last row is where the fare argument starts</td></tr>
+            <tr><td>Saloon (Corolla / Camry)</td><td class="n">4</td><td class="n">12</td><td class="n">₦26</td><td class="n">₦6,500</td><td>seat pool</td><td>the cheapest seat-kilometre on four wheels, and right for a fast run with four people who know each other</td><td>four seats means four denominators. One empty seat costs the trip a quarter of its income</td></tr>
+            <tr><td>SUV (RAV4 / Highlander)</td><td class="n">5</td><td class="n">9.5</td><td class="n">₦45</td><td class="n">₦8,000</td><td>charter</td><td>sold as a whole vehicle for a family, a funeral or a business trip where nobody wants to share</td><td>priced per seat it loses to the Sienna, because it drinks like one and carries fewer bodies</td></tr>
+            <tr><td>Hilux double cab</td><td class="n">4</td><td class="n">10</td><td class="n">₦55</td><td class="n">₦7,000</td><td>charter</td><td>the load and the people at once: trade and building traffic on roads that punish a saloon</td><td>the highest wear rate per seat here. It is a work vehicle and the suspension charges you like one</td></tr>
+            <tr><td>13-seater Kiss</td><td class="n">12</td><td class="n">6.5</td><td class="n">₦70</td><td class="n">₦10,500</td><td>seat pool</td><td>the real capacity route: twelve seats on a busy corridor and the lowest cost per seat-km except a bus</td><td>twelve seats is twelve chances to sit empty. Half a Kiss is a worse day than half a Sienna</td></tr>
+            <tr><td>30-seater bus</td><td class="n">29</td><td class="n">4.5</td><td class="n">₦120</td><td class="n">₦21,000</td><td>seat pool</td><td>the cheapest seat-kilometre in Nigeria if the seats fill, and the only class where a park run beats everyone</td><td>₦12,000 of tolls and ₦120 a kilometre of wear land on the trip whether or not anybody boards</td></tr>
+            <tr><td>Keke NAA</td><td class="n">2</td><td class="n">18</td><td class="n">₦9</td><td class="n">₦1,500</td><td>short hop</td><td>the last mile and the short hop between two towns on good tarmac</td><td>two seats. It is not an inter-city class and no arithmetic will make it one</td></tr>
+            <tr><td>Okada</td><td class="n">1</td><td class="n">28</td><td class="n">₦4</td><td class="n">₦1,100</td><td>short hop</td><td>one body, one destination, and the lowest cost per kilometre on this table</td><td>one seat means one rider and no pool to split anything with. The rider's risk sits outside this table</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Filtered on the 'How it is sold' column. Seats exclude the driver. Wear is the whole vehicle per kilometre: tyres, oil, servicing and repairs, and it is a rate rather than a measurement of your engine. A 30-seater at ₦16.78 per seat-kilometre is not an argument for buses, it is an argument for filling them.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="perkm">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · The same road, eight machines</p>
+          <h2 id="perkm-h">Per-kilometre cost of each class and what it says about the seat</h2>
+          <p class="lede">Fuel per kilometre is the pump price divided by the class's kilometres per litre. Wear is the class figure. Together they are the money the vehicle spends simply by moving. Everything else, the tolls, the levy and the driver's cut, is fixed to the trip and comes on top of these columns.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a class</span><input id="perkm-q" type="search" placeholder="sienna, kiss, okada" autocomplete="off"></label>
+          
+          <span class="filter-count" id="perkm-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="perkm-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Class</th>
+            <th data-sort="1" class="n">Fuel per km</th>
+            <th data-sort="2" class="n">Wear per km</th>
+            <th data-sort="3" class="n">Running cost per km</th>
+            <th data-sort="4" class="n">Per seat-km</th>
+            <th data-sort="5" class="n">245 km of running cost</th>
+            <th data-sort="6">What the row actually says</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Okada</td><td class="n">₦58.93</td><td class="n">₦4.00</td><td class="n">₦62.93</td><td class="n">₦62.93</td><td class="n">₦15,418</td><td>the cheapest to move and the most expensive per seat, because there is one seat and no pool</td></tr>
+            <tr><td>Keke NAA</td><td class="n">₦91.67</td><td class="n">₦9.00</td><td class="n">₦100.67</td><td class="n">₦50.33</td><td class="n">₦24,663</td><td>two bodies is not a shared ride. Good to the park, not to Lagos</td></tr>
+            <tr><td>Saloon (Corolla / Camry)</td><td class="n">₦137.50</td><td class="n">₦26.00</td><td class="n">₦163.50</td><td class="n">₦40.88</td><td class="n">₦40,058</td><td>the best car-class seat-kilometre here: 12 km per litre and low wear, split four ways</td></tr>
+            <tr><td>SUV (RAV4 / Highlander)</td><td class="n">₦173.68</td><td class="n">₦45.00</td><td class="n">₦218.68</td><td class="n">₦43.74</td><td class="n">₦53,578</td><td>Sienna fuel economy, five seats instead of six. It is a charter and it prices like one</td></tr>
+            <tr><td>Hilux double cab</td><td class="n">₦165.00</td><td class="n">₦55.00</td><td class="n">₦220.00</td><td class="n">₦55.00</td><td class="n">₦53,900</td><td>second highest wear rate here and only four bodies to carry it</td></tr>
+            <tr><td>Sienna / Hiace</td><td class="n">₦183.33</td><td class="n">₦49.00</td><td class="n">₦232.33</td><td class="n">₦38.72</td><td class="n">₦56,922</td><td>expensive to move, cheap per seat. That is the whole reason the shared Sienna is Nigeria's inter-city default</td></tr>
+            <tr><td>13-seater Kiss</td><td class="n">₦253.85</td><td class="n">₦70.00</td><td class="n">₦323.85</td><td class="n">₦26.99</td><td class="n">₦79,342</td><td>₦324 a kilometre and still the second cheapest seat on this table, if all twelve sell</td></tr>
+            <tr><td>30-seater bus</td><td class="n">₦366.67</td><td class="n">₦120.00</td><td class="n">₦486.67</td><td class="n">₦16.78</td><td class="n">₦119,233</td><td>₦487 a kilometre, ₦16.78 a seat-kilometre. The trip is enormous and the seat is the cheapest in the country</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Sorted worst to best per seat-kilometre, petrol at ₦1,650 a litre. Add the Sienna's ₦8,000 of tolls and levy and the ₦25,000 driver and its full cost per seat-kilometre on 245 km is ₦61.17, which is the number the ₦9,000 park rate is being compared against. At each class's own fixed charges the same 245 km costs ₦114,842 in a Kiss, ₦9,570 a seat, and ₦165,233 in a bus, ₦5,698 a seat, both with the driver's cut counted once.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="methods">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · The four split methods</p>
+          <h2 id="methods-h">What each method collects, and how far it drifts from cost causation</h2>
+          <p class="lede">Cost causation is the yardstick the tool scores every method against: a rider's fair share is the amount the seats must bring in, multiplied by the kilometres that rider rode, divided by everybody's kilometres. On the worked example that is ₦89,922 across 1,064 rider-kilometres, or ₦84.51 a kilometre. Drift is the naira distance from that share, reported per rider, as an average and as the worst case.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a method</span><input id="methods-q" type="search" placeholder="even, distance, zone, park" autocomplete="off"></label>
+          
+          <span class="filter-count" id="methods-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="methods-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Method</th>
+            <th data-sort="1">What it charges</th>
+            <th data-sort="2" class="n">Collected</th>
+            <th data-sort="3" class="n">Against ₦89,922 of cost</th>
+            <th data-sort="4" class="n">Average drift</th>
+            <th data-sort="5" class="n">Worst drift</th>
+            <th data-sort="6">What it does to the short-distance rider</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Even split</td><td>₦14,987 from every body, no regard for distance</td><td class="n">₦89,922</td><td class="n">₦0</td><td class="n">₦5,155</td><td class="n">₦8,479</td><td>Collects the cost and then moves it: the 77 km rider pays ₦8,479 over his share and the two 245 km riders pay ₦5,719 under theirs. Fastest to explain, hardest to defend</td></tr>
+            <tr><td>Distance share</td><td>₦84.51 for each kilometre actually ridden</td><td class="n">₦89,922</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦0</td><td>Zero drift by construction, because it is the yardstick. It charges a full-length rider ₦20,706, which is more than the park has ever heard of, and it is the honest number</td></tr>
+            <tr><td>Zone fare</td><td>The asking fare pro-rated by distance, rounded to the nearest ₦100</td><td class="n">₦39,100</td><td class="n">-₦50,822</td><td class="n">₦8,470</td><td class="n">₦11,706</td><td>Proportional to a number nobody checked. Every rider drifts downward, so it feels generous while quietly being a discount schedule with a fairness label</td></tr>
+            <tr><td>Park rule</td><td>Full fare past 60% of the route, half before it</td><td class="n">₦45,000</td><td class="n">-₦44,922</td><td class="n">₦7,487</td><td class="n">₦11,706</td><td>Simple to say at the gate and short by half the trip. A convention of some parks, not a law and not a ruling, and the deficit is what later raises the fare for everybody</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Four methods because those are the four the tool carries, so this table is four rows by definition; the rider-by-rider figures are in the next one. The tool ranks them as average drift plus 35% of the worst drift plus a shortfall penalty per rider: distance share 0, even split 8,123, park rule 11,771, zone fare 12,779. Lower is fairer.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="splits">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Six riders, one car, four answers</p>
+          <h2 id="splits-h">The sample board priced by each method</h2>
+          <p class="lede">The same six riders the tool loads, on the same 245 km, with the whole ₦89,922 carried by the seats. Boards and alights are stop names from the stop list and the kilometres are the difference between them. Read the last four columns as four different stories about the same afternoon.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a rider</span><input id="splits-q" type="search" placeholder="ada, chidi, tunde, kene" autocomplete="off"></label>
+          
+          <span class="filter-count" id="splits-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="splits-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Rider</th>
+            <th data-sort="1">Seat type</th>
+            <th data-sort="2">Boards</th>
+            <th data-sort="3">Alights</th>
+            <th data-sort="4" class="n">Km ridden</th>
+            <th data-sort="5" class="n">Fair share</th>
+            <th data-sort="6" class="n">Even split</th>
+            <th data-sort="7" class="n">Distance share</th>
+            <th data-sort="8" class="n">Zone fare</th>
+            <th data-sort="9" class="n">Park rule</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Ada</td><td>Adult</td><td>Benin park</td><td>CMS</td><td class="n">245</td><td class="n">₦20,706</td><td class="n">₦14,987</td><td class="n">₦20,706</td><td class="n">₦9,000</td><td class="n">₦9,000</td></tr>
+            <tr><td>Femi</td><td>Adult</td><td>Benin park</td><td>Sango</td><td class="n">225</td><td class="n">₦19,015</td><td class="n">₦14,987</td><td class="n">₦19,015</td><td class="n">₦8,300</td><td class="n">₦9,000</td></tr>
+            <tr><td>Chidi</td><td>Student</td><td>Ore</td><td>CMS</td><td class="n">160</td><td class="n">₦13,522</td><td class="n">₦14,987</td><td class="n">₦13,522</td><td class="n">₦5,900</td><td class="n">₦9,000</td></tr>
+            <tr><td>Tunde</td><td>Front row</td><td>Okela</td><td>Sagamu</td><td class="n">112</td><td class="n">₦9,465</td><td class="n">₦14,987</td><td class="n">₦9,465</td><td class="n">₦4,100</td><td class="n">₦4,500</td></tr>
+            <tr><td>Blessing</td><td>Adult</td><td>Benin park</td><td>CMS</td><td class="n">245</td><td class="n">₦20,706</td><td class="n">₦14,987</td><td class="n">₦20,706</td><td class="n">₦9,000</td><td class="n">₦9,000</td></tr>
+            <tr><td>Kene</td><td>Last row</td><td>Ijebu-Ode</td><td>Iyana Ilogbo</td><td class="n">77</td><td class="n">₦6,507</td><td class="n">₦14,987</td><td class="n">₦6,507</td><td class="n">₦2,800</td><td class="n">₦4,500</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Six rows because the sample board holds six seats; change the riders in section 04 and this becomes your table. The fair shares total ₦89,921 against a ₦89,922 cost, one naira of rounding residue, which is why the tool keeps unrounded arithmetic and rounded money separate. The zone column totals ₦39,100 and the park column ₦45,000, so those two are not cheaper splits, they are unpaid ones.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="pumps">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · The pump, by city</p>
+          <h2 id="pumps-h">Ten cities, the litre price the tool starts with, and what it does to one trip</h2>
+          <p class="lede">These are the shipped reference prices, marked current as of the date you set under Assumptions, and every row is editable. The middle columns put the same litres, 27.2 of them, against each city's petrol price, so you can see how much of a fare argument is really a pump argument.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a city</span><input id="pumps-q" type="search" placeholder="lagos, kaduna, onitsha" autocomplete="off"></label>
+          
+          <span class="filter-count" id="pumps-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="pumps-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">City</th>
+            <th data-sort="1" class="n">Petrol per litre</th>
+            <th data-sort="2" class="n">AGO per litre</th>
+            <th data-sort="3" class="n">Petrol less AGO</th>
+            <th data-sort="4" class="n">27.2 litres on this trip</th>
+            <th data-sort="5" class="n">Fuel per seat, six seats</th>
+            <th data-sort="6">What the difference really is</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Lagos</td><td class="n">₦1,650</td><td class="n">₦1,550</td><td class="n">₦100</td><td class="n">₦44,917</td><td class="n">₦7,486</td><td>the tool's default and the cheapest petrol here, which is why a driver filling at Benin is already ₦1,361 worse off</td></tr>
+            <tr><td>Ibadan</td><td class="n">₦1,650</td><td class="n">₦1,560</td><td class="n">₦90</td><td class="n">₦44,917</td><td class="n">₦7,486</td><td>same petrol as Lagos, so on the Lagos-Ibadan run the pump explains none of the fare</td></tr>
+            <tr><td>Benin City</td><td class="n">₦1,700</td><td class="n">₦1,600</td><td class="n">₦100</td><td class="n">₦46,278</td><td class="n">₦7,713</td><td>the departure city of the worked example: ₦50 a litre dearer adds ₦1,361 to the trip and ₦227 to a seat</td></tr>
+            <tr><td>Abuja</td><td class="n">₦1,700</td><td class="n">₦1,620</td><td class="n">₦80</td><td class="n">₦46,278</td><td class="n">₦7,713</td><td>the narrowest petrol-to-AGO gap here, which matters more to a Kiss and a bus than to a Sienna</td></tr>
+            <tr><td>Port Harcourt</td><td class="n">₦1,750</td><td class="n">₦1,650</td><td class="n">₦100</td><td class="n">₦47,639</td><td class="n">₦7,940</td><td>₦2,722 dearer than Lagos over the same 245 km</td></tr>
+            <tr><td>Onitsha</td><td class="n">₦1,750</td><td class="n">₦1,650</td><td class="n">₦100</td><td class="n">₦47,639</td><td class="n">₦7,940</td><td>a commercial city: mid-range pump, and levies that are not mid-range</td></tr>
+            <tr><td>Enugu</td><td class="n">₦1,750</td><td class="n">₦1,660</td><td class="n">₦90</td><td class="n">₦47,639</td><td class="n">₦7,940</td><td>same petrol as Port Harcourt, part of why ₦16,342 a seat on Abuja-Enugu is arithmetic and not greed</td></tr>
+            <tr><td>Warri</td><td class="n">₦1,750</td><td class="n">₦1,650</td><td class="n">₦100</td><td class="n">₦47,639</td><td class="n">₦7,940</td><td>the same price as Onitsha on a shorter trip, so here the fixed costs dominate and the fuel is noise</td></tr>
+            <tr><td>Kaduna</td><td class="n">₦1,800</td><td class="n">₦1,700</td><td class="n">₦100</td><td class="n">₦49,000</td><td class="n">₦8,167</td><td>the dear end. ₦4,083 more than Lagos on one leg, close to a whole extra seat bought by nobody</td></tr>
+            <tr><td>Kano</td><td class="n">₦1,800</td><td class="n">₦1,700</td><td class="n">₦100</td><td class="n">₦49,000</td><td class="n">₦8,167</td><td>longest haul plus dearest fuel: Kano-Abuja costs ₦109,670 before a passenger pays anything</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Pump prices only: the tool holds no live feed and will never quote today's price at you. Across the whole range the pump moves this trip by ₦4,083, while the tolls, levy and driver's cut move it by ₦33,000 and vary far more between parks. If you are arguing about a fare, check which of those two you are arguing about.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="adj">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">08 · The adjustment board</p>
+          <h2 id="adj-h">What each seat is worth against the asking fare, as shipped</h2>
+          <p class="lede">These are the tool's default adjustments. Percentages apply to the asking fare, except the night surcharge, which applies to the driver's cut and then passes into the trip cost, and the luggage rate, which is a flat price for a unit rather than a fare. The naira column assumes the worked example's ₦9,000 asking fare.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a rule</span><input id="adj-q" type="search" placeholder="front, student, detour, night" autocomplete="off"></label>
+          
+          <span class="filter-count" id="adj-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="adj-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Rule</th>
+            <th data-sort="1">As shipped</th>
+            <th data-sort="2">What it applies to</th>
+            <th data-sort="3" class="n">On a ₦9,000 seat</th>
+            <th data-sort="4">The reason it exists, honestly</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Front row premium</td><td>+8%</td><td>the asking fare</td><td class="n">₦9,720</td><td>widest legroom, best view, first out at every stop. Somebody pays for it and it is not the driver</td></tr>
+            <tr><td>Middle rows</td><td>baseline</td><td>nothing, this is the base</td><td class="n">₦9,000</td><td>the seat every other seat is measured against. The asking fare is a middle-row fare</td></tr>
+            <tr><td>Last row discount</td><td>-7%</td><td>the asking fare</td><td class="n">₦8,370</td><td>behind the axle, over the boot, hot, and last to alight. A real disadvantage priced as one</td></tr>
+            <tr><td>Student</td><td>-15%</td><td>the asking fare</td><td class="n">₦7,650</td><td>a termly regular who pays cash at the park and fills a seat the alternative is to leave empty</td></tr>
+            <tr><td>Child on a lap</td><td>-50%</td><td>the asking fare</td><td class="n">₦4,500</td><td>consumes no seat, but it is still a body and still weight. The discount is not a statement about what a body is worth</td></tr>
+            <tr><td>Luggage space sold as a seat</td><td>₦2,000 flat</td><td>nothing, it replaces the fare</td><td class="n">₦2,000</td><td>a crate, not a person. It still counts as one of the units on sale, so the body count drops by one</td></tr>
+            <tr><td>Night surcharge</td><td>+10%</td><td>the driver's cut, then the whole trip</td><td class="n">₦2,500 on a ₦25,000 cut</td><td>a 4am departure is a worse shift. It raises the trip cost to ₦92,422 and cost per seat to ₦15,404 for everyone</td></tr>
+            <tr><td>Detour charge</td><td>₦18 per km per seat</td><td>each seat on sale</td><td class="n">₦198 for an 11 km diversion</td><td>₦1,188 across six seats against ₦2,556 of fuel and wear. The default does not cover itself, and section 03 of the tool says so out loud</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Premiums and discounts as shipped: the board collects 18 points, front 8 plus night 10, and gives away 72 across last row, student and child. The tool compares the two sides and warns when they drift more than 12 points apart, so a table this generous is a discount policy rather than a neutral one. Put your own percentages in section 09 if you want the asking fare to stay the number the pool is built on.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="space">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">09 · Space, sold</p>
+          <h2 id="space-h">The four parcel rates, the combinations, and the relief each gives the seats</h2>
+          <p class="lede">Parcel money is not profit: it comes off what the seats must bring in before any split is computed. The first four rows are the rates the tool ships with, the last one is the luggage option, and the middle rows are combinations of those same four rates, because a boot is filled in combinations. Cost per seat starts at ₦14,987 with an empty boot and break-even at ten seats.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a load</span><input id="space-q" type="search" placeholder="carton, sack, backpack, freezer" autocomplete="off"></label>
+          
+          <span class="filter-count" id="space-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="space-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">What goes in the boot</th>
+            <th data-sort="1" class="n">Space revenue</th>
+            <th data-sort="2" class="n">Cost per seat, down by</th>
+            <th data-sort="3" class="n">Seats must bring</th>
+            <th data-sort="4" class="n">Cost per seat</th>
+            <th data-sort="5" class="n">Break-even seats</th>
+            <th data-sort="6">What it is really worth to the trip</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Small parcel, backpack size (shipped rate)</td><td class="n">₦800</td><td class="n">₦133</td><td class="n">₦89,122</td><td class="n">₦14,854</td><td class="n">10</td><td>a rounding error on the trip. Worth taking, worth nothing in an argument</td></tr>
+            <tr><td>Carton (shipped rate)</td><td class="n">₦2,000</td><td class="n">₦333</td><td class="n">₦87,922</td><td class="n">₦14,654</td><td class="n">10</td><td>the common unit. Two of them move the fare question by ₦667 a seat</td></tr>
+            <tr><td>30 kg sack (shipped rate)</td><td class="n">₦3,500</td><td class="n">₦583</td><td class="n">₦86,422</td><td class="n">₦14,404</td><td class="n">10</td><td>grain, cement, provisions: the heaviest money per unit of boot</td></tr>
+            <tr><td>Freezer-size box (shipped rate)</td><td class="n">₦9,000</td><td class="n">₦1,500</td><td class="n">₦80,922</td><td class="n">₦13,487</td><td class="n">9</td><td>a whole seat's fare, and it takes a seat's worth of space. The only single rate that moves the break-even</td></tr>
+            <tr><td>Two cartons</td><td class="n">₦4,000</td><td class="n">₦667</td><td class="n">₦85,922</td><td class="n">₦14,320</td><td class="n">10</td><td>typical of a market run. Real money, but not a business</td></tr>
+            <tr><td>One sack plus a small parcel</td><td class="n">₦4,300</td><td class="n">₦717</td><td class="n">₦85,622</td><td class="n">₦14,270</td><td class="n">10</td><td>the most common real boot on a family visit: one heavy thing and one bag</td></tr>
+            <tr><td>Two cartons plus one sack</td><td class="n">₦7,500</td><td class="n">₦1,250</td><td class="n">₦82,422</td><td class="n">₦13,737</td><td class="n">10</td><td>₦7,500 off the seats and still one seat short of break-even</td></tr>
+            <tr><td>Three cartons plus one sack</td><td class="n">₦9,500</td><td class="n">₦1,583</td><td class="n">₦80,422</td><td class="n">₦13,404</td><td class="n">9</td><td>the figure to quote at the park: a reasonably full boot is worth more than a last-row discount</td></tr>
+            <tr><td>Freezer box plus one carton</td><td class="n">₦11,000</td><td class="n">₦1,833</td><td class="n">₦78,922</td><td class="n">₦13,154</td><td class="n">9</td><td>now the boot is carrying part of the driver's cut as well as the fuel</td></tr>
+            <tr><td>Four sacks</td><td class="n">₦14,000</td><td class="n">₦2,333</td><td class="n">₦75,922</td><td class="n">₦12,654</td><td class="n">9</td><td>heavy, and the load that makes the wear rate a live number instead of a formality</td></tr>
+            <tr><td>Freezer box plus two sacks</td><td class="n">₦16,000</td><td class="n">₦2,667</td><td class="n">₦73,922</td><td class="n">₦12,320</td><td class="n">9</td><td>an almost-full boot on 245 km. This is where a Sienna starts to beat a Kiss on price</td></tr>
+            <tr><td>Luggage space sold in place of a seat</td><td class="n">₦2,000</td><td class="n">₦333</td><td class="n">₦87,922</td><td class="n">₦14,654</td><td class="n">10</td><td>counts as one unit on sale and removes one body from the car, so it raises revenue and cuts capacity at once. Read it twice before you price it</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Break-even is the seats-required figure at a ₦9,000 asking fare, so it moves whenever the fare moves. Space is the one lever in the whole tool that lowers every fare at the same time, which is why the tool nets it off first instead of treating it as the driver's perquisite.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="stops">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">10 · Stop economics</p>
+          <h2 id="stops-h">The sample run from Benin park to CMS, stop by stop</h2>
+          <p class="lede">Nine stops, the sequence the tool loads for a 245 km corridor. Detour kilometres are what the app keeps for each stop, extra minutes are the diversion minutes plus the six minutes allowed wherever somebody boards or alights, and the cost column prices those kilometres at ₦232.33, the Sienna's own fuel plus wear. Revenue is what the riders boarding at that stop bring in under the distance share.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a stop</span><input id="stops-q" type="search" placeholder="okela, ore, sagamu, sango" autocomplete="off"></label>
+          
+          <span class="filter-count" id="stops-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="stops-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Stop</th>
+            <th data-sort="1" class="n">Km along</th>
+            <th data-sort="2" class="n">Detour km</th>
+            <th data-sort="3" class="n">Extra minutes</th>
+            <th data-sort="4" class="n">Detour costs</th>
+            <th data-sort="5" class="n">Board</th>
+            <th data-sort="6" class="n">Alight</th>
+            <th data-sort="7" class="n">Fare brought in here</th>
+            <th data-sort="8" class="n">Net</th>
+            <th data-sort="9" class="n">Buffered clock</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Benin park (start)</td><td class="n">0</td><td class="n">0</td><td class="n">6</td><td class="n">₦0</td><td class="n">3</td><td class="n">0</td><td class="n">₦60,427</td><td class="n">+₦60,427</td><td class="n">06:07</td></tr>
+            <tr><td>Okela</td><td class="n">18</td><td class="n">3</td><td class="n">13</td><td class="n">₦697</td><td class="n">1</td><td class="n">0</td><td class="n">₦9,465</td><td class="n">+₦8,768</td><td class="n">06:43</td></tr>
+            <tr><td>Evbuotubu</td><td class="n">48</td><td class="n">0</td><td class="n">4</td><td class="n">₦0</td><td class="n">0</td><td class="n">0</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">07:16</td></tr>
+            <tr><td>Ore</td><td class="n">85</td><td class="n">5</td><td class="n">15</td><td class="n">₦1,162</td><td class="n">1</td><td class="n">0</td><td class="n">₦13,522</td><td class="n">+₦12,360</td><td class="n">08:18</td></tr>
+            <tr><td>Ijebu-Ode</td><td class="n">108</td><td class="n">0</td><td class="n">11</td><td class="n">₦0</td><td class="n">1</td><td class="n">0</td><td class="n">₦6,507</td><td class="n">+₦6,507</td><td class="n">08:49</td></tr>
+            <tr><td>Sagamu</td><td class="n">130</td><td class="n">11</td><td class="n">24</td><td class="n">₦2,556</td><td class="n">0</td><td class="n">1</td><td class="n">₦0</td><td class="n">-₦2,556</td><td class="n">09:50</td></tr>
+            <tr><td>Iyana Ilogbo</td><td class="n">185</td><td class="n">0</td><td class="n">10</td><td class="n">₦0</td><td class="n">0</td><td class="n">1</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">10:48</td></tr>
+            <tr><td>Sango</td><td class="n">225</td><td class="n">6</td><td class="n">20</td><td class="n">₦1,394</td><td class="n">0</td><td class="n">1</td><td class="n">₦0</td><td class="n">-₦1,394</td><td class="n">11:59</td></tr>
+            <tr><td>CMS (finish)</td><td class="n">245</td><td class="n">0</td><td class="n">6</td><td class="n">₦0</td><td class="n">0</td><td class="n">3</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">12:21</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Whole run: 25 km off the main line, 61 diversion minutes plus 48 stop minutes, ₦5,808 of fuel and wear. The two negative stops are set-downs with a diversion and nobody boarding, which is the shape of most unpaid detours. Arrival at CMS is 11:46 unbuffered and 12:21 with the 10% buffer, and the toll queue is in neither number.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="wrong">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">11 · Where the argument goes wrong</p>
+          <h2 id="wrong-h">Three places a fare conversation dies, and what to put in its place</h2>
+          <p class="lede">None of these are disagreements about money. They are disagreements about what the number is measuring.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>The park rate is treated as the cost</h3><p>₦9,000 is what people pay, ₦14,987 is what the seat costs to provide. Both are true and they are different numbers, which is why a full car of six still ends the day ₦35,922 short. Put both on the sheet and the conversation stops being about whether the driver is greedy.</p></div>
+        <div class="note-box warn"><h3>Everyone is assumed to ride the whole road</h3><p>An even split makes one assumption, that the money is shared, and on this board it is wrong: one rider covers 77 km of 245 and pays the same as two who cover all of it. Distance is not a courtesy, it is the only figure in the car that measures what each person consumed.</p></div>
+        <div class="note-box "><h3>The detour is priced as a favour</h3><p>Eleven kilometres off the line is ₦2,556 of fuel and wear and, on the tool's own pricing card, about 17 minutes of everybody's afternoon, or 24 minutes for all 25 diverted km at the ETA speed. A ₦198 charge to the person who asked for it recovers less than half. Either charge the real cost or refuse the stop.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">12 · Check these before you argue with them</p>
+          <h2 id="sources-h">Where to verify a figure before you quote it to a stranger</h2>
+          <p class="lede">This page exists so you can see what the tool assumed, not so you can stop asking. The reference tables carry an as-of date and are estimates by construction.</p>
+        </div>
+<ul class="sources reveal">        <li>Your own receipt book, or the fuel slips for the last ten trips. The kilometres per litre in these tables is an average and your engine has its own.</li>
+        <li>The park agent and the posted rate for that corridor on that day, for anything you intend to charge a stranger. That rate is market information, not a cost, and this page cannot tell you which one you are quoting.</li>
+        <li>The toll placard at the barrier and the levy schedule at the gate, both ends. Those are two different charges and both are commonly forgotten until the car is moving.</li>
+        <li>A garage that knows the class. What a set of tyres and a service costs per 10,000 km on a Sienna is the honest way to check ₦49 a kilometre.</li>
+        <li>Your own phone: the trip log and the fuel meter. Keep a corridor for three months and your own wear, levy and average speed replace the three weakest rows on this page.</li>
+        <li>The sample board in section 08 of the tool. Read it as fiction written into the source file: it shows what a fare ladder looks like, it does not tell you what a seat costs.</li>
+        <li>State and local rules on seating, permits and routing. They are not in this tool and the tool will not pretend to know them: what you may carry and charge is decided outside this page.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own corridor through it</h2>
+        <p class="lede">RiderPool takes the distance, the class, the pump price and the six people who rode different parts of the same road, and hands back a trip cost, a cost per seat, four splits and a card you can paste into the group chat.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#build">Price a trip</a>
+        <a class="btn btn-ghost" href="playbook.html">Park playbook</a>
+        <a class="btn btn-ghost" href="record.html">Trip ledger</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">⇄</span><span style="color:#fff">RiderPool<small style="color:rgba(255,255,255,.6)">the empty seat, split fairly</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one argument: a fare is arithmetic, not habit. Write the kilometres, the litres, the wear, the levy and the driver's cut on the same sheet and the argument stops being about feelings.</p>
+      </div>
+      <div>
+        <h4>RiderPool pages</h4>
+        <p><a href="index.html">Trip builder</a><br><a href="data.html">Fare data</a><br><a href="playbook.html">Park playbook</a><br><a href="record.html">Trip ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../fuelmeter/">FuelMeter: true cost per kilometre</a><br><a href="../marketrate/">MarketRate: fair price today</a><br><a href="../landedcost/">LandedCost: what imports really cost</a><br><a href="../feesplan/">FeesPlan: school fees, planned</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>The sample board is fiction written into the source file. Nothing here matches a rider, moves money, or tells you what your park is charging today. Routing, permits and what you may carry are settled by state law and local practice, not by a calculator.</span><span class="mono">RiderPool · Fare data · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#corridors-tbl');
+  pages.filter('#corridors-tbl', { input: '#corridors-q', select: '#corridors-f', count: '#corridors-count', empty: "No corridor here by that name. Type your own route and your own kilometres in the builder." });
+  pages.sortable('#classes-tbl');
+  pages.filter('#classes-tbl', { input: '#classes-q', select: '#classes-f', count: '#classes-count', empty: "No row here matches that search." });
+  pages.sortable('#perkm-tbl');
+  pages.filter('#perkm-tbl', { input: '#perkm-q', count: '#perkm-count', empty: "No row here matches that search." });
+  pages.sortable('#methods-tbl');
+  pages.filter('#methods-tbl', { input: '#methods-q', count: '#methods-count', empty: "No row here matches that search." });
+  pages.sortable('#splits-tbl');
+  pages.filter('#splits-tbl', { input: '#splits-q', count: '#splits-count', empty: "No row here matches that search." });
+  pages.sortable('#pumps-tbl');
+  pages.filter('#pumps-tbl', { input: '#pumps-q', count: '#pumps-count', empty: "No row here matches that search." });
+  pages.sortable('#adj-tbl');
+  pages.filter('#adj-tbl', { input: '#adj-q', count: '#adj-count', empty: "No row here matches that search." });
+  pages.sortable('#space-tbl');
+  pages.filter('#space-tbl', { input: '#space-q', count: '#space-count', empty: "No row here matches that search." });
+  pages.sortable('#stops-tbl');
+  pages.filter('#stops-tbl', { input: '#stops-q', count: '#stops-count', empty: "No row here matches that search." });
+  var bandSel = document.getElementById('corridors-f'); if (bandSel) bandSel.dataset.col = '1';
+  var soldSel = document.getElementById('classes-f'); if (soldSel) soldSel.dataset.col = '5';
+});
+</script>
+</body>
+</html>

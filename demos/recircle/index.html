@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReCircle — get paid properly for the waste you already carry out</title>
+<meta name="description" content="Count your PET, carton, cans and scrap by item, see what it is worth sorted versus dumped, check whether a pickup load is worth the collector's trip, and keep an auditable earnings ledger. Runs offline in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="recircle.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2316704f'/><path d='M10 12a7 7 0 0111.9-1.2M22 20a7 7 0 01-11.9 1.2' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round'/><path d='M21.6 7.6l.6 3.4-3.4-.6M10.4 24.4l-.6-3.4 3.4.6' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#count">Skip to the waste counter</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark" aria-hidden="true">↻</span><span>ReCircle<small>Waste that pays you back</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#count">Count</a>
+      <a href="#split">Sorted vs mixed</a>
+      <a href="#pickup">Pickup</a>
+      <a href="#scale">Scale check</a>
+      <a href="#ledger">Ledger</a>
+      <a href="#group">Group</a>
+      <a href="#prices">Prices</a>
+      <a href="data.html">Prices &amp; weights</a>
+      <a href="playbook.html">Sorting playbook</a>
+      <a href="record.html">Earnings ledger</a>
+      <a class="btn btn-primary btn-sm" href="#count">Count my waste</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Households · scrap dealers · schools · associations</p>
+      <h1>You are carrying <em>₦4,000–₦12,000</em> out of the gate every month.</h1>
+      <p class="lede">In Lagos, Ibadan, Abuja and Onitsha the recyclable part of your waste leaves for free, or is burned, while the person who buys it names a price and weighs it on a scale you cannot see. ReCircle counts your material item by item, prices it against an editable market table, tells you whether the load is even worth the collector's trip, and keeps a record a school or an association can defend in a meeting.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#count">Count what came out this week</a>
+        <a class="btn btn-ghost" href="#pickup">Is the load worth a trip? <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="12000" data-prefix="₦">0</b><span>top of the indicative monthly value in a Lagos household's recyclables</span></div>
+        <div class="stat"><b data-count="4" data-suffix="×">0</b><span>what sorted material can fetch against the same material dumped mixed</span></div>
+        <div class="stat"><b data-count="18" data-suffix=" materials">0</b><span>priced in the editable table below — each with a contamination penalty and a minimum viable weight</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <span class="rc-loop-wrap rc-loop-idle" aria-hidden="true">
+        <svg class="rc-loop" viewBox="0 0 100 100" width="132" height="132" focusable="false">
+          <circle class="rc-loop-track" cx="50" cy="50" r="34"></circle>
+          <g class="rc-loop-seg"><path d="M55.9 16.5 A34 34 0 0 1 83.5 44.1"></path><path class="rc-loop-head" d="M0 -7 L9 0 L0 7 Z" transform="translate(83.5 44.1) rotate(80)"></path></g>
+          <g class="rc-loop-seg" transform="rotate(120 50 50)"><path d="M55.9 16.5 A34 34 0 0 1 83.5 44.1"></path><path class="rc-loop-head" d="M0 -7 L9 0 L0 7 Z" transform="translate(83.5 44.1) rotate(80)"></path></g>
+          <g class="rc-loop-seg" transform="rotate(240 50 50)"><path d="M55.9 16.5 A34 34 0 0 1 83.5 44.1"></path><path class="rc-loop-head" d="M0 -7 L9 0 L0 7 Z" transform="translate(83.5 44.1) rotate(80)"></path></g>
+        </svg>
+      </span>
+      <div class="hero-frame float"><img src="../_media/recircle-hero.webp" width="1536" height="1024" alt="Sorted bags of plastic bottles, carton and cans waiting in a Nigerian compound for a collector" fetchpriority="high"></div>
+      <p class="tiny hero-caption">Sorted, bagged and counted before the collector arrives — that order is where the money is.</p>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="why">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">01 · The leak nobody prices</p>
+      <h2>It is not that the material is worthless. It is that nobody prices it in front of you.</h2>
+      <p class="lede">A collector's arbitrary price, a scale behind the lorry, and no record afterwards. Five people use the same situation and none of them can answer the same three questions: what is it worth, was it weighed honestly, and is the load even worth the trip.</p>
+    </div>
+
+    <div class="grid-3 reveal">
+      <article class="card">
+        <span class="card-num">01</span>
+        <h3>Estate resident, Lekki</h3>
+        <p>Two bins go out monthly: one paid to the refuse man, one taken free by whoever comes for scrap. Sorting takes twenty minutes a week and has never been priced.</p>
+      </article>
+      <article class="card" data-delay="1">
+        <span class="card-num">02</span>
+        <h3>“Miles” scrap dealer, Ibadan</h3>
+        <p>Buys everything at one price because he cannot sort fast either. His margin is the weight he gains on a scale the seller cannot check — and the risk of a wet batch.</p>
+      </article>
+      <article class="card" data-delay="2">
+        <span class="card-num">03</span>
+        <h3>School facility manager, Abuja</h3>
+        <p>Carton and plastic from a term of lessons leaves with no weighbridge ticket, no receipt, no name. The custodian cannot tell the BOM what it was worth.</p>
+      </article>
+    </div>
+
+    <div class="stat-strip reveal">
+      <div class="stat"><b data-count="2400" data-prefix="₦">0</b><span>the spread on one 20kg carton load between sorted and dumped mixed</span></div>
+      <div class="stat"><b data-count="3" data-suffix=" of 4">0</b><span>commonly-cited rough ranges put sorted material worth two to four times mixed</span></div>
+      <div class="stat"><b data-count="0" data-suffix=" tickets">0</b><span>of weight or money that a household is handed when it goes free</span></div>
+    </div>
+    <p class="tiny reveal">Ranges here are indicative and editable. The only measured figure on this site is the one you type in: your own kilograms.</p>
+  </div>
+</section>
+
+<section id="count">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Count it, do not guess it</p>
+      <h2>Count pieces. ReCircle converts them to kilograms and to money.</h2>
+      <p class="lede">No scale in the house? Fine — a 1.5L PET bottle is about 30g, a tin can about 60g. Enter what you can see. If you weighed it yourself, override the derived weight: <strong>your own scale is the truth you should trust</strong>.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="load-form" autocomplete="off">
+        <div class="field">
+          <label for="load-name">Name this load <span class="tiny">for the record</span></label>
+          <input id="load-name" name="load-name" maxlength="60" placeholder="e.g. Block C, Saturday sweep" value="Block C — Saturday load">
+        </div>
+
+        <fieldset class="quick-add">
+          <legend>Quick add</legend>
+          <div class="pill-row" id="quick-row">
+            <button class="pill" type="button" data-add="pet1500" data-n="10">+10 × 1.5L PET</button>
+            <button class="pill" type="button" data-add="pet500" data-n="10">+10 × 500ml PET</button>
+            <button class="pill" type="button" data-add="sachet" data-n="50">+50 × sachet</button>
+            <button class="pill" type="button" data-add="can" data-n="20">+20 × can</button>
+            <button class="pill" type="button" data-add="tin" data-n="10">+10 × tin can</button>
+            <button class="pill" type="button" data-add="cartonbox" data-n="10">+10 × carton</button>
+            <button class="pill" type="button" data-add="jerrycan" data-n="2">+2 × jerrycan</button>
+            <button class="pill" type="button" data-add="glass" data-n="6">+6 × glass</button>
+          </div>
+        </fieldset>
+
+        <div class="count-list" id="count-rows"><!-- generated --></div>
+        <p class="tiny">Weights per piece are editable in <a href="#prices">Assumptions</a>. “Actual kg” replaces the counted weight for that line — use it when you weighed the bag.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="mixed-rate">Mixed rate you are offered <span class="tiny">₦ / kg</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="mixed-rate" name="mixed-rate" type="number" min="0" max="1000" step="5" value="45" inputmode="decimal"></div>
+            <p class="help">What a buyer pays for unsorted plastic-and-paper mixed together.</p>
+          </div>
+          <div class="field">
+            <label for="loads-month">Loads like this a month</label>
+            <input id="loads-month" name="loads-month" type="number" min="1" max="30" step="1" value="4" inputmode="numeric">
+            <p class="help">Most households set out once or twice a fortnight.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="save-load">Add this load to the ledger</button>
+          <button class="btn btn-ghost" type="button" id="reset-counts">Clear the counter</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite" aria-atomic="false">
+        <div class="readout-big">
+          <span>This load is worth</span>
+          <b id="net">₦0</b>
+          <span id="net-note">counted sorted, at the editable price table</span>
+          <span class="rc-loop-mini" id="loop-load" aria-hidden="true">
+            <svg class="rc-loop rc-loop-sm" viewBox="0 0 100 100" width="56" height="56" focusable="false">
+              <circle class="rc-loop-track" cx="50" cy="50" r="34"></circle>
+              <g class="rc-loop-seg"><path d="M55.9 16.5 A34 34 0 0 1 83.5 44.1"></path><path class="rc-loop-head" d="M0 -7 L9 0 L0 7 Z" transform="translate(83.5 44.1) rotate(80)"></path></g>
+              <g class="rc-loop-seg" transform="rotate(120 50 50)"><path d="M55.9 16.5 A34 34 0 0 1 83.5 44.1"></path><path class="rc-loop-head" d="M0 -7 L9 0 L0 7 Z" transform="translate(83.5 44.1) rotate(80)"></path></g>
+              <g class="rc-loop-seg" transform="rotate(240 50 50)"><path d="M55.9 16.5 A34 34 0 0 1 83.5 44.1"></path><path class="rc-loop-head" d="M0 -7 L9 0 L0 7 Z" transform="translate(83.5 44.1) rotate(80)"></path></g>
+            </svg>
+          </span>
+        </div>
+
+        <div class="readout">
+          <div class="line"><span>Total weight (counted or entered)</span><b id="out-kg">—</b></div>
+          <div class="line"><span>Value if sorted, per material</span><b id="out-sorted">—</b></div>
+          <div class="line"><span>Same items dumped as mixed</span><b id="out-mixed">—</b></div>
+          <div class="line line-strong"><span>Uplift for sorting</span><b id="out-uplift">—</b></div>
+          <div class="line"><span>If the batch is wet or oily</span><b id="out-penalty">—</b></div>
+          <div class="line"><span>Priced per piece (tyres, phones, laptops)</span><b id="out-pcs">—</b></div>
+        </div>
+
+        <div class="verdict" id="verdict">
+          <h4 id="verdict-title">Count something first</h4>
+          <p id="verdict-body">Add bottles, carton or cans on the left and the sorting case builds itself.</p>
+        </div>
+
+        <div class="mini">
+          <div><span>Per month</span><b id="m-month">—</b></div>
+          <div><span>Per 12-week term</span><b id="m-term">—</b></div>
+          <div><span>Kg diverted</span><b id="m-divert">—</b></div>
+        </div>
+
+        <div class="rc-week-card">
+          <h4 class="rc-week-title">Your week, filling up</h4>
+          <div class="rc-week" id="week-band" role="img" aria-label="Bars showing kilograms of recyclable material set out on each day of the week"></div>
+          <p class="tiny" id="week-caption">—</p>
+        </div>
+
+        <p class="tiny">Prices are indicative and editable, “as of” the date in <a href="#prices">Assumptions</a>. Nothing is booked, collected or paid by this page.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="split">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · The headline number</p>
+      <h2>Sorted material is not the same product as mixed material.</h2>
+      <p class="lede">The same bottles, cans and carton, in seven minutes of separation, are a different commodity to the buyer. Below is your current load both ways, material by material — and what a contamination penalty does to it.</p>
+    </div>
+
+    <div class="rc-cycle-band reveal" id="cycle-band" aria-hidden="true"></div>
+
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Value, material by material</h3>
+        <p class="muted small-copy">Sorted at the editable table price for each material.</p>
+        <div id="split-bars"></div>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>What sorting keeps</h3>
+        <div class="donut-wrap">
+          <div id="split-donut"></div>
+          <div>
+            <p class="tiny">Share of the sorted value you keep if it goes out unsorted</p>
+            <b class="big-num" id="donut-label">—</b>
+            <p class="muted small-copy" id="donut-note">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal compare-card">
+      <h3>Sorted, dumped, or rejected</h3>
+      <p class="muted">Three ways the same load leaves the gate. The third column is what happens when a buyer finds food waste or water in the bag and applies his own discount.</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Comparison of sorted, mixed and contaminated outcomes</caption>
+          <thead><tr><th>Material</th><th class="num">kg</th><th class="num">Sorted ₦</th><th class="num">Dumped as mixed ₦</th><th class="num">Wet / oily ₦</th></tr></thead>
+          <tbody id="split-body"></tbody>
+          <tfoot id="split-foot"></tfoot>
+        </table>
+      </div>
+      <p class="tiny" id="penalty-note">—</p>
+    </div>
+
+    <div class="card reveal week-card">
+      <h3>Set out per day <span class="badge badge-ink">drives the week band above</span></h3>
+      <p class="muted">Kilograms of sorted material that comes out of the house each day. Editable, and only used to spread your load across the week.</p>
+      <div class="rc-days" id="week-form"></div>
+      <div class="row"><button class="btn btn-ghost btn-sm" type="button" id="week-sync">Copy this load into Saturday</button><button class="btn btn-ghost btn-sm" type="button" id="week-clear">Clear the week</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="pickup">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · Is it worth the trip?</p>
+      <h2>The most useful number on this page is the one that says <em>don't call yet</em>.</h2>
+      <p class="lede">A collector's trip costs him fuel and time before he earns anything. Below the break-even weight, the sensible answer is to combine with a neighbour or hold the material another week — and that answer is worth more than a false pickup.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="pickup-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="pick-day">Collection day and area <span class="tiny">from the editable calendar</span></label>
+            <select id="pick-day" name="pick-day"></select>
+          </div>
+          <div class="field">
+            <label for="pick-window">Time window</label>
+            <select id="pick-window" name="pick-window">
+              <option>07:00–09:00</option>
+              <option selected>09:00–11:00</option>
+              <option>11:00–13:00</option>
+              <option>14:00–16:00</option>
+              <option>16:00–18:00</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pick-address">Pick-up point <span class="tiny">gate, store, back entrance</span></label>
+          <input id="pick-address" name="pick-address" maxlength="90" placeholder="e.g. Block C service gate, Lekki Phase 1" value="Block C service gate, Lekki Phase 1">
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="pick-vehicle">Collector's vehicle</label>
+            <select id="pick-vehicle" name="pick-vehicle">
+              <option value="bike">Push / hand cart</option>
+              <option value="trike" selected>Tricycle (keke)</option>
+              <option value="truck">3-ton truck</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pick-distance">One-way distance to the aggregation point</label>
+            <div class="input-group"><span class="prefix">km</span><input id="pick-distance" name="pick-distance" type="number" min="0" max="120" step="0.5" value="3" inputmode="decimal"></div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="pick-perkm">Trip cost per km</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="pick-perkm" name="pick-perkm" type="number" min="0" max="2000" step="10" value="120" inputmode="decimal"></div>
+            <p class="help">Fuel and time only — not the collector's margin.</p>
+          </div>
+          <div class="field">
+            <label for="pick-offered">Price offered for this load <span class="tiny">₦/kg — blank uses your sorted mix</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="pick-offered" name="pick-offered" type="number" min="0" max="5000" step="5" placeholder="auto" inputmode="decimal"></div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="pick-share">Combine with <span class="tiny">households on this load</span></label>
+            <input id="pick-share" name="pick-share" type="number" min="1" max="50" step="1" value="1" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="pick-note">Note for the collector</label>
+            <input id="pick-note" name="pick-note" maxlength="90" placeholder="e.g. carton is dry, bags are tied">
+          </div>
+        </div>
+
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="pick-sorted"><span class="track"></span><span>I will present it sorted (uses the per-material value)</span></label>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="make-record">Prepare pickup request record</button>
+          <button class="btn btn-ghost" type="button" id="export-records">Download requests (CSV)</button>
+        </div>
+        <p class="tiny">“Prepare a record” writes a text record you can copy to the collector yourself. <strong>This page is offline: it does not contact anyone, book a truck or pay anyone.</strong></p>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big rc-trip">
+          <span>Trip cost to break even</span>
+          <b id="trip-cost">₦0</b>
+          <span id="trip-note">—</span>
+        </div>
+
+        <div class="readout">
+          <div class="line"><span>Your load (from the counter)</span><b id="load-kg">—</b></div>
+          <div class="line"><span>Value at the offered price</span><b id="load-value">—</b></div>
+          <div class="line line-strong"><span>Minimum viable load</span><b id="min-kg">—</b></div>
+          <div class="line"><span>Shortfall / surplus vs break-even</span><b id="load-gap">—</b></div>
+          <div class="line"><span>With <b id="share-n">1</b> households combined</span><b id="shared-kg">—</b></div>
+          <div class="line"><span>Break-even on one material only</span><b id="min-kg-one">—</b></div>
+        </div>
+
+        <div class="verdict" id="pickup-verdict">
+          <h4 id="pickup-title">Enter the trip</h4>
+          <p id="pickup-body">Distance and ₦/km decide the smallest load that is worth calling anyone for.</p>
+        </div>
+
+        <div class="mini">
+          <div><span>Per km cost</span><b id="m-perkm">—</b></div>
+          <div><span>Kg per ₦1,000 of trip</span><b id="m-per-thousand">—</b></div>
+          <div><span>Price needed at your weight</span><b id="m-needed-price">—</b></div>
+        </div>
+
+        <div class="card card-flat record-card">
+          <h4>Last prepared request</h4>
+          <p class="tiny record-status" id="record-status">No record prepared yet.</p>
+          <pre class="mono record-out" id="record-out" tabindex="0">—</pre>
+          <div class="row">
+            <button class="btn btn-ghost btn-sm" type="button" id="copy-record">Copy record</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="print-record">Print</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <details class="acc reveal" id="calendar-acc">
+      <summary>Collection calendar — sample data, edit it to your area</summary>
+      <div class="acc-body">
+        <p class="tiny">These are illustrative routes, not a service. Change the day, area and window to match what actually comes to your street, and the pickup selector above follows.</p>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Editable collection calendar</caption>
+            <thead><tr><th>Day</th><th>Area / route</th><th>Usual window</th><th>Notes</th></tr></thead>
+            <tbody id="cal-body"></tbody>
+          </table>
+        </div>
+        <p class="tiny">As of <input type="date" id="cal-asof" class="inline-date" aria-label="Collection calendar as of date"></p>
+        <button class="btn btn-ghost btn-sm" type="button" id="reset-cal">Restore sample calendar</button>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="band" id="scale">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Weigh-in sanity check</p>
+      <h2>His scale, your count, and the gap between them.</h2>
+      <p class="lede">Most disputes are not cheating. They are a crate, a wet sack or a bucket left on the scale. Enter both numbers and the tare, and see whether the gap survives the tare — then put the answer in the ledger.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="scale-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="scale-buyer">Buyer's scale said <span class="tiny">kg</span></label>
+            <div class="input-group"><span class="prefix">kg</span><input id="scale-buyer" name="scale-buyer" type="number" min="0" max="5000" step="0.1" value="6.2" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="scale-own">My own count or scale says <span class="tiny">kg</span></label>
+            <div class="input-group"><span class="prefix">kg</span><input id="scale-own" name="scale-own" type="number" min="0" max="5000" step="0.1" value="7.48" inputmode="decimal"></div>
+            <p class="help" id="scale-derived">—</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="scale-tare">Tare: crate, sack, bucket <span class="tiny">kg</span></label>
+            <div class="input-group"><span class="prefix">kg</span><input id="scale-tare" name="scale-tare" type="number" min="0" max="50" step="0.1" value="0.4" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="scale-price">Agreed price <span class="tiny">₦/kg</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="scale-price" name="scale-price" type="number" min="0" max="10000" step="5" value="58.56" inputmode="decimal"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="scale-material">Material it was sold as</label>
+          <select id="scale-material" name="scale-material"></select>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="scale-tol">Dispute tolerance <span class="tiny">%</span></label>
+            <input id="scale-tol" name="scale-tol" type="number" min="1" max="60" step="1" value="12" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="scale-buyer-name">Buyer name <span class="tiny">for the record</span></label>
+            <input id="scale-buyer-name" name="scale-buyer-name" maxlength="60" placeholder="e.g. Chidi, Iyanaho scrap">
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-accent" type="button" id="log-dispute">Log this weigh-in in the ledger</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="use-count">Use my counted load</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Under-declared, after tare</span>
+          <b id="gap-naira">₦0</b>
+          <span id="gap-note">—</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Gap on the scale</span><b id="gap-kg">—</b></div>
+          <div class="line"><span>Gap as a percentage</span><b id="gap-pct">—</b></div>
+          <div class="line"><span>Tare you declared</span><b id="gap-tare">—</b></div>
+          <div class="line line-strong"><span>Gap left after tare</span><b id="gap-net-kg">—</b></div>
+          <div class="line"><span>Paid vs fairly paid</span><b id="gap-paid">—</b></div>
+        </div>
+        <div class="verdict" id="scale-verdict">
+          <h4 id="scale-title">Enter both weights</h4>
+          <p id="scale-body">A gap inside your tolerance is a rounding argument. Outside it, it is a dispute with a number attached.</p>
+        </div>
+        <div class="mini">
+          <div><span>₦ lost if unchallenged</span><b id="s-lost">—</b></div>
+          <div><span>Same gap, monthly</span><b id="s-month">—</b></div>
+          <div><span>Recorded disputes</span><b id="s-disputes">—</b></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="ledger">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Earnings ledger</p>
+      <h2>Every kilogram, every ₦, every buyer, in one record.</h2>
+      <p class="lede">Saved in this browser only. Export as CSV for the estate manager, print a monthly statement for the union meeting, and let the count-versus-scale comparison raise a flag when a load was under-weighed.</p>
+    </div>
+
+    <div class="ledger-tools reveal">
+      <button class="btn btn-accent btn-sm" type="button" id="export-ledger">Export ledger CSV</button>
+      <button class="btn btn-ghost btn-sm ghost-ink" type="button" id="print-statement">Print monthly statement</button>
+      <button class="btn btn-ghost btn-sm ghost-ink" type="button" id="seed-ledger">Add a sample month</button>
+      <button class="btn btn-ghost btn-sm ghost-ink" type="button" id="clear-ledger">Clear ledger</button>
+      <label class="sr-only" for="statement-month">Statement month</label>
+      <select id="statement-month" class="ink-select"></select>
+      <span class="tiny ledger-count" id="ledger-count">0 records</span>
+    </div>
+
+    <p class="dispute-callout reveal" id="dispute-flag">No disputes flagged.</p>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only">Saved earnings records</caption>
+        <thead><tr><th>Date</th><th>Material</th><th class="num">Kg sold</th><th class="num">Count-derived kg</th><th class="num">₦/kg</th><th class="num">₦ earned</th><th>Buyer</th><th>Scale checked</th><th>Note</th><th></th></tr></thead>
+        <tbody id="ledger-body"></tbody>
+        <tfoot id="ledger-foot"></tfoot>
+      </table>
+    </div>
+    <p class="tiny ledger-empty" id="ledger-empty">Nothing saved yet. Use <b>Add this load to the ledger</b> in the counter, or <b>Add a sample month</b> to see how it works.</p>
+
+    <div class="split-2 ledger-charts">
+      <div class="card card-flat reveal">
+        <h3>Totals by material</h3>
+        <div id="ledger-bars"></div>
+      </div>
+      <div class="card card-flat reveal" data-delay="1">
+        <h3>Weekly earnings</h3>
+        <svg id="spark-weekly" class="spark" viewBox="0 0 300 74" preserveAspectRatio="none" role="img" aria-label="Weekly naira earned, sparkline"></svg>
+        <div class="mini mini-ink">
+          <div><span>This month</span><b id="t-month">—</b></div>
+          <div><span>All records</span><b id="t-all">—</b></div>
+          <div><span>Kg in the ledger</span><b id="t-kg">—</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-flat statement reveal" id="statement">
+      <h3 id="st-title">Monthly statement</h3>
+      <p class="tiny" id="st-sub">—</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Statement rows by material and month</caption>
+          <thead><tr><th>Material</th><th class="num">Kg</th><th class="num">₦</th><th class="num">Records</th></tr></thead>
+          <tbody id="st-body"></tbody>
+          <tfoot id="st-foot"></tfoot>
+        </table>
+      </div>
+      <div class="st-sign"><span>Prepared by: ______________________</span><span>Received by: ______________________</span></div>
+    </div>
+
+    <form class="card card-flat add-form reveal" id="entry-form" autocomplete="off">
+      <h3>Add a record by hand</h3>
+      <div class="form-grid entry-grid">
+        <div class="field"><label for="e-date">Date</label><input id="e-date" name="e-date" type="date"></div>
+        <div class="field"><label for="e-material">Material</label><select id="e-material" name="e-material"></select></div>
+        <div class="field"><label for="e-kg">Kg sold (what the scale said)</label><input id="e-kg" name="e-kg" type="number" min="0" max="20000" step="0.1" placeholder="0"></div>
+        <div class="field"><label for="e-expected">Kg from my own count <span class="tiny">optional — flags disputes</span></label><input id="e-expected" name="e-expected" type="number" min="0" max="20000" step="0.1" placeholder="blank = not counted"></div>
+        <div class="field"><label for="e-price">Price used <span class="tiny">₦/kg, or ₦ per piece</span></label><input id="e-price" name="e-price" type="number" min="-5000" max="20000" step="1"></div>
+        <div class="field"><label for="e-earned">₦ earned <span class="tiny">blank = kg × price</span></label><input id="e-earned" name="e-earned" type="number" step="1" placeholder="auto"></div>
+        <div class="field"><label for="e-buyer">Buyer</label><input id="e-buyer" name="e-buyer" maxlength="60" placeholder="e.g. Amina's son"></div>
+        <div class="field"><label for="e-checked">Was the scale visible to you?</label><select id="e-checked" name="e-checked"><option value="yes">Yes</option><option value="no">No</option><option value="shown" selected>Shown to me, not verified</option></select></div>
+        <div class="field span-2"><label for="e-note">Note</label><input id="e-note" name="e-note" maxlength="90" placeholder="e.g. carton damp, buyer deducted 1kg"></div>
+      </div>
+      <div class="row"><button class="btn btn-primary btn-sm" type="button" id="add-entry">Save record</button></div>
+    </form>
+  </div>
+</section>
+
+<section id="group">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Group accounts</p>
+      <h2>A school, a church, a market association — one pot, one defensible split.</h2>
+      <p class="lede">Cooperative collection only survives a meeting if the arithmetic is visible. Record each member's float contribution and kilograms, pool the collections, and choose how the money is shared out: equally, per kilogram, or with a slice kept for the group.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="group-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field"><label for="g-name">Group name</label><input id="g-name" name="g-name" maxlength="60" value="St. Mary's — facility recycling circle"></div>
+          <div class="field"><label for="g-cycle">Cycle / term</label><input id="g-cycle" name="g-cycle" maxlength="40" value="Michaelmas term"></div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="g-mode">Share-out method</label>
+            <select id="g-mode" name="g-mode">
+              <option value="kg">Per kilogram contributed</option>
+              <option value="equal">Equal shares</option>
+              <option value="kept">Keep a slice for the group, then per kg</option>
+            </select>
+          </div>
+          <div class="field"><label for="g-keep">Kept for the group <span class="tiny">%</span></label><input id="g-keep" name="g-keep" type="number" min="0" max="100" step="1" value="10"></div>
+        </div>
+        <div class="table-wrap member-wrap">
+          <table>
+            <caption class="sr-only">Group members: contributions, kilograms brought, money collected on their material</caption>
+            <thead><tr><th>Member</th><th class="num">₦ into the float</th><th class="num">kg brought</th><th class="num">₦ collected</th><th></th></tr></thead>
+            <tbody id="member-body"></tbody>
+          </table>
+        </div>
+        <div class="row">
+          <button class="btn btn-ghost btn-sm" type="button" id="add-member">Add member</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="group-reset">Reset to sample</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>The group collected this cycle</span>
+          <b id="g-total">₦0</b>
+          <span id="g-total-note">—</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Kilograms pooled</span><b id="g-kg">—</b></div>
+          <div class="line"><span>Float contributed by members</span><b id="g-float">—</b></div>
+          <div class="line"><span>Kept for the group fund</span><b id="g-kept">—</b></div>
+          <div class="line line-strong"><span>To share out</span><b id="g-distributable">—</b></div>
+          <div class="line"><span>Audit: Σ shares − Σ collected</span><b id="g-audit">—</b></div>
+        </div>
+        <div class="verdict" id="group-verdict">
+          <h4 id="group-title">Add members</h4>
+          <p id="group-body">The share-out and the audit line are what you read out at the meeting.</p>
+        </div>
+        <div class="mini">
+          <div><span>Members</span><b id="g-members-n">—</b></div>
+          <div><span>₦ per kg, pooled</span><b id="g-per-kg">—</b></div>
+          <div><span>Largest single share</span><b id="g-largest">—</b></div>
+        </div>
+        <p class="tiny">Sample members are labelled. Edit any name or figure — nothing here is money moving; it is the record and the arithmetic.</p>
+      </aside>
+    </div>
+
+    <div class="card reveal">
+      <h3>Share-out sheet</h3>
+      <p class="muted small-copy">This is the table you read at the meeting. Export or print it as it stands.</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Per member share-out</caption>
+          <thead><tr><th>Member</th><th class="num">kg</th><th class="num">₦ collected on their material</th><th class="num">Share-out</th><th class="num">Balance vs their own material</th></tr></thead>
+          <tbody id="share-body"></tbody>
+          <tfoot id="share-foot"></tfoot>
+        </table>
+      </div>
+      <div class="row">
+        <button class="btn btn-accent btn-sm" type="button" id="group-csv">Export share-out CSV</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="group-print">Print share-out</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="impact">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">08 · Environmental figures, honestly ranked</p>
+      <h2>The only environmental number you can prove is the kilogram you diverted.</h2>
+      <p class="lede">Everything else is a published range with wide error bars. ReCircle states the fact from your own entry, shows the ranges as ranges, and hides any CO₂e estimate behind a switch that starts off.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <span class="card-num">fact</span>
+        <h3><span class="mono" id="kg-diverted">0 kg</span></h3>
+        <p class="muted">diverted from burning or the dump, taken directly from your own ledger entries. Not an estimate.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <span class="card-num">range</span>
+        <h3><span class="mono" id="range-note">2–4×</span></h3>
+        <p class="muted">the commonly cited value multiple for sorted over mixed material. Ranges differ by market, by city and by how dry the load is.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <span class="card-num">rough</span>
+        <h3><span class="mono" id="co2-headline">switched off</span></h3>
+        <p class="muted">any CO₂e saving is a modelled estimate from published factors. Turn it on below only if you can defend the factor you used.</p>
+      </div>
+    </div>
+
+    <div class="split-2 impact-split">
+      <div class="card reveal">
+        <h3>What each material avoids — published ranges, not measurements</h3>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Indicative published ranges per material</caption>
+            <thead><tr><th>Material</th><th>Landfill / burning avoided</th><th>Virgin material displaced</th></tr></thead>
+            <tbody id="range-rows"></tbody>
+          </table>
+        </div>
+        <p class="tiny">Widely quoted ranges vary by source and by year. Treat them as orders of magnitude and cite your own source if this goes in a report.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Kilograms by material, from your ledger</h3>
+        <div id="impact-bars"></div>
+        <label class="switch co2-switch"><input type="checkbox" id="co2-toggle"><span class="track"></span><span>Show a rough CO₂e estimate</span></label>
+        <div id="co2-block" hidden>
+          <p class="tiny co2-flag">Rough estimate, ranges from published factors. Not a measurement, not a carbon credit, and very sensitive to which factor you pick.</p>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">Editable rough factors</caption>
+              <thead><tr><th>Material</th><th class="num">Factor (kg CO₂e per kg, indicative)</th><th class="num">Your estimate</th></tr></thead>
+              <tbody id="co2-body"></tbody>
+            </table>
+          </div>
+          <p class="tiny" id="co2-out">—</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prices">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">09 · Assumptions in the open</p>
+      <h2>Change any number. The whole page follows.</h2>
+      <p class="lede">Prices are what buyers quoted around Lagos, Ibadan, Abuja and Onitsha — indicative, dated, and wrong for your street until you correct them. Contamination penalties are the deductions collectors apply for wet, oily or dirty material.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Material prices and contamination penalties</summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable material price table</caption>
+                <thead><tr><th>Material</th><th class="num">Price</th><th>Unit</th><th class="num">Contamination penalty</th><th class="num">Minimum viable kg</th></tr></thead>
+                <tbody id="price-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Indicative buyer prices as of <input type="date" id="as-of" class="inline-date" aria-label="Price table as of date">. Negative prices are legal here — plenty of buyers charge you to take glass or tyres, and the counter will honestly subtract that from your load. “Minimum viable kg” is the quantity a buyer usually refuses to come for; anything smaller is flagged in the counter. <span class="mono" id="price-updated">—</span></p>
+            <div class="row"><button class="btn btn-ghost btn-sm" type="button" id="reset-prices">Restore default prices</button></div>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Per-piece weights used by the counter</summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable per-piece weights</caption>
+                <thead><tr><th>Item</th><th class="num">Weight each (kg)</th><th>Priced against</th></tr></thead>
+                <tbody id="weight-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">A carton sheet is about 1 kg per m²; the small box default is 180 g. If your jerrycans are dented and wet, weigh them and use “Actual kg”.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>How every figure on this page is computed</summary>
+          <div class="acc-body">
+            <ul class="checklist">
+              <li>Counted weight = quantity × editable weight per piece. An “Actual kg” entry replaces it for that line.</li>
+              <li>Sorted value = Σ (kg × that material's price) plus per-piece items at their per-unit price.</li>
+              <li>Mixed value = the same kilograms priced at the single mixed rate you are offered.</li>
+              <li>Wet / oily value = sorted value less each material's contamination penalty.</li>
+              <li>Trip cost = one-way km × ₦/km. Minimum viable load = trip cost ÷ the price offered per kg.</li>
+              <li>Dispute flag = recorded kg more than the tolerance below the kg your own item count implies.</li>
+            </ul>
+            <p class="tiny">No VAT, no levies, no gate fees, no aggregator margin — and no live market feed, because this page is offline.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>What this tool does not do</summary>
+          <div class="acc-body"><p>It does not book a collector, move money, verify a scale you cannot see, or prove a buyer's intent. It prices, compares and records — you still have to be standing at the scale.</p></div>
+        </details>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h3>Worked example</h3>
+        <p class="muted">A week in one Lagos flat: 40 × 1.5L PET bottles, 20 aluminium cans, 6 kg of carton. Trip: 3 km at ₦120/km.</p>
+        <ol class="steps" id="worked"></ol>
+        <p class="tiny">Recomputed live from whatever you have entered above.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="limits">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">10 · The honest limits</p>
+      <h2>What you should not trust this page with.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal">
+        <h4>Prices are a snapshot, not a market</h4>
+        <p class="muted">Buyer prices move with fuel, the naira, and what the aggregator in Apapa is short of this month. The “as of” date is the only defence. Edit it whenever you get a quote.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h4>A counted weight is an estimate</h4>
+        <p class="muted">Item weights are averages. A wet sack of sachets or a crushed bottle breaks them. That is exactly why the counter lets you override with your own scale, and why the ledger compares the two.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <h4>No pickup has been booked</h4>
+        <p class="muted">The scheduler writes a record you can copy or print. It contacts nobody. Confirm the day, the price and the weight with the collector directly, in person.</p>
+      </div>
+      <div class="card reveal">
+        <h4>Environmental figures are ranges</h4>
+        <p class="muted">Only your kilograms are measured. Virgin-material displacement and CO₂e are published ranges with wide error bars, and the CO₂e number stays hidden until you ask for it.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h4>Records live in one browser</h4>
+        <p class="muted">localStorage is not a backup. Clearing site data erases the ledger, so export the CSV the same day you sell — especially for a school or association.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <h4>Under-weighing needs a witness</h4>
+        <p class="muted">A flag in this ledger is an argument, not evidence. Weigh on a visible scale, or refuse the load: the tool gives you the number, not the leverage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark" aria-hidden="true">↻</span><span style="color:#fff">ReCircle<small style="color:rgba(255,255,255,.6)">Waste that pays you back</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Built for the estate resident, the miles dealer, the school facility manager and the market association who all deserve the same three numbers: weight, price, record. No account, no upload, no server.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#count">Count</a><br><a href="#split">Sorted vs mixed</a><br><a href="#pickup">Pickup check</a><br><a href="#ledger">Ledger</a><br><a href="#prices">Prices used</a><br><a href="data.html">Prices &amp; weights</a><br><a href="playbook.html">Sorting playbook</a><br><a href="record.html">Earnings ledger</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../payrite/">PayRite payroll</a><br><a href="#group">Group accounts</a><br><a href="#impact">Environmental claims</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Prices are indicative and editable. Nothing here is booked, collected or paid.</span><span class="mono">ReCircle · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MarketRate — the fair price for your crops and goods today</title>
+<meta name="description" content="An editable Nigerian price board, crate/mudu/bag unit-cost comparison, a haul-elsewhere break-even calculator, seasonal indices with a store-to-sell-forward maths, a negotiation sheet and a trade log. Runs entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="marketrate.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%231f6b3c'/><path d='M7 12l9-5 9 5v2H7z' fill='%23dd6f26'/><path d='M9 14v9h14v-9' stroke='white' stroke-width='2' fill='none'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#board">Skip to the price board</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">₦</span><span>MarketRate<small>the fair price today</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#board">Board</a>
+      <a href="#convert">Units</a>
+      <a href="#haul">Haul</a>
+      <a href="#season">Season</a>
+      <a href="#negotiate">Negotiate</a>
+      <a href="data.html">Market data</a>
+      <a href="playbook.html">Trading playbook</a>
+      <a href="record.html">Trade log</a>
+      <a class="btn btn-accent btn-sm" href="#board">Open the board</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Farm gate · wholesale market · city retail</p>
+      <h1>₦9,000 at the gate.<br><em>₦28,000 in Lagos.</em><br>Who ate the difference?</h1>
+      <p class="lede">Price asymmetry is the quiet tax on every smallholder and market seller in Nigeria. MarketRate nets the spread against transport, levies, porter fees and spoilage, converts crate/mudu/basket/bag into ₦ per kilogram, and tells you the quantity at which hauling actually pays. Then it hands you the sheet to negotiate with.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#haul">Work out a haul</a>
+        <a class="btn btn-ghost" href="#convert">Compare two deals <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="9000" data-prefix="₦">0</b><span>one crate of tomato at the Zaria farm gate</span></div>
+        <div class="stat"><b data-count="28000" data-prefix="₦">0</b><span>the same crate retailing at Mile 12, Lagos</span></div>
+        <div class="stat"><b data-count="3.1" data-decimals="1" data-suffix="×">0</b><span>gross spread — before cost, loss and levies</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="awning" aria-hidden="true"></div>
+      <div class="hero-frame"><img src="../_media/marketrate-hero.webp" width="1536" height="1024" alt="Crates of tomato stacked at a Nigerian wholesale market while traders sort produce at dawn" fetchpriority="high"></div>
+      <p class="tiny hero-cap">Reference prices are indicative and editable. Put your own morning’s prices in and the whole tool works on them.</p>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">01 · The problem</p>
+        <h2>Nobody prices per kilogram. Everybody prices per crate.</h2>
+        <p class="lede">A farmer in Zaria sells 40 crates of tomato at the gate. A trader in Lagos would pay three times as much — but after a 780 km trip, two sets of levies, porters at the market gate and a fifth of the crop spoiled in the back of a truck in traffic, “three times as much” may be worth less than the gate price.</p>
+        <p>Aggregators in Akure price pepper by the bag while buyers quote per mudu. A garri seller at Bodija restocks on feel while inflation moves under her. A household in Abuja is asked ₦85,000 for a bag of rice and has nothing to compare it to. The unit is the trick, the spread is the trap, and the cost line is the thing nobody writes down.</p>
+      </div>
+      <div class="stack">
+        <div class="card reveal"><span class="card-num">WHO USES IT</span><h3>Four seats at the same market</h3><p class="muted">The smallholder with 40 crates, the pepper aggregator, the garri seller deciding whether to restock today, and the household buyer who just wants to know if the price is fair.</p></div>
+        <div class="card reveal" data-delay="1"><span class="card-num">THE INVISIBLE LINE</span><h3>Margin is not profit</h3><p class="muted">A ₦19,000 per-crate spread survives only if the trip, the levies, the porters and the spoilage leave anything behind. This tool subtracts them in front of you.</p></div>
+        <div class="card reveal" data-delay="2"><span class="card-num">THE UNIT TRAP</span><h3>Crate, mudu, basket, bag</h3><p class="muted">₦1,100 a mudu can be more expensive per kilogram than ₦26,000 a crate. Comparing anything else is guessing.</p></div>
+      </div>
+    </div>
+    <div class="stat-strip problem-strip reveal">
+      <div class="stat"><b data-count="780" data-suffix=" km">0</b><span>Zaria to Lagos — the distance a tomato margin has to survive</span></div>
+      <div class="stat"><b data-count="20" data-suffix="%">0</b><span>typical spoilage on a hot soft-crop haul, before any levy</span></div>
+      <div class="stat"><b data-count="16" data-prefix="≥ ">0</b><span>crates is where the example Zaria trip starts to pay at all</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="board">
+  <div class="shell-wide">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · The living price board</p>
+      <h2>Your prices beat my prices. Edit them.</h2>
+      <p class="lede">The figures below are a curated <strong>indicative reference</strong> for planning — not a live feed, and not a quotation. Type in what you actually saw this morning: every other tool on this page reads from what you typed, and it is remembered in this browser.</p>
+    </div>
+
+    <div class="board-tools reveal">
+      <div class="field inline-field">
+        <label for="as-of">Prices as of</label>
+        <input id="as-of" type="date">
+        <p class="help">Stored with your edits so a printed sheet carries its own date.</p>
+      </div>
+      <div class="field inline-field">
+        <label for="board-q">Find a commodity</label>
+        <input id="board-q" placeholder="tomato, garri, rice…" autocomplete="off">
+      </div>
+      <div class="field inline-field">
+        <label for="board-sort">Order by</label>
+        <select id="board-sort">
+          <option value="name">Name</option>
+          <option value="kg">Retail ₦ per kg</option>
+          <option value="spread">Retail ÷ farm-gate spread</option>
+          <option value="gain">₦ gain per crate, farm → city</option>
+        </select>
+      </div>
+      <div class="board-buttons">
+        <button class="btn btn-primary btn-sm" type="button" id="save-board">Save my prices</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="restore-board">Restore reference data</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="export-board">Export CSV</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="print-board">Print board</button>
+      </div>
+    </div>
+
+    <div class="table-wrap reveal board-wrap">
+      <table id="board-table">
+        <caption class="sr-only">Editable price board</caption>
+        <thead>
+          <tr>
+            <th scope="col">Commodity</th>
+            <th scope="col">Unit</th>
+            <th scope="col" class="num">Farm gate</th>
+            <th scope="col" class="num">Wholesale</th>
+            <th scope="col" class="num">City retail</th>
+            <th scope="col" class="num">Retail ₦/kg</th>
+            <th scope="col" class="num">Spread</th>
+            <th scope="col">Lean season</th>
+            <th scope="col">Markets sampled</th>
+          </tr>
+        </thead>
+        <tbody id="board-body"></tbody>
+        <tfoot id="board-foot"></tfoot>
+      </table>
+    </div>
+    <p class="tiny board-status" id="board-status" aria-live="polite">Reference data. Edit any price to start using your own.</p>
+    <div class="legend reveal">
+      <span><i class="dot dot-farm"></i> farm gate</span>
+      <span><i class="dot dot-whole"></i> wholesale market</span>
+      <span><i class="dot dot-retail"></i> city retail</span>
+      <span class="tiny">Spread = city retail ÷ farm gate. Lean season is when the reference index is highest, i.e. the month a stored crop is worth most.</span>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="convert">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Units and unit cost</p>
+      <h2>Which deal is actually cheaper?</h2>
+      <p class="lede">The most-used thing here. Every offer is converted to ₦ per kilogram using the unit weights on the board (editable in section 09), then ranked. A mudu is not a small cheap bag — it is a different price entirely.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card reveal" id="deal-form" autocomplete="off">
+        <div class="field">
+          <label for="deal-commodity">Commodity being compared</label>
+          <select id="deal-commodity"></select>
+          <p class="help" id="deal-unit-note">—</p>
+        </div>
+        <fieldset class="deal-set">
+          <legend>Offers on the table</legend>
+          <div id="deal-rows"></div>
+          <div class="row">
+            <button class="btn btn-ghost btn-sm" type="button" id="add-deal">Add an offer</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-deals">Reset to the example</button>
+          </div>
+        </fieldset>
+        <div class="form-grid">
+          <div class="field">
+            <label for="unit-kg-override">Override the unit weight (kg)</label>
+            <input id="unit-kg-override" type="number" min="0" max="500" step="0.05" value="0" inputmode="decimal">
+            <p class="help">0 = use the board weight. Set it when the crate in front of you is not the crate in the table.</p>
+          </div>
+          <div class="field">
+            <label for="deal-quantity">How much you actually need (kg)</label>
+            <input id="deal-quantity" type="number" min="1" max="10000" step="1" value="50" inputmode="numeric">
+            <p class="help">Used only to price the whole requirement under each offer — the ranking itself is per kilogram.</p>
+          </div>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big deal-panel">
+          <span>Cheapest deal, per kilogram</span>
+          <b id="deal-best">—</b>
+          <span id="deal-best-note">enter at least two offers</span>
+        </div>
+        <div class="verdict" id="deal-verdict">
+          <h4 id="deal-title">Waiting for offers</h4>
+          <p id="deal-body">Add a price and a unit for each offer.</p>
+        </div>
+        <div id="deal-bars"></div>
+        <div class="mini">
+          <div><span>Spread cheapest → dearest</span><b id="m-spread">—</b></div>
+          <div><span>Total cost, best</span><b id="m-total-best">—</b></div>
+          <div><span>Total cost, worst</span><b id="m-total-worst">—</b></div>
+        </div>
+        <p class="tiny">Per-kg figures are only as good as the unit weight. Confirm a crate, basket or mudu by weighing or counting once, then keep that number.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="haul">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · Haul or sell at the gate</p>
+      <h2>The spread has to survive the trip.</h2>
+      <p class="lede">Buy at one market, sell at another, and the answer is not the price difference — it is the price difference minus transport shared across your quantity, minus levies and porters, minus the share that spoils. The break-even quantity is the number that actually decides whether to load the truck.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card reveal haul-form" id="haul-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="h-commodity">Commodity</label>
+            <select id="h-commodity"></select>
+          </div>
+          <div class="field">
+            <label for="h-qty">Quantity you can buy (units of the commodity)</label>
+            <input id="h-qty" type="number" min="1" max="20000" step="1" value="350" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="h-origin">Buy at</label>
+            <select id="h-origin"></select>
+          </div>
+          <div class="field">
+            <label for="h-dest">Sell at</label>
+            <select id="h-dest"></select>
+          </div>
+          <div class="field">
+            <label for="h-dist">Distance (km)</label>
+            <input id="h-dist" type="number" min="0" max="2000" step="5" value="780" inputmode="numeric">
+            <p class="help" id="h-dist-note">auto-filled from the inter-city table when the pair is known</p>
+          </div>
+          <div class="field">
+            <label for="h-rate">Transport rate per km, one trip</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="h-rate" type="number" min="0" max="2000" step="1" value="244" inputmode="numeric"></div>
+            <p class="help">Used only when the fixed trip cost below is 0.</p>
+          </div>
+          <div class="field">
+            <label for="h-trip">What the driver quoted for the trip <span class="tiny">0 = compute rate × km</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="h-trip" type="number" min="0" max="3000000" step="5000" value="190000" inputmode="numeric"></div>
+            <p class="help">₦190,000 is the Zaria-to-Lagos figure in the worked example. ₦244 × 780 km would be ₦190,320 — the same trip, a different way of quoting it.</p>
+          </div>
+          <div class="field">
+            <label for="h-levy">Loading + at-on-arrival levies, whole trip</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="h-levy" type="number" min="0" max="500000" step="500" value="12000" inputmode="numeric"></div>
+            <p class="help">Union levies, local government charges, police/toll stops. Write them down; they are the line everyone forgets.</p>
+          </div>
+          <div class="field">
+            <label for="h-porter">Unloading and market porter, per unit</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="h-porter" type="number" min="0" max="5000" step="50" value="300" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="h-spoil">Spoilage on this crop class (%)</label>
+            <input id="h-spoil" type="number" min="0" max="90" step="1" value="20" inputmode="numeric">
+            <p class="help" id="h-spoil-note">—</p>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="haul-log">Log this trip to the trade log</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="haul-reset">Reset to the Zaria example</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big haul-panel">
+          <span>Net extra profit, whole trip</span>
+          <b id="haul-net">—</b>
+          <span id="haul-net-note">vs selling everything at the gate</span>
+        </div>
+        <div class="verdict" id="haul-verdict">
+          <h4 id="haul-title">Pick a commodity and two markets</h4>
+          <p id="haul-body">The break-even quantity appears here.</p>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Buy price per unit at origin</span><b id="r-buy">—</b></div>
+          <div class="line"><span>Sell price per unit at destination</span><b id="r-sell">—</b></div>
+          <div class="line"><span>Gross spread per unit</span><b id="r-gross">—</b></div>
+          <div class="line"><span>Transport per unit carried</span><b id="r-transport">—</b></div>
+          <div class="line"><span>Levies per unit carried</span><b id="r-levy">—</b></div>
+          <div class="line"><span>Porter / unloading per unit</span><b id="r-porter">—</b></div>
+          <div class="line"><span>Spoilage loss per unit carried</span><b id="r-spoil">—</b></div>
+          <div class="line line-strong"><span>Extra profit per unit carried</span><b id="r-per-unit">—</b></div>
+        </div>
+        <div class="mini">
+          <div><span>Break-even quantity</span><b id="m-be">—</b></div>
+          <div><span>Units that actually sell</span><b id="m-sell">—</b></div>
+          <div><span>Turnover on capital</span><b id="m-roi">—</b></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="split-2 trail-split">
+      <div class="card reveal">
+        <h3>The money trail, per unit sold</h3>
+        <p class="muted small-copy">Farm gate to city retail, drawn to scale. Everything below the top of the bar is somebody else’s take of your crop.</p>
+        <div id="trail-bars"></div>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>What the trip costs you per crate</h3>
+        <p class="muted small-copy">Fixed costs divided by the quantity you actually load. This is why a half-empty truck loses money on a crop that looks profitable.</p>
+        <div id="cost-bars"></div>
+        <div class="readout trail-readout">
+          <div class="line"><span>Total outlay (goods + trip)</span><b id="r-outlay">—</b></div>
+          <div class="line"><span>Revenue at destination</span><b id="r-revenue">—</b></div>
+          <div class="line line-strong"><span>Profit on the trip</span><b id="r-profit">—</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="season">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Season and storage</p>
+      <h2>Sell in the glut, or hold four months and take the risk.</h2>
+      <p class="lede">Each commodity carries a 12-month relative price index: harvest glut low, lean season high. It is a planning shape, not a forecast — set it against your own market’s history if you have it.</p>
+    </div>
+
+    <div class="ink-grid">
+      <div class="card card-ink reveal">
+        <h3>The index</h3>
+        <div class="field">
+          <label for="s-commodity">Commodity</label>
+          <select id="s-commodity"></select>
+        </div>
+        <div class="spark-wrap"><svg id="season-spark" class="spark" role="img" aria-label="Twelve month relative price index"></svg></div>
+        <div class="month-strip" id="month-strip"></div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="s-month">Month you are standing in</label>
+            <input id="s-month" type="range" min="0" max="11" step="1" value="10">
+            <p class="help" id="s-month-name">—</p>
+          </div>
+          <div class="field">
+            <label for="s-today">Or jump to today</label>
+            <button class="btn btn-ghost btn-sm ink-btn" type="button" id="s-today">Use this month</button>
+          </div>
+        </div>
+        <div class="verdict verdict-ink" id="s-verdict">
+          <h4 id="s-title">—</h4>
+          <p id="s-body">—</p>
+        </div>
+        <p class="tiny">Index 1.00 is the annual average for that commodity. Reference shape only — weather, road condition and a competitor’s stock can all beat the calendar.</p>
+      </div>
+
+      <form class="card card-ink reveal" id="store-form" data-delay="1">
+        <h3>Store it and sell later</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="st-buy-month">Buy in</label>
+            <select id="st-buy-month"></select>
+          </div>
+          <div class="field">
+            <label for="st-sell-month">Sell in</label>
+            <select id="st-sell-month"></select>
+          </div>
+          <div class="field">
+            <label for="st-buy">Buy price per unit (₦)</label>
+            <input id="st-buy" type="number" min="0" step="100" value="34000" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="st-sell">Sell price per unit (₦)</label>
+            <input id="st-sell" type="number" min="0" step="100" value="48000" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="st-loss">Storage loss (%)</label>
+            <input id="st-loss" type="number" min="0" max="80" step="0.5" value="6" inputmode="decimal">
+            <p class="help">Weight lost to weevils, drying, sprouting, theft and rats. For maize in a sack, 3–8% is the honest range; for yam in a shed it is worse.</p>
+          </div>
+          <div class="field">
+            <label for="st-cost">Storage cost per unit per month (₦)</label>
+            <input id="st-cost" type="number" min="0" step="100" value="350" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="st-finance">Financing cost per month (%)</label>
+            <input id="st-finance" type="number" min="0" max="15" step="0.1" value="2.5" inputmode="decimal">
+            <p class="help">What the money you tied up costs you — cooperative savings, 50:50, or the price of not buying something else.</p>
+          </div>
+          <div class="field">
+            <label for="st-months">Months held</label>
+            <input id="st-months" type="number" min="1" max="18" step="1" value="4" inputmode="numeric">
+          </div>
+        </div>
+        <div class="store-out">
+          <div class="mini mini-ink">
+            <div><span>Profit per unit</span><b id="st-profit">—</b></div>
+            <div><span>Return on money tied up</span><b id="st-roi">—</b></div>
+            <div><span>Break-even rise needed</span><b id="st-be">—</b></div>
+          </div>
+          <div class="verdict verdict-ink" id="st-verdict">
+            <h4 id="st-title">Enter the numbers</h4>
+            <p id="st-body">The storage decision appears here.</p>
+          </div>
+          <p class="tiny warn-note">Moisture and aflatoxin are not a cost line, they are a rejection. Grain stored above roughly 13–14% moisture cakes and grows aflatoxin, which no price rise makes acceptable to sell. Dry it properly or do not store it.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="negotiate">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Negotiation sheet</p>
+      <h2>Know your walk-away before the buyer opens.</h2>
+      <p class="lede">Anchors, target, floor and three concessions you get paid for. Fill your cost base from the haul calculator with one button so the floor is a real number, not a feeling.</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card reveal" id="neg-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="n-cost">Your landed cost per unit (₦)</label>
+            <input id="n-cost" type="number" min="0" step="100" value="12346" inputmode="numeric">
+            <p class="help">Everything it cost to get one saleable unit to the selling point.</p>
+          </div>
+          <div class="field">
+            <label for="n-qty">Quantity on offer (units)</label>
+            <input id="n-qty" type="number" min="1" max="20000" step="1" value="280" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="n-margin">Target margin over cost (%)</label>
+            <input id="n-margin" type="number" min="0" max="300" step="1" value="35" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="n-anchor">Anchor buffer above target (%)</label>
+            <input id="n-anchor" type="number" min="0" max="200" step="1" value="18" inputmode="numeric">
+            <p class="help">Your first number should be comfortably above your target so the buyer can “win” something you always intended to give.</p>
+          </div>
+          <div class="field">
+            <label for="n-open">Buyer’s opening offer, per unit (₦)</label>
+            <input id="n-open" type="number" min="0" step="100" value="11000" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="n-floor">Minimum margin you will accept (%)</label>
+            <input id="n-floor" type="number" min="0" max="100" step="0.5" value="8" inputmode="numeric">
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="neg-build">Build the sheet</button>
+          <button class="btn btn-accent" type="button" id="neg-copy">Copy to clipboard</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="neg-print">Print</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="neg-from-haul">Fill cost from the haul calculator</button>
+        </div>
+        <div class="field neg-out">
+          <label for="neg-text">Negotiation sheet</label>
+          <textarea id="neg-text" rows="16" readonly spellcheck="false" aria-live="polite"></textarea>
+          <p class="help" id="neg-status">Nothing built yet.</p>
+        </div>
+      </form>
+      <aside class="reveal" data-delay="1">
+        <div class="card">
+          <h3>The four numbers</h3>
+          <div class="readout">
+            <div class="line"><span>Anchor — open here</span><b id="g-anchor">—</b></div>
+            <div class="line"><span>Target — where you want to land</span><b id="g-target">—</b></div>
+            <div class="line"><span>Walk-away — below this, no deal</span><b id="g-walk">—</b></div>
+            <div class="line line-strong"><span>Per-unit floor (your cost)</span><b id="g-floor">—</b></div>
+          </div>
+          <div id="neg-bars"></div>
+        </div>
+        <div class="card">
+          <h3>Concession ladder</h3>
+          <ol class="steps" id="neg-steps"></ol>
+          <p class="tiny">Never concede without taking something back: volume, cash up front, or the buyer paying return transport.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="fair">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Is this price fair today?</p>
+      <h2>For the buyer standing at the stall.</h2>
+      <p class="lede">Takes the commodity, the city and the quantity, and compares the quote against the middle half of this board — the band between the 25th and 75th percentile of what that good is being quoted at in that city right now.</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card reveal" id="fair-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="f-commodity">Commodity</label>
+            <select id="f-commodity"></select>
+          </div>
+          <div class="field">
+            <label for="f-city">City / market</label>
+            <select id="f-city"></select>
+          </div>
+          <div class="field">
+            <label for="f-qty">Quantity quoted</label>
+            <input id="f-qty" type="number" min="0.05" max="1000" step="0.05" value="1" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="f-unit">Quoted in</label>
+            <select id="f-unit"></select>
+          </div>
+          <div class="field">
+            <label for="f-price">Total price asked (₦)</label>
+            <input id="f-price" type="number" min="0" step="500" value="85000" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="f-tier">What the seller claims it is</label>
+            <select id="f-tier">
+              <option value="retail">City retail</option>
+              <option value="whole">Wholesale market</option>
+              <option value="farm">Farm gate</option>
+            </select>
+          </div>
+        </div>
+        <p class="help">A bag of rice at ₦85,000 in Abuja is the question this box exists to answer.</p>
+      </form>
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big fair-panel">
+          <span>Fair today, this city</span>
+          <b id="fair-band">—</b>
+          <span id="fair-band-note">pick a commodity</span>
+        </div>
+        <div class="verdict" id="fair-verdict">
+          <h4 id="fair-title">Awaiting a quote</h4>
+          <p id="fair-body">Enter what you are being asked to pay.</p>
+        </div>
+        <div id="fair-bars"></div>
+        <div class="mini">
+          <div><span>Your price per unit</span><b id="m-fair-unit">—</b></div>
+          <div><span>Band midpoint</span><b id="m-fair-mid">—</b></div>
+          <div><span>Distance from band</span><b id="m-fair-diff">—</b></div>
+        </div>
+        <p class="tiny">Prices move weekly, sometimes daily, and a quote can be high because the goods are better, fresher or delivered. This band is a starting point for the conversation, not a verdict on the seller.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="log">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">08 · Trade log</p>
+      <h2>Write the trades down. A cooperative needs the paper.</h2>
+      <p class="lede">Every buy and sell you log is compared with the board, so you can see whether your own average is beating the market or only feeling like it is. Saved in this browser, exportable as CSV, printable for a union meeting.</p>
+    </div>
+
+    <div class="log-grid">
+      <form class="card card-ink reveal" id="log-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="l-date">Date</label>
+            <input id="l-date" type="date">
+          </div>
+          <div class="field">
+            <label for="l-commodity">Commodity</label>
+            <select id="l-commodity"></select>
+          </div>
+          <div class="field">
+            <label for="l-dir">Direction</label>
+            <select id="l-dir"><option value="sell">Sold</option><option value="buy">Bought</option></select>
+          </div>
+          <div class="field">
+            <label for="l-qty">Quantity</label>
+            <input id="l-qty" type="number" min="0" max="100000" step="1" value="10" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="l-unit">Unit</label>
+            <select id="l-unit"></select>
+          </div>
+          <div class="field">
+            <label for="l-price">Price per unit (₦)</label>
+            <input id="l-price" type="number" min="0" step="100" value="0" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="l-market">Market</label>
+            <select id="l-market"></select>
+          </div>
+          <div class="field">
+            <label for="l-notes">Note</label>
+            <input id="l-notes" maxlength="80" placeholder="e.g. buyer paid cash, took return load">
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-accent" type="button" id="log-add">Add to the log</button>
+          <button class="btn btn-ghost btn-sm ink-btn" type="button" id="log-export">Export CSV</button>
+          <button class="btn btn-ghost btn-sm ink-btn" type="button" id="log-print">Print sheet</button>
+          <button class="btn btn-ghost btn-sm ink-btn" type="button" id="log-clear">Clear log</button>
+        </div>
+      </form>
+
+      <div class="reveal" data-delay="1">
+        <div class="mini mini-ink log-mini">
+          <div><span>Trades logged</span><b id="lg-count">0</b></div>
+          <div><span>Total bought</span><b id="lg-buy">—</b></div>
+          <div><span>Total sold</span><b id="lg-sell">—</b></div>
+          <div><span>Realised margin</span><b id="lg-margin">—</b></div>
+        </div>
+        <div class="table-wrap table-ink">
+          <table>
+            <caption class="sr-only">Per commodity log summary against the board</caption>
+            <thead><tr><th>Commodity</th><th class="num">Bought</th><th class="num">Avg buy</th><th class="num">Sold</th><th class="num">Avg sell</th><th class="num">Board retail</th><th class="num">Margin/unit</th></tr></thead>
+            <tbody id="log-summary"></tbody>
+          </table>
+        </div>
+        <p class="tiny log-bests" id="log-bests">No trades yet.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap table-ink reveal log-table">
+      <table>
+        <caption class="sr-only">Logged trades</caption>
+        <thead><tr><th>Date</th><th>Commodity</th><th>Dir</th><th class="num">Qty</th><th>Unit</th><th class="num">Price/unit</th><th class="num">Value</th><th>Market</th><th>Note</th><th></th></tr></thead>
+        <tbody id="log-body"></tbody>
+        <tfoot id="log-month"></tfoot>
+      </table>
+    </div>
+    <p class="tiny roster-empty" id="log-empty">Nothing logged. Add a trade above, or use <b>Log this trip</b> in the haul calculator.</p>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">09 · Assumptions, in the open</p>
+      <h2>Every number the tool invents is editable.</h2>
+      <p class="lede">Unit weights, spoilage rates, market multipliers and the default transport rate all drive the answers. Change them to what your market actually does and every calculation on this page follows.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Unit weights in kilograms (editable)</summary>
+          <div class="acc-body">
+            <div class="table-wrap table-sm">
+              <table>
+                <caption class="sr-only">Editable unit weights</caption>
+                <thead><tr><th>Unit</th><th class="num">kg</th><th>Where it is used</th></tr></thead>
+                <tbody id="unit-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">A “crate” of tomato and a “crate” of egg are not the same object. Where a commodity defines its own weight on the board, the commodity wins.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-units">Restore reference weights</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Spoilage by crop class (editable)</summary>
+          <div class="acc-body">
+            <div class="table-wrap table-sm">
+              <table>
+                <caption class="sr-only">Editable spoilage rates</caption>
+                <thead><tr><th>Class</th><th class="num">Typical loss %</th><th>Notes</th></tr></thead>
+                <tbody id="spoil-body"></tbody>
+              </table>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-spoil">Restore reference rates</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Market multipliers and default transport</summary>
+          <div class="acc-body">
+            <div class="table-wrap table-sm">
+              <table>
+                <caption class="sr-only">Editable market multipliers</caption>
+                <thead><tr><th>Market</th><th>City</th><th class="num">Multiplier</th><th>Role</th></tr></thead>
+                <tbody id="market-body"></tbody>
+              </table>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="rate-default">Default transport rate per km (₦)</label>
+                <input id="rate-default" type="number" min="0" max="2000" step="1" value="244">
+              </div>
+              <div class="field">
+                <label for="season-amp">Seasonal swing applied (± fraction)</label>
+                <input id="season-amp" type="number" min="0" max="0.8" step="0.01" value="0.28">
+              </div>
+            </div>
+            <p class="tiny">The multiplier scales a commodity’s tier price for that market’s own cost of doing business: rent, levies, porter culture, distance from the farm belt. Seasonal index = 1 ± swing, peaking in the lean month.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-markets">Restore reference markets</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>The formulas, written out</summary>
+          <div class="acc-body">
+            <ul class="checklist">
+              <li><b>Per-unit contribution</b> = (1 − spoilage) × sell price − buy price − porter fee.</li>
+              <li><b>Extra profit</b> = quantity × contribution − (trip cost + levies). Baseline is selling everything at the origin price.</li>
+              <li><b>Break-even quantity</b> = (trip cost + levies) ÷ contribution, rounded up, when contribution is positive.</li>
+              <li><b>Cost per unit sold</b> = total outlay ÷ units that survive to be sold, so spoilage shows up as an inflated goods cost.</li>
+              <li><b>Store-to-sell profit</b> = sell price × (1 − loss) − buy price − storage cost × months − buy price × financing × months.</li>
+              <li><b>Fair band</b> = 25th–75th percentile of the tier price for that commodity across every desk sampled in that city, each scaled by that desk’s cost multiplier only. Your board is read as <em>this week’s</em> prices, so the month’s seasonal index is never applied twice — the season panel tells you which way the band is about to move instead.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>What this cannot do, and where real numbers come from</summary>
+          <div class="acc-body">
+            <p>This is a <strong>curated indicative dataset for planning</strong>, not a live price feed, and it is not a quotation service. Your edited prices always take precedence over the reference figures — that is the point of the board.</p>
+            <p>Real prices come from people who are at the market: the market union or market women’s association at the specific market you trade in; the commodity traders’ association for your crop; the federal and state agricultural marketing price reports published each month (FMARD and NAICS series, and the commodity price tables the state marketing boards issue); and your own ledger of trades. Ask for the dated table rather than trusting any website, including this one.</p>
+            <p>What it cannot do: predict tomorrow’s price, account for a road closure, an harvest failure, a border, a fuel increase, a union dispute, or a buyer with better information than you. It cannot tell you whether a specific seller is cheating you — only whether the number is inside the ordinary range.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="card reveal worked-card" data-delay="1">
+        <h3>Worked example — Zaria to Lagos</h3>
+        <p class="muted small-copy">350 crates of tomato bought at ₦9,000 at the farm gate, sold at ₦28,000 in Lagos, 780 km, ₦190,000 trip, ₦12,000 levies, ₦300 per crate porters, 20% spoilage. Recomputed live from whatever you typed.</p>
+        <ol class="steps" id="worked"></ol>
+        <div class="worked-foot">
+          <span class="badge badge-ok" id="worked-verdict">—</span>
+          <b class="mono big-num" id="worked-net">—</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="limits">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">10 · Honest limits</p>
+      <h2>A planning sheet, not a market oracle.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal"><span class="card-num">NOT A FEED</span><h3>Indicative, editable, dated</h3><p class="muted">Reference prices are a curated starting point with an “as of” date you set. They are not scraped, quoted or guaranteed, and they go stale on purpose so you replace them.</p></div>
+      <div class="card reveal" data-delay="1"><span class="card-num">NO FAKE PRECISION</span><h3>Two significant figures, honestly</h3><p class="muted">Spoilage, multipliers and seasonal swings are rounded planning shapes. Nothing here claims to know your market to the naira — the arithmetic is exact, the inputs are not.</p></div>
+      <div class="card reveal" data-delay="2"><span class="card-num">SOURCES, NOT CITATIONS</span><h3>Go and ask</h3><p class="muted">Market unions, traders’ associations, the monthly public agricultural price reports, and your own trade log. This tool deliberately names no source it cannot stand behind.</p></div>
+    </div>
+    <div class="quote reveal limits-quote">
+      <p>“The trader who knows the per-kilometre cost of a trip is the one still trading in March.”</p>
+      <footer>Everything here is arithmetic you can do on paper. The tool’s only real value is that it makes you write the costs down before you commit the capital.</footer>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">₦</span><span style="color:#fff">MarketRate<small style="color:rgba(255,255,255,.6)">the fair price today</small></span></a>
+        <p style="margin-top:14px;max-width:46ch">Built for the seller with 40 crates and the buyer with one question. No account, no upload, no server — your prices stay on your device.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#board">Price board</a><br><a href="#convert">Units and deals</a><br><a href="#haul">Haul calculator</a><br><a href="#season">Season and storage</a><br><a href="#log">Trade log</a><br><a href="data.html">Market data</a><br><a href="playbook.html">Trading playbook</a><br><a href="record.html">Trade log</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../payrite/">Payroll &amp; PAYE</a><br><a href="../sealcheck/">Medicine check</a><br><a href="../suncost/">Solar sizing</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Indicative planning figures. Not a price quotation or a market feed.</span><span class="mono">MarketRate · runs offline · your edits stay in your browser</span></div>
+  </div>
+</footer>
+
+<div class="toast" role="status"></div>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

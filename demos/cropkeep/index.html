@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CropKeep — stop losing a third of your harvest after it leaves the farm</title>
+<meta name="description" content="Project post-harvest loss for Nigerian tomatoes, pepper, maize, cassava and more, test the handling fixes and storage technologies against your own budget and grid, and rank what actually pays back. Runs entirely in your browser.">
+<meta name="theme-color" content="#4c6b21">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="cropkeep.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%234c6b21'/><path d='M16 6c5 3 7 7 7 11a7 7 0 11-14 0c0-4 2-8 7-11z' fill='%23c9973a'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#calculator">Skip to the loss calculator</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">✦</span><span>CropKeep<small>Post-harvest loss maths</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#calculator">Loss</a>
+      <a href="#shelf">Shelf life</a>
+      <a href="#options">Storage options</a>
+      <a href="#batches">Batches</a>
+      <a href="#rules">Limits</a>
+      <a href="data.html">Loss data</a>
+      <a href="playbook.html">Handling playbook</a>
+      <a href="record.html">Batch ledger</a>
+      <a class="btn btn-ink btn-sm" href="#calculator">Count my loss</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Post-harvest loss · Nigeria</p>
+      <h1>A third of what you grew<br><em>never reaches a buyer.</em></h1>
+      <p class="lede">It is not pests and it is not bad luck. It is field heat, sacks instead of crates, a truck with no vents and a market you reach two days after the tomato decided to ripen. CropKeep puts money on each of those decisions and ranks the fixes by what they return to you this season.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#calculator">Count my loss</a>
+        <a class="btn btn-ghost" href="#options">Rank the fixes <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="33" data-suffix="–45%">0</b><span>Typical loss on perishables between farm and buyer</span></div>
+        <div class="stat"><b data-count="15" data-suffix="–20%">0</b><span>Loss on stored maize, rice and groundnut</span></div>
+        <div class="stat"><b data-count="4.2" data-decimals="1" data-suffix=" cycles">0</b><span>What one charcoal cooler takes to pay for itself</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame float"><img src="../_media/cropkeep-hero.webp" width="1536" height="1024" alt="Crates of tomatoes shaded at a Nigerian roadside market, with a stack of sack-loaded produce behind them" fetchpriority="high"></div>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">01 · Where the harvest goes</p>
+        <h2>The loss happens after the farm gate.</h2>
+        <p class="lede">Everything you spent on seed, fertiliser, labour and fuel is already in the crate. What happens next is pure margin — and it is decided by six or seven small choices, none of which anyone writes down.</p>
+        <div class="stat-strip">
+          <div class="stat"><b data-count="40" data-suffix="%">0</b><span>Indicative unimproved loss on tomato in the hot season</span></div>
+          <div class="stat"><b data-count="180" data-prefix="₦" data-suffix=" /kg">0</b><span>Farm-gate value the worked example uses</span></div>
+          <div class="stat"><b data-count="190000" data-prefix="₦">0</b><span>Indicative price of a charcoal cooler that holds 15 °C down</span></div>
+        </div>
+        <p class="tiny">Ranges drawn from published post-harvest literature on Nigerian perishables and stored grain. Your season will differ; measure your own batches in the ledger below.</p>
+      </div>
+      <div class="stack">
+        <article class="card reveal" data-delay="1">
+          <span class="card-num">Case 01</span>
+          <h3>Tomato farmer, Zaria / Jalingo</h3>
+          <p>Cuts at noon because the truck cannot wait, loads in sacks, sells the remainder at the gate for a third of the price. <b>The panic sale is not a market problem, it is a temperature problem.</b></p>
+        </article>
+        <article class="card reveal" data-delay="2">
+          <span class="card-num">Case 02</span>
+          <h3>Maize in an open store, Sabo Gari</h3>
+          <p>15–20% down to weevils, moisture and mould — and the mould is the dangerous one. A ₦3,500 hermetic bag per 50 kg is the cheapest technology on this page.</p>
+        </article>
+        <article class="card reveal" data-delay="3">
+          <span class="card-num">Case 03</span>
+          <h3>Pepper aggregator to Lagos</h3>
+          <p>Two nights on the road decides the whole trip. Covered load, vented stacks and shade on arrival are handling, not hardware — and they are free.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calculator">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Your harvest, in naira</p>
+      <h2>What is this batch actually worth — and what do you lose?</h2>
+      <p class="lede">Pick the crop, state the tonnage and the gate price, and say how long it takes to reach a buyer. Then tick the handling you really do, not the handling you wish you did. The decay bar below is the same batch, drawn as loss.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="loss-form" autocomplete="off">
+        <div class="block-head">
+          <h3>The batch</h3>
+          <span class="tiny mono" id="batch-totals">—</span>
+        </div>
+        <div class="field">
+          <label for="crop">Crop</label>
+          <select id="crop" name="crop"></select>
+          <p class="help" id="crop-help">—</p>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="batch-kg">Harvested <span class="tiny">kg</span></label>
+            <input id="batch-kg" name="batch-kg" type="number" min="0" max="200000" step="50" value="1000" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="value-kg">Farm-gate value <span class="tiny">₦ per kg</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="value-kg" name="value-kg" type="number" min="0" max="100000" step="10" value="180" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="days-to-market">Days to reach a buyer</label>
+            <input id="days-to-market" name="days-to-market" type="number" min="0" max="30" step="0.5" value="3" inputmode="decimal">
+            <p class="help">Harvest to sale, including nights in transit or at the gate.</p>
+          </div>
+          <div class="field">
+            <label for="storage-temp">Average temperature <span class="tiny">°C, where it actually sits</span></label>
+            <input id="storage-temp" name="storage-temp" type="number" min="0" max="45" step="1" value="28" inputmode="numeric">
+            <p class="help">Shady outdoor yard, sack in a corridor, the back of a truck — be honest, it moves the answer.</p>
+          </div>
+          <div class="field">
+            <label for="baseline-loss">Unimproved loss on this batch <span class="tiny">%</span></label>
+            <input id="baseline-loss" name="baseline-loss" type="number" min="0" max="90" step="1" value="40" inputmode="numeric">
+            <p class="help" id="baseline-help">—</p>
+          </div>
+          <div class="field">
+            <label for="cycles">Harvest cycles this season</label>
+            <input id="cycles" name="cycles" type="number" min="1" max="40" step="1" value="8" inputmode="numeric">
+            <p class="help">Tomato picks roughly weekly; maize is one pass. Payback is counted in cycles.</p>
+          </div>
+        </div>
+
+        <div class="block-head split-head">
+          <h3>Handling checklist</h3>
+          <p class="tiny">Each tick is worth the points shown. The total can never fall below the floor for the crop — the last few percent is heat and road, not carelessness.</p>
+        </div>
+        <div class="preset-row">
+          <span class="tiny">Preset:</span>
+          <button class="pill" type="button" data-credit-preset="none">Nothing special</button>
+          <button class="pill is-on" type="button" data-credit-preset="crates">Crates + shade</button>
+          <button class="pill" type="button" data-credit-preset="all">Everything done right</button>
+        </div>
+        <ul class="credit-list" id="credit-list"></ul>
+
+        <div class="block-head split-head">
+          <h3>Your constraints</h3>
+          <p class="tiny">These are what the technology ranking is scored against — change them and the top three change.</p>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="budget">Cash available this season</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="budget" name="budget" type="number" min="0" step="25000" value="250000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="grid">Power at the store</label>
+            <select id="grid" name="grid">
+              <option value="none" selected>No reliable power</option>
+              <option value="solar">Small solar setup</option>
+              <option value="grid">Grid, mostly there</option>
+              <option value="gen">Generator on tap</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="value-multiplier">Buyer premium on clean produce <span class="tiny">%</span></label>
+            <input id="value-multiplier" name="value-multiplier" type="number" min="0" max="60" step="5" value="15" inputmode="numeric">
+            <p class="help">What an unbruised, well-timed crate sells for above the panic price. Applied to what you save.</p>
+          </div>
+          <div class="field">
+            <label for="batch-name">Batch label <span class="tiny">for the ledger</span></label>
+            <input id="batch-name" name="batch-name" maxlength="50" placeholder="e.g. Bed 4 — Tuesday pick">
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="log-batch">Add this batch to the ledger</button>
+          <button class="btn btn-ghost" type="reset" id="reset-form">Reset</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big decay-card">
+          <span>Projected loss on this batch</span>
+          <b id="loss-out">₦0</b>
+          <div class="decay-track" aria-hidden="true"><span class="decay-fill" id="decay-fill"><span class="decay-tip"></span></span><span class="decay-goal" id="decay-goal"></span></div>
+          <span id="decay-caption">—</span>
+        </div>
+
+        <div class="readout">
+          <div class="line"><span>Value of what you harvested</span><b id="crop-out">—</b></div>
+          <div class="line"><span>Unimproved loss (literature range)</span><b id="baseline-out">—</b></div>
+          <div class="line"><span>Handling credits you earned</span><b id="handling-out">—</b></div>
+          <div class="line line-strong"><span>Projected loss</span><b id="adjusted-out">—</b></div>
+          <div class="line"><span>Shelf life left on arrival</span><b id="shelf-out">—</b></div>
+          <div class="line"><span>Days to a buyer</span><b id="days-out">—</b></div>
+        </div>
+
+        <div class="verdict" id="survival">
+          <h4 id="verdict-title">Enter the batch</h4>
+          <p id="verdict-body">The arrival verdict — survives, or how many days late — appears here.</p>
+        </div>
+
+        <div class="mini">
+          <div><span>Recovered this batch</span><b id="recovered-out">—</b></div>
+          <div><span>Avoided per cycle</span><b id="avoided-cycle">—</b></div>
+          <div><span>Top option, net / season</span><b id="net-season">—</b></div>
+        </div>
+        <p class="tiny">Loss percentages are field estimates from published post-harvest ranges, not measurements of your crop. Confirm with your own weigh-in — the ledger below is built for exactly that.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="shelf">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Temperature is the whole game</p>
+      <h2>Every 10 °C you take off roughly doubles the life left.</h2>
+      <p class="lede">This is the Q10 rule horticulture has used for a century: for each 10 °C drop, the biochemical clock slows by about half. CropKeep applies it as <span class="mono">life = base days × 0.5^((T − base temp)/10)</span>, then asks the only question that matters — does it survive the trip?</p>
+    </div>
+
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Your crop against temperature</h3>
+        <p class="muted small-copy" id="ladder-caption">—</p>
+        <div class="ladder" id="temp-ladder"></div>
+        <p class="tiny">Field estimates. Chilling-sensitive crops (tomato, banana, garden egg) are damaged below roughly 10–12 °C, so "colder" is not automatically "better" — the ladder flags it.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Days of life, same crop</h3>
+        <p class="muted small-copy">Where the batch sits now, versus what each storage option would actually give it.</p>
+        <div id="shelf-bars"></div>
+        <div class="field temp-field">
+          <label for="cool-temp">Test any temperature <span class="tiny">°C</span></label>
+          <input id="cool-temp" name="cool-temp" type="number" min="-5" max="45" step="1" value="13" inputmode="numeric">
+          <p class="help" id="cool-temp-out">—</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="options">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · What to buy, and what to skip</p>
+      <h2>Ranked for this answer set, not in general.</h2>
+      <p class="lede">Nine interventions, from a ₦3,500 hermetic bag to a ₦950,000 cold room. Each is scored against your crop class, your tonnage, your distance to market and the power you have — and the ranking is by net naira left this season after paying for the thing itself.</p>
+    </div>
+
+    <div class="table-wrap reveal matrix-wrap">
+      <table id="matrix">
+        <caption class="sr-only">Storage and handling options scored against your situation</caption>
+        <thead>
+          <tr>
+            <th scope="col">Option</th>
+            <th scope="col">Fit</th>
+            <th scope="col">Cost this season</th>
+            <th class="num" scope="col">Loss with it</th>
+            <th class="num" scope="col">Points saved</th>
+            <th class="num" scope="col">Avoided / cycle</th>
+            <th class="num" scope="col">Avoided / season</th>
+            <th class="num" scope="col">Net / season</th>
+            <th class="num" scope="col">Payback</th>
+            <th scope="col"><span class="sr-only">Choose</span></th>
+          </tr>
+        </thead>
+        <tbody id="matrix-body"></tbody>
+      </table>
+    </div>
+
+    <div class="rank-cards" id="top-picks"></div>
+
+    <div class="card reveal why-card">
+      <h3>Why the others lost</h3>
+      <p class="muted small-copy">Every rejected or outscored option, in one sentence, for this exact answer set.</p>
+      <ul class="checklist crosslist" id="why-rest"></ul>
+    </div>
+
+    <div class="card reveal option-card" id="option-card" aria-live="polite">
+      <div class="option-head">
+        <div>
+          <h3 id="option-name">Select an option</h3>
+          <p class="tiny" id="option-sub">—</p>
+        </div>
+        <span class="badge" id="option-badge">—</span>
+      </div>
+      <p class="option-fit" id="option-hint">—</p>
+      <div class="option-stats">
+        <div><span>Cost this season</span><b id="option-cost">—</b></div>
+        <div><span>Loss avoided per cycle</span><b id="option-avoided">—</b></div>
+        <div><span>Payback</span><b id="option-cycles">—</b></div>
+        <div><span>Payback in months</span><b id="option-months">—</b></div>
+      </div>
+      <div id="option-bars"></div>
+      <p class="tiny" id="option-co2">—</p>
+      <p class="tiny" id="option-note">—</p>
+      <div class="row option-actions">
+        <button class="btn btn-primary btn-sm" type="button" id="select-option">Use this option for the planner</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="planner">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Harvest window planner</p>
+      <h2>The week you will be forced to sell cheap.</h2>
+      <p class="lede">Five weeks of flow against the storage you can actually afford. Any week where volume beats capacity is a panic-selling week — and that, not the market, is why the price collapses on you.</p>
+    </div>
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Weekly flow</h3>
+        <div class="field">
+          <label for="harvest-start">First harvest date</label>
+          <input id="harvest-start" name="harvest-start" type="date" value="2026-01-05">
+        </div>
+        <div class="week-grid" id="week-inputs"></div>
+        <p class="tiny" id="capacity-line">—</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Volume against capacity</h3>
+        <div id="planner-bars"></div>
+        <div class="panic-note" id="panic-line">—</div>
+        <p class="tiny" id="planner-note">—</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="batches">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Batch ledger</p>
+      <h2>Predict the loss. Then weigh it. That is the audit.</h2>
+      <p class="lede">Log a batch, sell it, come back and enter what you actually lost. The gap between the two is the only number that teaches you anything — and the sheet you can hand to a store manager or cooperative is the one this table prints.</p>
+    </div>
+    <div class="roster-tools reveal">
+      <button class="btn btn-accent btn-sm" type="button" id="export-csv">Export CSV</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="print-record">Print batch record</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="clear-batches">Clear ledger</button>
+      <span class="tiny roster-count" id="batch-count">0 batches</span>
+    </div>
+    <div class="table-wrap reveal">
+      <table id="batch-table">
+        <caption class="sr-only">Saved batches</caption>
+        <thead>
+          <tr>
+            <th scope="col">Batch</th>
+            <th class="num" scope="col">Date</th>
+            <th scope="col">Crop</th>
+            <th class="num" scope="col">kg</th>
+            <th class="num" scope="col">Value</th>
+            <th scope="col">Storage chosen</th>
+            <th class="num" scope="col">Projected loss</th>
+            <th class="num" scope="col">Actual loss ₦</th>
+            <th class="num" scope="col">Difference</th>
+            <th scope="col"><span class="sr-only">Remove</span></th>
+          </tr>
+        </thead>
+        <tbody id="batch-body"></tbody>
+        <tfoot id="batch-foot"></tfoot>
+      </table>
+    </div>
+    <p class="tiny roster-empty" id="batch-empty">No batches yet. Fill the calculator and press <b>Add this batch to the ledger</b>. Enter the actual loss after the sale — that is what makes the estimate honest.</p>
+
+    <div class="record-sheet" id="record-sheet" aria-hidden="true">
+      <h3>Post-harvest batch record — cooperative store copy</h3>
+      <p class="record-sub" id="record-meta">—</p>
+      <dl id="record-list"></dl>
+      <p class="record-foot">Produced by CropKeep. Loss percentages are projected from published post-harvest ranges and the handling recorded above; the actual figure is a weigh-in at sale. Aflatoxin and other safety findings require laboratory testing — this sheet is not evidence of safety.</p>
+    </div>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Numbers in the open</p>
+      <h2>Change any assumption. The ranking follows.</h2>
+      <p class="lede">If your cooperative gets hermetic bags at ₦2,800, or your tomato baseline is 45% not 40%, put it in. Everything downstream — the decay bar, the matrix, the top three, the payback — recomputes live.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Crop dataset <span class="tiny">baseline loss, floor, shelf life</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable crop assumptions</caption>
+                <thead><tr><th>Crop</th><th class="num">Baseline %</th><th class="num">Floor %</th><th class="num">Days</th><th class="num">Base °C</th></tr></thead>
+                <tbody id="crop-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Baseline is the mid-point of published unimproved-loss ranges for that crop in Nigeria; floor is the best loss achievable by handling alone, without cooling. Shelf life is the quoted days at the base temperature.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Handling credits <span class="tiny">percentage points, editable</span></summary>
+          <div class="acc-body">
+            <ul class="credit-const-list" id="credit-defaults"></ul>
+            <button class="btn btn-ghost btn-sm" type="button" id="restore-credits">Restore default credits</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Loss reduction per option <span class="tiny">points, editable</span></summary>
+          <div class="acc-body"><div class="const-grid" id="const-achieved"></div></div>
+        </details>
+        <details class="acc">
+          <summary>Indicative prices and costs <span class="tiny">2026 market</span></summary>
+          <div class="acc-body"><div class="const-grid" id="const-price"></div></div>
+        </details>
+        <details class="acc">
+          <summary>Model constants</summary>
+          <div class="acc-body"><div class="const-grid" id="const-sizing"></div></div>
+        </details>
+        <div class="row const-actions">
+          <button class="btn btn-ghost btn-sm" type="button" id="reset-assumptions">Restore all defaults</button>
+        </div>
+
+        <details class="acc">
+          <summary>Honest limits — read this before quoting the numbers</summary>
+          <div class="acc-body">
+            <ul class="checklist crosslist" id="limits"></ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h3>Worked example</h3>
+        <p class="muted small-copy">1,000 kg of tomato at ₦180/kg — the arithmetic, shown every time you change a tick.</p>
+        <ol class="steps" id="worked"></ol>
+        <p class="tiny">Recomputed live from whatever is in the calculator above.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="faq">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">08 · Questions people actually ask</p>
+      <h2>Before you spend anything.</h2>
+    </div>
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Are these loss figures measured on my farm?</summary>
+          <div class="acc-body"><p>No. They are mid-points of published post-harvest loss ranges for each crop in Nigerian conditions, and they move with season, variety, ridge position and how the pick was done. Treat them as a starting hypothesis: log three batches in the ledger, enter the actual loss after the sale, and use <em>your</em> baseline from then on.</p></div>
+        </details>
+        <details class="acc">
+          <summary>Is a charcoal cooler or a CoolBot cold room the better buy?</summary>
+          <div class="acc-body"><p>At 1,000 kg a cycle the charcoal cooler pays back in a handful of cycles; the cold room needs volume and reliable power to get there at all. Change the tonnage and the grid answer above and watch the top three reorder — that reordering is the actual point of this tool.</p></div>
+        </details>
+        <details class="acc">
+          <summary>What about aflatoxin in stored maize?</summary>
+          <div class="acc-body"><p>The calculator can tell you that hermetic storage suppresses mould growth by limiting moisture and oxygen. It cannot tell you whether your maize is safe to sell or eat. That is a laboratory result, and no arithmetic on this page substitutes for it.</p></div>
+        </details>
+      </div>
+      <div class="reveal" data-delay="1">
+        <details class="acc">
+          <summary>Why can I not push loss below a certain number?</summary>
+          <div class="acc-body"><p>Because every crop has a floor: bruising in the last sackful, road vibration, a buyer who inspects badly. Handling credits stop there on purpose. If a tool promises you 0% loss on tomato with crates and shade, it is selling you a dream, not a system.</p></div>
+        </details>
+        <details class="acc">
+          <summary>What this tool does not do</summary>
+          <div class="acc-body">
+            <ul class="checklist crosslist">
+              <li>No cold-chain audit — it never measures your actual transit temperature, and a logger for two weeks would change these answers.</li>
+              <li>No market prices. You enter the farm-gate value; nobody can forecast the price in Bodija on a Tuesday.</li>
+              <li>No safety or quality judgement: aflatoxin and pesticide residue need laboratory testing.</li>
+              <li>No finance quotes, no insurance, no subsidy or intervention programmes. Prices are indicative 2026 market rates.</li>
+              <li>No variety, altitude or rain-year modelling — those matter more than anything on this page.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Who should confirm these figures?</summary>
+          <div class="acc-body"><p>Your state agricultural development programme, a commodity association post-harvest officer, or a commercial cold-chain audit. Bring the printed batch record — three weeks of weighed losses is a better brief than any estimate, including this one.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">✦</span><span style="color:#fff">CropKeep<small style="color:rgba(255,255,255,.6)">Post-harvest loss maths</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Built for the farmer and the aggregator who already paid for the crop and are about to lose it in transit. No account, no upload, no lead form.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#calculator">Loss</a><br><a href="#shelf">Shelf life</a><br><a href="#options">Storage options</a><br><a href="#batches">Batches</a><br><a href="#rules">Limits</a><br><a href="data.html">Loss data</a><br><a href="playbook.html">Handling playbook</a><br><a href="record.html">Batch ledger</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../suncost/">Solar vs generator</a><br><a href="../payrite/">Payroll &amp; PAYE</a><br><a href="../sealcheck/">Medicine check</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Field estimates from published ranges. Confirm locally.</span><span class="mono">CropKeep · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

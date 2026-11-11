@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your saved school fees payment plans · FeesPlan record</title>
+<meta name="description" content="Every dated fee plan you saved in FeesPlan, in one sortable table with the children planned for, the total billed, the total scheduled, the next payment date, CSV export and a print-ready sheet. Stored on your device only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="feesplan.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%232f4a8c'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>FP</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">FP</span><span>FeesPlan<small>School fees, planned</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Planner</a>
+      <a href="data.html">Fees reference</a>
+      <a href="playbook.html">Fees playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Saved plans</a>
+      <a class="btn btn-primary btn-sm" href="index.html#plan">Build a dated plan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">FeesPlan</a> <span aria-hidden="true">/</span> <span aria-current="page">Saved plans</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record · this device only</p>
+    <h1 class="reveal" data-delay="1">The plans you have<br>already made.</h1>
+    <p class="lede reveal" data-delay="2">FeesPlan keeps every dated plan you build in the payment plan section. This page reads them back: the term total, the shape you agreed, how many payments are ticked off, what is still owed and the next date that matters. It is the sheet you take to the bursary.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>No upload</b> the plans stay in this browser</span><span><b>CSV + print</b> two ways to keep a copy</span><span><b>Sortable</b> click any column heading</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why keep this record</p>
+          <h2 id="why-h">A fee plan is a promise with dates on it</h2>
+          <p class="lede">Each saved row is a figure you told a school you would pay, and a date you asked to be held to. Keeping them is what lets you prove it, and what shows you the month you over-promised.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>Saved in this browser on this device. Clear site data and it is gone. Export the CSV every term and keep it with the receipts.</p></div>
+        <div class="note-box "><h3>It is a working document</h3><p>Tick payments as the bursary issues receipts and the balance column becomes the figure you quote on the phone.</p></div>
+        <div class="note-box warn"><h3>It is your own evidence</h3><p>The stamped letter, the dated plan and the receipts together are how a disputed balance ends in one conversation.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Saved fee plans</h2>
+          <p class="lede">Read live from the calculator. Each row is one plan; the payments inside it are the dated lines the plan builder generated, and deleting a row here deletes it in the tool too.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">Plan</th>
+              <th data-sort="1">Children on the plan</th>
+              <th class="n" data-sort="2">Term total</th>
+              <th data-sort="3">Shape</th>
+              <th class="n" data-sort="4">Payments made</th>
+              <th class="n" data-sort="5">Paid so far</th>
+              <th class="n" data-sort="6">Balance owed</th>
+              <th data-sort="7">Next payment</th>
+              <th data-sort="8">Confirm by</th>
+              <th class="n" data-sort="9">Payment window</th>
+              <th class="n" data-sort="10">Saved</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:feesplan:plans</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with these numbers</h2>
+          <p class="lede">A record is only useful if something changes because of it. This is the cadence the entries support.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">Same week</p>
+          <div><h3>Tick a payment the day it is made</h3><p>The balance and the next date on this page are only true if the ticked lines are. Ask for the receipt, then tick the line.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">Confirm</p>
+          <div><h3>Confirm the date with the bursary</h3><p>The plan carries a confirm-by date for every payment. A phone call five days out is cheaper than an apology on the day.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">Admission</p>
+          <div><h3>Print the plan and take it in</h3><p>A dated plan the school has seen is worth far more than a promise made on resumption day. Print from this page and keep your copy.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">Term end</p>
+          <div><h3>Rebuild, do not edit</h3><p>Once every line is paid, build the next term's plan on the new figures instead of reusing the old one. The rise is not in the old file.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">New phone</p>
+          <div><h3>Export the CSV first</h3><p>This record lives in one browser. Clear site data and every saved plan is gone, so export and keep the file with the receipts.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Add the next term, or clear what is finished</h2>
+        <p class="lede">The plan builder writes straight to this page. No account, no import, nothing uploaded.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#plan">Back to the plan builder</a>
+        <a class="btn btn-ghost" href="data.html">Fees reference</a>
+        <a class="btn btn-ghost" href="playbook.html">Fees playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">FP</span><span style="color:#fff">FeesPlan<small style="color:rgba(255,255,255,.6)">School fees, planned</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one job: turn three lump sums a year into a monthly amount, a dated plan and a letter the bursar can sign.</p>
+      </div>
+      <div>
+        <h4>FeesPlan pages</h4>
+        <p><a href="index.html">Planner</a><br><a href="data.html">Fees reference</a><br><a href="playbook.html">Fees playbook</a><br><a href="record.html">Saved plans</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../payrite/">PayRite · payroll and PAYE</a><br><a href="../marketrate/">MarketRate · fair price today</a><br><a href="../landedcost/">LandedCost · what imports really cost</a><br><a href="../sealcheck/">SealCheck · is that medicine real</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Figures are indicative national shapes, not your school's bill. Not an offer of credit, and not legal advice; ask for your school's fee schedule in writing.</span><span class="mono">FeesPlan · Saved plans · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "name", label: "Plan"}, { k: "child", label: "Children on the plan"}, { k: "bill", label: "Term total", n: true, fmt: (v) => kit.money(v)}, { k: "schedule", label: "Shape", fmt: function (v) { var m = { '100': 'One payment on the due date', '6040': '60 / 40', '403030': '40 / 30 / 30', 'm4': 'Four monthly', 'w13': 'Thirteen weekly', 'w26': 'Twenty-six weekly' }; return m[v] || pages.escape(String(v || 'not set')); }}, { k: "rows", label: "Payments made", n: true, fmt: function (v) { var a = v || []; return String(a.filter(function (r) { return r.paid; }).length) + ' of ' + a.length; }}, { k: "rows", label: "Paid so far", n: true, fmt: function (v) { return kit.money((v || []).reduce(function (a, r) { return a + (r.paid ? (Number(r.amount) || 0) : 0); }, 0)); }}, { k: "bill", label: "Balance owed", n: true, fmt: function (v, r) { var paid = (r.rows || []).reduce(function (a, x) { return a + (x.paid ? (Number(x.amount) || 0) : 0); }, 0); return kit.money(Math.max(0, (Number(v) || 0) - paid)); }}, { k: "rows", label: "Next payment", fmt: function (v) { var a = (v || []).filter(function (x) { return !x.paid; })[0]; if (!a) return 'cleared'; var p = String(a.date || '').split('-'); return kit.dateLabel(new Date(Number(p[0]), (Number(p[1]) || 1) - 1, Number(p[2]) || 1)) + ' · ' + kit.money(a.amount); }}, { k: "rows", label: "Confirm by", fmt: function (v) { var a = (v || []).filter(function (x) { return !x.paid; })[0]; if (!a || !a.confirm) return 'nothing open'; var p = String(a.confirm).split('-'); return kit.dateLabel(new Date(Number(p[0]), (Number(p[1]) || 1) - 1, Number(p[2]) || 1)); }}, { k: "rows", label: "Payment window", n: true, fmt: function (v) { var a = v || []; if (!a.length) return 'empty'; var last = new Date(a[a.length - 1].date), first = new Date(a[0].date); var days = Math.round((last - first) / 86400000); return String(days) + ' days'; }}, { k: "savedAt", label: "Saved", n: true, fmt: (v) => kit.dateLabel(new Date(v))}];
+  var handle = pages.cases("feesplan:plans", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 60,
+    emptyTitle: "No plans saved yet",
+    emptyText: "Open the payment plan builder, choose a schedule, press Build the dated plan and then Save this plan. Every saved plan appears here immediately, on this device only.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var paidOf = function (p) { return (p.rows || []).reduce(function (a, r) { return a + (r.paid ? (Number(r.amount) || 0) : 0); }, 0); }; var schedOf = function (p) { return (p.rows || []).reduce(function (a, r) { return a + (Number(r.amount) || 0); }, 0); }; var billed = 0, sched = 0, paid = 0, open = 0, names = {}, next = null; rows.forEach(function (p) { billed += Number(p.bill) || 0; sched += schedOf(p); paid += paidOf(p); open += (p.rows || []).length; String(p.child || '').split(',').forEach(function (c) { c = c.trim(); if (c.replace(/[^A-Za-z0-9]/g, '')) names[c] = 1; }); (p.rows || []).forEach(function (r) { if (r.paid) return; var x = String(r.date || '').split('-'); var d = new Date(Number(x[0]), (Number(x[1]) || 1) - 1, Number(x[2]) || 1); if (!isNaN(d.getTime()) && (next === null || d < next)) next = d; }); }); var owed = Math.max(0, billed - paid); return [ { v: String(Object.keys(names).length), l: 'children named across these plans' }, { v: kit.money(billed), l: 'total billed, every term planned' }, { v: kit.money(sched), l: 'total scheduled across ' + open + ' dated payments' }, { v: owed ? kit.money(owed) : 'clear', l: 'still owed on these plans' }, { v: next ? kit.dateLabel(next) : 'nothing open', l: 'earliest payment date still open' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "feesplan-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("feesplan:plans", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

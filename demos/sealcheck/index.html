@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SealCheck — know whether that medicine is real before you take it</title>
+<meta name="description" content="Check a NAFDAC-style registration number, an EAN barcode prefix, an ambiguous expiry date and a broken cold chain, then run a weighted physical inspection that scores the pack and drafts the report. Runs entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="sealcheck.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2312667a'/><path d='M16 6l8 3v7c0 5-3.6 8.4-8 10-4.4-1.6-8-5-8-10V9z' fill='none' stroke='%23d99321' stroke-width='2.2'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#inspect">Skip to the inspection</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">✓</span><span>SealCheck<small>medicine authenticity, at the counter</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#inspect">Inspect</a>
+      <a href="#register">Register</a>
+      <a href="#expiry">Expiry</a>
+      <a href="#cold">Cold chain</a>
+      <a href="#recalls">Recalls</a>
+      <a href="data.html">Counter data</a>
+      <a href="playbook.html">40-second playbook</a>
+      <a href="record.html">Inspection log</a>
+      <a class="btn btn-primary btn-sm" href="#inspect">Start an inspection</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">NAFDAC numbers · blister seals · expiry · cold chain</p>
+      <h1>That blister foil is<br><em>not lined up.</em><br>Now you know before you pay.</h1>
+      <p class="lede">Substandard and falsified medicines move openly through patent medicine stores and open markets. You cannot send a pack to a lab from a counter in Onitsha — but you can read the registration number shape, test the barcode, spot a re-glued carton, resolve <span class="mono">EXP&nbsp;04/27</span>, and score the cold chain. SealCheck does those checks properly, in front of the seller, and writes the report for you.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#inspect">Run a 14-point inspection</a>
+        <a class="btn btn-ghost" href="#register">Check a number <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="14">0</b><span>weighted physical checks, four groups</span></div>
+        <div class="stat"><b data-count="6">0</b><span>expiry date formats decoded on packs</span></div>
+        <div class="stat"><b data-count="0" data-suffix=" ms">0</b><span>nothing uploaded — it is all local</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame"><img src="../_media/sealcheck-hero.webp" width="1536" height="1024" alt="A pharmacist holding a blister pack up to the light while checking the printed batch number on the carton" fetchpriority="high"></div>
+      <p class="tiny hero-cap">The four things a counter check can actually catch: the printed number, the printed date, the seal, and the temperature.</p>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="hard-truth" id="truth">
+  <div class="shell">
+    <p class="eyebrow">Read this before anything else</p>
+    <h2>No app on a phone can authenticate a medicine.</h2>
+    <p class="lede">Only the regulator's register and a laboratory can say a product is genuine. A perfectly valid NAFDAC number can be printed on a falsified carton — the number is text, and text copies. What this tool does is catch the <em>visible</em> failures (a re-glued seam, an ink-stamped date, a swollen syrup bottle, a VVM that has turned dark) and force the questions that a buyer in a hurry does not get to ask. Treat a high score as permission to ask, never as proof of safety.</p>
+    <div class="truth-grid">
+      <div><b>It can</b><p>Decode number formats, barcode prefixes and ambiguous dates; score a documented physical inspection; compute cold-chain degree-hours; draft a report with your observations in it.</p></div>
+      <div><b>It cannot</b><p>Verify the register, assay an API, detect a look-alike carton printed on the same machine, or tell you a tablet is active. Nothing here replaces discarding a doubtful pack.</p></div>
+      <div><b>When in doubt</b><p>Do not take it. Take the pack and the receipt to a licensed pharmacist, and report it. An unused medicine is a loss of money; a falsified one can be a loss of a child.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">01 · The problem</p>
+        <h2>Four people, four packs, no way to check.</h2>
+        <p class="lede">A mother buys amoxicillin syrup for a fever at a patent medicine store in Onitsha. A student in Ibadan pays for “malaria drugs” at a chemist who has never heard of the register. A pharmacist in Benin City signs for a consignment whose carton seams are sticky. A village health worker walks insulin and vaccines to a PHC with no power and no ice.</p>
+        <p>All four are being asked to trust a piece of printed card. The checks that separate a genuine pack from a re-packed one take under two minutes and cost nothing — and almost nobody is taught them.</p>
+      </div>
+      <div class="stack">
+        <div class="card reveal"><span class="card-num">WHO ESTIMATE</span><h3>1 in 10</h3><p class="muted">medical products in low- and middle-income markets is estimated to be substandard or falsified. Region-level estimates vary widely and move year to year — the number is a reason to check, not a prediction about your pack.</p></div>
+        <div class="card reveal" data-delay="1"><span class="card-num">THE GAP</span><h3>0 lab tests</h3><p class="muted">stand between you and a discard decision at a counter. Every check on this page is a visual, printed-matter or temperature check that a buyer can run without equipment or data.</p></div>
+        <div class="card reveal" data-delay="2"><span class="card-num">THE COST</span><h3>₦0</h3><p class="muted">to refuse a pack. The sunk cost of a ₦1,800 antimalarial is never worth the risk of a substandard artemisinin combination — treatment failure and resistance are paid for by everyone.</p></div>
+      </div>
+    </div>
+    <div class="stat-strip problem-strip reveal">
+      <div class="stat"><b data-count="10" data-prefix="1 in ">0</b><span>products estimated substandard or falsified in LMIC markets (WHO)</span></div>
+      <div class="stat"><b data-count="100" data-suffix="%">0</b><span>of the checks here need no lab, no app store, no network</span></div>
+      <div class="stat"><b data-count="90" data-suffix=" sec">0</b><span>is what a full 14-point inspection takes at the counter</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="inspect">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Physical inspection — the tool</p>
+      <h2>Answer 14 checks. Get a score, a verdict and the reasons.</h2>
+      <p class="lede">Every check carries a weight; <em>unsure</em> carries partial risk instead of letting you off. Some answers override the arithmetic entirely: a re-glued carton or an ink-stamped batch number is a red flag, and a red flag means do not use it however the score reads.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="check-form" autocomplete="off">
+        <div class="form-head">
+          <div>
+            <h3>Pack under inspection</h3>
+            <p class="muted small-copy">Identity fields feed the score notes and the report draft. They are never required.</p>
+          </div>
+          <div class="row quick">
+            <button class="btn btn-ghost btn-sm" type="button" id="load-sample">Load worked example</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="clear-answers">Clear answers</button>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="p-name">Product name or description</label>
+            <input id="p-name" name="p-name" maxlength="70" value="Amoxicillin 500 mg capsules — re-packed carton scenario" placeholder="e.g. Amoxicillin 500 mg capsules">
+          </div>
+          <div class="field">
+            <label for="p-number">NAFDAC number on the pack</label>
+            <input id="p-number" name="p-number" maxlength="18" value="F-21348" placeholder="e.g. F-21348" class="mono">
+            <p class="help">Checked live in <a href="#register">section 03</a> — the shape is reported here.</p>
+          </div>
+          <div class="field">
+            <label for="p-batch">Batch / lot number as printed</label>
+            <input id="p-batch" name="p-batch" maxlength="24" value="B2411-07" placeholder="e.g. B2411-07" class="mono">
+          </div>
+          <div class="field">
+            <label for="p-expiry">Expiry as printed (optional)</label>
+            <input id="p-expiry" name="p-expiry" maxlength="18" value="EXP 04/27" placeholder="e.g. EXP 04/27" class="mono">
+          </div>
+        </div>
+
+        <fieldset class="check-fieldset">
+          <legend>Answer each check</legend>
+          <p class="help">Yes = the pack passes. No = the defect is present. Unsure = you could not tell, which is itself a risk.</p>
+          <div id="check-groups"></div>
+        </fieldset>
+
+        <div class="field cold-link-field">
+          <label class="switch cold-link"><input type="checkbox" id="vvm-fail" name="vvm-fail"><span class="track"></span><span>VVM is at stage 3 or 4 (from the cold-chain module)</span></label>
+          <label class="switch cold-link"><input type="checkbox" id="exp-fail" name="exp-fail"><span class="track"></span><span>The expiry reading puts this pack out of date</span></label>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1">
+        <div class="readout-big score-panel" id="score-panel">
+          <div class="seal-ring" id="seal-ring" aria-hidden="true"><span class="seal-inner"></span></div>
+          <span class="score-label">Pack integrity score</span>
+          <b id="score">—</b>
+          <span id="score-note">no checks answered yet</span>
+        </div>
+
+        <div class="verdict" id="verdict" aria-live="polite">
+          <h4 id="verdict-title">Nothing inspected yet</h4>
+          <p id="verdict-body">Work down the checklist — the verdict, the score and the reasons update as you answer.</p>
+        </div>
+
+        <div class="reasons">
+          <h4>Top reasons driving the score</h4>
+          <ol id="reason-list"><li class="tiny">Answer a few checks and the largest weighted losses appear here.</li></ol>
+        </div>
+
+        <div class="flags" id="flags" hidden>
+          <h4>Red flags — these override the score</h4>
+          <ul id="flag-list"></ul>
+        </div>
+
+        <div class="mini">
+          <div><span>Checks answered</span><b id="m-answered">0/14</b></div>
+          <div><span>Coverage of weight</span><b id="m-coverage">0%</b></div>
+          <div><span>Number shape</span><b id="m-shape">—</b></div>
+        </div>
+
+        <div class="score-chart">
+          <div id="score-donut"></div>
+          <div id="group-bars"></div>
+        </div>
+        <p class="tiny">Group bars show credit earned per section, not weights. Unanswered checks are excluded from the score and flagged as provisional coverage.</p>
+        <a class="btn btn-accent btn-block" href="#action">Draft the report from this</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="register">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Registration numbers</p>
+      <h2>What the number says — and what it cannot say.</h2>
+      <p class="lede">NAFDAC registration numbers follow documented shapes. Learn the shape and most lazy fakes fall out immediately: the letter is wrong, the digit count is wrong, the dash is missing, or the suffix that means “bulk material” is printed on a consumer carton.</p>
+    </div>
+
+    <div class="ink-grid">
+      <div class="card card-ink reveal">
+        <h3>Check a number</h3>
+        <div class="field">
+          <label for="reg-input">Registration number exactly as printed</label>
+          <input id="reg-input" placeholder="A-12345CR" class="mono" maxlength="20" autocomplete="off">
+          <p class="help">Spaces and case are ignored the way an inspector reads them. Try <span class="mono">A-45678</span>, <span class="mono">F-21348</span>, <span class="mono">12/4567</span>, <span class="mono">A45678</span>, <span class="mono">A-1234567</span>.</p>
+        </div>
+        <div class="field">
+          <label for="reg-type">What is in the pack?</label>
+          <select id="reg-type">
+            <option value="finished">Finished product for sale (imported)</option>
+            <option value="local">Finished product, manufactured in Nigeria</option>
+            <option value="bulk">Bulk material / API (not a retail pack)</option>
+            <option value="herbal">Herbal / traditional medicine</option>
+            <option value="unknown">Not sure</option>
+          </select>
+        </div>
+        <div class="reg-out" id="reg-out" aria-live="polite">
+          <div class="reg-line"><span>Shape</span><b id="reg-shape">awaiting input</b></div>
+          <div class="reg-line"><span>Prefix means</span><b id="reg-prefix">—</b></div>
+          <div class="reg-line"><span>Digit count</span><b id="reg-digits">—</b></div>
+          <div class="reg-line"><span>Consistent with your product type</span><b id="reg-consistent">—</b></div>
+          <div class="reg-line reg-warn"><span>Register lookup</span><b id="reg-lookup">not performed here</b></div>
+        </div>
+        <div class="verdict verdict-ink" id="reg-verdict">
+          <h4 id="reg-verdict-title">Enter a number</h4>
+          <p id="reg-verdict-body">A valid shape is not proof. Confirm on the NAFDAC register or the mobile app before you accept the pack.</p>
+        </div>
+      </div>
+
+      <div class="card card-ink reveal" data-delay="1">
+        <h3>The formats, in words</h3>
+        <div class="table-wrap table-ink">
+          <table>
+            <caption class="sr-only">Documented NAFDAC number formats</caption>
+            <thead><tr><th>Format</th><th>Applies to</th><th>Trap to watch</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">A-12345</td><td>Imported finished product (registration by agent)</td><td>Missing dash or a 4-digit body is not a valid shape</td></tr>
+              <tr><td class="mono">F-12345</td><td>Locally manufactured finished product</td><td>Local packs with only an “A-” number: ask which factory made it</td></tr>
+              <tr><td class="mono">A-12345CR</td><td>Contract / bulk or repack-related registration variant</td><td>Never belongs on a sealed retail carton</td></tr>
+              <tr><td class="mono">A-12345X</td><td>Bulk material / API variant</td><td>Appears on raw-material drums, not on patient packs</td></tr>
+              <tr><td class="mono">12/4567</td><td>Older 5–6 digit numeric forms still on legacy packs</td><td>Legacy numbers may be dormant — confirm the product is still registered</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny">Shapes as commonly documented and reported on packs. NAFDAC may add or change formats at any time — the official register is the only authority, and this tool never claims to query it.</p>
+      </div>
+    </div>
+
+    <div class="card card-ink reveal lookup-card">
+      <h3>Illustrative product reference — 17 common packs</h3>
+      <p class="muted small-copy">Generic names only. No real company is named, and the “expected shape” column is the <em>format</em> a pack of this type is usually seen with, not anyone’s registration number. Prices are indicative bands for planning, not quotes. Search by name, class or shape.</p>
+      <div class="lookup-tools">
+        <div class="field inline-field">
+          <label for="lookup-q">Search</label>
+          <input id="lookup-q" placeholder="amoxicillin, A-, antimalarial, injection…" autocomplete="off">
+        </div>
+        <div class="field inline-field">
+          <label for="lookup-class">Class</label>
+          <select id="lookup-class">
+            <option value="">All classes</option>
+            <option>Antimalarial</option>
+            <option>Antibiotic</option>
+            <option>Analgesic / anti-inflammatory</option>
+            <option>Diabetes</option>
+            <option>Cardiovascular</option>
+            <option>Metabolic</option>
+            <option>Psychiatric</option>
+            <option>Rehydration / supplement</option>
+            <option>Veterinary</option>
+          </select>
+        </div>
+        <span class="tiny lookup-count" id="lookup-count">17 of 17 shown</span>
+      </div>
+      <div class="table-wrap table-ink">
+        <table>
+          <caption class="sr-only">Product reference table</caption>
+          <thead><tr><th>Product</th><th>Class</th><th>Expected shape</th><th>Indicative pack</th><th class="num">Price band</th><th>Seal features on genuine packs</th></tr></thead>
+          <tbody id="lookup-body"></tbody>
+        </table>
+      </div>
+      <p class="tiny" id="lookup-empty" hidden>No row matches that search. Falsified packs often <em>do</em> exist in a reference list — the absence of a match here is not evidence, and neither is a match.</p>
+    </div>
+  </div>
+</section>
+
+<section id="barcode">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · Barcode prefix</p>
+      <h2>600–601 is South Africa. Your “Made in Nigeria” carton says otherwise.</h2>
+      <p class="lede">A GS1 prefix tells you where the licence was issued — not where the goods were made, and certainly not whether they are genuine. It is still worth 20 seconds, because counterfeiters routinely copy a barcode without thinking about the prefix, and because the check digit is arithmetic that cannot be faked by accident.</p>
+    </div>
+    <div class="split">
+      <form class="card reveal" id="bc-form">
+        <div class="field">
+          <label for="bc-input">Barcode digits (EAN-13, EAN-8 or UPC-A)</label>
+          <input id="bc-input" class="mono" maxlength="14" value="6001234500001" inputmode="numeric" autocomplete="off">
+          <p class="help">Digits only. Try <span class="mono">6141234567892</span> (Nigeria prefix), <span class="mono">8901234567890</span> (India), <span class="mono">6154234567892</span> (reported as Kenya), <span class="mono">50660209</span> (EAN-8 short code), <span class="mono">6141234567895</span> (check digit broken).</p>
+        </div>
+        <div class="field">
+          <label for="bc-made">“Made in” text printed on the pack</label>
+          <select id="bc-made">
+            <option value="NG">Nigeria</option>
+            <option value="IN">India</option>
+            <option value="CN">China</option>
+            <option value="ZA">South Africa</option>
+            <option value="DE">Germany</option>
+            <option value="GB">United Kingdom</option>
+            <option value="KE">Kenya</option>
+            <option value="FR">France</option>
+            <option value="XX">No country printed / illegible</option>
+          </select>
+        </div>
+        <div class="bc-out" aria-live="polite">
+          <div class="verdict" id="bc-verdict">
+            <h4 id="bc-title">Awaiting digits</h4>
+            <p id="bc-body">Type the number under the bars.</p>
+          </div>
+          <div class="readout">
+            <div class="line"><span>Length / symbology</span><b id="bc-len">—</b></div>
+            <div class="line"><span>Prefix</span><b id="bc-prefix">—</b></div>
+            <div class="line"><span>Prefix assigned to</span><b id="bc-country">—</b></div>
+            <div class="line line-strong"><span>Check digit (mod-10)</span><b id="bc-cd">—</b></div>
+            <div class="line"><span>Consistency with “Made in”</span><b id="bc-match">—</b></div>
+          </div>
+        </div>
+      </form>
+      <div class="reveal" data-delay="1">
+        <div class="card">
+          <h3>Prefix ranges this tool uses</h3>
+          <p class="muted small-copy">Ranges commonly reported in GS1 tables. The <span class="badge badge-warn">reported</span> rows are the ones this tool will not assert confidently — confirm any prefix that matters to you against the GS1 list or the regulator.</p>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">GS1 prefix ranges used</caption>
+              <thead><tr><th>Prefix</th><th>Reported assignment</th><th>Confidence</th></tr></thead>
+              <tbody id="prefix-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card copy-card">
+          <h3>Three honest limits</h3>
+          <ul class="checklist crosslist">
+            <li>A prefix is the country of the <em>licence holder</em>. Nigerian-packaged goods with an Indian or Chinese prefix are common and legal.</li>
+            <li>Precious card stock is the weak point: prefixes, batch blocks and foil are all copied. So is a real barcode from a genuine pack.</li>
+            <li>Check-digit arithmetic can be recomputed by a counterfeiter who bothers. A failed check digit is close to conclusive; a passing one proves almost nothing.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="expiry">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Expiry interpreter</p>
+      <h2><span class="mono">EXP 04/27</span> is two different dates.</h2>
+      <p class="lede">Nigerian packs print dates in at least six conventions, sometimes with no legend. The tool shows every plausible reading, names the safe one, counts the months left, and applies the hard rule: an out-of-date antibiotic, injection or ORS is not a “a little bit weaker” product.</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card reveal" id="exp-form">
+        <div class="field">
+          <label for="exp-input">Date exactly as printed on the pack</label>
+          <input id="exp-input" class="mono" maxlength="24" value="EXP 04/27" placeholder="EXP 04/27" autocomplete="off">
+          <p class="help">Handles <span class="mono">04/27</span>, <span class="mono">04/2027</span>, <span class="mono">2704</span>, <span class="mono">04.05.2027</span>, <span class="mono">2027-05-04</span>, <span class="mono">APR 2027</span>.</p>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="exp-class">Product class</label>
+            <select id="exp-class">
+              <option>Tablet / capsule (oral)</option>
+              <option>Dry syrup (unreconstituted)</option>
+              <option>Reconstituted antibiotic syrup</option>
+              <option>Injection / IV fluid</option>
+              <option>ORS + zinc</option>
+              <option>Insulin</option>
+              <option>Vaccine</option>
+              <option>Ointment / cream / sachet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="exp-open">Days since opened or reconstituted <span class="tiny">0 if unopened</span></label>
+            <input id="exp-open" type="number" min="0" max="400" step="1" value="0" inputmode="numeric">
+            <p class="help">After reconstitution, amoxicillin-type syrups are normally discarded at 7–14 days refrigerated — the printed expiry no longer governs.</p>
+          </div>
+        </div>
+        <div class="pill-row format-pills" id="format-pills" role="group" aria-label="Format hint"></div>
+        <p class="help">The pills are the formats the string can be read as; the tool never silently picks one.</p>
+      </form>
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big exp-panel">
+          <span>Safe reading — act on this one</span>
+          <b id="exp-safe">—</b>
+          <span id="exp-safe-note">enter a date</span>
+        </div>
+        <div class="verdict" id="exp-verdict">
+          <h4 id="exp-title">Awaiting a date</h4>
+          <p id="exp-body">Both readings appear below with the months remaining for each.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Candidate readings</caption>
+            <thead><tr><th>Reading</th><th>Interpreted as</th><th class="num">Use until</th><th class="num">Months</th><th>Status</th></tr></thead>
+            <tbody id="exp-rows"></tbody>
+          </table>
+        </div>
+        <div class="readout" id="exp-rules"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="cold">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Cold chain</p>
+      <h2>The vial dial is a thermometer you can read for free.</h2>
+      <p class="lede">A Vaccine Vial Monitor is a printed chemical disc that darkens with accumulated heat. It is the only honest record of what a vaccine went through on the way to a PHC — and health workers are taught to read it, buyers almost never are.</p>
+    </div>
+
+    <div class="cold-grid">
+      <div class="card reveal vvm-card">
+        <h3>VVM stage</h3>
+        <p class="muted small-copy">Pick the stage that matches the disc against the printed reference ring.</p>
+        <div class="vvm-stage" id="vvm-stage" role="group" aria-label="VVM stage">
+          <div class="vvm-dial" id="vvm-dial"><span class="vvm-inner" id="vvm-inner"></span><span class="vvm-ring" id="vvm-ringlabel">3</span></div>
+          <div class="vvm-picker" id="vvm-picker"></div>
+        </div>
+        <div class="verdict" id="vvm-verdict">
+          <h4 id="vvm-title">Stage 0 — fully usable</h4>
+          <p id="vvm-body">Inner square clearly lighter than the ring.</p>
+        </div>
+        <p class="tiny">Stages as documented by WHO for VVM Type 8–14 on opened and unopened vials. Type matters: a Type 10 on a reconstituted measles vial has a shorter clock than the same colour on a multidose vial.</p>
+      </div>
+
+      <form class="card reveal" id="cold-form" data-delay="1">
+        <h3>Time out of range</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="cc-class">What is being kept cold</label>
+            <select id="cc-class">
+              <option value="vaccine">Vaccine (2–8 °C, freeze-sensitive)</option>
+              <option value="insulin">Insulin glargine / soluble (2–8 °C stored)</option>
+              <option value="antibiotic-syrup">Antibiotic syrup requiring refrigeration</option>
+              <option value="oxytet">Oxytetracycline / veterinary injection</option>
+              <option value="ors">ORS + zinc (no cold chain)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cc-storage">Where it is now</label>
+            <select id="cc-storage">
+              <option value="fridge">Refrigerator / cold box</option>
+              <option value="ambient">Ambient, closed container</option>
+              <option value="sun">In sun / on a metal shelf</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cc-temp">Measured temperature (°C)</label>
+            <input id="cc-temp" type="number" min="-20" max="60" step="0.5" value="13" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="cc-hours">Hours at that temperature</label>
+            <input id="cc-hours" type="number" min="0" max="720" step="0.5" value="3" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="cc-prior">Degree-hours already accumulated on this vial/bottle</label>
+            <input id="cc-prior" type="number" min="0" max="5000" step="1" value="0" inputmode="numeric">
+            <p class="help">Add the output of previous events; excursions accumulate, they do not reset.</p>
+          </div>
+          <div class="field">
+            <label for="cc-shaken">Shaken or frozen-solid then thawed?</label>
+            <select id="cc-shaken"><option value="no">No</option><option value="maybe">Not sure</option><option value="yes">Yes — it froze or was shaken hard</option></select>
+          </div>
+        </div>
+        <div class="cold-out" aria-live="polite">
+          <div class="mini mini-cold">
+            <div><span>Deviation</span><b id="cc-dev">—</b></div>
+            <div><span>Degree-hours this event</span><b id="cc-dh">—</b></div>
+            <div><span>Budget used</span><b id="cc-use">—</b></div>
+          </div>
+          <div class="verdict" id="cc-verdict">
+            <h4 id="cc-title">Enter a temperature</h4>
+            <p id="cc-body">Screening result appears here with the action.</p>
+          </div>
+          <div class="bar-wrap"><div class="bar"><i id="cc-bar"></i></div><span class="tiny" id="cc-bar-note">budget consumed</span></div>
+          <p class="tiny warn-note">Screening aid only. Any refrigerator or freezer failure affecting vaccines must be reported to your state EPI officer and the product quarantined until the WHO “vaccine storage and transport” assessment says otherwise — do not decide from a web page.</p>
+        </div>
+      </form>
+    </div>
+
+    <div class="card reveal carry-card">
+      <h3>How to carry it to a PHC with no power</h3>
+      <div class="grid-3">
+        <div>
+          <h4>Pack it</h4>
+          <ul class="checklist">
+            <li>Conditioned (sweating) cold packs on top and at the sides, never only under the bottom.</li>
+            <li>A cardboard buffer between packs and vials — direct contact freezes the antigen.</li>
+            <li>Vials upright, upright, upright. Spacer filler so nothing tips.</li>
+            <li>Sealed box, taped, void space minimised; do not open to “look” en route.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Move it</h4>
+          <ul class="checklist">
+            <li>Know the hours your packed box holds: 24 h is normal for a good validated carrier, 6 h for a foam pot in March sun.</li>
+            <li>Shade, vehicle floor not boot lid, never the dashboard.</li>
+            <li>Include a thermometer or a VVM you can read on arrival.</li>
+            <li>Time the trip honestly and write it on the box.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>On arrival</h4>
+          <ul class="checklist crosslist">
+            <li>Shake test: a frozen-then-thawed vaccine often looks normal. Shake against another vial — a rusty or powdery sound means discard.</li>
+            <li>Read the VVM before anyone else does, and record the stage.</li>
+            <li>Log the maximum temperature and the hours out of range.</li>
+            <li>Anything you cannot explain goes to quarantine with a label, not to a patient.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="recalls">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Recall watch</p>
+      <h2>Sample data, real mechanism.</h2>
+      <p class="lede">Every row below is <strong>illustrative fiction</strong>: invented batch numbers, generic product names, no real company or brand is implicated, and nothing here is an allegation. It exists so you can see how a recall check <em>should</em> work — and so you can practise the two habits that matter: keep the pack, and match batch to notice exactly.</p>
+    </div>
+    <div class="recall-tools reveal">
+      <div class="field inline-field">
+        <label for="recall-cat">Filter by category</label>
+        <select id="recall-cat">
+          <option value="">All categories</option>
+          <option>Antimalarial</option>
+          <option>Antibiotic</option>
+          <option>Analgesic</option>
+          <option>Vaccine</option>
+          <option>Rehydration</option>
+          <option>Injection</option>
+        </select>
+      </div>
+      <div class="field inline-field">
+        <label for="recall-batch">Check my batch number</label>
+        <input id="recall-batch" class="mono" placeholder="e.g. SX-2411-K" maxlength="20" autocomplete="off">
+      </div>
+      <span class="badge badge-warn" id="recall-hit">no batch entered</span>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only">Illustrative recall notice sample</caption>
+        <thead><tr><th>Notice date</th><th>Product (generic)</th><th>Category</th><th>Sample batch</th><th>Stated reason</th><th>Region</th><th>Action</th></tr></thead>
+        <tbody id="recall-body"></tbody>
+      </table>
+    </div>
+    <p class="tiny" id="recall-empty" hidden>Nothing in the sample matches. In a real recall list, a non-matching batch does not make your pack safe — notices are batch-specific and partial.</p>
+    <div class="grid-3 recall-notes reveal">
+      <div class="card"><h4>Where real notices live</h4><p class="muted small-copy">NAFDAC’s published alerts and product recall notices, the Federal Medical Centre / teaching hospital pharmacy bulletins, and your state drug officer. This page links nothing and queries nothing.</p></div>
+      <div class="card"><h4>Batch matching is exact</h4><p class="muted small-copy">A notice names a batch or a batch range, not a product. “Same brand” is not the same as “affected”. Write the batch down before you throw the carton away.</p></div>
+      <div class="card"><h4>Keep the evidence</h4><p class="muted small-copy">Pack, carton, leaflet, receipt and the remainder of the batch at the outlet. A regulator can do something with a sealed sample and a receipt; it can do nothing with a description.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="action">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">08 · Action generator</p>
+      <h2>Turn the inspection into something a regulator can act on.</h2>
+      <p class="lede">The report is built from what you already entered plus the computed score, verdict and red flags. Copy it into a message, print it, or hand it over at the outlet. Saved inspections stay in this browser and export as CSV.</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card reveal" id="report-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="o-name">Outlet / seller description</label>
+            <input id="o-name" maxlength="70" placeholder="e.g. patent medicine store, Oitoli junction">
+          </div>
+          <div class="field">
+            <label for="o-place">Town or location</label>
+            <input id="o-place" maxlength="60" placeholder="e.g. Onitsha, Anambra">
+          </div>
+          <div class="field">
+            <label for="o-when">Date of purchase / inspection</label>
+            <input id="o-when" type="date">
+          </div>
+          <div class="field">
+            <label for="o-price">Price paid (₦)</label>
+            <input id="o-price" type="number" min="0" step="50" value="0" inputmode="numeric">
+          </div>
+        </div>
+        <div class="field">
+          <label for="o-defects">What you observed, in your own words</label>
+          <textarea id="o-defects" rows="3" maxlength="400" placeholder="e.g. foil on two blisters punched through, date ink rubs off with a thumb"></textarea>
+        </div>
+        <div class="row report-actions">
+          <button class="btn btn-primary" type="button" id="build-report">Build the report</button>
+          <button class="btn btn-accent" type="button" id="copy-report">Copy to clipboard</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="save-inspection">Save to inspection history</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="print-report">Print</button>
+        </div>
+        <div class="field report-out">
+          <label for="report-text">Generated report</label>
+          <textarea id="report-text" rows="14" readonly spellcheck="false" aria-live="polite"></textarea>
+          <p class="help" id="report-status">Nothing generated yet. Fill the inspection first, or press <b>Build the report</b> to see the structure.</p>
+        </div>
+      </form>
+
+      <aside class="reveal" data-delay="1">
+        <div class="card">
+          <h3>Who to tell, in order</h3>
+          <ol class="steps">
+            <li><b>The licensed pharmacist or superintendent at the point of sale.</b> They can test the number on the register from the outlet, and they carry the legal duty to quarantine stock. Show them the score.</li>
+            <li><b>Your state drug/health officer or the state pharmacist.</b> They can inspect the outlet and lift the whole batch, not just your pack. Send the printed report plus the pack.</li>
+            <li><b>NAFDAC’s report channel</b> — the regulatory reporting/integrity number and the online complaint form on nafdac.gov.ng, plus the state office address for physical samples. Report even if you cannot prove anything: patterns are how operations start.</li>
+            <li><b>The prescriber</b>, if the product was prescribed. A substandard antimalarial changes what the next treatment should be.</li>
+          </ol>
+        </div>
+        <div class="card keep-card">
+          <h3>Before you hand anything over</h3>
+          <ul class="checklist">
+            <li>Photograph the pack, carton faces, batch block and the seal damage.</li>
+            <li>Keep the receipt. If there is none, ask for one and note the seller’s name.</li>
+            <li>Keep the remainder sealed; do not “finish it to be sure”.</li>
+            <li>Write the time you suspect a patient already took a dose.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="history">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">09 · Inspection history</p>
+      <h2>Your own log, on your own device.</h2>
+      <p class="lede">Useful for a pharmacy that inspects consignments: one line per pack, scores comparable over months, export for the district health register.</p>
+    </div>
+    <div class="roster-tools reveal">
+      <button class="btn btn-accent btn-sm" type="button" id="export-history">Export CSV</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="print-history">Print log</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="clear-history">Clear history</button>
+      <span class="tiny roster-count" id="history-count">0 inspections</span>
+    </div>
+    <div class="table-wrap table-ink reveal">
+      <table>
+        <caption class="sr-only">Saved inspections</caption>
+        <thead><tr><th>Date</th><th>Product</th><th>Number</th><th>Batch</th><th>Expiry</th><th class="num">Score</th><th>Verdict</th><th>Flags</th><th>Outlet</th><th></th></tr></thead>
+        <tbody id="history-body"></tbody>
+      </table>
+    </div>
+    <p class="tiny roster-empty" id="history-empty">No inspections saved yet. Run the checklist, then press <b>Save to inspection history</b>.</p>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">10 · The maths, in the open</p>
+      <h2>Assumptions you can argue with.</h2>
+      <p class="lede">Weights change verdicts, so they are visible and editable. A pharmacist who thinks “invoice from a licensed outlet” matters more than the deboss can move its weight, and the score follows. Nothing here is secret sauce.</p>
+    </div>
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Check weights and scoring (editable)</summary>
+          <div class="acc-body">
+            <div class="field narrow">
+              <label for="unsure-credit">Credit given to an “unsure” answer</label>
+              <input id="unsure-credit" type="number" min="0" max="1" step="0.05" value="0.4">
+              <p class="help">1 = generous, 0 = treats unsure as a defect. Default 0.4.</p>
+            </div>
+            <div class="table-wrap table-sm">
+              <table>
+                <caption class="sr-only">Editable check weights</caption>
+                <thead><tr><th>Check</th><th class="num">Weight</th><th>Override</th></tr></thead>
+                <tbody id="weight-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">“Override” marks checks whose <em>No</em> answer fails the pack regardless of score. Score = 100 × Σ(weight × credit) ÷ Σ(weight of answered checks).</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-weights">Restore default weights</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Verdict tiers</summary>
+          <div class="acc-body">
+            <div class="table-wrap table-sm"><table>
+              <thead><tr><th class="num">Score</th><th>Verdict</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td class="num mono">≥ 85</td><td>Use as directed</td><td>No weighted defect worth more than a rounding error. Keep the receipt, ask the pharmacist to confirm the register entry if the number is legacy.</td></tr>
+                <tr><td class="num mono">66–84</td><td>Inspect further with the pharmacist</td><td>Real defects, none conclusive. Do not accept it as the only course of treatment while it is being checked.</td></tr>
+                <tr><td class="num mono">&lt; 66</td><td>Do not use — report it</td><td>Multiple documented defects. Keep the pack and the receipt.</td></tr>
+                <tr><td class="num mono">any</td><td>Override → Do not use</td><td>Any overridden <em>No</em>, a stage 3/4 VVM, or a date reading that is out of date.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Cold-chain excursion budgets (editable)</summary>
+          <div class="acc-body">
+            <p class="muted small-copy">Degree-hours = |deviation from the range| × hours, summed. Budgets below are <b>screening illustrations</b>, taken from the shape of WHO excursion guidance for common classes — they are not product-specific stability data and they must not overrule the manufacturer’s insert or your state EPI officer.</p>
+            <div class="table-wrap table-sm">
+              <table>
+                <caption class="sr-only">Editable degree-hour budgets</caption>
+                <thead><tr><th>Class</th><th class="num">Range °C</th><th class="num">Warn at DH</th><th class="num">Discard at DH</th></tr></thead>
+                <tbody id="budget-body"></tbody>
+              </table>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-budgets">Restore default budgets</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Date conventions this tool assumes</summary>
+          <div class="acc-body">
+            <ul class="checklist">
+              <li>Two-digit years resolve to 20YY when the value is 40 or lower, otherwise 19YY, and the choice is always stated.</li>
+              <li>A bare <span class="mono">MM/YY</span> is read as end-of-month, i.e. usable to the last day of that month, and the alternative DD/MM reading is still shown.</li>
+              <li>Where two readings are plausible, the <b>earlier</b> one is labelled safe. Ambiguity is resolved against use, not in favour of it, because the failure mode is a dead child rather than a wasted ₦1,800.</li>
+              <li>A date that has passed under any plausible reading, on an antibiotic, injection, ORS or vaccine, is a hard stop — no scraping the label, no “it still smells fine”.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>What this tool cannot do</summary>
+          <div class="acc-body">
+            <p>It cannot query the NAFDAC register, decode a manufacturer’s internal batch code, assay content, detect an under-dose that passes every visual check, or tell you that a pack is safe. It cannot see the pack — you are the sensor, and your honest answers are the limit of its accuracy. The reference table, recall rows and excursion budgets are curated illustrations for teaching and drafting, clearly labelled as such, not a data feed. If a pack is for a child, for malaria, for sepsis or for insulin: when in doubt, discard and go to a licensed pharmacist.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="card reveal worked-card" data-delay="1">
+        <h3>Worked example — the re-packed carton</h3>
+        <p class="muted small-copy">Amoxicillin 500 mg capsules, carton with a re-glued seam and no receipt. Press <b>Load worked example</b> above to reproduce it.</p>
+        <ol class="steps" id="worked"></ol>
+        <div class="worked-foot">
+          <span class="badge badge-bad" id="worked-flags">0 overrides</span>
+          <b class="mono big-num" id="worked-score">—</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="limits">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">11 · Limits and reporting</p>
+      <h2>If it matters, verify it somewhere else.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal"><span class="card-num">NOT A VERIFICATION</span><h3>A valid shape is not authenticity</h3><p class="muted">Every format rule on this page is public, which means it is copyable. Use the checker to decide whether to <em>ask</em>, then confirm the registration on the official register with a pharmacist present.</p></div>
+      <div class="card reveal" data-delay="1"><span class="card-num">NOT A LAB</span><h3>Invisible failures exist</h3><p class="muted">Under-dosing, wrong API, heavy metals and microbial contamination are invisible at a counter and undetectable by any checklist. That is why reports matter more than scores.</p></div>
+      <div class="card reveal" data-delay="2"><span class="card-num">NOT A DATA SOURCE</span><h3>Sample content is illustrative</h3><p class="muted">The product reference table uses generic names; the recall table is invented fiction; price bands are indicative planning ranges. No real company is accused of anything here.</p></div>
+    </div>
+    <div class="quote reveal limits-quote">
+      <p>“The pack that makes you feel suspicious is worth more to the system than the pack you silently throw away.”</p>
+      <footer>Report it with the batch number, the outlet and the receipt — that is the only version of this that helps the next buyer.</footer>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">✓</span><span style="color:#fff">SealCheck<small style="color:rgba(255,255,255,.6)">medicine check at the counter</small></span></a>
+        <p style="margin-top:14px;max-width:46ch">Built for the buyer with sixty seconds and no laboratory: read the seal, read the date, read the dial, then report it. No account, no upload, no network call.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#inspect">Inspect</a><br><a href="#register">Register &amp; product reference</a><br><a href="#expiry">Expiry</a><br><a href="#cold">Cold chain</a><br><a href="#rules">Rules used</a><br><a href="data.html">Counter data</a><br><a href="playbook.html">40-second playbook</a><br><a href="record.html">Inspection log</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../payrite/">Payroll &amp; PAYE</a><br><a href="../marketrate/">Fair price today</a><br><a href="../suncost/">Solar sizing</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Screening and reporting aid. Not a verification service, not medical advice.</span><span class="mono">SealCheck · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<div class="toast" role="status"></div>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

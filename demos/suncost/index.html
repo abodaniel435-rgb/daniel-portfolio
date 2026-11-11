@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SunCost — size a solar + battery system against the cost of running a generator</title>
+<meta name="description" content="Build your real appliance load, size the panels, inverter and battery bank, then compare the 5-year cost of the system against the petrol or diesel you burn today. Find the month solar overtakes the generator. Runs entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="suncost.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2312506b'/><circle cx='16' cy='15' r='5.4' fill='%23e0932b'/><g stroke='%23e0932b' stroke-width='1.8' stroke-linecap='round'><path d='M16 4v3'/><path d='M16 23v3'/><path d='M5 15h3'/><path d='M24 15h3'/></g></svg>">
+</head>
+<body>
+<a class="skip-link" href="#calculator">Skip to the sizing tool</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">☀</span><span>SunCost<small>Solar vs generator, sized honestly</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#calculator">Size it</a>
+      <a href="#compare">5-year cost</a>
+      <a href="#quotes">Quotes</a>
+      <a href="#rules">Assumptions</a>
+      <a href="data.html">Sizing data</a>
+      <a href="playbook.html">Install playbook</a>
+      <a href="record.html">Quote ledger</a>
+      <a class="btn btn-ink btn-sm" href="#calculator">Size my load</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="sun-arc" aria-hidden="true"><span class="sun-disc"></span></div>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Solar + battery sizing · Nigeria</p>
+      <h1>The generator is<br><em>not cheap because it is small.</em></h1>
+      <p class="lede">Installers size solar by eye, quotes hide the night load, and nobody writes down what the petrol actually costs across five years. SunCost takes your real appliance list, sizes the array, inverter and battery bank line by line, and tells you the exact month the system becomes cheaper than burning fuel.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#calculator">Size my load</a>
+        <a class="btn btn-ghost" href="#compare">See the crossover <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="8.6" data-decimals="1" data-suffix=" kWh">0</b><span>A typical Ibadan family day, before losses</span></div>
+        <div class="stat"><b data-count="6.1" data-decimals="1" data-suffix=" h">0</b><span>Peak sun hours Jalingo gets and Lagos does not</span></div>
+        <div class="stat"><b data-count="0" data-suffix=" uploads">0</b><span>Your load list never leaves this browser</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame float"><img src="../_media/suncost-hero.webp" width="1536" height="1024" alt="Rooftop solar panels above a Nigerian house with a petrol generator switched off on the ground beside it" fetchpriority="high"></div>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">01 · The money you already spend</p>
+        <h2>Nobody budgets for fuel. That is the problem.</h2>
+        <p class="lede">A generator has no invoice you can plan against — it costs ₦4,000 here, ₦6,500 there, and by December it has eaten the price of a good solar system. Solar quotes go the other way: one big number, no explanation, and a battery bank that dies at 11pm because the installer never asked what you run at night.</p>
+        <div class="stat-strip">
+          <div class="stat"><b data-count="2340000" data-prefix="₦">0</b><span>One Ibadan family's year of petrol — ₦45,000 a week × 52</span></div>
+          <div class="stat"><b data-count="1650" data-prefix="₦">0</b><span>Indicative pump price per litre of petrol, 2026</span></div>
+          <div class="stat"><b data-count="5.2" data-decimals="1" data-suffix=" h">0</b><span>Annual-average peak sun hours in Ibadan</span></div>
+        </div>
+      </div>
+      <div class="stack">
+        <article class="card reveal" data-delay="1">
+          <span class="card-num">Case 01</span>
+          <h3>Family in Ibadan</h3>
+          <p>₦45,000 a week at the pump for a 3.5 kVA generator that runs the fridge, three fans and the TV. Quoted <b>₦4.9m</b> for a system with no night sizing at all — and told the battery "lasts years".</p>
+        </article>
+        <article class="card reveal" data-delay="2">
+          <span class="card-num">Case 02</span>
+          <h3>Barbing salon, Onitsha</h3>
+          <p>Clippers, a hot-air dryer and four ACs during the day, zero supply at night. Every idle hour of the diesel gen is ₦1,950 a litre of margin shaved off a ₦3,000 haircut.</p>
+        </article>
+        <article class="card reveal" data-delay="3">
+          <span class="card-num">Case 03</span>
+          <h3>Pharmacy, Kaduna</h3>
+          <p>A fridge that cannot stop. One 6-hour outage spoils insulin and vaccines; the loss is not the fuel bill, it is the stock — so the backup-critical load is the whole design brief.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calculator">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Load first, quote second</p>
+      <h2>Build the load. The system writes itself.</h2>
+      <p class="lede">Every appliance you actually run, with watts, quantity and hours — and a tick for what must keep running when it is dark and the grid is gone. Night-critical rows drive the battery bank; that tick is the difference between a system that works and a system that dies at 11pm.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="size-form" autocomplete="off">
+        <div class="block-head">
+          <h3>Load profile</h3>
+          <span class="tiny mono" id="load-totals">—</span>
+        </div>
+        <fieldset class="plain">
+          <legend class="sr-only">Quick add common Nigerian appliances</legend>
+          <div class="pill-row" id="quick-add"></div>
+        </fieldset>
+
+        <div class="table-wrap load-wrap">
+          <table id="load-table">
+            <caption class="sr-only">Appliance load builder</caption>
+            <thead>
+              <tr>
+                <th scope="col">Appliance</th>
+                <th scope="col">Watts</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Hours/day</th>
+                <th scope="col">Night</th>
+                <th scope="col">Motor</th>
+                <th class="num" scope="col">Wh/day</th>
+                <th scope="col"><span class="sr-only">Remove</span></th>
+              </tr>
+            </thead>
+            <tbody id="load-body"></tbody>
+          </table>
+        </div>
+        <div class="row load-actions">
+          <button class="btn btn-ghost btn-sm" type="button" id="add-row">+ Add an appliance</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="reset-load">Restore starter profile</button>
+        </div>
+
+        <div class="block-head split-head">
+          <h3>Site &amp; battery</h3>
+          <p class="tiny">Peak sun hours are annual averages from Nigerian irradiation data — not a guarantee for any single week.</p>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="city">City</label>
+            <select id="city" name="city"></select>
+            <p class="help" id="city-note">—</p>
+          </div>
+          <div class="field">
+            <label for="sun-hours">Peak sun hours <span class="tiny">per day, editable</span></label>
+            <input id="sun-hours" name="sun-hours" type="number" min="2" max="9" step="0.1" value="5.2" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="night-hours">Night hours to cover</label>
+            <input id="night-hours" name="night-hours" type="number" min="0" max="16" step="0.5" value="8" inputmode="decimal">
+            <p class="help">How many of the blackout hours the battery must carry.</p>
+          </div>
+          <div class="field">
+            <label for="autonomy">Days of autonomy</label>
+            <input id="autonomy" name="autonomy" type="number" min="0.25" max="4" step="0.25" value="1" inputmode="decimal">
+            <p class="help">1 day = one night plus a cloudy morning. 2+ days is expensive, not safer.</p>
+          </div>
+          <div class="field">
+            <label for="chemistry">Battery chemistry</label>
+            <select id="chemistry" name="chemistry">
+              <option value="lithium" selected>Lithium (LiFePO₄) — DoD 90%</option>
+              <option value="tubular">Tubular lead-acid — DoD 80%</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bank-volts">Bank voltage</label>
+            <select id="bank-volts" name="bank-volts">
+              <option value="24">24 V</option>
+              <option value="48" selected>48 V</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="budget">Budget band</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="budget" name="budget" type="number" min="0" step="100000" value="3500000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="quote-label">Quote label <span class="tiny">for the ledger</span></label>
+            <input id="quote-label" name="quote-label" maxlength="60" placeholder="e.g. Bola — Ibadan flat">
+          </div>
+        </div>
+        <p class="warn-note" id="bank-warn" role="status"></p>
+        <p class="warn-note" id="surge-note" role="status"></p>
+
+        <div class="block-head split-head">
+          <h3>Generator you run today</h3>
+          <p class="tiny">Be honest about hours — this is the number the solar has to beat.</p>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="fuel-type">Fuel</label>
+            <select id="fuel-type" name="fuel-type">
+              <option value="petrol" selected>Petrol / petrol gen</option>
+              <option value="diesel">Diesel (AGO)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fuel-price">Price per litre</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="fuel-price" name="fuel-price" type="number" min="0" step="50" value="1650" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="gen-lh">Consumption <span class="tiny">litres per hour</span></label>
+            <input id="gen-lh" name="gen-lh" type="number" min="0" max="10" step="0.05" value="1.1" inputmode="decimal">
+            <p class="help" id="gen-litres">—</p>
+          </div>
+          <div class="field">
+            <label for="gen-hours">Hours run per day</label>
+            <input id="gen-hours" name="gen-hours" type="number" min="0" max="24" step="0.25" value="3.5" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="gen-svc">Servicing cost per litre burned</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="gen-svc" name="gen-svc" type="number" min="0" step="10" value="120" inputmode="numeric"></div>
+            <p class="help">Oil, plugs, alternator, the mender — amortised per litre is the only honest way to count it.</p>
+          </div>
+          <div class="field">
+            <label for="gen-price">Generator purchase price</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="gen-price" name="gen-price" type="number" min="0" step="10000" value="380000" inputmode="numeric"></div>
+          </div>
+        </div>
+        <p class="tiny noise-note">Not in any spreadsheet: the noise, the neighbours, the 6am start-up, the queue at the filling station, the stolen fuel. SunCost counts money only — you decide what the quiet is worth.</p>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Month solar overtakes the generator</span>
+          <b id="crossover">—</b>
+          <span id="crossover-note">build the load first</span>
+        </div>
+
+        <div class="readout">
+          <div class="line"><span>Energy you use per day</span><b id="r-daily">—</b></div>
+          <div class="line"><span>Peak load (all on at once)</span><b id="r-peak">—</b></div>
+          <div class="line"><span>Panel array needed</span><b id="r-array">—</b></div>
+          <div class="line"><span>Inverter rating</span><b id="r-inverter">—</b></div>
+          <div class="line line-strong"><span>Battery bank</span><b id="r-battery">—</b></div>
+          <div class="line"><span>Night load covered</span><b id="r-night">—</b></div>
+          <div class="line"><span>System price (indicative)</span><b id="r-capex">—</b></div>
+          <div class="line"><span>Cost per year over horizon</span><b id="r-peryear">—</b></div>
+        </div>
+
+        <div class="verdict" id="verdict">
+          <h4 id="verdict-title">Enter your load</h4>
+          <p id="verdict-body">The recommended system class and the reason appear here.</p>
+        </div>
+
+        <div class="mini">
+          <div><span id="lab-gen5">Generator, 5 yrs</span><b id="r-gen5">—</b></div>
+          <div><span id="lab-solar5">Solar, 5 yrs</span><b id="r-solar5">—</b></div>
+          <div><span id="lab-diff5">Difference</span><b id="r-diff5">—</b></div>
+        </div>
+        <p class="tiny">Prices are indicative 2026 Lagos/Ibadan market rates. Get three local quotes; a 20% spread is normal.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="compare">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Five years, drawn to scale</p>
+      <h2>Two lines. One crossing point.</h2>
+      <p class="lede">Generator cost climbs in a straight line — fuel is a daily habit. Solar is a cliff at the start and then a slow incline of upkeep and one battery change. Where they cross is the month you stop paying rent to the fuel market.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Cumulative cost curves</h3>
+        <p class="muted small-copy" id="curve-note">—</p>
+        <div class="curve">
+          <div class="curve-key"><span class="key key-gen"></span> Generator (purchase + fuel + servicing)</div>
+          <div id="gen-spark"></div>
+        </div>
+        <div class="curve">
+          <div class="curve-key"><span class="key key-sun"></span> Solar + battery (price + upkeep)</div>
+          <div id="sun-spark"></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Cumulative cost at 1, 3, 5 and 7 years</caption>
+            <thead><tr><th>Horizon</th><th class="num">Generator</th><th class="num">Solar</th><th class="num">Ahead</th></tr></thead>
+            <tbody id="curve-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h3>What the money is made of</h3>
+        <p class="muted small-copy">Five-year generator spend, split into the lines you can actually control.</p>
+        <div class="donut-wrap">
+          <div id="cost-donut"></div>
+          <div>
+            <p class="tiny">Fuel share of generator cost</p>
+            <b class="big-num" id="donut-label">—</b>
+            <p class="muted small-copy" id="donut-note">—</p>
+          </div>
+        </div>
+        <div id="capex-bars" class="capex-bars"></div>
+      </div>
+    </div>
+
+    <div class="card reveal finance-card">
+      <h3>Financing: PAYG and instalments</h3>
+      <p class="muted small-copy">SunKing-style pay-as-you-go is not cheaper — it is cheaper <em>per week</em> than petrol while costing more in total. The table shows both truths at once.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label for="horizon">Compare over</label>
+          <select id="horizon" name="horizon">
+            <option value="1">1 year</option>
+            <option value="3">3 years</option>
+            <option value="5" selected>5 years</option>
+            <option value="7">7 years</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fin-mode">Payment plan</label>
+          <select id="fin-mode" name="fin-mode">
+            <option value="cash" selected>Pay cash up front</option>
+            <option value="payg-daily">PAYG — daily instalments</option>
+            <option value="payg-weekly">PAYG — weekly instalments</option>
+            <option value="loan">Down payment + monthly instalments</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="payg-rate">PAYG interest rate <span class="tiny">% per year</span></label>
+          <input id="payg-rate" name="payg-rate" type="number" min="0" max="80" step="0.5" value="9" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="payg-years">PAYG term <span class="tiny">years</span></label>
+          <input id="payg-years" name="payg-years" type="number" min="1" max="7" step="0.5" value="3" inputmode="decimal">
+        </div>
+      </div>
+      <div class="fin-out" id="fin-out"></div>
+      <p class="tiny">Annuity maths: payment = balance × rate per period ÷ (1 − (1 + rate)<sup>−periods</sup>). Asset ownership at the end of the term is assumed — check the exit clause in any real PAYG contract.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="quotes">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · Quote ledger</p>
+      <h2>Keep every version. Hand one to the installer.</h2>
+      <p class="lede">Saved in this browser only. Export the CSV to compare quotes from three installers side by side, or print the spec sheet and pin it to the wall.</p>
+    </div>
+    <div class="roster-tools reveal">
+      <button class="btn btn-accent btn-sm" type="button" id="save-quote">Save this system</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="export-csv">Export CSV</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="print-spec">Print spec sheet</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="clear-quotes">Clear ledger</button>
+      <span class="tiny roster-count" id="quote-count">0 quotes</span>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only">Saved solar quotes</caption>
+        <thead><tr><th>Quote</th><th class="num">Date</th><th>City</th><th class="num">kWh/day</th><th class="num">Array</th><th class="num">Inverter</th><th class="num">Battery</th><th class="num">Price</th><th class="num">Gen / month</th><th class="num">Crossover</th><th></th></tr></thead>
+        <tbody id="quote-body"></tbody>
+        <tfoot id="quote-foot"></tfoot>
+      </table>
+    </div>
+    <p class="tiny roster-empty" id="quote-empty">Nothing saved yet. Size a system above and press <b>Save this system</b>.</p>
+
+    <div class="spec-sheet" id="spec-sheet" aria-hidden="true">
+      <h3>Solar system specification — indicative</h3>
+      <p class="spec-sub" id="spec-meta">—</p>
+      <dl id="spec-list"></dl>
+      <p class="spec-foot">Generated by SunCost. Figures are indicative sizing and 2026 market prices, not a warranty or a tender. Peak sun hours are annual averages. Confirm on-site irradiation, roof condition, earthing and DISCO changeover with a certified installer.</p>
+    </div>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Nothing in a black box</p>
+      <h2>Every constant, editable.</h2>
+      <p class="lede">If your installer uses a different loss factor, a different depth of discharge, or a different price for a 275 W panel, change it here. The whole computation follows, live.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Sizing constants</summary>
+          <div class="acc-body"><div class="const-grid" id="const-sizing"></div></div>
+        </details>
+        <details class="acc">
+          <summary>Indicative 2026 prices</summary>
+          <div class="acc-body"><div class="const-grid" id="const-price"></div></div>
+        </details>
+        <details class="acc">
+          <summary>Peak sun hours by city <span class="tiny">(annual averages — editable)</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable peak sun hours</caption>
+                <thead><tr><th>Location</th><th class="num">Peak sun hours</th><th class="num">Array needed for your day</th></tr></thead>
+                <tbody id="psh-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Values are annual-average daily peak sun hours from published Nigerian irradiation atlases. A single harmattan week can sit 30% below them; a wet-season week well under. Do not size a system on the average and then complain about the average.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Financing &amp; replacement assumptions</summary>
+          <div class="acc-body"><div class="const-grid" id="const-fin"></div></div>
+        </details>
+        <div class="row const-actions">
+          <button class="btn btn-ghost btn-sm" type="button" id="reset-assumptions">Restore all defaults</button>
+        </div>
+
+        <details class="acc">
+          <summary>What this tool does not do</summary>
+          <div class="acc-body">
+            <ul class="checklist crosslist">
+              <li>No shading, soiling or orientation model — a west-facing roof with a mango tree over it will not give you the annual average.</li>
+              <li>No load diversity. Peak load is every appliance on at once, which oversizes the inverter; a real installer applies a diversity factor you cannot audit.</li>
+              <li>No grid feed-in or net metering income. Most DISCOs will not buy your surplus; if yours will, treat it as a bonus, not a plan.</li>
+              <li>No guarantee on sun hours, no weather risk, no battery degradation curve beyond the replacement interval.</li>
+              <li>No inverter harmonics, earthing design, changeover isolation or roof-load certification — all of which are physical safety matters, not arithmetic.</li>
+              <li>No SunKing or Lumar price list. The PAYG rate is your input, not their quotation.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Why my inverter looks too small for my panels</summary>
+          <div class="acc-body"><p>Because the two are sized by different things. The inverter rating comes from your <em>simultaneous peak load</em>; the array comes from your <em>daily energy</em>. A house that uses 9 kWh a day but never draws more than 800 W needs a small inverter and a big array — which is exactly why cheap "5 kVA for everything" quotes feel oversized and yet still die at night. SunCost prices the smaller of the two requirements but warns you when the array exceeds what that inverter can accept.</p></div>
+        </details>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h3>Worked example</h3>
+        <p class="muted small-copy">The starter profile at Ibadan, shown step by step. It recomputes from whatever is in the builder above.</p>
+        <ol class="steps" id="worked"></ol>
+        <p class="tiny">Round up on panels, round up on the bank, round to a real inverter rating — that is how installers quote, so that is how this computes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">☀</span><span style="color:#fff">SunCost<small style="color:rgba(255,255,255,.6)">Solar vs generator, sized honestly</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Built for the person who has been quoted ₦4.9m and cannot tell whether it will still be running at 2am. No account, no upload, no lead form.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#calculator">Size it</a><br><a href="#compare">5-year cost</a><br><a href="#quotes">Quotes</a><br><a href="#rules">Assumptions</a><br><a href="data.html">Sizing data</a><br><a href="playbook.html">Install playbook</a><br><a href="record.html">Quote ledger</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../cropkeep/">Post-harvest loss</a><br><a href="../payrite/">Payroll &amp; PAYE</a><br><a href="../sealcheck/">Medicine check</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Indicative sizing and 2026 market prices. Confirm locally.</span><span class="mono">SunCost · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

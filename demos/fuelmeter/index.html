@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FuelMeter — what this trip actually costs you per kilometre</title>
+<meta name="description" content="True cost per kilometre for Nigerian vehicles: litres from real consumption, pump price per editable state, plus tyres, oil, servicing and insurance. Compare drive vs ride-hail vs bus, solve the crossover distance, budget a month of fuel and learn your car's actual km/L from the odometer log. Runs entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="fuelmeter.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23c0451f'/><path d='M16 7c4 4.6 6 7.4 6 10.2A6 6 0 0110 17.2C10 14.4 12 11.6 16 7z' fill='white'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#trip">Skip to the trip planner</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">km</span><span>FuelMeter<small>cost per kilometre, Nigeria</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#trip">Trip</a>
+      <a href="#breakdown">Cost per km</a>
+      <a href="#head2head">Drive or hail</a>
+      <a href="#budget">Monthly</a>
+      <a href="#log">Fuel log</a>
+      <a href="#assumptions">Assumptions</a>
+      <a href="data.html">Reference data</a>
+      <a href="playbook.html">Driver playbook</a>
+      <a href="record.html">Fuel log</a>
+      <a class="btn btn-ink btn-sm" href="#trip">Price a trip</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Fuel · wear · tyres · oil · servicing</p>
+      <h1>What this trip<br>actually costs you<br><em>per kilometre</em>.</h1>
+      <p class="lede">Almost nobody in Nigeria computes it. A "half-tank" guess hides what Benin–Lagos really costs, riders price jobs by feel and lose money on long ones, and drivers quote fuel while ignoring tyres, oil and servicing. FuelMeter does the whole sum — litres from real consumption at an editable pump price, plus the wear you pay anyway — and prints the number per kilometre.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#trip">Price a trip</a>
+        <a class="btn btn-ghost" href="#head2head">Drive or hail? <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="1610" data-prefix="₦">0</b><span>/L petrol — the cheapest line in the editable price table</span></div>
+        <div class="stat"><b data-count="6" data-suffix="">0</b><span>cost lines beyond fuel that a rider never counts</span></div>
+        <div class="stat"><b data-count="0" data-suffix=" requests">0</b><span>nothing is uploaded. It all stays in this browser</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame float"><img src="../_media/fuelmeter-hero.webp" width="1536" height="1024" alt="A Lagos driver at a filling station watching the pump meter while a dispatch rider waits beside him" fetchpriority="high"></div>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">00 · The hole in the arithmetic</p>
+      <h2>Fuel is the biggest cost you can see, and the only one you count.</h2>
+      <p class="lede">A go-slow burns petrol the engine is not using for movement. A worn tyre raises consumption without announcing itself. Pump prices differ across states and move without notice. Put those together and a trip that "feels" profitable quietly is not.</p>
+    </div>
+
+    <div class="grid-3 problem-grid">
+      <div class="card reveal">
+        <span class="card-num">A · price gap</span>
+        <p class="big-figure"><b data-count="80" data-prefix="₦">0</b><span>/L</span></p>
+        <h3>The same litre is not the same price</h3>
+        <p>Petrol in Lagos and petrol in Kano are not the same number, and neither is stable. Every price here is an editable reference value you update from the pump you actually use.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <span class="card-num">B · idling</span>
+        <p class="big-figure"><b data-count="0.6" data-decimals="1">0</b><span>L / hour</span></p>
+        <h3>Go-slow burns fuel that moves nothing</h3>
+        <p>An engine at idle drinks roughly 0.6 litres an hour on petrol. Two hours in traffic on a 60 km job is a real ₦1,956 that never appears on any fare slip.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <span class="card-num">C · the hidden tell</span>
+        <p class="big-figure"><b data-count="12" data-suffix="%">0</b></p>
+        <h3>12% below your baseline is a warning</h3>
+        <p>Log your odometer and litres and the site learns your real km/L. When learned economy falls more than 12% below your own baseline, it says the obvious: service the car, check the tyres.</p>
+      </div>
+    </div>
+
+    <div class="who-row reveal">
+      <span class="tiny who-label">Built for</span>
+      <span class="who">Uber / Bolt driver in Lagos</span>
+      <span class="who">Dispatch rider in Abuja</span>
+      <span class="who">Keke NLP owner on 30-second routes</span>
+      <span class="who">A family doing Lagos–Ibadan at the holidays</span>
+      <span class="who">Union member pricing a route</span>
+      <span class="who">Fleet owner with six vehicles and no data</span>
+    </div>
+  </div>
+</section>
+
+<section id="trip">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">01 · Trip planner</p>
+      <h2>Route, vehicle, traffic. Everything else follows.</h2>
+      <p class="lede">Pick a vehicle class, pick a known route or type your own kilometres, and the panel computes litres, fuel cost, wear cost and the total per kilometre — fuel and wear always shown as separate lines, because a single blended figure is how money quietly disappears.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="trip-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="t-profile">Vehicle</label>
+            <select id="t-profile" name="t-profile"></select>
+            <p class="help" id="t-profile-help">Claims and wear figures are editable under <a href="#assumptions">Assumptions</a>.</p>
+            <p class="tiny" id="t-profile-detail"></p>
+          </div>
+          <div class="field">
+            <label for="t-state">Pump price from</label>
+            <select id="t-state" name="t-state"></select>
+            <p class="help">Reference values you update yourself — <span class="mono" id="t-price-asof-inline">as of —</span>.</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="t-route">Known route (sets the distance)</label>
+          <select id="t-route" name="t-route">
+            <option value="custom">Custom distance — I will type it</option>
+          </select>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="t-origin">From</label>
+            <select id="t-origin" name="t-origin"></select>
+          </div>
+          <div class="field">
+            <label for="t-dest">To</label>
+            <select id="t-dest" name="t-dest"></select>
+          </div>
+          <div class="field">
+            <label for="t-km">Distance <span class="tiny">km, one way unless return is on</span></label>
+            <div class="input-group"><span class="prefix">km</span><input id="t-km" name="t-km" type="number" min="1" max="2000" step="1" value="130" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="t-traffic">Road conditions</label>
+            <select id="t-traffic" name="t-traffic">
+              <option value="1" selected>Open road — multiplier 1.00</option>
+              <option value="1.12">City stop-go — multiplier 1.12</option>
+              <option value="1.25">Go-slow — multiplier 1.25</option>
+            </select>
+            <p class="help">The multiplier is applied to consumption, not to the distance.</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="t-idle">Hours idling in traffic</label>
+            <div class="input-group"><span class="prefix">h</span><input id="t-idle" name="t-idle" type="number" min="0" max="12" step="0.25" value="0" inputmode="decimal"></div>
+            <p class="help">Burned at the editable idle rate (petrol ≈ 0.6 L/h).</p>
+          </div>
+          <div class="field">
+            <label for="t-load">Load / baggage</label>
+            <div class="input-group"><span class="prefix">kg</span><input id="t-load" name="t-load" type="number" min="0" max="5000" step="10" value="0" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="t-pax">Passengers beside you</label>
+            <input id="t-pax" name="t-pax" type="number" min="0" max="40" step="1" value="3" inputmode="numeric">
+            <p class="help">Used only for the cost-per-seat line — never to shrink the total.</p>
+          </div>
+          <div class="field">
+            <label for="t-fills">Tank capacity <span class="tiny">litres, from the vehicle</span></label>
+            <div class="input-group"><span class="prefix">L</span><input id="t-fills" name="t-fills" type="number" min="1" max="300" step="1" value="50" inputmode="numeric"></div>
+            <p class="help">Drives the needle on the gauge. Editable per vehicle.</p>
+          </div>
+        </div>
+
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="t-ac" name="t-ac"><span class="track"></span><span>A/C on (<span id="t-ac-pct">8</span>% more burn)</span></label>
+          <label class="switch"><input type="checkbox" id="t-return" name="t-return"><span class="track"></span><span>Count the return leg too</span></label>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="use-in-budget">Send trip to monthly budget</button>
+          <button class="btn btn-ghost" type="reset" id="trip-reset">Reset</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite" aria-label="Trip cost results">
+        <div class="readout-big">
+          <span>Total cost of this trip</span>
+          <b id="tr-total">₦0</b>
+          <span id="tr-total-note">fuel plus wear, servicing, tyres and amortised fixed cost</span>
+        </div>
+
+        <div class="gauge-card">
+          <div class="gauge">
+            <svg viewBox="0 0 200 122" role="img" aria-labelledby="gauge-title">
+              <title id="gauge-title">Fuel gauge: the fraction of one tank left if you burn this trip</title>
+              <path class="g-arc" d="M20 106 A80 80 0 0 1 180 106"></path>
+              <path class="g-arc-live" id="g-arc-live" d="M20 106 A80 80 0 0 1 180 106"></path>
+              <g class="g-ticks" id="g-ticks" aria-hidden="true"></g>
+              <g class="g-needle" id="g-needle" style="--needle:-90deg">
+                <path d="M100 106 L100 36"></path>
+                <circle cx="100" cy="106" r="7"></circle>
+              </g>
+              <text class="g-lab" x="14" y="120">E</text>
+              <text class="g-lab" x="178" y="120">F</text>
+            </svg>
+            <p class="gauge-read"><b id="g-pct">—</b><span id="g-note">tank to tank</span></p>
+          </div>
+          <p class="gauge-foot mono" id="g-fills">—</p>
+        </div>
+
+        <div class="readout">
+          <div class="line line-drip"><span>Litres needed <svg class="drip" viewBox="0 0 24 30" aria-hidden="true"><path class="nozzle" d="M4 3h11v6H8a4 4 0 004 6"></path><circle class="drop" id="drop-1" cx="12" cy="22" r="2.1"></circle><circle class="drop drop-b" id="drop-2" cx="12" cy="22" r="1.5"></circle></svg></span><b id="tr-litres">—</b></div>
+          <div class="line"><span>Fuel cost</span><b id="tr-fuel">—</b></div>
+          <div class="line"><span>Wear: service + tyres + oil</span><b id="tr-wear">—</b></div>
+          <div class="line"><span>Amortised insurance / registration</span><b id="tr-fixed">—</b></div>
+          <div class="line line-strong"><span>Total cost</span><b id="tr-total-2">—</b></div>
+          <div class="line"><span>Effective economy</span><b id="tr-eff">—</b></div>
+          <div class="line"><span>Fuel cost per km</span><b id="tr-perkm-fuel">—</b></div>
+          <div class="line line-strong"><span>TOTAL cost per km</span><b id="tr-perkm">—</b></div>
+          <div class="line"><span>Cost per seat per km <span class="tiny" id="tr-seat-count"></span></span><b id="tr-perseat">—</b></div>
+        </div>
+
+        <div class="verdict" id="tr-verdict">
+          <h4 id="tr-verdict-title">Pick a route</h4>
+          <p id="tr-verdict-body">Litres, fuel, wear and cost per km appear here as you type.</p>
+        </div>
+
+        <div class="mini">
+          <div><span>Fuel share of cost</span><b id="m-fuelshare">—</b></div>
+          <div><span>Marginal ₦/km (no fixed)</span><b id="m-marginal">—</b></div>
+          <div><span>Trip vs one tank</span><b id="m-tank">—</b></div>
+        </div>
+        <p class="tiny">Marginal cost ignores insurance and registration, which you pay whether the car moves or not. Use it to price a job; use the total to decide whether the vehicle is worth keeping.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="breakdown">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · The stack</p>
+      <h2>Every naira in that per-kilometre figure.</h2>
+      <p class="lede">Fuel is the loud one. The rest is quiet, certain, and paid out of the same pocket. This section is drawn from the trip you just configured.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Cost of this trip, line by line</h3>
+        <p class="muted small-copy">Litres at the pump price, then the wear you would otherwise forget.</p>
+        <div id="cost-bars"></div>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>What fuel really is</h3>
+        <div class="donut-wrap">
+          <div id="fuel-donut"></div>
+          <div>
+            <p class="tiny">Fuel as a share of total trip cost</p>
+            <b class="big-num" id="donut-label">—</b>
+            <p class="muted small-copy" id="donut-note">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal compare-card">
+      <h3>All vehicle classes at the same pump price</h3>
+      <p class="muted">Computed live from the editable profile table — claimed km/L, wear figures and your current pump price. The gap between the fuel column and the total column is what most drivers never add.</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Cost per kilometre by vehicle class</caption>
+          <thead><tr><th>Vehicle</th><th class="num">km/L</th><th class="num">Fuel ₦/km</th><th class="num">Wear ₦/km</th><th class="num">Fixed ₦/km</th><th class="num">Total ₦/km</th><th class="num">₦/seat/km</th></tr></thead>
+          <tbody id="vehicle-body"></tbody>
+        </table>
+      </div>
+      <div id="vehicle-bars" class="vbars"></div>
+    </div>
+  </div>
+</section>
+
+<section id="head2head">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Head to head</p>
+      <h2>Same trip, six ways to travel it.</h2>
+      <p class="lede">The trip distance, pump price and vehicle from section 01, priced against the alternatives. Fare rates are editable reference values, not quotations — but the ranking is arithmetic, and the crossover is solved, not guessed.</p>
+    </div>
+
+    <div class="h-tools reveal">
+      <div class="field h-field">
+        <label for="h-people">People travelling</label>
+        <input id="h-people" type="number" min="1" max="40" step="1" value="4" inputmode="numeric">
+      </div>
+      <div class="field h-field">
+        <label for="h-compare">Crossover against</label>
+        <select id="h-compare"></select>
+      </div>
+      <p class="tiny h-hint">Cost per person shown for the number above; cost per seat is the same figure divided one seat at a time.</p>
+    </div>
+
+    <div class="crossover reveal">
+      <div class="cross-main">
+        <p class="eyebrow">The answer everyone wants</p>
+        <b id="x-value">—</b>
+        <p id="x-note" class="mono">Solving…</p>
+      </div>
+      <ul class="cross-facts" id="cross-facts"></ul>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only">Travel modes for this trip</caption>
+        <thead><tr><th>Mode</th><th class="num">Total ₦</th><th class="num">₦ per person</th><th class="num">₦ per seat</th><th class="num">₦/km</th><th>Rank</th></tr></thead>
+        <tbody id="h-body"></tbody>
+      </table>
+    </div>
+    <div class="split-2 h-charts">
+      <div class="card reveal card-flat"><h3>Cost per person</h3><div id="h-bars"></div></div>
+      <div class="card reveal card-flat" data-delay="1"><h3>Read this honestly</h3><p class="muted small-copy" id="h-note">—</p><p class="muted small-copy" id="h-note-2">—</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="budget">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · A month of fuel</p>
+      <h2>What the calendar costs, and what a price rise does to it.</h2>
+      <p class="lede">Commute, weekend trips and a buffer, priced at today's pump — then re-priced at +10%, +15%, +20% and +30%, because that is what actually happens without notice.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="budget-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="g-commute">One-way commute</label>
+            <div class="input-group"><span class="prefix">km</span><input id="g-commute" type="number" min="0" max="300" step="1" value="22" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="g-days">Working days a week</label>
+            <input id="g-days" type="number" min="0" max="7" step="1" value="5" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="g-weeks">Weeks a month</label>
+            <input id="g-weeks" type="number" min="3" max="4.5" step="0.1" value="4.3" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="g-weekend-n">Weekend trips a month</label>
+            <input id="g-weekend-n" type="number" min="0" max="30" step="1" value="4" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="g-weekend-km">Round-trip km each</label>
+            <div class="input-group"><span class="prefix">km</span><input id="g-weekend-km" type="number" min="0" max="1200" step="5" value="60" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="g-buffer">Buffer for detours</label>
+            <div class="input-group"><span class="prefix">%</span><input id="g-buffer" type="number" min="0" max="60" step="1" value="8" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="g-income">Monthly earnings <span class="tiny">what the vehicle earns, or your salary</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="g-income" type="number" min="0" max="50000000" step="10000" value="800000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="g-commute-traffic">Commute conditions</label>
+            <select id="g-commute-traffic">
+              <option value="1">Open road</option>
+              <option value="1.12" selected>City stop-go</option>
+              <option value="1.25">Daily go-slow</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="g-idle-h">Idling hours per working day</label>
+          <div class="input-group"><span class="prefix">h</span><input id="g-idle-h" type="number" min="0" max="8" step="0.25" value="0.75" inputmode="decimal"></div>
+          <p class="help">Uses the vehicle and pump price chosen in the trip planner above.</p>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite" aria-label="Monthly budget results">
+        <div class="readout-big">
+          <span>Fuel this month</span>
+          <b id="bg-cost">₦0</b>
+          <span id="bg-note">litres per month appears below</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Litres per month</span><b id="bg-litres">—</b></div>
+          <div class="line"><span>Kilometres per month</span><b id="bg-km">—</b></div>
+          <div class="line"><span>Commute share of the bill</span><b id="bg-commute">—</b></div>
+          <div class="line line-strong"><span>Fuel as a share of earnings</span><b id="bg-share">—</b></div>
+        </div>
+        <div class="share-bar">
+          <div class="bar"><i id="bg-bar"></i></div>
+          <p class="tiny" id="bg-bar-note">—</p>
+        </div>
+        <div class="verdict" id="bg-verdict">
+          <h4 id="bg-verdict-title">—</h4>
+          <p id="bg-verdict-body">—</p>
+        </div>
+        <div class="mini">
+          <div><span>₦/km this month</span><b id="m-baperkm">—</b></div>
+          <div><span>Total cost of running</span><b id="m-batotal">—</b></div>
+          <div><span>Days to fill up</span><b id="m-bafills">—</b></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="card reveal compare-card">
+      <h3>What if the pump moves?</h3>
+      <p class="muted">Same litres, different price. The +15% row is the one to plan against: it is a normal month in Nigeria.</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Fuel price scenarios</caption>
+          <thead><tr><th>Scenario</th><th class="num">Pump ₦/L</th><th class="num">Litres / month</th><th class="num">Fuel ₦ / month</th><th class="num">Extra ₦</th><th class="num">Share of earnings</th></tr></thead>
+          <tbody id="scen-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="log">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Your real numbers</p>
+      <h2>The odometer does not lie. Neither does this.</h2>
+      <p class="lede">Every figure above is a model. Fill the log at the pump — date, litres, cost, odometer — and FuelMeter learns your vehicle's actual km/L, compares it with the claimed figure, and flags the moment it drops. Saved in this browser only. Export as CSV or print a monthly sheet for a cooperative or fleet owner.</p>
+    </div>
+
+    <div class="tabs reveal" data-tabs>
+      <button class="tab" type="button" role="tab" id="tab-log" aria-selected="true" aria-controls="panel-log">Fuel log</button>
+      <button class="tab" type="button" role="tab" id="tab-fleet" aria-selected="false" aria-controls="panel-fleet">Fleet</button>
+    </div>
+
+    <div id="panel-log" role="tabpanel" aria-labelledby="tab-log">
+      <div class="log-grid">
+        <form class="card log-form" id="log-form" autocomplete="off">
+          <h4>Add a fill-up</h4>
+          <div class="form-grid">
+            <div class="field">
+              <label for="l-date">Date</label>
+              <input id="l-date" type="date">
+            </div>
+            <div class="field">
+              <label for="l-vehicle">Vehicle</label>
+              <select id="l-vehicle"></select>
+            </div>
+            <div class="field">
+              <label for="l-litres">Litres</label>
+              <div class="input-group"><span class="prefix">L</span><input id="l-litres" type="number" min="0" max="500" step="0.1" value="45" inputmode="decimal"></div>
+            </div>
+            <div class="field">
+              <label for="l-cost">Paid</label>
+              <div class="input-group"><span class="prefix">₦</span><input id="l-cost" type="number" min="0" max="2000000" step="100" value="73350" inputmode="numeric"></div>
+            </div>
+            <div class="field">
+              <label for="l-odo">Odometer <span class="tiny">km reading now</span></label>
+              <div class="input-group"><span class="prefix">km</span><input id="l-odo" type="number" min="0" max="2000000" step="1" value="42130" inputmode="numeric"></div>
+            </div>
+            <div class="field">
+              <label for="l-note">Pump / note <span class="tiny">optional</span></label>
+              <input id="l-note" maxlength="40" placeholder="e.g. Asset, Iyana Ipaja">
+            </div>
+          </div>
+          <label class="switch"><input type="checkbox" id="l-full" checked><span class="track"></span><span>Full tank this time <span class="tiny">(needed for a true km/L)</span></span></label>
+          <div class="row"><button class="btn btn-accent btn-sm" type="button" id="l-add">Add to log</button><span class="tiny" id="l-error" role="status"></span></div>
+        </form>
+
+        <div class="learn-card">
+          <p class="eyebrow">Learned economy</p>
+          <b id="learned-big">—</b>
+          <p class="mono" id="learned-sub">no odometer pairs yet</p>
+          <div class="learn-row">
+            <div><span>Claimed by profile</span><b id="learned-claimed">—</b></div>
+            <div><span>Difference</span><b id="learned-diff">—</b></div>
+            <div><span>Samples</span><b id="learned-count">—</b></div>
+          </div>
+          <svg id="learned-spark" class="sparkline-slot" viewBox="0 0 300 74" preserveAspectRatio="none" role="img" aria-label="Trend of learned km per litre over the log"></svg>
+          <div class="verdict" id="learned-flag">
+            <h4 id="learned-flag-title">Log two full tanks</h4>
+            <p id="learned-flag-body">Two consecutive full-tank readings give the first real km/L figure.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="roster-tools reveal">
+        <label class="sr-only" for="log-month">Filter log by month</label>
+        <select id="log-month" class="ghost-select"></select>
+        <button class="btn btn-accent btn-sm" type="button" id="log-csv">Export log CSV</button>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="log-print">Print monthly sheet</button>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="log-clear">Clear log</button>
+        <span class="tiny roster-count" id="log-count">0 entries</span>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <caption class="sr-only">Fuel log entries</caption>
+          <thead><tr><th>Date</th><th>Vehicle</th><th class="num">Litres</th><th class="num">Paid ₦</th><th class="num">₦/L</th><th class="num">Odometer</th><th class="num">Real km/L</th><th>Note</th><th></th></tr></thead>
+          <tbody id="log-body"></tbody>
+          <tfoot id="log-foot"></tfoot>
+        </table>
+      </div>
+      <p class="tiny roster-empty" id="log-empty">Nothing logged yet. Add a fill-up above — the learned km/L, the trend line and the service flag all come out of these rows.</p>
+      <div class="print-sheet" id="print-sheet" aria-hidden="true"></div>
+    </div>
+
+    <div id="panel-fleet" role="tabpanel" aria-labelledby="tab-fleet" hidden>
+      <p class="lede fleet-intro">A transport cooperative or fleet owner gets the same arithmetic per vehicle: kilometres a month in, ₦/km out, and a ranked list of which vehicle is bleeding money. Stored in this browser, exportable as CSV.</p>
+      <div class="fleet-grid">
+        <form class="card log-form" id="fleet-form" autocomplete="off">
+          <h4>Add a vehicle</h4>
+          <div class="form-grid">
+            <div class="field">
+              <label for="f-name">Name / plate</label>
+              <input id="f-name" maxlength="30" placeholder="e.g. KUN 412 XP">
+            </div>
+            <div class="field">
+              <label for="f-profile">Profile</label>
+              <select id="f-profile"></select>
+            </div>
+            <div class="field">
+              <label for="f-km">Km per month</label>
+              <div class="input-group"><span class="prefix">km</span><input id="f-km" type="number" min="1" max="30000" step="50" value="2200" inputmode="numeric"></div>
+            </div>
+            <div class="field">
+              <label for="f-state">Priced in</label>
+              <select id="f-state"></select>
+            </div>
+            <div class="field">
+              <label for="f-traffic">Typical road</label>
+              <select id="f-traffic">
+                <option value="1">Open road</option>
+                <option value="1.12" selected>City stop-go</option>
+                <option value="1.25">Go-slow</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-seats">Seats used / paid</label>
+              <input id="f-seats" type="number" min="1" max="40" step="1" value="4" inputmode="numeric">
+            </div>
+          </div>
+          <div class="row"><button class="btn btn-accent btn-sm" type="button" id="f-add">Add to fleet</button></div>
+        </form>
+        <div class="fleet-totals">
+          <div><span>Fleet cost / month</span><b id="fleet-total">—</b></div>
+          <div><span>Fleet distance / month</span><b id="fleet-km">—</b></div>
+          <div><span>Blended ₦/km</span><b id="fleet-avg">—</b></div>
+          <div><span>Worst ₦/km</span><b id="fleet-worst">—</b></div>
+        </div>
+      </div>
+      <div class="roster-tools reveal">
+        <button class="btn btn-accent btn-sm" type="button" id="fleet-csv">Export fleet CSV</button>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="fleet-print">Print fleet sheet</button>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="fleet-clear">Clear fleet</button>
+        <span class="tiny roster-count" id="fleet-count">0 vehicles</span>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <caption class="sr-only">Fleet vehicles</caption>
+          <thead><tr><th>Vehicle</th><th>Profile</th><th class="num">km/mo</th><th class="num">Litres/mo</th><th class="num">Fuel ₦/mo</th><th class="num">Wear+fixed ₦/mo</th><th class="num">Total ₦/mo</th><th class="num">₦/km</th><th class="num">₦/seat/km</th><th></th></tr></thead>
+          <tbody id="fleet-body"></tbody>
+        </table>
+      </div>
+      <div class="card card-flat fleet-rank">
+        <h3>Which vehicle is bleeding money</h3>
+        <p class="muted small-copy">Ranked by total ₦ per kilometre — highest first. A vehicle only belongs in the fleet if it earns more per km than this number.</p>
+        <div id="fleet-bars"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="assumptions">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Nothing hidden</p>
+      <h2>Change the reference numbers and the maths follows.</h2>
+      <p class="lede">These are not live feeds. They are editable reference values with an "as of" date, because static hosting cannot know what the pump charged this morning. Update them when you fill up; the site remembers them in this browser.</p>
+    </div>
+
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Pump prices per state <span class="tiny">editable reference values</span></summary>
+          <div class="acc-body">
+            <div class="field field-inline">
+              <label for="price-asof">Prices as of</label>
+              <input id="price-asof" type="date">
+              <span class="tiny">Nothing is fetched from anywhere. You are the source.</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable pump prices</caption>
+                <thead><tr><th>State</th><th class="num">Petrol ₦/L</th><th class="num">Diesel ₦/L</th></tr></thead>
+                <tbody id="price-body"></tbody>
+              </table>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-prices">Restore default prices</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Vehicle profiles <span class="tiny">consumption and wear</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable vehicle profiles</caption>
+                <thead><tr><th>Vehicle</th><th class="num">km/L</th><th class="num">Tank L</th><th class="num">Seats</th><th class="num">Service ₦/km</th><th class="num">Tyre set ₦</th><th class="num">Tyre km</th><th class="num">Oil ₦</th><th class="num">Oil km</th><th class="num">Fixed ₦/mo</th></tr></thead>
+                <tbody id="profile-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Indicative ranges, from the claimed figures owners quote: dispatch bike 40–55, keke NLP 18–25, Corolla 11–13, Camry 9–11, Sienna/Hiace 7–9, Aygo/Picanto 16–20, pickup 7–9, 3–5 ton truck 4–6, bus 3–5. Wear figures are averages — your car's real numbers come from the log, not from here.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-profiles">Restore default profiles</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Alternative modes <span class="tiny">fare rates, editable</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable travel mode fares</caption>
+                <thead><tr><th>Mode</th><th class="num">Minimum fare ₦</th><th class="num">₦ per km</th><th class="num">Seats</th><th>Priced per</th><th>Notes</th></tr></thead>
+                <tbody id="fare-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Not quotations — real fares are negotiated, and a park agent's demand is a conversation, not a formula. "Priced per seat" means every traveller pays that rate (bus, minibus, a sold seat in a private car, okada). "Priced per vehicle" means you hire the whole thing and split it (ride-hail, a keke booked for your group).</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-fares">Restore default fares</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Driving physics and amortisation</summary>
+          <div class="acc-body">
+            <div class="form-grid">
+              <div class="field">
+                <label for="k-idle">Idling burn <span class="tiny">L per hour, petrol</span></label>
+                <div class="input-group"><span class="prefix">L</span><input id="k-idle" type="number" min="0" max="3" step="0.05" value="0.6" inputmode="decimal"></div>
+              </div>
+              <div class="field">
+                <label for="k-ac">A/C penalty <span class="tiny">%</span></label>
+                <div class="input-group"><span class="prefix">%</span><input id="k-ac" type="number" min="0" max="25" step="0.5" value="8" inputmode="decimal"></div>
+              </div>
+              <div class="field">
+                <label for="k-load">Extra burn per 100 kg <span class="tiny">%</span></label>
+                <div class="input-group"><span class="prefix">%</span><input id="k-load" type="number" min="0" max="20" step="0.5" value="2.5" inputmode="decimal"></div>
+              </div>
+              <div class="field">
+                <label for="k-monthly">Distance per month <span class="tiny">km, for insurance/registration amortisation</span></label>
+                <div class="input-group"><span class="prefix">km</span><input id="k-monthly" type="number" min="100" max="20000" step="100" value="1400" inputmode="numeric"></div>
+              </div>
+              <div class="field">
+                <label for="k-flag">Service flag threshold <span class="tiny">% below baseline</span></label>
+                <div class="input-group"><span class="prefix">%</span><input id="k-flag" type="number" min="2" max="40" step="1" value="12" inputmode="numeric"></div>
+              </div>
+              <div class="field">
+                <label for="k-go-slow">Go-slow multiplier</label>
+                <input id="k-go-slow" type="number" min="1" max="2" step="0.01" value="1.25" inputmode="decimal">
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-factors">Restore defaults</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Known route distances</summary>
+          <div class="acc-body">
+            <p>Lagos–Ibadan 130 · Lagos–Benin City 245 · Abuja–Kaduna 170 · Abuja–Lokoja 240 · Onitsha–Enugu 65 · Port Harcourt–Aba 60 · Lagos–Abeokuta 100 · Kano–Bauchi 180 · Benin–Ore 130. Custom kilometres are always allowed, and the number you type beats the table.</p>
+            <p class="tiny">Road distance, not straight-line. Signposts and Google Maps disagree with each other often enough that the table is a starting point, not a measurement.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="card reveal worked-card" data-delay="1">
+        <h3>Worked example, start to finish</h3>
+        <p class="muted small-copy">A Corolla at 12 km/L doing Lagos–Ibadan (130 km) at the Oyo pump price. Recomputed live from whatever you have configured.</p>
+        <ol class="steps" id="worked"></ol>
+        <p class="tiny">Switch the road condition to "city stop-go" and watch the litre figure move: the multiplier is applied to consumption, so 1.12 turns a 10.8 L trip into 12.1 L — about ₦2,000 more at the pump, and nobody mentions it in a fare.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="limits">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Honest limits</p>
+      <h2>What this number is not.</h2>
+    </div>
+    <div class="grid-3 limits-grid">
+      <div class="card reveal">
+        <span class="card-num">Consumption</span>
+        <h3>Driving style is a variable, not a constant</h3>
+        <p>Aggressive acceleration, under-inflated tyres, a lazy clutch, tinted windows and a boot full of stuff all move km/L by more than the table does. That is exactly why the fuel log exists: your learned figure beats any claimed one.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <span class="card-num">Prices</span>
+        <h3>Pump prices move without notice</h3>
+        <p>The state table is a set of editable reference values with an "as of" date you set. There is no live feed here — static hosting cannot have one — so if the pump changed this morning, type the new number.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <span class="card-num">Wear</span>
+        <h3>Wear costs are indicative averages</h3>
+        <p>Tyres, oil and servicing are amortised per kilometre from typical Nigerian prices. Your actual set of four, your actual mechanic, and that suspension work you keep postponing will differ. Depreciation is not included at all.</p>
+      </div>
+      <div class="card reveal">
+        <span class="card-num">Not a quote</span>
+        <h3>Nothing here is a quotation</h3>
+        <p>No fare, no contract, no repair estimate. Ride-hail, bus and minibus rates are arithmetic placeholders for negotiation, and a union levy or a park agent's demand is a conversation, not a formula.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <span class="card-num">Storage</span>
+        <h3>One browser, one device</h3>
+        <p>Logs and fleets live in this browser's localStorage. Clearing site data clears them, so export the CSV before you change phones. There is no account and no sync — deliberately.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <span class="card-num">Fuel type</span>
+        <h3>Petrol and diesel only</h3>
+        <p>Gas conversions, CNG and hybrid regen are not modelled. Diesel pickup, truck and bus figures use the diesel column of the price table; if you run CNG, edit the price row and treat the consumption claim with extra suspicion.</p>
+      </div>
+    </div>
+    <ul class="crosslist tiny limits-note reveal">
+      <li>Trip totals exclude tolls, park levies, "orientation" charges and anything an agent demands at a barrier — add them to the load line or accept the under-estimate.</li>
+      <li>Cost per seat only divides the cost; it does not tell you whether a fare is legal, collectable or fair on your route.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">km</span><span style="color:#fff">FuelMeter<small style="color:rgba(255,255,255,.6)">cost per kilometre, Nigeria</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">For the driver who has to answer for the fuel money, and the rider who priced the job by feel. No account, no server, no upload.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#trip">Trip planner</a><br><a href="#breakdown">Cost per km</a><br><a href="#head2head">Drive or hail</a><br><a href="#budget">Monthly budget</a><br><a href="#log">Fuel log &amp; fleet</a><br><a href="data.html">Reference data</a><br><a href="playbook.html">Driver playbook</a><br><a href="record.html">Fuel log</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../riderpool/">RiderPool — split the fare</a><br><a href="../payrite/">PayRite — payroll maths</a><br><a href="../rentjury/">RentJury — tenancy</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Figures are indicative. Not a quotation, not a fare, not advice.</span><span class="mono">FuelMeter · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAFDAC number shapes, seal types, storage bands and recall-prone categories - SealCheck reference</title>
+<meta name="description" content="The reference data behind SealCheck: which registration number shapes are documented, which pack seals copy well and which do not, what heat does to each dosage form, which clock governs after opening, and the categories that get recalled.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="sealcheck.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2312667a'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%9C%93</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">✓</span><span>SealCheck<small>medicine authenticity, at the counter</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Inspector</a>
+      <a href="data.html" class="is-here" aria-current="page">Counter data</a>
+      <a href="playbook.html">40-second playbook</a>
+      <a href="record.html">Inspection log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#inspect">Run the 14 checks</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">SealCheck</a> <span aria-hidden="true">/</span> <span aria-current="page">Counter data</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference - what a counter check can actually see</p>
+    <h1 class="reveal" data-delay="1">Six things you can read<br>without a laboratory.</h1>
+    <p class="lede reveal" data-delay="2">A number, a date, a glue seam, a foil, a dial and a receipt. That is the whole instrument panel available to a buyer in a chemist or an open market, and every table on this page exists to make one of those six readable in seconds.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>14 checks</b> weighted, four groups, 100 points</span><span><b>4 fatal</b> answers that override the score</span><span><b>2 minutes</b> is what a full inspection takes</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="provable">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · What a counter check proves</p>
+          <h2 id="provable-h">Six hard numbers, and the honest limit of each</h2>
+          <p class="lede">Nothing here authenticates a medicine. What these numbers do is tell you which failures are visible from where you are standing, and which are invisible no matter how long you look.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>100</b><span>total check weight, spread over 14 documented checks</span></div>
+      <div class="metric"><b>4 of 100</b><span>weight of the fatal documentation check: the registration number</span></div>
+      <div class="metric"><b>12 + 12</b><span>the two heaviest checks: blister foil and carton glue seam</span></div>
+      <div class="metric"><b>85 / 66</b><span>the score lines: at or above 85 use as directed, below 66 do not use and report</span></div>
+      <div class="metric"><b>0.4</b><span>credit given to an unsure answer, because unsure is itself a risk</span></div>
+      <div class="metric"><b>27 DH</b><span>degree-hours accrued per hour on a 2-8 C item sitting at 35 C</span></div>
+      <div class="metric"><b>0</b><span>lab tests standing between you and a discard decision</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="regshapes">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Registration numbers</p>
+          <h2 id="regshapes-h">The documented shapes, what each one is supposed to be printed on, and the trap in it</h2>
+          <p class="lede">A registration number is text, and text copies. What still fails is the shape: the letter, the digit count, the dash and the suffix. Learn these five rules and most lazy fakes fall out before you ask a single question.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a shape</span><input id="regshapes-q" type="search" placeholder="prefix, digits, CR, legacy" autocomplete="off"></label>
+          
+          <span class="filter-count" id="regshapes-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="regshapes-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">As printed on the pack</th>
+            <th data-sort="1" class="n">Body digits</th>
+            <th data-sort="2">What it should be on</th>
+            <th data-sort="3">What the checker returns</th>
+            <th data-sort="4">The trap in it</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>A-12345</td><td class="n">5</td><td>Imported finished product registered through a Nigerian agent</td><td>Recognised shape</td><td>Copies as easily as any other text; verify the entry against this exact product, strength and pack</td></tr>
+            <tr><td>F-12345</td><td class="n">5</td><td>Finished product manufactured in Nigeria</td><td>Recognised shape</td><td>An F- number on a pack whose text says imported means one of the two is wrong - ask which factory</td></tr>
+            <tr><td>A-123456</td><td class="n">6</td><td>The older documented length for an imported product</td><td>Recognised, flagged</td><td>Six-digit bodies are more often legacy or dormant listings than current ones</td></tr>
+            <tr><td>F-123456</td><td class="n">6</td><td>The older documented length for a local product</td><td>Recognised, flagged</td><td>Same caveat: the shape passing tells you less here, not more</td></tr>
+            <tr><td>A-12345CR</td><td class="n">5</td><td>Contract or repack-related registration, seen against bulk handling</td><td>Valid shape, wrong context</td><td>A CR suffix never belongs on a sealed retail carton; ask for the finished-product number</td></tr>
+            <tr><td>A-12345X</td><td class="n">5</td><td>Bulk material or active pharmaceutical ingredient registration</td><td>Valid shape, wrong context</td><td>X appears on drums and material records, not on patient packs</td></tr>
+            <tr><td>12/4567</td><td class="n">4 + 4</td><td>Older 5-6 digit numeric form, often written nn/nnnn</td><td>Recognised as legacy</td><td>No letter prefix at all, so ask which agent imported it and whether the listing is still live</td></tr>
+            <tr><td>45678</td><td class="n">5</td><td>Plain legacy number, no prefix</td><td>Recognised as legacy</td><td>Also exactly what a copied label looks like when the copier dropped the letter</td></tr>
+            <tr><td>456789</td><td class="n">6</td><td>Plain legacy number, long form</td><td>Recognised as legacy</td><td>Frequently a batch code being read as a registration number; check which field you are actually looking at</td></tr>
+            <tr><td>A-1234</td><td class="n">4</td><td>Nothing documented</td><td>Not a valid shape</td><td>Documented bodies are 5-6 digits, so a 4-digit body is rejected on the shape alone</td></tr>
+            <tr><td>A-1234567</td><td class="n">7</td><td>Nothing documented</td><td>Not a valid shape</td><td>Longer than any documented form - usually a barcode or a shelf code being misread</td></tr>
+            <tr><td>A12345</td><td class="n">5</td><td>Nothing documented</td><td>Not a valid shape</td><td>Genuine packs print the dash; a missing dash is a bad transcription or a bad copy</td></tr>
+            <tr><td>B-12345</td><td class="n">5</td><td>No letter prefix this tool knows</td><td>Not a valid shape</td><td>Documented retail prefixes are A (imported) and F (locally manufactured), nothing else</td></tr>
+            <tr><td>no number, or illegible</td><td class="n">0</td><td>Nothing legal at retail</td><td>Stop</td><td>The registration check is fatal in this tool: a missing or unreadable number is a stop, not a question</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Shapes are the ones commonly documented and reported on packs. Regulators add and retire formats, and the official register is the only authority - this page queries nothing and never returns a lookup result.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sealtypes">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Seals and factory finishes</p>
+          <h2 id="sealtypes-h">Which pack finishes copy well, and which ones a counterfeiter cannot carry out of the shop</h2>
+          <p class="lede">Every row is a finish you can look at in three seconds. The useful column is the last one: the tell that survives a copying attempt, because printed card stock, leaflets and stickers all get copied, and the physical seal is where the copy falls apart.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a pack format</span><input id="sealtypes-q" type="search" placeholder="blister, carton, vial, sachet, syrup" autocomplete="off"></label>
+          <label class="field"><span>Filter by how well it copies</span><select id="sealtypes-f"><option value="all">All</option><option>Copyable</option><option>Hard to copy</option><option>Nearly impossible</option></select></label>
+          <span class="filter-count" id="sealtypes-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="sealtypes-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Pack format</th>
+            <th data-sort="1">Usually carrying</th>
+            <th data-sort="2">The factory finish you are checking</th>
+            <th data-sort="3">How well it copies</th>
+            <th data-sort="4">The tell that survives copying</th>
+            <th data-sort="5">Check it feeds</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Blister strip, foil against foil</td><td>Paracetamol, amoxicillin capsules, ciprofloxacin, metformin</td><td>Foil continuous, aligned, printed on both faces</td><td>Hard to copy</td><td>Punched-through cells, misregistration, and a second layer of foil pasted over the first cannot be hidden</td><td>seal, weight 12</td></tr>
+            <tr><td>Carton with a machine glue line</td><td>Most 10, 20, 30 and 100 tablet packs</td><td>Even bead of machine glue at the factory seam only</td><td>Copyable</td><td>A re-glued flap lifts, shows a crush mark, or has clear tape over it - that is a re-packed carton</td><td>glue, weight 12, fatal</td></tr>
+            <tr><td>Inkjet batch and expiry on the carton flap</td><td>Antimalarial ACT packs, imported tablets</td><td>Digits jetted over the artwork print, repeated on the foil</td><td>Hard to copy</td><td>Inkjet ink does not lift off with a thumb; a hand ink-stamp smeared over other text does</td><td>batchprint, weight 8, fatal</td></tr>
+            <tr><td>Laser-etched batch on the foil</td><td>Amoxicillin 500 mg capsules, many imports</td><td>Mark burnt into the foil coating</td><td>Nearly impossible</td><td>Rubbing leaves nothing; a stamp printed on top of an etched mark rubs off</td><td>batchprint, weight 8, fatal</td></tr>
+            <tr><td>Embossed date in the crimp edge</td><td>Some local tablet strips</td><td>Digits raised or pressed into the metal</td><td>Nearly impossible</td><td>Cannot be re-created on a re-packed strip, so its absence on a strip that should have one is a finding</td><td>batchprint, weight 8, fatal</td></tr>
+            <tr><td>Day-labelled blister, D1 D2 D3</td><td>Dihydroartemisinin plus piperaquine, 18-tablet packs</td><td>Day labels printed as part of the blister artwork</td><td>Hard to copy</td><td>A sticker laid over the print, or missing day labels on a three-day pack, is a defect on its own</td><td>seal, weight 12</td></tr>
+            <tr><td>Manufacturer hologram or colour-shift tile</td><td>Many imported ACTs</td><td>Shifts colour at one fixed angle, seated into the seam</td><td>Copyable</td><td>Stickers are bought by the sheet, so a hologram is only worth something when the glue seam and the foil are also right</td><td>print, weight 8</td></tr>
+            <tr><td>Screw cap with a tamper band</td><td>Antibiotic syrups, Artemisia syrup, reconstitution bottles</td><td>Band tears cleanly at its perforation on first opening</td><td>Hard to copy</td><td>A band already broken, glued back down, or absent means the bottle has been opened before you</td><td>suspension, weight 6</td></tr>
+            <tr><td>Aluminium crimp cap over a rubber stopper</td><td>Oxytetracycline 100 mL vials, insulin vials</td><td>Crimp sealed, stopper centred, no residue at the closure</td><td>Hard to copy</td><td>Dried residue or weeping at the closure means the seal is gone, whatever the paperwork says</td><td>injection, weight 6, fatal</td></tr>
+            <tr><td>Amber bottle with an induction seal</td><td>Dry syrup powder, reconstituted suspensions</td><td>Foil induction seal welded under the cap</td><td>Copyable</td><td>A glued-down or missing induction foil means a refilled bottle; a hard cake at the base means the fill was wet</td><td>suspension, weight 6</td></tr>
+            <tr><td>Nitrogen-flushed sachet</td><td>ORS sachets, zinc dispersibles</td><td>Sachet stands firm, powder free-flowing</td><td>Hard to copy</td><td>A cakey or salt-crusted sachet has taken moisture, and moisture cannot be dried back out on a counter</td><td>colour, weight 6</td></tr>
+            <tr><td>Softgel blister</td><td>Vitamin A 200,000 IU capsules</td><td>Uniform, glossy, individually separated capsules</td><td>Copyable</td><td>Merged or stuck pairs mean the pack went hot; the cavity cannot be re-sealed cleanly</td><td>colour, weight 6</td></tr>
+            <tr><td>Score line and deboss punch</td><td>Ciprofloxacin, amlodipine, albendazole, zinc tablets</td><td>Identical mark, shape and line across the whole strip</td><td>Hard to copy</td><td>Chipped, oversized or two-toned tablets inside one strip; note that the punch itself can be stolen, so this never proves content</td><td>deboss, weight 8</td></tr>
+            <tr><td>Leaflet, folded to a standard quarter-fold</td><td>Most imports</td><td>Correct text, correct strength, correct fold</td><td>Copyable</td><td>A correct leaflet proves almost nothing; a strength in the leaflet that does not match the carton is a re-pack signal</td><td>print, weight 8</td></tr>
+            <tr><td>Shrink overwrap on a multi-pack</td><td>Campaign packs, bulk and consignment cartons</td><td>Machine-tight film with one welded seam</td><td>Copyable</td><td>Hand-applied film with no weld seam, or overwrap on a carton whose flap is taped, is the cheapest fake to catch</td><td>glue, weight 12, fatal</td></tr>
+            <tr><td>Ampoule or vial, colourless solution</td><td>Injections, insulin glargine penfills</td><td>Uncracked neck, clear fill, no particles, matching batch on carton and label</td><td>Nearly impossible</td><td>A crack, a grey precipitate after freezing, or a carton and label whose batches do not match cannot be repaired at the counter</td><td>injection, weight 6, fatal</td></tr>
+            <tr><td>Loose tablets with no carton</td><td>Albendazole campaign packs, single-dose antimalarials</td><td>There is none</td><td>Copyable</td><td>No carton means no batch, no date and no registration to read, so there is nothing to check and no reason to buy</td><td>regnum, weight 10, fatal</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Copyable means the finish can be bought or reproduced and should never carry weight on its own. Nearly impossible means the factory equipment is the barrier, which is why the physical checks are weighted heavier than the printed ones.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="storage">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · Storage bands and heat damage</p>
+          <h2 id="storage-h">What heat does to each dosage form, and how fast it does it</h2>
+          <p class="lede">Heat damage is invisible in a liquid and permanent in an antigen. The degree-hour figures below are this tool's own screening guides: deviation from the band, multiplied by hours, summed across every event the pack has been through since it was made.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a dosage form</span><input id="storage-q" type="search" placeholder="vaccine, insulin, tablet, syrup, injection, ORS" autocomplete="off"></label>
+          
+          <span class="filter-count" id="storage-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="storage-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Dosage form</th>
+            <th data-sort="1">Instruction printed on the pack</th>
+            <th data-sort="2" class="n">Band to hold</th>
+            <th data-sort="3">Freeze damage</th>
+            <th data-sort="4">What heat does, invisibly</th>
+            <th data-sort="5" class="n">Screening guide, degree-hours</th>
+            <th data-sort="6">What to do at the counter</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Vaccine, freeze-sensitive (adsorbed, oil-adjuvant, flocculating)</td><td>2-8 C, do not freeze</td><td class="n">2-8</td><td>Damaged at 0 C even for minutes, and the damage shows nothing</td><td>Potency falls with accumulated heat; the VVM darkens instead of the liquid</td><td class="n">warn 12, discard 24</td><td>Read the VVM stage before you ask the price; stage 3 or 4 is a discard on the dial alone</td></tr>
+            <tr><td>Insulin glargine or soluble, unopened</td><td>2-8 C, protect from light</td><td class="n">2-8</td><td>A frozen vial is discarded, not shaken and reused</td><td>Loss of potency appears as unexplained high blood sugar, never in the vial</td><td class="n">warn 240, discard 480</td><td>Only glargine and soluble are clear and colourless; cloudiness in either is a defect, and NPH is the exception</td></tr>
+            <tr><td>Insulin in use, at room temperature</td><td>In use below about 30 C for a limited number of days</td><td class="n">2-30</td><td>Not applicable once in use</td><td>The in-use clock runs while you argue about the printed date</td><td class="n">480 discard band</td><td>Write the date of first use on the pen; 28 days governs, some presentations 42</td></tr>
+            <tr><td>Antibiotic syrup requiring refrigeration</td><td>2-8 C after reconstitution</td><td class="n">2-8</td><td>Uncommon, but separation after a cold spell is a reject</td><td>The clock after reconstitution is 7-14 days, not the printed expiry</td><td class="n">warn 72, discard 144</td><td>Ask the day the water was added; at 14 days the carton date no longer applies</td></tr>
+            <tr><td>Oxytetracycline 20% injection, veterinary</td><td>15-25 C, shake before use</td><td class="n">15-25</td><td>Grey precipitate forms after freezing and never redissolves</td><td>Particulates grow, and the vial neck cracks on the way</td><td class="n">warn 60, discard 150</td><td>Hold it to the light; grey, gritty or cracked is a discard whatever the paperwork says</td></tr>
+            <tr><td>ORS plus zinc kit</td><td>Below 30 C, keep dry</td><td class="n">2-30</td><td>Not applicable</td><td>Moisture ingress: caking, salt crust, sachets that no longer stand firm</td><td class="n">warn 200, discard 500</td><td>An in-date pack with a caked sachet is still a reject, and expired ORS is a hard stop</td></tr>
+            <tr><td>Uncoated tablets, paracetamol 500 mg</td><td>Below 25 C, protect from moisture</td><td class="n">15-25</td><td>Not applicable</td><td>Mottling, oil staining, a solvent smell, tablets sticking into the blister</td><td class="n">not modelled</td><td>The highest-volume falsified product: judge the white, the deboss and the machine-printed date together</td></tr>
+            <tr><td>Film-coated tablets, co-amoxiclav 625 mg</td><td>Below 25 C</td><td class="n">15-25</td><td>Not applicable</td><td>A mottled coat means moisture has already reached the core</td><td class="n">not modelled</td><td>Reject a mottled coating even inside a perfect-looking carton and a clean foil peel</td></tr>
+            <tr><td>Hard gelatin capsules, amoxicillin and fluoxetine</td><td>Below 25 C</td><td class="n">15-25</td><td>Not applicable</td><td>Powder dusting inside the blister, powder at the cap junction, changed fill</td><td class="n">not modelled</td><td>Long-chain resellers mix two batches in one carton: read the foil print across the whole strip</td></tr>
+            <tr><td>Softgel capsules, vitamin A 200,000 IU</td><td>Below 25 C, avoid heat</td><td class="n">15-25</td><td>Not applicable</td><td>Merging, sticking and leaking pairs as soon as the pack goes warm</td><td class="n">not modelled</td><td>Stuck pairs prove the pack was hot; buy none of it</td></tr>
+            <tr><td>Creams, ointments and sachet preparations</td><td>Below 25 C</td><td class="n">15-25</td><td>Emulsion cracks after freezing and does not re-form</td><td>Phase separation, graininess, a changed smell</td><td class="n">not modelled</td><td>Squeeze the tube: separation is visible, and a hot shop is the usual cause</td></tr>
+            <tr><td>Dry syrup powder, unreconstituted</td><td>Below 25 C, keep dry</td><td class="n">15-25</td><td>Not applicable</td><td>Caking inside the bottle before a single drop of water is added</td><td class="n">not modelled</td><td>Shake the bottle; powder that moves as one block has already taken moisture</td></tr>
+            <tr><td>Any cold-chain item on a window shelf or in sun</td><td>Protect from light</td><td class="n">above 35 fast</td><td>Reversed: a car dashboard bakes it</td><td>The load accrues while you are still deciding whether to buy</td><td class="n">27 added per hour at 35 C on a 2-8 C item</td><td>Do not buy cold-chain product from a metal shelf or a window; the excursion is already in the pack</td></tr>
+            <tr><td>Vaccine carried to a PHC in a foam pot</td><td>2-8 C, cold packs conditioned and buffered</td><td class="n">2-8</td><td>Direct contact with a cold pack freezes the antigen</td><td>A good validated carrier holds about 24 h; a foam pot holds about 6 h in March sun</td><td class="n">the shake test outranks the number</td><td>Shake the vial against another: a rusty or powdery sound means it froze, and it looks perfectly normal</td></tr>
+            <tr><td>Injection or IV fluid, main bottle</td><td>As printed, below 25 C unless stated otherwise</td><td class="n">15-25 typical</td><td>Not applicable</td><td>Particulation increases toward the date rather than after it</td><td class="n">not modelled; this class is a hard stop</td><td>Any visible particles, a cracked seal or a passed date is a discard, not a conversation</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Degree-hour guides are the tool's own illustrative screening budgets, drawn from the shape of WHO excursion guidance for these classes and editable in the inspector. They are not product-specific stability data and they never overrule the manufacturer's insert or your state EPI officer.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="clocks">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Which clock governs</p>
+          <h2 id="clocks-h">Shelf life is not the same as an in-use life</h2>
+          <p class="lede">For several classes the printed expiry stops governing the moment the pack is opened or reconstituted. Rows marked hard stop are the classes this tool refuses on the date rather than negotiating about it.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a class</span><input id="clocks-q" type="search" placeholder="syrup, injection, insulin, tablet, vaccine" autocomplete="off"></label>
+          
+          <span class="filter-count" id="clocks-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="clocks-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Class, as the tool names it</th>
+            <th data-sort="1" class="n">What to expect on a sealed pack</th>
+            <th data-sort="2">The clock once opened</th>
+            <th data-sort="3">Hard stop or conversation</th>
+            <th data-sort="4">The rule the tool applies</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Tablet or capsule, oral</td><td class="n">24-36 months from manufacture</td><td>None; the printed date keeps governing</td><td>Conversation</td><td>A bare MM/YY is read to the last day of that month, and the alternative DD/MM reading is still shown</td></tr>
+            <tr><td>Dry syrup, unreconstituted</td><td class="n">24 months</td><td>7-14 days refrigerated once water is added</td><td>Conversation until you add water</td><td>The moment it is reconstituted it becomes the row below, not this one</td></tr>
+            <tr><td>Reconstituted antibiotic syrup</td><td class="n">7-14 days refrigerated from the day of reconstitution</td><td>Same clock, and it is the only one that matters</td><td>Hard stop at the 14th day</td><td>Past 14 days the printed expiry no longer applies: discard, even if the carton says 2027</td></tr>
+            <tr><td>Injection or IV fluid</td><td class="n">24-36 months sealed</td><td>Single use; an opened bottle is not kept for the next patient</td><td>Hard stop</td><td>Sterility, potency and particulation all fail on the date, not on your judgement</td></tr>
+            <tr><td>ORS plus zinc</td><td class="n">24 months sealed and dry</td><td>One sachet, one dissolution; the rest is discarded</td><td>Hard stop</td><td>Expired ORS is a hard stop, not a soft one: a rehydration failure in a child is not a rounding error</td></tr>
+            <tr><td>Insulin</td><td class="n">To the printed date at 2-8 C</td><td>28 days from first use, some presentations 42</td><td>Hard stop on the in-use clock</td><td>In use, the 28-day clock governs and the printed date stops governing</td></tr>
+            <tr><td>Vaccine</td><td class="n">To the printed date at 2-8 C, subject to the VVM</td><td>The in-use multidose clock and the remainder of the session</td><td>Hard stop</td><td>Stage 3 or 4 on the dial discards the vial whatever the date says; stage 2 means use today then discard</td></tr>
+            <tr><td>Ointment, cream or sachet</td><td class="n">24-36 months</td><td>Per the insert, usually weeks rather than months</td><td>Conversation</td><td>Tube and sachet damage is visible: separation, caking, salt crust</td></tr>
+            <tr><td>Loose tablets with no carton</td><td class="n">Cannot be established at all</td><td>Not applicable</td><td>Hard stop</td><td>No carton means no batch, no date and no registration number, so there is nothing to check</td></tr>
+            <tr><td>Any pack with a legacy number</td><td class="n">The listing may be dormant or withdrawn</td><td>Depends on the dosage form above</td><td>Ask first</td><td>A valid legacy shape is weaker evidence than a valid current shape, not stronger</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Ranges are what a genuine pack of that class is expected to show, used as a sanity check on the date in front of you. The insert inside the carton is the authority, and where the two disagree follow the insert.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="recallcats">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Recall-prone categories</p>
+          <h2 id="recallcats-h">Which categories get recalled, and for what stated reasons</h2>
+          <p class="lede">The recall table in the inspector is labelled illustrative fiction with invented batch numbers. What is real is the mechanism and the pattern below: notices are batch-specific, partial, and never say same brand therefore your pack is affected.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a category</span><input id="recallcats-q" type="search" placeholder="antimalarial, antibiotic, vaccine, injection" autocomplete="off"></label>
+          
+          <span class="filter-count" id="recallcats-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="recallcats-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Category</th>
+            <th data-sort="1">Why the category is exposed</th>
+            <th data-sort="2">Stated reasons seen in the tool's sample notices</th>
+            <th data-sort="3">What a notice actually names</th>
+            <th data-sort="4">What you do with the pack in your hand</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Antimalarial</td><td>Highest volume, highest urgency, bought by course and often by tablet</td><td>Failed dissolution assay, declared content outside specification, a registration number belonging to another product</td><td>One batch on one adult or paediatric pack</td><td>Match your batch to the notice exactly, then refer patients who already completed the course</td></tr>
+            <tr><td>Antibiotic</td><td>Sold loose, re-packaged, and strength-confused between 250 mg and 500 mg cartons</td><td>Suspected zero-API counterfeit in the open market, re-packed cartons at several outlets, under-labelled strength on one line</td><td>A batch or a batch range, not the product</td><td>Check the glue seam and the foil continuity on every pack, and verify strength against carton and leaflet before dispensing</td></tr>
+            <tr><td>Analgesic, especially paracetamol</td><td>The single most falsified pack in the market, and the one people buy without asking</td><td>Hand-stamped expiry printed over a machine date, a registration number belonging to another product</td><td>The strip or pack size, usually with the batch</td><td>Reject any pack whose date can be smeared with a thumb, and report it rather than returning it to the shelf</td></tr>
+            <tr><td>Vaccine</td><td>One excursion is enough, and the damage does not show in the liquid</td><td>Cold-chain excursion during distribution with the VVM advanced to stage 3</td><td>The vial batch, and sometimes the presenting district</td><td>Discard at stage 3 and above, quarantine the rest, and report to the state EPI officer before a decision is made</td></tr>
+            <tr><td>Rehydration, ORS plus zinc</td><td>Cheap, hygroscopic, and stocked in damp shops</td><td>Sachet moisture ingress with caking reported</td><td>The kit batch, sachet count and pack</td><td>Inspect every sachet, discard caked units, and treat an in-date caked sachet as a failure</td></tr>
+            <tr><td>Injection and veterinary injection</td><td>Particulation and glass damage travel with the consignment, not the product</td><td>Particulate matter and cracked vials at consignment level</td><td>The consignment and the batch</td><td>Quarantine the whole consignment pending inspection rather than picking out the obviously bad vials</td></tr>
+            <tr><td>Herbal and traditional syrup</td><td>Market push, weak content control, and claims printed on the label</td><td>Assay content outside specification, and a no-alcohol claim contradicted by a solvent smell</td><td>The listed herbal product and its batch</td><td>Report a label claim contradicted by what you can smell or see; that is a labelling defect worth chasing</td></tr>
+            <tr><td>Diabetes, insulin penfills</td><td>Cold chain plus an in-use clock, and both are easy to lose track of</td><td>Excursion or a batch mismatch between carton and label</td><td>The presentation, strength and batch</td><td>Check that the carton batch and the label batch match each other exactly before you accept the pen</td></tr>
+            <tr><td>Campaign and free-distributed packs</td><td>Packs meant to be free are re-sold loose, with no carton and no traceability</td><td>Rarely recalled, because there is no batch record to recall against</td><td>Nothing, usually</td><td>Do not buy loose tablets with no carton: there is no number, no date and no one to hold</td></tr>
+            <tr><td>Anything with a legacy number</td><td>Older listings are frequently dormant or withdrawn without the pack being recalled</td><td>Listing status rather than a defect</td><td>The registration entry, not a batch</td><td>Ask which agent imported it and confirm the listing is still live before you pay</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">No row above is a recall notice and no batch is named. Real notices live with the regulator's published alerts and recall notices, teaching hospital and federal medical centre pharmacy bulletins, and your state drug officer. This page links nothing and queries nothing.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="prefixes">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · Barcode prefixes</p>
+          <h2 id="prefixes-h">Where a licence was issued, which is not the same as where goods were made</h2>
+          <p class="lede">A prefix is worth twenty seconds because counterfeiters copy barcodes without thinking about them, and because the check digit is arithmetic that cannot be wrong by accident. It is not worth more than that.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a prefix</span><input id="prefixes-q" type="search" placeholder="614, Nigeria, India, 890, South Africa" autocomplete="off"></label>
+          <label class="field"><span>Filter by confidence</span><select id="prefixes-f"><option value="all">All</option><option>documented</option><option>confirm</option></select></label>
+          <span class="filter-count" id="prefixes-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="prefixes-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Prefix range</th>
+            <th data-sort="1">Reported assignment</th>
+            <th data-sort="2">Confidence</th>
+            <th data-sort="3">What it does prove</th>
+            <th data-sort="4">What it does not prove</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>000-013</td><td>United States and Canada</td><td>documented</td><td>The licence holder is registered in that GS1 member organisation</td><td>Nothing about the pack in your hand</td></tr>
+            <tr><td>300-379</td><td>United States and Canada</td><td>documented</td><td>The number block was assigned there</td><td>Not the manufacturing site</td></tr>
+            <tr><td>400-449</td><td>Germany</td><td>documented</td><td>A German licence holder, common on imported European packs</td><td>Not that the tablet was made in Germany</td></tr>
+            <tr><td>450-459, 490-499</td><td>Japan</td><td>documented</td><td>Assignment by GS1 Japan</td><td>Nothing about authenticity</td></tr>
+            <tr><td>500-509</td><td>United Kingdom</td><td>documented</td><td>Assignment by GS1 UK</td><td>Not the factory</td></tr>
+            <tr><td>560-569</td><td>Portugal</td><td>documented</td><td>Assignment in Portugal</td><td>Nothing further</td></tr>
+            <tr><td>570-579</td><td>Norway</td><td>documented</td><td>Assignment in Norway</td><td>Nothing further</td></tr>
+            <tr><td>590-599</td><td>Poland</td><td>documented</td><td>Assignment in Poland; common on generics sold in Nigeria</td><td>Not the origin of the goods</td></tr>
+            <tr><td>600-601</td><td>South Africa</td><td>documented</td><td>A South African licence holder</td><td>A South African prefix on a carton saying Made in Nigeria is a question, not a verdict</td></tr>
+            <tr><td>603</td><td>Ghana</td><td>confirm</td><td>Reported assignment only</td><td>This tool will not assert a country confidently here</td></tr>
+            <tr><td>609</td><td>Morocco</td><td>documented</td><td>Assignment in Morocco</td><td>Nothing further</td></tr>
+            <tr><td>611, 613, 614</td><td>Tunisia, Algeria, Nigeria</td><td>documented</td><td>614 is the Nigerian block, so a locally licensed pack often carries it</td><td>A 614 prefix does not make a pack genuine; it is copied like everything else</td></tr>
+            <tr><td>615, 616</td><td>Kenya, Tanzania</td><td>confirm</td><td>Ranges this tool reports with low confidence</td><td>No comparison is attempted against a printed Made in claim</td></tr>
+            <tr><td>690-699</td><td>China</td><td>documented</td><td>A Chinese licence holder, frequent on APIs and bulk material</td><td>Nothing about the finished product</td></tr>
+            <tr><td>890</td><td>India</td><td>documented</td><td>An Indian licence holder, very common on generics</td><td>Indian prefix on a Nigerian pack is normal and legal; it is not evidence of anything</td></tr>
+            <tr><td>any 8 digits</td><td>EAN-8 short code</td><td>confirm</td><td>A well-formed short code with a valid check digit</td><td>Too few leading digits for a country read, and this tool will not guess one</td></tr>
+            <tr><td>8, 12 or 13 only</td><td>GS1 product code lengths</td><td>documented</td><td>The string is a plausible product code at all</td><td>Another length is usually a batch code, an internal shelf code, or a partial read of the bars</td></tr>
+            <tr><td>final digit, any length</td><td>Mod-10 check digit</td><td>documented</td><td>Arithmetic: a failed digit means mistyped, misread or badly copied</td><td>A passing digit proves almost nothing, because a counterfeiter who copies a real barcode gets the same result</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Ranges are those commonly reported in GS1 tables and carried in the inspector's prefix list. Any prefix that matters to you should be confirmed against the GS1 list itself; assignment changes and this page is not a feed.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="limits">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">08 · Three places a passing pack is still dangerous</p>
+          <h2 id="limits-h">The score is not the verdict you want</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>Under-dosing is invisible</h3><p>A wrong API, an under-dose, heavy metals and microbial contamination pass every visual check on this page. That is why a report with a batch number is worth more than a score.</p></div>
+        <div class="note-box warn"><h3>A valid number is copyable text</h3><p>Every format rule here is public, which means it is printable. The shape decides whether you ask; the register decides whether it is true, and a pharmacist has to be the one to open it.</p></div>
+        <div class="note-box "><h3>Unsure is not safe</h3><p>An unsure answer carries 0.4 credit instead of letting you off, and coverage below 100 percent marks the score provisional. Six unsure answers is a worse pack than four No answers, not a better one.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">09 · Where to verify what is on this page</p>
+          <h2 id="sources-h">Open these before you act on a number</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>The official NAFDAC register and its published alerts, recall notices and complaint route: the register is the only authority on a registration number, and this tool never queries it.</li>
+        <li>The manufacturer's insert inside the carton: it overrules every storage band, degree-hour guide and in-use clock on this page.</li>
+        <li>The WHO guidance behind vaccine vial monitors and cold-chain excursion management, for the stage readings and the reporting duty.</li>
+        <li>The GS1 prefix list, for any barcode prefix that matters; the ranges here are the ones the inspector carries, with confidence marked.</li>
+        <li>Your state drug officer or state pharmacist, who can inspect the outlet and lift the whole batch rather than your single pack.</li>
+        <li>The licensed pharmacist or superintendent at the point of sale, who carries the duty to quarantine stock and can test the number from the shop.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put the tables to work on a real pack</h2>
+        <p class="lede">The inspector runs these six readings as fourteen weighted checks, names the reason behind every point it takes off, and drafts the report with your observations in it.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#inspect">Run the 14 checks</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the inspection log</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">✓</span><span style="color:#fff">SealCheck<small style="color:rgba(255,255,255,.6)">medicine authenticity, at the counter</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one habit: read the number, read the date, look at the seam, look at the dial, then report what you found with the batch and the receipt in hand.</p>
+      </div>
+      <div>
+        <h4>SealCheck pages</h4>
+        <p><a href="index.html">Inspector</a><br><a href="data.html">Counter data</a><br><a href="playbook.html">40-second playbook</a><br><a href="record.html">Inspection log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../marketrate/">MarketRate - fair price today</a><br><a href="../payrite/">PayRite - payroll and PAYE</a><br><a href="../cropkeep/">CropKeep - post-harvest loss maths</a><br><a href="../suncost/">SunCost - solar vs generator</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Screening and reporting aid. Not a verification service, not a laboratory, not medical advice. Reference rows, price bands and recall categories are curated teaching data, clearly labelled as such, and are not a register and not an allegation.</span><span class="mono">SealCheck · Counter data · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#regshapes-tbl');
+  pages.filter('#regshapes-tbl', { input: '#regshapes-q', count: '#regshapes-count', empty: "No shape here matches that search. An unrecognised string is itself the finding." });
+  pages.sortable('#sealtypes-tbl');
+  pages.filter('#sealtypes-tbl', { input: '#sealtypes-q', select: '#sealtypes-f', count: '#sealtypes-count', empty: "No row here matches that search." });
+  pages.sortable('#storage-tbl');
+  pages.filter('#storage-tbl', { input: '#storage-q', count: '#storage-count', empty: "No row here matches that search." });
+  pages.sortable('#clocks-tbl');
+  pages.filter('#clocks-tbl', { input: '#clocks-q', count: '#clocks-count', empty: "No row here matches that search." });
+  pages.sortable('#recallcats-tbl');
+  pages.filter('#recallcats-tbl', { input: '#recallcats-q', count: '#recallcats-count', empty: "No row here matches that search." });
+  pages.sortable('#prefixes-tbl');
+  pages.filter('#prefixes-tbl', { input: '#prefixes-q', select: '#prefixes-f', count: '#prefixes-count', empty: "No row here matches that search." });
+});
+</script>
+</body>
+</html>

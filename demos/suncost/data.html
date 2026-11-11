@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nigerian peak sun hours, appliance loads and battery chemistry — SunCost reference</title>
+<meta name="description" content="Peak sun hours by city, watt-hours per day for common Nigerian appliances, battery chemistry trade-offs and inverter classes — every figure SunCost uses to size a solar and battery system.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="suncost.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2312506b'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>*</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">*</span><span>SunCost<small>Solar vs generator, sized honestly</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Size my load</a>
+      <a href="data.html" class="is-here" aria-current="page">Sizing data</a>
+      <a href="playbook.html">Install playbook</a>
+      <a href="record.html">Quote ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#size">Size my load</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">SunCost</a> <span aria-hidden="true">/</span> <span aria-current="page">Sizing data</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · the numbers behind the sizing</p>
+    <h1 class="reveal" data-delay="1">Solar is sized by arithmetic,<br>not by the weather.</h1>
+    <p class="lede reveal" data-delay="2">A quote you cannot check is a quote you overpay for. These are the inputs SunCost uses — sun hours by city, the watt-hours each appliance actually draws, and what each battery chemistry costs you in life and usable depth.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>4.2 – 6.0 h</b> peak sun hours, Nigeria</span><span><b>15%</b> system loss allowance</span><span><b>50% – 90%</b> usable depth, tubular to lithium</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="sun">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Where you live matters</p>
+          <h2 id="sun-h">Peak sun hours, by city</h2>
+          <p class="lede">Peak sun hours are an annual average of daily irradiation expressed as equivalent full-power hours. The same 3 kW array produces roughly 40% more in Maiduguri than in Port Harcourt.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find your city</span><input id="sun-q" type="search" placeholder="city or state" autocomplete="off"></label>
+          
+          <span class="filter-count" id="sun-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="sun-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">City</th>
+            <th data-sort="1">State / territory</th>
+            <th data-sort="2" class="n">Peak sun hours</th>
+            <th data-sort="3" class="n">A 3 kW array gives</th>
+            <th data-sort="4">What to watch</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Maiduguri</td><td>Borno</td><td class="n">6.0</td><td class="n">15.3 kWh/day</td><td>harmattan dust — clean panels monthly</td></tr>
+            <tr><td>Sokoto</td><td>Sokoto</td><td class="n">5.7</td><td class="n">14.6 kWh/day</td><td>highest irradiation, lowest humidity</td></tr>
+            <tr><td>Jalingo</td><td>Taraba</td><td class="n">5.5</td><td class="n">14.0 kWh/day</td><td>good year-round, few installers</td></tr>
+            <tr><td>Kaduna</td><td>Kaduna</td><td class="n">5.4</td><td class="n">13.8 kWh/day</td><td>harmattan season cuts output 10-20%</td></tr>
+            <tr><td>Ilorin</td><td>Kwara</td><td class="n">5.3</td><td class="n">13.5 kWh/day</td><td>balanced climate, low soiling</td></tr>
+            <tr><td>Ibadan</td><td>Oyo</td><td class="n">5.2</td><td class="n">13.3 kWh/day</td><td>the default assumption in most quotes</td></tr>
+            <tr><td>Jos</td><td>Plateau</td><td class="n">5.1</td><td class="n">13.0 kWh/day</td><td>altitude helps, cold nights help batteries</td></tr>
+            <tr><td>Abuja</td><td>FCT</td><td class="n">5.0</td><td class="n">12.8 kWh/day</td><td>dusty season, heavy rains in June-Sept</td></tr>
+            <tr><td>Lagos</td><td>Lagos</td><td class="n">4.6</td><td class="n">11.8 kWh/day</td><td>coastal humidity and cloud — plan for it</td></tr>
+            <tr><td>Benin City</td><td>Edo</td><td class="n">4.6</td><td class="n">11.7 kWh/day</td><td>long rainy season lowers autonomy</td></tr>
+            <tr><td>Warri</td><td>Delta</td><td class="n">4.3</td><td class="n">11.0 kWh/day</td><td>near-equatorial cloud cover, high rain</td></tr>
+            <tr><td>Port Harcourt</td><td>Rivers</td><td class="n">4.2</td><td class="n">10.8 kWh/day</td><td>the worst case in this table — size up</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Averages from published solar-resource maps for Nigeria. Use your own month, not the annual mean, when you depend on a specific season.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="loads">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · What your house actually draws</p>
+          <h2 id="loads-h">Watts, hours and the watt-hours that follow</h2>
+          <p class="lede">The load list is the whole design. A 1.5 HP air conditioner run for six hours is a bigger system than twelve fans and every bulb in the house — and it is the line installers leave out of the quote.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find an appliance</span><input id="loads-q" type="search" placeholder="name, watts or type" autocomplete="off"></label>
+          <label class="field"><span>Filter by night load</span><select id="loads-f"><option value="all">All</option><option>Runs at night</option><option>Daytime only</option><option>Starts on demand</option></select></label>
+          <span class="filter-count" id="loads-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="loads-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Appliance</th>
+            <th data-sort="1" class="n">Watts</th>
+            <th data-sort="2" class="n">Typical hours/day</th>
+            <th data-sort="3" class="n">Watt-hours/day</th>
+            <th data-sort="4">Runs at night</th>
+            <th data-sort="5">Motor start</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Fridge (single door)</td><td class="n">150</td><td class="n">24 (duty 40%)</td><td class="n">3,600</td><td>Runs at night</td><td>Yes</td></tr>
+            <tr><td>Deep freezer</td><td class="n">250</td><td class="n">8 (duty 45%)</td><td class="n">2,000</td><td>Runs at night</td><td>Yes</td></tr>
+            <tr><td>Standing fan</td><td class="n">75</td><td class="n">12</td><td class="n">1,800 (2 units)</td><td>Runs at night</td><td>Yes</td></tr>
+            <tr><td>LED bulb</td><td class="n">9</td><td class="n">5</td><td class="n">360 (8 bulbs)</td><td>Runs at night</td><td>No</td></tr>
+            <tr><td>Television 43&quot;</td><td class="n">65</td><td class="n">5</td><td class="n">325</td><td>Daytime only</td><td>No</td></tr>
+            <tr><td>WiFi router</td><td class="n">12</td><td class="n">24</td><td class="n">288</td><td>Runs at night</td><td>No</td></tr>
+            <tr><td>Laptop</td><td class="n">65</td><td class="n">4</td><td class="n">260</td><td>Daytime only</td><td>No</td></tr>
+            <tr><td>Water pump (0.75 kW)</td><td class="n">750</td><td class="n">1</td><td class="n">750</td><td>Starts on demand</td><td>Yes</td></tr>
+            <tr><td>Air conditioner 1.5 HP</td><td class="n">1,100</td><td class="n">6</td><td class="n">6,600</td><td>Runs at night</td><td>Yes</td></tr>
+            <tr><td>Pressing iron</td><td class="n">1,000</td><td class="n">0.5</td><td class="n">500</td><td>Daytime only</td><td>No</td></tr>
+            <tr><td>Sewing machine</td><td class="n">90</td><td class="n">1</td><td class="n">90</td><td>Daytime only</td><td>Yes</td></tr>
+            <tr><td>Borehole pump (1.5 kW)</td><td class="n">1,500</td><td class="n">0.75</td><td class="n">1,125</td><td>Starts on demand</td><td>Yes</td></tr>
+            <tr><td>Microwave</td><td class="n">1,200</td><td class="n">0.3</td><td class="n">360</td><td>Daytime only</td><td>No</td></tr>
+            <tr><td>Freezer showcase (shop)</td><td class="n">350</td><td class="n">12</td><td class="n">4,200</td><td>Runs at night</td><td>Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Duty cycle matters more than nameplate watts for anything with a compressor. SunCost lets you edit every line — use your own meter if you have one.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="batt">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Battery chemistry</p>
+          <h2 id="batt-h">The decision that sets your real cost per year</h2>
+          <p class="lede">Capacity is not energy. A tubular battery rated 10 kWh will give you about 5 kWh, cycle for two to three years, and need topping up with distilled water. Lithium gives you 90% of the rating and ten times the cycles, for roughly three times the price.</p>
+        </div>
+<div class="reveal">
+
+        <div class="table-scroll">
+          <table class="data" id="batt-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Chemistry</th>
+            <th data-sort="1" class="n">Usable depth</th>
+            <th data-sort="2" class="n">Cycles to 80%</th>
+            <th data-sort="3" class="n">Typical life</th>
+            <th data-sort="4" class="n">Indicative ₦/kWh</th>
+            <th data-sort="5">Maintenance</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Tubular flooded (lead-acid)</td><td class="n">50%</td><td class="n">1,200 – 1,800</td><td class="n">2 – 3</td><td class="n">₦95,000 – ₦130,000</td><td>Distilled water monthly, ventilated room</td></tr>
+            <tr><td>AGM / gel sealed</td><td class="n">50%</td><td class="n">800 – 1,200</td><td class="n">2 – 3</td><td class="n">₦120,000 – ₦160,000</td><td>None, but heat kills it fast</td></tr>
+            <tr><td>Lithium iron phosphate (LiFePO4)</td><td class="n">90%</td><td class="n">4,000 – 6,000</td><td class="n">8 – 10</td><td class="n">₦260,000 – ₦340,000</td><td>None; needs a working BMS</td></tr>
+            <tr><td>Lithium NMC</td><td class="n">90%</td><td class="n">2,500 – 3,500</td><td class="n">6 – 8</td><td class="n">₦300,000 – ₦400,000</td><td>Lighter, hotter, less tolerant</td></tr>
+            <tr><td>Used / repacked EV cells</td><td class="n">80%</td><td class="n">unknown</td><td class="n">1 – 3</td><td class="n">₦110,000 – ₦180,000</td><td>Cheapest per kWh until it is not</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Prices are 2026 street averages for a delivered pack, not installed. A quote that hides the chemistry is a quote about to change under you.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="inv">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · Inverter and panel classes</p>
+          <h2 id="inv-h">What a '3.5 kVA system' actually contains</h2>
+          
+        </div>
+<div class="reveal">
+
+        <div class="table-scroll">
+          <table class="data" id="inv-tbl">
+            
+            <thead><tr>
+            <th data-sort="0" class="n">Inverter class</th>
+            <th data-sort="1" class="n">Real continuous load</th>
+            <th data-sort="2" class="n">Typical array</th>
+            <th data-sort="3" class="n">Battery bank</th>
+            <th data-sort="4">Suits</th>
+            </tr></thead>
+            <tbody>
+            <tr><td class="n">1.5 kVA</td><td class="n">1,200 W</td><td class="n">4 x 275 W (1.1 kW)</td><td class="n">1.0 – 1.6 kWh</td><td>Lights, fan, TV, router</td></tr>
+            <tr><td class="n">2.5 kVA</td><td class="n">2,000 W</td><td class="n">8 x 275 W (2.2 kW)</td><td class="n">2.5 – 3.5 kWh</td><td>Above plus fridge</td></tr>
+            <tr><td class="n">3.5 kVA</td><td class="n">2,800 W</td><td class="n">10 x 275 W (2.75 kW)</td><td class="n">3.5 – 5 kWh</td><td>Fridge, freezer, pump, one AC</td></tr>
+            <tr><td class="n">5 kVA</td><td class="n">4,000 W</td><td class="n">16 x 300 W (4.8 kW)</td><td class="n">7 – 10 kWh</td><td>Two ACs, full house, small shop</td></tr>
+            <tr><td class="n">7.5 kVA</td><td class="n">6,000 W</td><td class="n">22 x 400 W (8.8 kW)</td><td class="n">12 – 18 kWh</td><td>Clinic, workshop, bakery</td></tr>
+            <tr><td class="n">10 kVA</td><td class="n">8,000 W</td><td class="n">28 x 450 W (12.6 kW)</td><td class="n">20 – 30 kWh</td><td>Guest house, office floor</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Motor loads need three to five times their watts for a second at start-up. That surge, not the running watts, is what forces the inverter class up.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="verify">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Reading a quote like an installer</p>
+          <h2 id="verify-h">Three lines that decide whether you were sold a system or a story</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box warn"><h3>The battery is quoted in Ah, not kWh</h3><p>100 Ah at 24 V is 2.4 kWh, and half of it is usable. Ask for the usable number and the chemistry, in writing.</p></div>
+        <div class="note-box bad"><h3>The array is sized for the day, not the night</h3><p>If the panels are chosen to cover daytime watts and the battery only covers 'backup', the system will hand you the generator at 9pm.</p></div>
+        <div class="note-box "><h3>The five-year fuel line is missing</h3><p>The honest comparison is system price plus five years of servicing against five years of petrol and generator maintenance. SunCost puts both columns on one screen.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Check these against</p>
+          <h2 id="sources-h">Where to verify before you pay</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>Your own meter readings for two weeks — the only load profile that describes your house.</li>
+        <li>Nigerian solar-resource maps and the Global Solar Atlas for peak sun hours at your coordinates.</li>
+        <li>The panel and battery datasheets for the exact models in your quote: Voc, Isc, DoD, cycle count.</li>
+        <li>Your NEPA/DisCo tariff band and the last three bills, if grid charging is part of the plan.</li>
+        <li>Two more quotes for the same specification — the spread tells you more than any single number.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own load list through it</h2>
+        <p class="lede">SunCost sizes the array, the inverter and the bank from the appliances you actually run, then shows the month solar becomes cheaper than the generator.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#size">Size my load</a>
+        <a class="btn btn-ghost" href="playbook.html">Install playbook</a>
+        <a class="btn btn-ghost" href="record.html">Quote ledger</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">*</span><span style="color:#fff">SunCost<small style="color:rgba(255,255,255,.6)">Solar vs generator, sized honestly</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one argument: solar is only cheap when the load is written down, the battery is sized for the night, and the five-year fuel bill is on the same sheet.</p>
+      </div>
+      <div>
+        <h4>SunCost pages</h4>
+        <p><a href="index.html">Size my load</a><br><a href="data.html">Sizing data</a><br><a href="playbook.html">Install playbook</a><br><a href="record.html">Quote ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../payrite/">PayRite — payroll and PAYE</a><br><a href="../fuelmeter/">FuelMeter — true cost per kilometre</a><br><a href="../landedcost/">LandedCost — what imports really cost</a><br><a href="../cropkeep/">CropKeep — post-harvest loss maths</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Irradiation, prices and autonomy figures are published averages. Get a site survey before you spend money.</span><span class="mono">SunCost · Sizing data · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#sun-tbl');
+  pages.filter('#sun-tbl', { input: '#sun-q', count: '#sun-count', empty: "No row here matches that search." });
+  pages.sortable('#loads-tbl');
+  pages.filter('#loads-tbl', { input: '#loads-q', select: '#loads-f', count: '#loads-count', empty: "No row here matches that search." });
+  pages.sortable('#batt-tbl');
+  pages.sortable('#inv-tbl');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your saved inspections - SealCheck record</title>
+<meta name="description" content="Every pack you saved in SealCheck, in one sortable table with score and coverage totals, CSV export and a print-ready sheet for the district register. Stored on your device only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="sealcheck.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2312667a'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%9C%93</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">✓</span><span>SealCheck<small>medicine authenticity, at the counter</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Inspector</a>
+      <a href="data.html">Counter data</a>
+      <a href="playbook.html">40-second playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Inspection log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#inspect">Run the 14 checks</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">SealCheck</a> <span aria-hidden="true">/</span> <span aria-current="page">Inspection log</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record - this device only</p>
+    <h1 class="reveal" data-delay="1">Every pack you said<br>no to, in one column.</h1>
+    <p class="lede reveal" data-delay="2">SealCheck writes one line per inspection into this browser. This page reads it back, sorts it, totals it and lets you export or print it: the artefact you take to a pharmacist, a state drug officer, or your own consignment file.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>No upload</b> inspections never leave this browser</span><span><b>CSV + print</b> two ways to hand it over</span><span><b>Sortable</b> click any column heading</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why this log exists</p>
+          <h2 id="why-h">A screening record is only worth what it lets you say later</h2>
+          <p class="lede">Every saved row is a pack you looked at, an answer you gave honestly, and a batch number that no other document in the shop will carry. Kept together, the rows become evidence rather than a complaint.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a verification record</h3><p>A score is a weighted summary of what you could see. Nothing in this table proves a product is genuine or falsified, and no row here should be quoted as either.</p></div>
+        <div class="note-box "><h3>It is a working file</h3><p>Save the doubtful packs, remove the rows you mistyped, and let the totals tell you whether you are actually inspecting or just guessing. Unanswered checks are excluded, so coverage matters more than score.</p></div>
+        <div class="note-box warn"><h3>It is your own evidence</h3><p>Outlet and town, batch as printed, expiry as printed and the reasons the tool recorded: hand this to the pharmacist at the premises and to your state drug officer with the physical pack.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Saved inspections</h2>
+          <p class="lede">Read live from the history the inspector writes. Removing a row here removes it from the tool as well, and the identity fields are exactly what you typed at the counter.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">Inspected</th>
+              <th data-sort="1">Product</th>
+              <th data-sort="2">Number as printed</th>
+              <th data-sort="3">Batch</th>
+              <th data-sort="4">Expiry as printed</th>
+              <th class="n" data-sort="5">Score / 100</th>
+              <th data-sort="6">Verdict</th>
+              <th class="n" data-sort="7">Red flags</th>
+              <th class="n" data-sort="8">Coverage</th>
+              <th data-sort="9">Outlet and town</th>
+              <th class="n" data-sort="10">Saved</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:sealcheck:history</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with these numbers</h2>
+          <p class="lede">A record is only useful if something changes because of it. This is the cadence the entries support.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">At the counter</p>
+          <div><h3>Save before you leave the shop</h3><p>The line that matters is the one you can still fill in: outlet, town, batch as printed. Write the batch on the receipt and save the row, and you have something a pharmacist can act on.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">On delivery</p>
+          <div><h3>One row per consignment carton</h3><p>A pharmacy signing for stock should run the seam, foil and batch checks on a sampled carton from each delivery and save the row. Two months of rows shows which distributor keeps failing.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">Before reporting</p>
+          <div><h3>Print the row, not a description</h3><p>The printed report plus the physical pack, the carton faces, the leaflet and the receipt is what a regulator can do something with. The saved row is your index into all of it.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">Monthly</p>
+          <div><h3>Sort by score and read the bottom</h3><p>The packs under 66 and the rows carrying flags are your pattern evidence. A single bad pack is an accident; four from one outlet is a report to the state drug officer.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">Before you clear browser data</p>
+          <div><h3>Export the CSV first</h3><p>This log is not an archive. Clear the site data and every row is gone, and the batch numbers in it are the part nobody else recorded.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="5">
+          <p class="when">Quarterly</p>
+          <div><h3>Compare coverage, not scores</h3><p>If mean coverage has fallen, you are answering fewer checks and congratulating yourself on higher scores. That is the one trend in this table that means you are getting worse.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Add another pack to the log, or start a clean file</h2>
+        <p class="lede">The inspector writes to this page directly: no account, no import, no upload, and the CSV export is yours to keep with the receipt.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#history">Back to the inspector</a>
+        <a class="btn btn-ghost" href="data.html">Counter data</a>
+        <a class="btn btn-ghost" href="playbook.html">40-second playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">✓</span><span style="color:#fff">SealCheck<small style="color:rgba(255,255,255,.6)">medicine authenticity, at the counter</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one habit: read the number, read the date, look at the seam, look at the dial, then report what you found with the batch and the receipt in hand.</p>
+      </div>
+      <div>
+        <h4>SealCheck pages</h4>
+        <p><a href="index.html">Inspector</a><br><a href="data.html">Counter data</a><br><a href="playbook.html">40-second playbook</a><br><a href="record.html">Inspection log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../marketrate/">MarketRate - fair price today</a><br><a href="../payrite/">PayRite - payroll and PAYE</a><br><a href="../cropkeep/">CropKeep - post-harvest loss maths</a><br><a href="../suncost/">SunCost - solar vs generator</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Screening and reporting aid. Not a verification service, not a laboratory, not medical advice. Reference rows, price bands and recall categories are curated teaching data, clearly labelled as such, and are not a register and not an allegation.</span><span class="mono">SealCheck · Inspection log · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "date", label: "Inspected"}, { k: "product", label: "Product"}, { k: "number", label: "Number as printed"}, { k: "batch", label: "Batch"}, { k: "expiry", label: "Expiry as printed"}, { k: "score", label: "Score / 100", n: true, fmt: (v) => kit.num(v)}, { k: "verdict", label: "Verdict"}, { k: "flags", label: "Red flags", n: true, fmt: (v) => kit.num(v)}, { k: "coverage", label: "Coverage", n: true, fmt: (v) => kit.num(v)}, { k: "outlet", label: "Outlet and town"}, { k: "when", label: "Saved", n: true, fmt: (v) => kit.dateLabel(new Date(v))}];
+  var handle = pages.cases("sealcheck:history", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 100,
+    emptyTitle: "No inspections saved yet",
+    emptyText: "Run the fourteen checks on a pack in the inspector, then press Save to inspection history. Saved packs appear here immediately, newest first.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var n = rows.length; if (!n) return []; var sum = function (k) { return rows.reduce(function (a, r) { return a + (Number(r[k]) || 0); }, 0); }; var mean = sum('score') / n; var cov = sum('coverage') / n; var flagged = rows.filter(function (r) { return (Number(r.flags) || 0) > 0; }).length; var under = rows.filter(function (r) { return Number(r.score) < 66; }).length; var report = rows.filter(function (r) { return String(r.verdict || '').toLowerCase().indexOf('report') > -1; }).length; var provisional = rows.filter(function (r) { return Number(r.coverage) < 100; }).length; return [ { v: kit.amount(mean, 1), l: 'mean integrity score across saved packs' }, { v: kit.pct(cov, 0), l: 'mean share of the 100 weight actually answered' }, { v: flagged + ' of ' + n, l: 'packs saved with at least one red flag' }, { v: report + ' of ' + n, l: 'verdicts recorded as do not use and report' }, { v: String(under), l: 'packs under the 66 line' }, { v: String(provisional), l: 'scores still provisional, coverage under 100' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "sealcheck-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("sealcheck:history", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

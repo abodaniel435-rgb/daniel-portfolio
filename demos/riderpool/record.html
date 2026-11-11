@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every trip you saved in RiderPool: the trip ledger</title>
+<meta name="description" content="The saved trips this browser holds: trip code, route, class, distance, seats, asking fare, trip cost, cost to cover, cost per seat, the split method used and the seat list, sortable, with honest totals, CSV export and a printable settlement sheet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="riderpool.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%233c4a99'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%87%84</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">⇄</span><span>RiderPool<small>the empty seat, split fairly</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Trip builder</a>
+      <a href="data.html">Fare data</a>
+      <a href="playbook.html">Park playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Trip ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#build">Price a trip</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">RiderPool</a> <span aria-hidden="true">/</span> <span aria-current="page">Trip ledger</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record: this device only</p>
+    <h1 class="reveal" data-delay="1">What the last ten trips<br>actually cost, on<br>one sheet.</h1>
+    <p class="lede reveal" data-delay="2">RiderPool writes each trip you save into this browser with the seat list attached, so you can tick people off as they pay. This page reads it back and turns it into a sortable table with totals, an export and a print sheet, which is the only way a ledger becomes anything other than a memory.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>Local only</b> stored on this device as riderpool:ledger</span><span><b>Sortable</b> click any column heading</span><span><b>CSV and print</b> two ways to keep a copy</span><span><b>No sync</b> no account, no cloud, no second device</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why this ledger is device-local</p>
+          <h2 id="why-h">It is a record, and it is not a backup</h2>
+          <p class="lede">The distinction matters more than it sounds. Everything on this page was written by the calculator on this browser and it will stay exactly there, which is both the point and the limit.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>The trips live in this browser's storage under afrik:riderpool:ledger and nowhere else. No account, no cloud, no second device reads it. Clear site data, change phones, or hand the phone to your brother and this table is empty. Export the CSV and keep it where the receipts are.</p></div>
+        <div class="note-box warn"><h3>It is not a payment record either</h3><p>The paid column is a tick you made yourself. Nothing was charged, transferred, held or refunded and no rider was notified. It records who you believe has paid, which is useful at the settlement table and worthless at a bank.</p></div>
+        <div class="note-box "><h3>It is the only price history that describes your corridor</h3><p>The reference tables on the data page carry an as-of date and are estimates by construction. Twelve saved trips on one route are measurements. After a season your own cost per seat, your own average load and your own drift are the figures you should be quoting, and the CSV is how you keep them.</p></div>
+        <div class="note-box "><h3>Rounded money, unrounded maths</h3><p>Each rider's share is rounded to the naira before it is written down, so a saved trip's seat amounts can fall a few naira short of its cost to cover. The still-owed column therefore works from the trip's own to-cover figure rather than from the sum of the unpaid ticks, so what you are owed stays honest even when the shares round down.</p></div>
+        <div class="note-box warn"><h3>Sample rows are marked as sample</h3><p>Board rows you copy in from the sample list arrive as pending, with seats named Seat 1, Seat 2 or empty and nobody paid. They are fiction that became a row, which is fine for practising a price and useless as a record of a trip. Delete them before the ledger means anything.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Saved trips</h2>
+          <p class="lede">Read live from the calculator's own ledger, one row per saved trip, with the seat list summarised into paid, collected, owed and rider kilometres. Deleting a row here deletes it from the tool too, so export before you clear. Saving a trip twice on the same date with the same code replaces the first instead of doubling it.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">Travel date</th>
+              <th data-sort="1">Route</th>
+              <th data-sort="2">Trip code</th>
+              <th data-sort="3">Class</th>
+              <th class="n" data-sort="4">Distance km</th>
+              <th class="n" data-sort="5">Seats on sale</th>
+              <th class="n" data-sort="6">Seats sold</th>
+              <th class="n" data-sort="7">Asking fare</th>
+              <th class="n" data-sort="8">Trip cost</th>
+              <th class="n" data-sort="9">Seats must bring</th>
+              <th class="n" data-sort="10">Cost per seat</th>
+              <th class="n" data-sort="11">Fuel</th>
+              <th class="n" data-sort="12">Litres</th>
+              <th data-sort="13">Split used</th>
+              <th class="n" data-sort="14">Paid</th>
+              <th class="n" data-sort="15">Collected</th>
+              <th class="n" data-sort="16">Still owed</th>
+              <th class="n" data-sort="17">Rider km</th>
+              <th class="n" data-sort="18">Saved</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:riderpool:ledger</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with these rows</h2>
+          <p class="lede">A trip record is only worth the decisions it changes. This is the cadence that turns twelve saved trips into a corridor you can price properly.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">Each trip</p>
+          <div><h3>Save it the moment it is priced</h3><p>Not at CMS. The code, the fare, the method and the seat list are the record, and both the card and the row come from the same inputs, so save before the numbers drift.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">At the stop</p>
+          <div><h3>Tick the paid column as money arrives</h3><p>The tick is a pencil mark in this browser and nothing more: it moves no money and tells no one. It does turn the row into a settlement sheet you can print and sign.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">Weekly</p>
+          <div><h3>Sort by cost per seat and read the column</h3><p>Six weeks of your own naira per seat on one corridor is a better fare argument than any single day's arithmetic, and it is the figure that shows whether the asking fare is drifting or the load is.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">Monthly</p>
+          <div><h3>Compare trip cost with what you collected</h3><p>The totals block gives you net per trip and net per paid rider kilometre. If both are negative every month, the corridor does not pay at your fare and the deficit is not a rounding problem.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">Before you export</p>
+          <div><h3>Remember there is no second copy</h3><p>The trips live in this browser's storage under afrik:riderpool:ledger. A phone that is wiped, replaced or restored takes the ledger with it. Export the CSV monthly and keep it with the fuel receipts.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="5">
+          <p class="when">At the argument</p>
+          <div><h3>Print the row, not the screenshot</h3><p>A saved trip prints with its code, its method and every rider's share. A dispute about a trip that already happened is a dispute about numbers that were written down before it did.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Price another trip and save it</h2>
+        <p class="lede">The ledger writes straight from the calculator: no account, no import, nothing uploaded, and the seat list comes with the row.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#ledger">Back to the ledger in the tool</a>
+        <a class="btn btn-ghost" href="index.html#build">Price a trip</a>
+        <a class="btn btn-ghost" href="data.html">Fare data</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">⇄</span><span style="color:#fff">RiderPool<small style="color:rgba(255,255,255,.6)">the empty seat, split fairly</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one argument: a fare is arithmetic, not habit. Write the kilometres, the litres, the wear, the levy and the driver's cut on the same sheet and the argument stops being about feelings.</p>
+      </div>
+      <div>
+        <h4>RiderPool pages</h4>
+        <p><a href="index.html">Trip builder</a><br><a href="data.html">Fare data</a><br><a href="playbook.html">Park playbook</a><br><a href="record.html">Trip ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../fuelmeter/">FuelMeter: true cost per kilometre</a><br><a href="../marketrate/">MarketRate: fair price today</a><br><a href="../landedcost/">LandedCost: what imports really cost</a><br><a href="../feesplan/">FeesPlan: school fees, planned</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>The sample board is fiction written into the source file. Nothing here matches a rider, moves money, or tells you what your park is charging today. Routing, permits and what you may carry are settled by state law and local practice, not by a calculator.</span><span class="mono">RiderPool · Trip ledger · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "date", label: "Travel date", fmt: (v) => kit.dateLabel(new Date(v))}, { k: "route", label: "Route"}, { k: "code", label: "Trip code"}, { k: "cls", label: "Class"}, { k: "km", label: "Distance km", n: true, fmt: (v) => kit.num(v)}, { k: "units", label: "Seats on sale", n: true, fmt: (v) => kit.num(v)}, { k: "sold", label: "Seats sold", n: true, fmt: (v) => kit.num(v)}, { k: "fare", label: "Asking fare", n: true, fmt: (v) => kit.money(v)}, { k: "cost", label: "Trip cost", n: true, fmt: (v) => kit.money(v)}, { k: "toCover", label: "Seats must bring", n: true, fmt: (v) => kit.money(v)}, { k: "perSeat", label: "Cost per seat", n: true, fmt: (v) => kit.money(v)}, { k: "fuel", label: "Fuel", n: true, fmt: (v) => kit.money(v)}, { k: "litres", label: "Litres", n: true, fmt: function (v) { return kit.amount(v, 1) + ' L'; }}, { k: "method", label: "Split used"}, { k: "seats", label: "Paid", n: true, fmt: function (v) { var a = v || []; if (!a.length) return '<span class="muted">no seats named</span>'; return String(a.filter(function (s) { return s.paid; }).length) + ' / ' + a.length; }}, { k: "seats", label: "Collected", n: true, fmt: function (v) { var a = v || []; return kit.money(a.reduce(function (x, s) { return x + (s.paid ? (Number(s.owed) || 0) : 0); }, 0)); }}, { k: "seats", label: "Still owed", n: true, fmt: function (v, r) { var a = v || []; if (!a.length) return '<span class="muted">no seats named</span>'; var paid = a.reduce(function (x, s) { return x + (s.paid ? (Number(s.owed) || 0) : 0); }, 0); var bal = (Number(r.toCover) || 0) - paid; return bal > 1 ? kit.money(bal) : '<span class="badge badge-ok">settled</span>'; }}, { k: "seats", label: "Rider km", n: true, fmt: function (v) { var a = v || []; return kit.amount(a.reduce(function (x, s) { return x + (Number(s.km) || 0); }, 0)); }}, { k: "at", label: "Saved", n: true, fmt: (v) => kit.dateLabel(new Date(v))}];
+  var handle = pages.cases("riderpool:ledger", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 90,
+    emptyTitle: "No trips saved yet",
+    emptyText: "Price a trip in the builder and press Save to ledger, or save it from the trip card. The whole seat list comes with it. Nothing is uploaded, so nothing appears here until you save it.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var paid = 0, cover = 0, cost = 0, fuel = 0, litres = 0, km = 0, riderKm = 0, paidKm = 0, seats = 0, units = 0; rows.forEach(function (t) { var list = Array.isArray(t.seats) ? t.seats : []; seats += list.length; units += Number(t.units) || 0; cost += Number(t.cost) || 0; cover += Number(t.toCover) || 0; fuel += Number(t.fuel) || 0; litres += Number(t.litres) || 0; km += Number(t.km) || 0; list.forEach(function (s) { var o = Number(s.owed) || 0; riderKm += Number(s.km) || 0; if (s.paid) { paid += o; paidKm += Number(s.km) || 0; } }); }); var owed = Math.max(0, cover - paid); var net = paid - cost; var sgn = function (v, dp) { return (v < 0 ? '-' : v > 0 ? '+' : '') + kit.money(Math.abs(v), 'NGN', dp); }; return [ { v: kit.amount(km) + ' km', l: 'corridor distance on the saved trips' }, { v: kit.amount(riderKm) + ' km', l: 'rider kilometres those seats actually rode' }, { v: kit.money(cost), l: 'trip cost, every line counted' }, { v: kit.money(cover), l: 'what the seats were asked to bring' }, { v: kit.money(paid), l: 'collected from seats marked paid' }, { v: owed > 0 ? kit.money(owed) : cover ? 'all settled' : 'no rows yet', l: 'still owed against those to-cover figures' }, { v: cost ? kit.pct(paid / cost * 100, 1) : 'no rows yet', l: 'of total cost recovered so far' }, { v: sgn(net), l: 'net across the ledger: collected less trip cost' }, { v: rows.length ? sgn(net / rows.length) : 'no rows yet', l: 'net per saved trip' }, { v: paidKm ? sgn(net / paidKm, 2) + ' per km' : 'nothing paid yet', l: 'net per paid rider kilometre' }, { v: kit.money(fuel) + ' / ' + kit.amount(litres, 1) + ' L', l: 'fuel across the ledger' }, { v: units ? String(seats) + ' of ' + kit.amount(units) : 'no rows yet', l: 'seats named on the saved manifests' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "riderpool-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("riderpool:ledger", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

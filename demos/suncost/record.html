@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your saved solar quotes side by side — SunCost ledger</title>
+<meta name="description" content="Every system you sized in SunCost, in one sortable ledger with capacity totals, crossover months, CSV export and a print-ready comparison sheet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="suncost.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2312506b'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>*</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">*</span><span>SunCost<small>Solar vs generator, sized honestly</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Size my load</a>
+      <a href="data.html">Sizing data</a>
+      <a href="playbook.html">Install playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Quote ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#size">Size my load</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">SunCost</a> <span aria-hidden="true">/</span> <span aria-current="page">Quote ledger</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record · this device only</p>
+    <h1 class="reveal" data-delay="1">Three quotes, one table,<br>no confusion.</h1>
+    <p class="lede reveal" data-delay="2">Save each system you size and this page becomes the comparison sheet: array, bank, capex, cost per year and the month solar overtakes the generator — side by side, sortable, exportable.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>Sortable</b> click any column heading</span><span><b>CSV + print</b> take it to the installer</span><span><b>Local only</b> nothing is uploaded</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why keep a ledger</p>
+          <h2 id="why-h">A solar purchase is a set of numbers you will need again in year four</h2>
+          <p class="lede">The bank you bought, the array you were promised and the crossover month you were quoted are the three things an installer will disagree about later. Write them down now.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>Saved on this device, in this browser. Export the CSV and keep it with the invoice.</p></div>
+        <div class="note-box "><h3>It is your negotiation record</h3><p>Three saved quotes make the fourth one comparable. Two make it a guess.</p></div>
+        <div class="note-box warn"><h3>It is the warranty file</h3><p>Chemistry, capacity and the date you saved it are what a battery claim asks for.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Saved systems</h2>
+          <p class="lede">Read live from the calculator's quote ledger. Deleting here deletes it from the tool as well.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">System</th>
+              <th data-sort="1">City</th>
+              <th class="n" data-sort="2">Daily load Wh</th>
+              <th class="n" data-sort="3">Array kW</th>
+              <th class="n" data-sort="4">Panels</th>
+              <th class="n" data-sort="5">Inverter kVA</th>
+              <th class="n" data-sort="6">Bank kWh</th>
+              <th data-sort="7">Chemistry</th>
+              <th class="n" data-sort="8">Capex</th>
+              <th class="n" data-sort="9">Cost per year</th>
+              <th class="n" data-sort="10">Generator / month</th>
+              <th class="n" data-sort="11">Crossover month</th>
+              <th class="n" data-sort="12">Saved</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:suncost:quotes</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with these numbers</h2>
+          <p class="lede">A record is only useful if something changes because of it. This is the cadence the entries support.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">Same day</p>
+          <div><h3>Save every quote you size</h3><p>Change one assumption, save again. The ledger is how you show yourself which number actually moved.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">Before the meeting</p>
+          <div><h3>Print the comparison</h3><p>Installers negotiate differently with a written specification in front of them than with a verbal one.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">At negotiation</p>
+          <div><h3>Watch ₦ per usable kWh</h3><p>The average on this page is your market check. A quote 30% below it is a chemistry or capacity conversation.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">After install</p>
+          <div><h3>Keep the commissioning row</h3><p>Save the as-built system, not the as-sold one. That row is your baseline for the yearly capacity test.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Size another system and save it</h2>
+        <p class="lede">The ledger writes straight from the calculator — no account, no import.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#quotes">Back to the calculator</a>
+        <a class="btn btn-ghost" href="data.html">Sizing data</a>
+        <a class="btn btn-ghost" href="playbook.html">Install playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">*</span><span style="color:#fff">SunCost<small style="color:rgba(255,255,255,.6)">Solar vs generator, sized honestly</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one argument: solar is only cheap when the load is written down, the battery is sized for the night, and the five-year fuel bill is on the same sheet.</p>
+      </div>
+      <div>
+        <h4>SunCost pages</h4>
+        <p><a href="index.html">Size my load</a><br><a href="data.html">Sizing data</a><br><a href="playbook.html">Install playbook</a><br><a href="record.html">Quote ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../payrite/">PayRite — payroll and PAYE</a><br><a href="../fuelmeter/">FuelMeter — true cost per kilometre</a><br><a href="../landedcost/">LandedCost — what imports really cost</a><br><a href="../cropkeep/">CropKeep — post-harvest loss maths</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Irradiation, prices and autonomy figures are published averages. Get a site survey before you spend money.</span><span class="mono">SunCost · Quote ledger · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "label", label: "System"}, { k: "city", label: "City"}, { k: "daily", label: "Daily load Wh", n: true, fmt: (v) => kit.num(v)}, { k: "arrayKw", label: "Array kW", n: true}, { k: "panels", label: "Panels", n: true, fmt: (v) => kit.num(v)}, { k: "kva", label: "Inverter kVA", n: true}, { k: "battKwh", label: "Bank kWh", n: true}, { k: "chem", label: "Chemistry"}, { k: "capex", label: "Capex", n: true, fmt: (v) => kit.money(v)}, { k: "perYear", label: "Cost per year", n: true, fmt: (v) => kit.money(v)}, { k: "genMonth", label: "Generator / month", n: true, fmt: (v) => kit.money(v)}, { k: "crossover", label: "Crossover month", n: true}, { k: "date", label: "Saved", n: true, fmt: (v) => kit.dateLabel(new Date(v))}];
+  var handle = pages.cases("suncost:quotes", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 60,
+    emptyTitle: "No quotes saved yet",
+    emptyText: "Size a load in the calculator and press Save this quote. Each saved system lands here for comparison.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var sum = function (k) { return rows.reduce(function (a, r) { return a + (Number(r[k]) || 0); }, 0); }; var cap = sum('capex'), kwh = sum('battKwh'), gen = sum('genMonth'); return [ { v: kit.money(cap), l: 'total capex of saved systems' }, { v: kwh ? kit.money(cap / kwh) : '—', l: 'average ₦ per battery kWh' }, { v: kit.money(gen * 12 * 5), l: 'five years of the generator they replace' }, { v: rows.length ? kit.amount(Math.min.apply(null, rows.map(function (r) { return Number(r.crossover) || 999; })), 0) : '—', l: 'earliest crossover month' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "suncost-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("suncost:quotes", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

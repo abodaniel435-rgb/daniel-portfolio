@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your saved trades — MarketRate record</title>
+<meta name="description" content="Every buy and sell you logged in MarketRate, in one sortable table with values, realised margin, CSV export and a print-ready sheet for a union meeting. Stored on your device only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="marketrate.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%231f6b3c'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%82%A6</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">₦</span><span>MarketRate<small>the fair price today</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Open the board</a>
+      <a href="data.html">Market data</a>
+      <a href="playbook.html">Trading playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Trade log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#board">Open the board</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">MarketRate</a> <span aria-hidden="true">/</span> <span aria-current="page">Trade log</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record · this device only</p>
+    <h1 class="reveal" data-delay="1">What you actually paid,<br>not what you remember.</h1>
+    <p class="lede reveal" data-delay="2">MarketRate writes each trade to this browser as you log it, either from the trade form or from the haul calculator's Log this trip button. This page reads it back, sorts it, totals it and lets you export or print it, which is what makes it a record instead of a feeling.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>No upload</b> the log never leaves this browser</span><span><b>CSV + print</b> two ways to keep a copy</span><span><b>Sortable</b> click any column heading</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why keep this record</p>
+          <h2 id="why-h">A price history you are standing inside</h2>
+          <p class="lede">Every row is a number you actually paid or actually took, at a named market, on a date. Nobody can argue with it, including you, in six months.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>localStorage lives in one browser on one device, stored as marketrate:log inside it. Clear site data and the year is gone. Export the CSV every month and keep it with the receipts.</p></div>
+        <div class="note-box "><h3>It is the only honest price feed you have</h3><p>The reference figures on the data page are planning shapes with an as-of date. Your logged trades are what your market really did, and after a year they become the numbers you should be typing into the board.</p></div>
+        <div class="note-box warn"><h3>It is your evidence</h3><p>A cooperative splitting a season, a buyer disputing a price, a union arguing a levy schedule: all three want dated rows with the market named. That is what this table prints.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Logged trades</h2>
+          <p class="lede">Read live from the trade log. Removing a row here removes it from the tool as well, so export before you clear.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">Date</th>
+              <th data-sort="1">Commodity</th>
+              <th data-sort="2">Buy or sell</th>
+              <th class="n" data-sort="3">Quantity</th>
+              <th data-sort="4">Unit</th>
+              <th class="n" data-sort="5">Price per unit</th>
+              <th data-sort="6">Market</th>
+              <th data-sort="7">Note</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:marketrate:log</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with the log</h2>
+          <p class="lede">A trade log is only worth the decisions it changes. This is the cadence that makes it pay for itself.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">Same day</p>
+          <div><h3>Log it before you forget the price</h3><p>An undated trade is not a record. Date, commodity, direction, quantity, unit, price per unit, market. The note field is for who paid the porters.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">Weekly</p>
+          <div><h3>Compare your average with the board</h3><p>The tool shows your average buy and average sell per commodity against the board's retail figure. If your average sell is under board retail, you are not selling dear, you are selling late.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">At the trip</p>
+          <div><h3>Remember what a logged margin is not</h3><p>Log this trip writes one buy and one sell, and the goods-only difference between them is not the trip profit. Transport, levies and spoilage stay in the haul calculator, where they belong.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">Monthly</p>
+          <div><h3>Export before you clear anything</h3><p>The CSV is the archive. This browser is not one, and a phone that gets wiped in the rainy season takes a season of your prices with it.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">At the union meeting</p>
+          <div><h3>Print the sheet</h3><p>Twelve months of your own dated buys and sells is the strongest thing anybody in the room can put on the table.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="5">
+          <p class="when">Seasonally</p>
+          <div><h3>Check the glut against your own buys</h3><p>Look at which months your cheapest buys fall in. If they are not the glut months on the data page, that is the whole lesson and it cost you nothing to learn.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Log another trade, or start the season again</h2>
+        <p class="lede">The trade form writes straight to this page, no account and no import. The haul calculator can write a buy and a sell for a whole trip in one press.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#log">Back to the trade log</a>
+        <a class="btn btn-ghost" href="index.html#haul">Log a haul instead</a>
+        <a class="btn btn-ghost" href="data.html">Market data</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">₦</span><span style="color:#fff">MarketRate<small style="color:rgba(255,255,255,.6)">the fair price today</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one habit: write the unit, the tier and the four costs down before any money moves. Your own prices always beat the reference figures.</p>
+      </div>
+      <div>
+        <h4>MarketRate pages</h4>
+        <p><a href="index.html">Open the board</a><br><a href="data.html">Market data</a><br><a href="playbook.html">Trading playbook</a><br><a href="record.html">Trade log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../cropkeep/">CropKeep — post-harvest loss maths</a><br><a href="../landedcost/">LandedCost — what imports really cost</a><br><a href="../payrite/">PayRite — payroll and PAYE</a><br><a href="../suncost/">SunCost — solar vs generator</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Every figure here is an indicative planning shape, rounded on purpose, and your edited board replaces it. Not a price quotation, not a market feed.</span><span class="mono">MarketRate · Trade log · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "date", label: "Date"}, { k: "name", label: "Commodity"}, { k: "dir", label: "Buy or sell"}, { k: "qty", label: "Quantity", n: true, fmt: (v) => kit.num(v)}, { k: "unit", label: "Unit"}, { k: "price", label: "Price per unit", n: true, fmt: (v) => kit.money(v)}, { k: "market", label: "Market"}, { k: "note", label: "Note"}];
+  var handle = pages.cases("marketrate:log", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 100,
+    emptyTitle: "The log is empty",
+    emptyText: "Add a trade in section 08 of the tool, or press Log this trip in the haul calculator. Logged trades appear here immediately.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var q = function (d) { return rows.reduce(function (a, r) { return r.dir === d ? a + kit.num(r.qty) : a; }, 0); }; var val = function (d) { return rows.reduce(function (a, r) { return r.dir === d ? a + kit.num(r.qty) * kit.num(r.price) : a; }, 0); }; var n = function (d) { return rows.filter(function (r) { return r.dir === d; }).length; }; var bq = q('buy'), sq = q('sell'), bv = val('buy'), sv = val('sell'); var byName = {}; rows.forEach(function (r) { var b = byName[r.name] || (byName[r.name] = { bq: 0, bv: 0, sq: 0, sv: 0 }); if (r.dir === 'buy') { b.bq += kit.num(r.qty); b.bv += kit.num(r.qty) * kit.num(r.price); } else { b.sq += kit.num(r.qty); b.sv += kit.num(r.qty) * kit.num(r.price); } }); var margin = 0; Object.keys(byName).forEach(function (k) { var b = byName[k]; if (b.bq > 0 && b.sq > 0) { margin += ((b.sv / b.sq) - (b.bv / b.bq)) * b.sq; } }); var allQ = bq + sq, allV = bv + sv; return [ { v: kit.amount(allQ), l: 'units traded, crates and bags mixed, so read them per commodity' }, { v: kit.money(bv), l: 'total value bought' }, { v: kit.money(sv), l: 'total value sold' }, { v: allQ ? kit.money(allV / allQ) : '—', l: 'average price per unit, every trade' }, { v: n('buy') + ' / ' + n('sell'), l: 'buys versus sells' }, { v: kit.money(margin), l: 'realised goods-only margin, transport and levies excluded' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "marketrate-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("marketrate:log", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

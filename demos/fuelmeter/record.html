@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every fill-up you have logged and what it adds up to, in the FuelMeter record</title>
+<meta name="description" content="Every fill-up you logged in FuelMeter, in one sortable table with litres, naira, odometer and full-tank flags, distance covered between readings, implied naira per kilometre, CSV export and a print-ready sheet. Stored on your device only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="fuelmeter.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23c0451f'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>km</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">km</span><span>FuelMeter<small>cost per kilometre, Nigeria</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Price a trip</a>
+      <a href="data.html">Reference data</a>
+      <a href="playbook.html">Driver playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Fuel log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#trip">Price a trip</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">FuelMeter</a> <span aria-hidden="true">/</span> <span aria-current="page">Fuel log</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record · this device only</p>
+    <h1 class="reveal" data-delay="1">The pumps, the litres,<br>the readings, all of it.</h1>
+    <p class="lede reveal" data-delay="2">FuelMeter writes every fill-up you enter into this browser. This page reads those rows back and does the arithmetic the log makes possible: total litres bought, total money paid, the distance between your first and last odometer reading for each vehicle, and what that implies you are really paying per kilometre.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>No upload</b> the log never leaves this browser</span><span><b>Litres, not money</b> the field that makes a km/L possible</span><span><b>CSV + print</b> two ways to keep it before you change phones</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why this log is worth keeping</p>
+          <h2 id="why-h">A fuel log is the only witness you own</h2>
+          <p class="lede">Every row is four facts you measured at a pump: when, how many litres, how much money, and what the odometer said. Nothing else about your running cost survives an argument as well as that does.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>Stored in this browser under afrik:fuelmeter:log. Clear site data and the log is gone, so export the CSV every month and keep it with the receipts.</p></div>
+        <div class="note-box warn"><h3>It is the only number that describes your car</h3><p>The claimed km/L in the profile table belongs to a brochure and an open road. The pair of full-tank rows belongs to you, your traffic and your tyres.</p></div>
+        <div class="note-box "><h3>It is a working document, not an archive</h3><p>The fleet tab and the monthly budget are built from the same assumptions. When your litres per month drifts, go and re-enter the distance the vehicle actually does.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="keys">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · What this device is holding</p>
+          <h2 id="keys-h">Every key the calculator writes, and who writes it</h2>
+          <p class="lede">The fuel log is the only list of entries. The other keys store the numbers your entries are measured against, and none of them are uploaded anywhere.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a key</span><input id="keys-q" type="search" placeholder="key or field name" autocomplete="off"></label>
+          
+          <span class="filter-count" id="keys-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="keys-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Key in this browser</th>
+            <th data-sort="1">What it holds</th>
+            <th data-sort="2">Written when</th>
+            <th data-sort="3">Where you see it</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>afrik:fuelmeter:log</td><td>One row per fill-up: date, vehicle profile id, litres, naira paid, odometer, full-tank flag, a note up to 40 characters</td><td>You press Add to log</td><td>This page, and the fuel log tab on the calculator</td></tr>
+            <tr><td>afrik:fuelmeter:fleet</td><td>Vehicles you added on the Fleet tab: a name, a profile, kilometres a month, the price row it is priced in, a road multiplier and a seat count</td><td>You press Add to fleet</td><td>The fleet table and its CSV on the calculator</td></tr>
+            <tr><td>afrik:fuelmeter:profiles</td><td>km/L, tank litres, seats, servicing per km, tyre set price and life, oil cost and interval, fixed monthly cost, once you change any of them</td><td>You edit a field in the vehicle profiles table</td><td>The profile table; this page uses it to name your vehicles</td></tr>
+            <tr><td>afrik:fuelmeter:prices</td><td>Petrol and diesel per litre for each of the thirteen state rows, as you edited them</td><td>You edit a price field</td><td>The pump price table and the trip planner's state selector</td></tr>
+            <tr><td>afrik:fuelmeter:modes</td><td>Minimum fare, naira per kilometre, seats and whether each comparator is priced per seat or per vehicle</td><td>You edit a fare field</td><td>The drive-versus-hail head-to-head and the crossover line</td></tr>
+            <tr><td>afrik:fuelmeter:factors</td><td>Idle litres per hour, A/C penalty, load penalty, the month's kilometres used for amortising fixed cost, the economy flag percentage and the go-slow multiplier</td><td>You edit an assumption field</td><td>Every computation on the calculator</td></tr>
+            <tr><td>afrik:fuelmeter:asof</td><td>The single date you marked the price rows against</td><td>You change the prices as-of date</td><td>The inline as-of label on the trip planner and the printed sheet</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Vehicle names in the table above come from the profile key when you have edited it, and from the nine profiles the calculator ships with when you have not. If you see a bare id such as corolla instead of a name, a fill-up was logged against a profile that is no longer in your list.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Every fill-up you have logged</h2>
+          <p class="lede">Read live from the fuel log, in the order you entered them: click the Date heading to put the newest first. The rows here and the totals below cover the first 240 entries on this device; Export CSV writes every row, all fields, nothing rounded. Clearing browser data deletes them, so export before you change phones.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th class="n" data-sort="0">Date</th>
+              <th data-sort="1">Vehicle</th>
+              <th class="n" data-sort="2">Litres</th>
+              <th class="n" data-sort="3">Paid at the pump</th>
+              <th class="n" data-sort="4">Odometer km</th>
+              <th data-sort="5">Fill</th>
+              <th data-sort="6">Note</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:fuelmeter:log</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with these numbers</h2>
+          <p class="lede">A record is only useful if something changes because of it. This is the cadence the entries support.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">At the pump</p>
+          <div><h3>Enter the litres before you get into the car</h3><p>Litres is the field that becomes km/L and the one that is impossible to recover once the receipt is in your pocket. Money alone gives you a spending record and no measurement.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">Every fill</p>
+          <div><h3>Tick full tank, or do not</h3><p>The calculator learns economy only from consecutive full-tank rows of the same vehicle. A partial fill logged as full poisons the sample; one logged honestly just waits for its pair.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">Weekly</p>
+          <div><h3>Read the implied naira per litre</h3><p>That figure is your own price index. When it moves 5% you did not change your driving, the pump did, and the state row in the calculator needs updating to match.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">Monthly</p>
+          <div><h3>Compare implied economy to the claimed figure</h3><p>The km/L in the summary is all your rows pooled, so treat it as a floor, not a verdict. The learned panel on the calculator uses only proper full-tank pairs and compares them to your own baseline.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">Before you swap phones</p>
+          <div><h3>Export the CSV</h3><p>This log is one browser on one device, deliberately, with no account and no sync. The CSV is the only copy that survives clearing site data.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="5">
+          <p class="when">Quarterly</p>
+          <div><h3>Print and read the sheet once</h3><p>A quarter of litres, money and odometer on paper shows the pattern the screen hides: which months the car worked, which months you paid it to sit.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Add the next fill-up, or check the assumptions behind it</h2>
+        <p class="lede">The fuel log writes straight to this page: no account, no import, no upload. The reference data behind every figure is on the data page, and the method that makes the log worth keeping is on the playbook.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#log">Back to the fuel log</a>
+        <a class="btn btn-ghost" href="data.html">Reference data</a>
+        <a class="btn btn-ghost" href="playbook.html">Driver playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">km</span><span style="color:#fff">FuelMeter<small style="color:rgba(255,255,255,.6)">cost per kilometre, Nigeria</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one number: what a kilometre of your vehicle actually costs, from litres you measured and a pump price you set yourself.</p>
+      </div>
+      <div>
+        <h4>FuelMeter pages</h4>
+        <p><a href="index.html">Price a trip</a><br><a href="data.html">Reference data</a><br><a href="playbook.html">Driver playbook</a><br><a href="record.html">Fuel log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../riderpool/">RiderPool: fill the seat, split the fare</a><br><a href="../suncost/">SunCost: solar versus generator</a><br><a href="../payrite/">PayRite: payroll and PAYE</a><br><a href="../marketrate/">MarketRate: the fair price today</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Pump prices are the editable reference values shipped with the tool, not a live feed. Tyre, oil and servicing figures are indicative street averages. Nothing here is a quotation, a fare or a repair estimate.</span><span class="mono">FuelMeter · Fuel log · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+var FUEL_DEFAULT_NAMES = { okada: 'Dispatch motorcycle (100-200cc)', keke: 'Keke NLP tricycle', aygo: 'Aygo / Kia Picanto', corolla: 'Toyota Corolla', camry: 'Toyota Camry', sienna: 'Sienna / Hiace', pickup: 'Pickup (Hilux / Dyna)', truck: '3-5 ton truck', bus: 'Bus / coaster (33 seats)' }; var fuelProfileList = function () { var s = kit.store('fuelmeter:profiles', null).read(); return Array.isArray(s) && s.length ? s : Object.keys(FUEL_DEFAULT_NAMES).map(function (id) { return { id: id, name: FUEL_DEFAULT_NAMES[id] }; }); }; var fuelVehicleName = function (id) { var list = fuelProfileList(); for (var i = 0; i < list.length; i++) { if (list[i].id === id) return list[i].name; } return FUEL_DEFAULT_NAMES[id] || id || 'vehicle not named'; };
+pages.boot(function () {
+  pages.sortable('#keys-tbl');
+  pages.filter('#keys-tbl', { input: '#keys-q', count: '#keys-count', empty: "No row here matches that search." });
+  pages.sortable('#rec-table');
+  var cols = [{ k: "date", label: "Date", n: true, fmt: (v) => kit.dateLabel(new Date(v))}, { k: "profileId", label: "Vehicle", fmt: function (v) { return pages.escape(fuelVehicleName(v)); }}, { k: "litres", label: "Litres", n: true, fmt: (v) => kit.num(v)}, { k: "cost", label: "Paid at the pump", n: true, fmt: (v) => kit.money(v)}, { k: "odo", label: "Odometer km", n: true, fmt: (v) => kit.num(v)}, { k: "full", label: "Fill", fmt: function (v) { return v ? '<span class="badge badge-ok">full tank</span>' : '<span class="badge badge-warn">partial</span>'; }}, { k: "note", label: "Note"}];
+  var handle = pages.cases("fuelmeter:log", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 240,
+    emptyTitle: "No fill-ups logged on this device",
+    emptyText: "Fill up, then enter the date, the litres the pump showed, the naira you paid and the odometer in the fuel log on the calculator, with full tank ticked. Every row you add appears here.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var sum = function (k) { return rows.reduce(function (a, r) { return a + (Number(r[k]) || 0); }, 0); }; var litres = sum('litres'); var paid = sum('cost'); var byCar = {}; rows.forEach(function (r) { var key = r.profileId || 'not set'; if (!byCar[key]) byCar[key] = []; byCar[key].push(Number(r.odo) || 0); }); var keys = Object.keys(byCar); var km = 0; keys.forEach(function (key) { var odos = byCar[key].filter(function (n) { return n > 0; }); if (odos.length > 1) km += Math.max.apply(null, odos) - Math.min.apply(null, odos); }); var pool = fuelProfileList(); var known = 0; keys.forEach(function (key) { if (key === 'not set') return; if (pool.some(function (p) { return p.id === key; })) known++; }); var fulls = rows.filter(function (r) { return r.full; }).length; return [ { v: kit.amount(litres, 1) + ' L', l: 'litres bought across these rows' }, { v: kit.money(paid), l: 'paid at the pump' }, { v: litres ? kit.money(paid / litres) : '—', l: 'average naira per litre, your own price index' }, { v: km ? kit.amount(km) + ' km' : '—', l: 'first reading to last, counted per vehicle' }, { v: km ? kit.money(paid / km, 'NGN', 1) : '—', l: 'implied naira per km, fuel only' }, { v: km && litres ? kit.amount(km / litres, 1) + ' km/L' : '—', l: 'implied economy across every row, full and partial' }, { v: String(known) + ' of ' + String(pool.length), l: 'logged vehicles that still match a profile in the list' }, { v: fulls ? String(fulls) + ' full, ' + String(rows.length - fulls) + ' partial' : 'none ticked full', l: 'only consecutive full tanks produce a true km/L sample' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "fuelmeter-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("fuelmeter:log", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LandedCost — what the goods really cost before you sell them</title>
+<meta name="description" content="Work out the true Nigerian landed cost of an imported carton: duty, NT242, ECOWAS levy, CISS, ETLS, VAT, surcharge, Form M, SONCAP, THC, agent fees, demurrage and detention, local delivery — then the break-even selling price and the naira rate at which your margin disappears.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="landedcost.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%232b3d4d'/><rect x='7' y='12' width='18' height='11' rx='1.5' stroke='white' stroke-width='2' fill='none'/><path d='M11 12v11M16 12v11M21 12v11' stroke='%23c1652b' stroke-width='1.6'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#quote">Skip to the landed-cost calculator</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark" aria-hidden="true">LC</span><span>LandedCost<small>Quote to landed, in one pass</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#quote">Quote</a>
+      <a href="#freight">Freight</a>
+      <a href="#duty">Duty</a>
+      <a href="#demurrage">Demurrage</a>
+      <a href="#sell">Price it</a>
+      <a href="#fx">FX risk</a>
+      <a href="#saved">Saved</a>
+      <a href="data.html">Duty and charges</a>
+      <a href="playbook.html">Import playbook</a>
+      <a href="record.html">Shipment log</a>
+      <a class="btn btn-ink btn-sm" href="#quote">Cost a shipment</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Apapa · Tin Can · Onne · cargo that must clear</p>
+      <h1>The supplier's price is not<br><em>your cost.</em></h1>
+      <p class="lede">Freight, insurance, duty, NT242, CISS, ETLS, VAT on the duty-inclusive value, surcharge, stamp, Form M, SONCAP, THC, terminal, CTO, the clearing agent, then demurrage because the bank took nine days — and the naira you finally pay at clearing is not the naira you quoted with. LandedCost runs the whole chain, line by line, so you can see where the profit goes before you transfer anything.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#quote">Cost a shipment</a>
+        <a class="btn btn-ghost" href="#fx">Test my margin against FX <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="45" data-suffix="%">0</b><span>typical gap between a quoted FOB price and landed cost</span></div>
+        <div class="stat"><b data-count="7" data-suffix=" days">0</b><span>rent-free at the terminal before demurrage starts</span></div>
+        <div class="stat"><b data-count="1520" data-prefix="₦">0</b><span>the rate you quoted at — what is it on arrival day?</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame port-frame">
+        <img src="../_media/landedcost-hero.webp" width="1536" height="1024" alt="Container terminal gantries and stacked boxes at a Nigerian port at dusk" fetchpriority="high">
+        <span class="port-water" aria-hidden="true"></span>
+        <span class="port-ship" aria-hidden="true">
+          <svg viewBox="0 0 120 44" role="presentation" focusable="false">
+            <path d="M6 30h108l-9 10H15z" fill="#1b2833"/>
+            <rect x="20" y="20" width="14" height="9" fill="#c1652b"/>
+            <rect x="36" y="20" width="14" height="9" fill="#2b3d4d"/>
+            <rect x="52" y="20" width="14" height="9" fill="#c1652b"/>
+            <rect x="68" y="20" width="14" height="9" fill="#43596c"/>
+            <rect x="36" y="10" width="14" height="9" fill="#43596c"/>
+            <rect x="52" y="10" width="14" height="9" fill="#2b3d4d"/>
+            <path d="M88 30V12h12v18z" fill="#12202b"/>
+          </svg>
+        </span>
+        <span class="port-tide" aria-hidden="true"></span>
+        <span class="port-pin mono">20ft · Apapa · 7 free days</span>
+      </div>
+      <p class="tiny hero-note">All rates on this page are indicative and editable. Confirm the tariff line and the levies with your clearing agent before you commit money.</p>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">01 · The problem</p>
+      <h2>Three quotes, one shipment, three different profits.</h2>
+      <p class="lede">The merchant who quotes from the Guangzhou invoice price has not yet bought anything. The one who quotes from the landed number has already decided whether this shipment is worth the container.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card reveal">
+        <span class="card-num">Guangzhou → Alaba</span>
+        <h3>Phone accessories, 40 cartons</h3>
+        <p>USD 8,000 of goods looks sellable at ₦1,520. Freight, duty at 10%, CISS, VAT on the duty-inclusive value and a 20% surcharge on duty push it far higher — and the rate on the day the bank actually funds the Form M is never the rate you used.</p>
+      </article>
+      <article class="card reveal" data-delay="1">
+        <span class="card-num">Istanbul → Balogun</span>
+        <h3>Bags and shoes, garments band</h3>
+        <p>Apparel sits around 20% duty with the ECOWAS levy and surcharge on top, plus terminal handling that is charged per container, not per carton. Twelve percent margin on the invoice is often four percent once the goods reach the shop.</p>
+      </article>
+      <article class="card reveal" data-delay="2">
+        <span class="card-num">Tin Can Island</span>
+        <h3>Food, machinery, household goods</h3>
+        <p>Perishables and spares have the worst enemy in common: time. Seven rent-free days, then a per-day rate that escalates by bracket. Nine days in the terminal can eat the whole margin on a low-value container.</p>
+      </article>
+    </div>
+    <div class="stat-strip">
+      <div class="stat"><b data-count="289408" data-prefix="₦">0</b><span>surcharge alone on a 10% duty of ₦14.47m CIF — 20% of duty</span></div>
+      <div class="stat"><b data-count="62000" data-prefix="₦" data-suffix="/day">0</b><span>demurrage in the top bracket, if the file drags</span></div>
+      <div class="stat"><b data-count="167" data-suffix=" kg/m³">0</b><span>air freight volumetric divisor — light, big boxes still cost</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="quote">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Shipment &amp; Incoterm</p>
+      <h2>What the supplier actually handed you.</h2>
+      <p class="lede">The Incoterm is not decoration — it decides who pays freight and insurance, and therefore what the customs value is. Under FOB the freight and insurance you pay <em>become</em> the CIF assessable value. Under CIF the seller already paid them, so you must not add them twice. That single mistake inflates duty by 15–30%.</p>
+    </div>
+    <div class="incoterm-strip reveal" id="inco-strip" role="group" aria-label="Incoterm">
+      <button class="inco" type="button" data-inco="EXW" aria-pressed="false"><b>EXW</b><span>Factory price. You pay loading, inland to the port, origin THC, freight and insurance. Everything is in your duty base.</span></button>
+      <button class="inco is-on" type="button" data-inco="FOB" aria-pressed="true"><b>FOB</b><span>Seller delivers on board. You pay ocean/air freight and insurance — and both are added to the assessable value.</span></button>
+      <button class="inco" type="button" data-inco="CIF" aria-pressed="false"><b>CIF</b><span>Seller's price already includes freight and insurance. Do not add them again — the invoice is your assessable value.</span></button>
+      <button class="inco" type="button" data-inco="DDP" aria-pressed="false"><b>DDP</b><span>Seller delivers duty-paid. You see one price and no breakdown — the numbers below become an estimate of what they buried.</span></button>
+    </div>
+    <p class="inco-note tiny" id="inco-note" aria-live="polite"></p>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="q-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="quote-name">Shipment reference</label>
+            <input id="quote-name" maxlength="60" placeholder="e.g. Cartons — phone accessories, 10/26" value="Phone accessories — 40 cartons">
+          </div>
+          <div class="field">
+            <label for="route">Route</label>
+            <input id="route" maxlength="60" placeholder="e.g. Guangzhou → Apapa" value="Guangzhou → Apapa">
+          </div>
+          <div class="field">
+            <label for="cur">Invoice currency</label>
+            <select id="cur">
+              <option value="USD" selected>USD — US dollar</option>
+              <option value="CNY">CNY — Chinese yuan</option>
+              <option value="EUR">EUR — Euro</option>
+              <option value="GBP">GBP — British pound</option>
+              <option value="AED">AED — UAE dirham</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="rate">Exchange rate used (₦ per 1 <span id="cur-tag">USD</span>)</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="rate" type="number" min="1" step="1" value="1520" inputmode="decimal"></div>
+            <p class="help" id="rate-note">Rate date: today. FX moves while the goods are on the water — see section 07.</p>
+          </div>
+          <div class="field">
+            <label for="price-mode">The supplier price is…</label>
+            <select id="price-mode"><option value="total" selected>The total for the order</option><option value="unit">Per unit</option></select>
+          </div>
+          <div class="field">
+            <label for="goods" id="goods-label">Supplier price (total, in <span class="cur-tag2">USD</span>)</label>
+            <div class="input-group"><span class="prefix" id="goods-prefix">$</span><input id="goods" type="number" min="0" step="50" value="8000" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="qty">Quantity (units)</label>
+            <input id="qty" type="number" min="1" step="1" value="400" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="cartons">Cartons</label>
+            <input id="cartons" type="number" min="1" step="1" value="40" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="upc">Units per carton</label>
+            <input id="upc" type="number" min="1" step="1" value="10" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="cartonKg">Weight per carton (kg)</label>
+            <input id="cartonKg" type="number" min="0" step="0.5" value="12" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="cLength">Carton length (cm)</label>
+            <input id="cLength" type="number" min="1" step="1" value="60" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="cWidth">Carton width (cm)</label>
+            <input id="cWidth" type="number" min="1" step="1" value="40" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="cHeight">Carton height (cm)</label>
+            <input id="cHeight" type="number" min="1" step="1" value="35" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="freightMode">Freight</label>
+            <select id="freightMode">
+              <option value="manual" selected>Quoted by the forwarder — enter it in <span class="cur-tag3">USD</span></option>
+              <option value="lcl">Sea LCL — ₦ per CBM (calculated)</option>
+              <option value="fcl20">Sea FCL — one or more 20ft containers (calculated)</option>
+              <option value="fcl40">Sea FCL — one or more 40ft high-cube (calculated)</option>
+              <option value="airx">Air freight — express ₦/kg (calculated)</option>
+              <option value="aire">Air freight — economy ₦/kg (calculated)</option>
+              <option value="airs">Air freight — sea-air ₦/kg (calculated)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="freightFx">Freight amount (in <span class="cur-tag4">USD</span>)</label>
+            <div class="input-group"><span class="prefix" id="fr-prefix">$</span><input id="freightFx" type="number" min="0" step="10" value="1400" inputmode="decimal"></div>
+            <p class="help">Ignored when a calculated mode is chosen. Use section 03 to compare them.</p>
+          </div>
+          <div class="field">
+            <label for="insMode">Insurance</label>
+            <select id="insMode"><option value="manual" selected>Quoted amount, in <span class="cur-tag5">USD</span></option><option value="pct">% of the goods value</option><option value="none">None / included by the seller</option></select>
+          </div>
+          <div class="field">
+            <label for="insFx">Insurance amount (in <span class="cur-tag6">USD</span>)</label>
+            <div class="input-group"><span class="prefix" id="in-prefix">$</span><input id="insFx" type="number" min="0" step="5" value="120" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="insPct">Insurance, % of goods value</label>
+            <input id="insPct" type="number" min="0" max="5" step="0.05" value="0.6">
+          </div>
+          <div class="field">
+            <label for="category">Item category (indicative tariff band)</label>
+            <select id="category"></select>
+          </div>
+          <div class="field">
+            <label for="dutyRate">Import duty rate on this line, %</label>
+            <div class="input-group"><span class="prefix">%</span><input id="dutyRate" type="number" min="0" max="60" step="1" value="10"></div>
+            <p class="help" id="duty-note">—</p>
+          </div>
+          <div class="field">
+            <label for="originInland">Origin inland haulage to the port (₦) <span class="tiny">EXW only</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="originInland" type="number" min="0" step="5000" value="0"></div>
+          </div>
+          <div class="field">
+            <label for="originThc">Origin terminal handling (₦) <span class="tiny">EXW only</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="originThc" type="number" min="0" step="5000" value="0"></div>
+          </div>
+          <div class="field">
+            <label for="lines">Product lines on the invoice <span class="tiny">for SONCAP / type conformity</span></label>
+            <input id="lines" type="number" min="1" max="50" step="1" value="1">
+          </div>
+          <div class="field">
+            <label for="vehicles">Vehicles or machinery units <span class="tiny">MSON ₦15,000 each</span></label>
+            <input id="vehicles" type="number" min="0" max="500" step="1" value="0">
+          </div>
+        </div>
+
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="use-excise"><span class="track"></span><span>This line attracts excise duty</span></label>
+          <label class="switch"><input type="checkbox" id="use-surcharge" checked><span class="track"></span><span>Import duty surcharge (20% of duty)</span></label>
+          <label class="switch"><input type="checkbox" id="use-stamp" checked><span class="track"></span><span>Stamp duty on the assessable value</span></label>
+          <label class="switch"><input type="checkbox" id="reclaim-vat"><span class="track"></span><span>I am VAT-registered and will reclaim input VAT</span></label>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="q-save">Save this shipment</button>
+          <button class="btn btn-ghost" type="button" id="q-print">Print quotation sheet</button>
+          <button class="btn btn-ghost" type="reset" id="q-reset">Reset</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Landed cost, all in</span>
+          <b id="lc-landed">₦0</b>
+          <span id="lc-landed-note">—</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Goods (invoice value)</span><b id="lc-goods">—</b></div>
+          <div class="line"><span>Freight</span><b id="lc-freight">—</b></div>
+          <div class="line"><span>Insurance</span><b id="lc-insurance">—</b></div>
+          <div class="line line-strong"><span>CIF / assessable value</span><b id="lc-cif">—</b></div>
+          <div class="line"><span>Import duty</span><b id="lc-duty">—</b></div>
+          <div class="line"><span>Levies (NT242 · ECOWAS · CISS · ETLS · stamp)</span><b id="lc-levies">—</b></div>
+          <div class="line"><span>VAT 7.5% (duty-inclusive base)</span><b id="lc-vat">—</b></div>
+          <div class="line"><span>Port, line &amp; agent charges</span><b id="lc-port">—</b></div>
+          <div class="line"><span>Demurrage &amp; detention</span><b id="lc-demurrage">—</b></div>
+          <div class="line"><span>Local tail (delivery · offload · storage)</span><b id="lc-local">—</b></div>
+        </div>
+        <div class="mini">
+          <div><span>Per unit</span><b id="lc-unit">—</b></div>
+          <div><span>Per carton</span><b id="lc-carton">—</b></div>
+          <div><span>Uplift on the invoice</span><b id="lc-uplift">—</b></div>
+        </div>
+        <div class="verdict" id="lc-verdict">
+          <h4 id="lc-verdict-title">Enter the shipment</h4>
+          <p id="lc-verdict-body">The CIF value, the charge stack and the per-unit number appear here.</p>
+        </div>
+        <p class="tiny">The product is rarely the biggest line. Check the donut in section 05.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="freight">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Freight, volume and containers</p>
+      <h2>LCL until a number you can remember, then a box.</h2>
+      <p class="lede">Less-than-container load is priced per cubic metre; a full container is a flat rate no matter how much of it you use. The crossover is the number every importer should know by heart — and it moves with the LCL rate, not with your feelings.</p>
+    </div>
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Your volume</h3>
+        <div class="vol-grid" id="vol-grid"></div>
+        <p class="tiny" id="vol-note">Carton dimensions drive CBM. Air freight charges the greater of actual and volumetric weight (CBM × 167 kg).</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Freight options, priced for this load</h3>
+        <div id="fr-bars" role="img" aria-label="Freight options compared"></div>
+        <div class="crossover">
+          <b id="xo-head">—</b>
+          <p class="tiny" id="xo-note">—</p>
+        </div>
+        <div class="row no-print">
+          <button class="btn btn-accent btn-sm" type="button" id="fr-use">Use the cheapest mode above</button>
+          <span class="tiny" id="fr-current">Current: forwarder's quote</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="duty">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · Duty and levies</p>
+      <h2>Every line, so you can check the arithmetic yourself.</h2>
+      <p class="lede">This is the page to photograph at the agent's office. Each row shows its own base, its own rate and the running total, in the order they are actually assessed. Edit a rate in section 09 and this table follows.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="trail">
+        <caption>Assessment trail <span class="tiny">(values in naira at the rate you entered)</span></caption>
+        <thead><tr><th>#</th><th>Line</th><th class="num">Base</th><th class="num">Rate</th><th class="num">Amount</th><th class="num">Running total</th></tr></thead>
+        <tbody id="duty-body"></tbody>
+        <tfoot id="duty-foot"></tfoot>
+      </table>
+    </div>
+    <div class="split-2 duty-split">
+      <div class="card reveal">
+        <h3>Where the money went</h3>
+        <div id="duty-bars" role="img" aria-label="Cost groups"></div>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Charge stack as a share of the invoice</h3>
+        <div class="donut-wrap">
+          <div id="duty-donut"></div>
+          <div>
+            <p class="tiny">Government charges + port + local, against what the supplier was paid</p>
+            <b class="big-num" id="donut-label">—</b>
+            <p class="muted small-copy" id="donut-note">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="demurrage">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Demurrage &amp; detention</p>
+      <h2>The clock starts the day the vessel discharges.</h2>
+      <p class="lede">Seven rent-free days is the usual indication at Apapa and Tin Can. After that the daily rate escalates in brackets, and the shipping line charges container detention separately. Every day you argue with a bank about a Form M amendment is priced here.</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="dm-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="dwell">Days the container sits at the terminal</label>
+            <input id="dwell" type="number" min="0" max="120" step="1" value="12">
+          </div>
+          <div class="field">
+            <label for="freeDays">Rent-free days</label>
+            <input id="freeDays" type="number" min="0" max="30" step="1" value="7">
+          </div>
+          <div class="field">
+            <label for="detDays">Days the box is held beyond the free detention period</label>
+            <input id="detDays" type="number" min="0" max="90" step="1" value="4">
+          </div>
+          <div class="field">
+            <label for="detRate">Container detention, ₦ per day</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="detRate" type="number" min="0" step="1000" value="12000"></div>
+          </div>
+          <div class="field">
+            <label for="containers">Containers counted</label>
+            <input id="containers" type="number" min="1" max="20" step="1" value="1">
+          </div>
+          <div class="field">
+            <label for="financeRate">Cost of your money, % per month</label>
+            <input id="financeRate" type="number" min="0" max="30" step="0.5" value="4">
+          </div>
+        </div>
+      </form>
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Demurrage + detention on this dwell</span>
+          <b id="dm-total">₦0</b>
+          <span id="dm-note">—</span>
+        </div>
+        <div class="mini">
+          <div><span>Cost per extra day</span><b id="dm-day">—</b></div>
+          <div><span>Capital tied up / day</span><b id="dm-capital">—</b></div>
+          <div><span>Share of your gross profit</span><b id="dm-share">—</b></div>
+        </div>
+        <div class="verdict" id="dm-verdict">
+          <h4 id="dm-verdict-title">—</h4>
+          <p id="dm-verdict-body">Enter the dwell days.</p>
+        </div>
+      </aside>
+    </div>
+    <div class="split-2">
+      <div class="table-wrap reveal">
+        <table>
+          <caption>How the daily rate escalates <span class="tiny">(per container)</span></caption>
+          <thead><tr><th>Day bracket</th><th class="num">Rate / day</th><th class="num">Days charged</th><th class="num">Amount</th></tr></thead>
+          <tbody id="dm-body"></tbody>
+          <tfoot id="dm-foot"></tfoot>
+        </table>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Clear within N days — the break-even clock</h3>
+        <div id="dm-spark-wrap">
+          <svg id="dm-spark" class="spark" aria-label="Cost of the shipment against days in the terminal"></svg>
+        </div>
+        <p class="muted small-copy" id="dm-break">—</p>
+        <ul class="checklist" id="dm-tips"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trail">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · The landed-cost trail</p>
+      <h2>FOB to landed, drawn to scale.</h2>
+      <p class="lede">The same shipment, stacked. If the product is less than half of your landed cost, you are not in the goods business — you are in the logistics and customs business, and you should price accordingly.</p>
+    </div>
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Cost trail</h3>
+        <div id="trail-bars" role="img" aria-label="Landed cost trail"></div>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>How much of the final cost was the product?</h3>
+        <div class="donut-wrap">
+          <div id="trail-donut"></div>
+          <div>
+            <p class="tiny">Goods value as a share of landed cost</p>
+            <b class="big-num" id="trail-label">—</b>
+            <p class="muted small-copy" id="trail-note">—</p>
+          </div>
+        </div>
+        <div id="trail-spark" class="spark-holder"><svg id="trail-cum" class="spark" aria-label="Cumulative cost build-up"></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="sell">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Local tail, margin and cash</p>
+      <h2>What to charge, and how long the money is gone.</h2>
+      <p class="lede">Port to warehouse, porters, storage, a breakage allowance — and then the only question that matters at the shop counter: at what price do you stop losing money, and how many days does the capital sit out there earning nothing?</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="se-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="truck">Truck from the port</label>
+            <select id="truck"></select>
+          </div>
+          <div class="field">
+            <label for="distance">Distance, port to warehouse (km)</label>
+            <input id="distance" type="number" min="0" max="1500" step="5" value="38">
+          </div>
+          <div class="field">
+            <label for="porters">Offloading &amp; porters (₦)</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="porters" type="number" min="0" step="1000" value="18000"></div>
+          </div>
+          <div class="field">
+            <label for="storageMonths">Months in store before it sells</label>
+            <input id="storageMonths" type="number" min="0" max="12" step="0.5" value="0.5">
+          </div>
+          <div class="field">
+            <label for="storageRate">Storage, ₦ per month for this load</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="storageRate" type="number" min="0" step="5000" value="45000"></div>
+          </div>
+          <div class="field">
+            <label for="breakage">Breakage / shrinkage allowance, %</label>
+            <input id="breakage" type="number" min="0" max="30" step="0.5" value="1.5">
+          </div>
+          <div class="field">
+            <label for="margin">Target margin on cost, %</label>
+            <input id="margin" type="number" min="0" max="300" step="1" value="35">
+          </div>
+          <div class="field">
+            <label for="market">Price the market will bear, ₦ per unit <span class="tiny">0 = use my target price</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="market" type="number" min="0" step="500" value="0"></div>
+          </div>
+          <div class="field">
+            <label for="daysToSell">Average days to sell the load</label>
+            <input id="daysToSell" type="number" min="1" max="365" step="1" value="55">
+          </div>
+          <div class="field">
+            <label for="creditDays">Days between paying the supplier and being paid</label>
+            <input id="creditDays" type="number" min="0" max="365" step="1" value="120">
+          </div>
+        </div>
+      </form>
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Break-even selling price per unit</span>
+          <b id="sv-breakeven">—</b>
+          <span id="sv-breakeven-note">—</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Landed per unit (after breakage)</span><b id="sv-unit">—</b></div>
+          <div class="line"><span>Selling price ex-VAT at target margin</span><b id="sv-price">—</b></div>
+          <div class="line"><span>VAT 7.5% on the selling price</span><b id="sv-vat">—</b></div>
+          <div class="line line-strong"><span>Shelf price, VAT inclusive</span><b id="sv-shelf">—</b></div>
+          <div class="line"><span>Gross profit per unit</span><b id="sv-profit">—</b></div>
+          <div class="line"><span>Profit on the whole load</span><b id="sv-load">—</b></div>
+        </div>
+        <div class="mini">
+          <div><span>ROI on the shipment</span><b id="sv-roi">—</b></div>
+          <div><span>Cash out the door</span><b id="sv-window">—</b></div>
+          <div><span>Cost of that money</span><b id="sv-carry">—</b></div>
+        </div>
+        <div class="verdict" id="sv-verdict">
+          <h4 id="sv-verdict-title">—</h4>
+          <p id="sv-verdict-body">Set a target margin and a market price to see whether this shipment is worth doing.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="fx">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">08 · FX sensitivity</p>
+      <h2>The naira rate at which your profit disappears.</h2>
+      <p class="lede">You order in dollars and sell in naira, and the two dates are months apart. Everything below recomputes the whole chain — CIF, duty, VAT, surcharge — at each rate, then solves for the exact rate where the margin hits zero. That single number is your real risk.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <caption>Landed cost and margin at different rates</caption>
+        <thead><tr><th>Scenario</th><th class="num">Rate (₦/1 FX)</th><th class="num">CIF</th><th class="num">Duty + levies</th><th class="num">Landed</th><th class="num">Landed / unit</th><th class="num">Profit / unit</th><th>Survives?</th></tr></thead>
+        <tbody id="fx-body"></tbody>
+      </table>
+    </div>
+    <div class="split-2 fx-split">
+      <div class="card reveal">
+        <h3>Margin against the rate</h3>
+        <svg id="fx-spark" class="spark" aria-label="Profit per unit as the exchange rate moves"></svg>
+        <p class="muted small-copy" id="fx-note">—</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>The break-even rate</h3>
+        <div class="breakeven-rate" id="be-rate">—</div>
+        <p class="muted small-copy" id="be-note">—</p>
+        <div class="mini">
+          <div><span>Headroom now</span><b id="be-head">—</b></div>
+          <div><span>Landed / unit at break-even</span><b id="be-unit">—</b></div>
+          <div><span>If the rate rose 20%</span><b id="be-20">—</b></div>
+        </div>
+        <p class="tiny">Hedging is not available to most small importers. The practical levers are: pay sooner, hold less stock, price off the landed number rather than the invoice, and do not order a container you cannot clear inside the free period.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="saved">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">09 · Saved shipments</p>
+      <h2>Compare quotes before you commit.</h2>
+      <p class="lede">Saved in this browser only. Export the CSV for your records, or print the quotation sheet to show a customer or your bank.</p>
+    </div>
+    <div class="roster-tools reveal no-print">
+      <button class="btn btn-accent btn-sm" type="button" id="sv-csv">Export CSV</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="sv-print">Print quotation sheet</button>
+      <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="sv-clear">Clear all</button>
+      <span class="tiny roster-count" id="sv-count">0 shipments</span>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only">Saved shipments</caption>
+        <thead><tr><th>Quote date</th><th>Reference / route</th><th class="num">CIF</th><th class="num">Duty + levies</th><th class="num">Landed</th><th class="num">/ unit</th><th class="num">Break-even</th><th class="num">Margin</th><th class="num">FX break-even</th><th></th></tr></thead>
+        <tbody id="sv-body"></tbody>
+        <tfoot id="sv-foot"></tfoot>
+      </table>
+    </div>
+    <p class="tiny roster-empty" id="sv-empty">Nothing saved yet. Fill the shipment in section 02 and press <b>Save this shipment</b>.</p>
+    <div class="print-block">
+      <div class="print-head">
+        <h3>Quotation sheet</h3>
+        <p class="mono" id="print-meta">—</p>
+        <p class="tiny">Produced with LandedCost. Indicative landed-cost working — not a customs valuation and not a bank instruction.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption>Every line of the current shipment</caption>
+          <thead><tr><th>Line</th><th class="num">Amount</th></tr></thead>
+          <tbody id="print-lines"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">10 · The maths, in the open</p>
+      <h2>Rates this tool applies — all editable.</h2>
+      <p class="lede">Indicative Nigerian tariff bands and charge defaults, taken from what importers are actually invoiced. Your HS line decides the real duty rate; your terminal decides the real handling charge. Change them here and the whole page recomputes.</p>
+    </div>
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Levy and duty rates (editable)</summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable levy rates</caption>
+                <thead><tr><th>Charge</th><th>Applied to</th><th class="num">Rate</th></tr></thead>
+                <tbody id="rate-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Duty and surcharge follow the assessable (CIF) value; VAT is charged on the duty-inclusive value. Excise only applies when the line is flagged.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-rates">Restore default rates</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Tariff bands by item category</summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable tariff bands</caption>
+                <thead><tr><th>Category</th><th class="num">Duty %</th><th>Excise</th></tr></thead>
+                <tbody id="cat-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Bands are ranges collapsed to a single indicative figure so the arithmetic stays checkable. A phone accessory at 5% and a finished handset on a different line are not the same assessment.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Freight, demurrage and port charge defaults</summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable charge defaults</caption>
+                <thead><tr><th>Charge</th><th class="num">Value</th></tr></thead>
+                <tbody id="chg-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Sea LCL is quoted per CBM (₦28,000–45,000 indicative), FCL as a flat per-container rate, air by weight band. Demurrage brackets escalate by day.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>What the Incoterms change</summary>
+          <div class="acc-body"><p><b>EXW</b> — you pay everything from the factory door, so inland haulage and origin THC join the assessable value. <b>FOB</b> — the seller's job ends once the goods are on board; your freight and insurance are added to reach CIF. <b>CIF</b> — the seller's invoice already contains freight and insurance, so they are not added again. <b>DDP</b> — the seller delivers duty-paid: you get one price and no breakdown, so this tool shows the charges as an estimate of what is buried inside their figure.</p></div>
+        </details>
+        <details class="acc">
+          <summary>What this tool does not do</summary>
+          <div class="acc-body"><p>No HS-code lookup, no valuation ruling, no attachment or ETLS relief claim, no WAPEX/duty-free entitlement, no forex application, no filing. It cannot know your terminal's current tariff, and it is not a substitute for a licensed agent's assessment. Use it to question the invoice, not to pay it.</p></div>
+        </details>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h3>Worked example, live</h3>
+        <p class="muted">USD 8,000 of goods at ₦1,520, USD 1,400 freight, USD 120 insurance, 10% duty, 400 units:</p>
+        <ol class="steps" id="worked"></ol>
+        <p class="tiny">Recomputed from whatever you typed — press Reset to return to this example.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">11 · Honest limits</p>
+      <h2>Where this number can still be wrong.</h2>
+    </div>
+    <div class="grid-3">
+      <article class="card reveal"><h3>Valuation is contested</h3><p>Customs can reject an invoice value it thinks is under-declared and substitute its own. Nothing here anticipates an attachment; a single revaluation can exceed every margin figure on this page.</p></article>
+      <article class="card reveal" data-delay="1"><h3>Terminal tariffs move</h3><p>THC, CTO and concession charges are revised by operators and shipping lines without much notice. Update the defaults in section 10 from the invoice you were actually handed.</p></article>
+      <article class="card reveal" data-delay="2"><h3>Rates are indicative</h3><p>The ₦1,520 default is a placeholder, not a market quote. The date you fund the Form M and the date the bank releases are two different rates, and both differ from the one you used to price the goods.</p></article>
+      <article class="card reveal"><h3>No illegal shortcuts</h3><p>This tool does not model under-declaration, "all-in" clearing promises or the informal channel. Those are how consignments get impounded, and they are not a cost saving.</p></article>
+      <article class="card reveal" data-delay="1"><h3>Margin is not cash</h3><p>A 35% margin over 120 days of credit is roughly 9% a month of capital exposure. Check the cash conversion window in section 07 before you order the second container.</p></article>
+      <article class="card reveal" data-delay="2"><h3>Nothing leaves your browser</h3><p>Saved shipments stay in this device's storage. Export the CSV before you clear your site data or change phones.</p></article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark" aria-hidden="true">LC</span><span style="color:#fff">LandedCost<small style="color:rgba(255,255,255,.6)">Quote to landed, in one pass</small></span></a>
+        <p style="margin-top:14px;max-width:46ch">Built for the importer who has to answer for the price on the shelf. No account, no upload, no server — and a printable sheet for the customer who wants to know why it costs that.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#quote">Shipment &amp; Incoterm</a><br><a href="#freight">Freight &amp; volume</a><br><a href="#duty">Duty &amp; levies</a><br><a href="#demurrage">Demurrage</a><br><a href="#fx">FX risk</a><br><a href="data.html">Duty and charges</a><br><a href="playbook.html">Import playbook</a><br><a href="record.html">Shipment log</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../payrite/">Payroll &amp; PAYE</a><br><a href="../feesplan/">School fees plan</a><br><a href="../sealcheck/">Medicine check</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Indicative rates. Not a customs valuation, not clearing advice.</span><span class="mono">LandedCost · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

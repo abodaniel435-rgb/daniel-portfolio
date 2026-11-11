@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your saved shipments: landed cost, margin and FX break-even, LandedCost record</title>
+<meta name="description" content="Every shipment you saved in LandedCost, in one sortable table with totals, blended cost per unit, CSV export and a print-ready sheet. Stored on your device only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="landedcost.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%232b4a63'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>LC</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">LC</span><span>LandedCost<small>Quote to landed, in one pass</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Calculator</a>
+      <a href="data.html">Duty and charges</a>
+      <a href="playbook.html">Import playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Shipment log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#quote">Cost a shipment</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">LandedCost</a> <span aria-hidden="true">/</span> <span aria-current="page">Shipment log</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record · this device only</p>
+    <h1 class="reveal" data-delay="1">Every file you priced,<br>on one sheet.</h1>
+    <p class="lede reveal" data-delay="2">LandedCost keeps the shipments you save from the calculator. This page reads them back and puts the assessable value, the charges, the landed cost, the break-even shelf price, the margin and the naira rate that kills it in one sortable table: the sheet you take to a bank, an agent or a customer.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>Live read</b> straight from the calculator's own storage</span><span><b>No upload</b> nothing leaves this browser</span><span><b>CSV + print</b> two ways to keep a copy</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why keep this log</p>
+          <h2 id="why-h">A landed cost is a promise you make to yourself about the future</h2>
+          <p class="lede">Each row is a set of assumptions about a rate, a band, a dwell and a truck. Writing them down is the only way to find out later which of them you got wrong.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>localStorage lives in one browser on one device. Clear site data and the files are gone, and the sixty-file cap means old ones fall off the end anyway. Export the CSV.</p></div>
+        <div class="note-box "><h3>The full file stays with the tool</h3><p>Each saved shipment carries every field you typed, which is why the calculator's Load button can refill the whole form. This page shows the results only, and the CSV here exports the columns above.</p></div>
+        <div class="note-box warn"><h3>It is your evidence at the window</h3><p>An assessment that disagrees with your estimate is easier to argue line by line when you have the trail, the printed sheet and the previous three files beside it.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Saved shipments</h2>
+          <p class="lede">Read live from the calculator's saved list, which keeps the sixty most recent files. The Load and Delete buttons live in section 09 of the tool; deleting here deletes there.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">Reference</th>
+              <th data-sort="1">Route</th>
+              <th data-sort="2">Term</th>
+              <th data-sort="3">Currency</th>
+              <th class="n" data-sort="4">Rate quoted</th>
+              <th class="n" data-sort="5">Assessable (CIF)</th>
+              <th class="n" data-sort="6">Duty + levies + VAT</th>
+              <th class="n" data-sort="7">Landed</th>
+              <th class="n" data-sort="8">Landed / unit</th>
+              <th class="n" data-sort="9">Break-even shelf</th>
+              <th class="n" data-sort="10">Shelf priced</th>
+              <th class="n" data-sort="11">Margin on cost</th>
+              <th class="n" data-sort="12">Net ROI</th>
+              <th class="n" data-sort="13">Rate that kills it</th>
+              <th class="n" data-sort="14">Saved</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:landedcost:shipments</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with these numbers</h2>
+          <p class="lede">A record is only useful if something changes because of it. This is the cadence the entries support.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">Before ordering</p>
+          <div><h3>Compare two saved files, not one</h3><p>Same goods, two freight structures, two dwell assumptions. The landed column decides the argument faster than a forwarder's opinion does.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">At assessment</p>
+          <div><h3>Put the real numbers beside the estimate</h3><p>Save again with the actual rate, the actual duty line and the actual days. The gap between the two rows is the number you should be managing.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">Monthly</p>
+          <div><h3>Watch the blended cost per unit</h3><p>If it drifts up while the bands did not move, the answer is in the freight structure, the dwell or the rate, and the log tells you which.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">When the naira moves</p>
+          <div><h3>Sort by the last column</h3><p>That is the rate at which each file's margin disappears. Do not average it across currencies: a USD file and a CNY file have nothing in common except the column.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">Before the second container</p>
+          <div><h3>Kill the bottom row</h3><p>Sort by net ROI and remove the worst file from the plan. Reordering the same goods is not loyalty, it is working capital.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="5">
+          <p class="when">Quarterly</p>
+          <div><h3>Export, then start again</h3><p>Sixty files is a working list, not an archive. Download the CSV, keep it with the invoices, and let the next quarter have a clean sheet.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Save the next consignment and watch the totals move</h2>
+        <p class="lede">The log writes straight from the calculator: no account, no import, no upload, and nothing leaves this device.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#quote">Back to the calculator</a>
+        <a class="btn btn-ghost" href="data.html">Duty and charges</a>
+        <a class="btn btn-ghost" href="playbook.html">Import playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">LC</span><span style="color:#fff">LandedCost<small style="color:rgba(255,255,255,.6)">Quote to landed, in one pass</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one job: turn a supplier's price into a landed number you can defend, then into a shelf price that still works when the naira moves.</p>
+      </div>
+      <div>
+        <h4>LandedCost pages</h4>
+        <p><a href="index.html">Calculator</a><br><a href="data.html">Duty and charges</a><br><a href="playbook.html">Import playbook</a><br><a href="record.html">Shipment log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../suncost/">SunCost: solar vs generator</a><br><a href="../marketrate/">MarketRate: fair price today</a><br><a href="../fuelmeter/">FuelMeter: true cost per kilometre</a><br><a href="../payrite/">PayRite: payroll and PAYE</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Every figure here is the tool's own indicative default and is editable in section 10 of the calculator. Not a customs valuation, not clearing advice: your HS line, your terminal and your line decide the truth.</span><span class="mono">LandedCost · Shipment log · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "name", label: "Reference"}, { k: "route", label: "Route"}, { k: "inco", label: "Term"}, { k: "cur", label: "Currency"}, { k: "rate", label: "Rate quoted", n: true, fmt: (v) => kit.num(v)}, { k: "cif", label: "Assessable (CIF)", n: true, fmt: (v) => kit.money(v)}, { k: "tax", label: "Duty + levies + VAT", n: true, fmt: (v) => kit.money(v)}, { k: "landed", label: "Landed", n: true, fmt: (v) => kit.money(v)}, { k: "unit", label: "Landed / unit", n: true, fmt: (v) => kit.money(v)}, { k: "be", label: "Break-even shelf", n: true, fmt: (v) => kit.money(v)}, { k: "shelf", label: "Shelf priced", n: true, fmt: (v) => kit.money(v)}, { k: "margin", label: "Margin on cost", n: true, fmt: (v) => kit.amount(v, 1) + '%'}, { k: "roi", label: "Net ROI", n: true, fmt: (v) => kit.amount(v, 1) + '%'}, { k: "fxBe", label: "Rate that kills it", n: true, fmt: (v) => kit.num(v)}, { k: "at", label: "Saved", n: true, fmt: (v) => kit.dateLabel(new Date(v))}];
+  var handle = pages.cases("landedcost:shipments", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 60,
+    emptyTitle: "No shipments saved yet",
+    emptyText: "Fill the form in section 02 of the calculator and press Save this shipment. Each saved consignment appears here, most recent first.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var sum = function (k) { return rows.reduce(function (a, r) { return a + (Number(r[k]) || 0); }, 0); }; var cif = sum('cif'), tax = sum('tax'), landed = sum('landed'); var units = rows.reduce(function (a, r) { var u = Number(r.unit); return a + (u > 0 ? r.landed / u : 0); }, 0); var wm = rows.reduce(function (a, r) { return a + (Number(r.margin) || 0) * (Number(r.landed) || 0); }, 0); var wr = rows.reduce(function (a, r) { return a + (Number(r.roi) || 0) * (Number(r.landed) || 0); }, 0); var dead = rows.filter(function (r) { return Number(r.shelf) > 0 && Number(r.shelf) <= Number(r.be); }).length; return [ { v: kit.money(cif), l: 'total assessable (CIF) value' }, { v: kit.money(tax), l: 'duty, levies and VAT you actually kept as cost' }, { v: kit.money(landed), l: 'total landed cost of these files' }, { v: landed ? kit.pct(tax / landed * 100, 1) : 'not set', l: 'government share of everything you spent' }, { v: units ? kit.money(landed / units) : 'not set', l: 'blended landed cost per unit' }, { v: landed ? kit.pct(wm / landed, 1) : 'not set', l: 'margin on cost, weighted by landed value' }, { v: landed ? kit.pct(wr / landed, 1) : 'not set', l: 'net ROI, weighted by landed value' }, { v: kit.amount(dead, 0) + ' of ' + rows.length, l: 'priced at or below their own break-even shelf' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "landedcost-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("landedcost:shipments", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

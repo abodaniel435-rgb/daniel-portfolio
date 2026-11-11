@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FeesPlan — school fees without the last-week panic</title>
+<meta name="description" content="Plan three terms of Nigerian school fees in advance: per-child costs with the hidden levies, the monthly sinking fund that covers them, an honest comparison of saving, salary advance, instalments and ajo circles, a dated payment plan and a letter to the bursar. Runs in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="feesplan.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%232f4a8c'/><path d='M8 9h7a3 3 0 013 3v11a3 3 0 00-3-3H8z M24 9h-6v11h6a2 2 0 012 2V11a2 2 0 00-2-2z' stroke='white' stroke-width='1.8' fill='none'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#planner">Skip to the fees planner</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark" aria-hidden="true">FP</span><span>FeesPlan<small>School fees, planned</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#planner">Planner</a>
+      <a href="#sinking">Sinking fund</a>
+      <a href="#options">Options</a>
+      <a href="#plan">Payment plan</a>
+      <a href="#letters">Letters</a>
+      <a href="#circle">Circle</a>
+      <a href="data.html">Fees reference</a>
+      <a href="playbook.html">Fees playbook</a>
+      <a href="record.html">Saved plans</a>
+      <a class="btn btn-ink btn-sm" href="#planner">Plan a term</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Three terms · one household · no surprises</p>
+      <h1>School fees arrive as lump sums.<br><em>They do not have to.</em></h1>
+      <p class="lede">A term bill is not one number — it is fees, uniform, books, PTA dues, exam fee, an ICT levy, and transport you stopped budgeting for. FeesPlan adds up what your children actually cost, works out the exact amount to set aside from today, prices the salary advance you are being offered, and writes the letter to the bursar if you need an instalment plan.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#planner">Cost my children's term</a>
+        <a class="btn btn-ghost" href="#options">Price an advance <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="1200000" data-prefix="₦">0</b><span>top end of private school fees, per child, per year</span></div>
+        <div class="stat"><b data-count="25" data-suffix="%">0</b><span>typical yearly rise a school announces in one letter</span></div>
+        <div class="stat"><b data-count="240" data-prefix="₦" data-suffix="k">0</b><span>a term that becomes ₦30,000 a month with 8 months' notice</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame ledger-frame">
+        <img src="../_media/feesplan-hero.webp" width="1536" height="1024" alt="A mother and her school-age daughter writing a fee schedule together at a kitchen table in Nigeria" fetchpriority="high">
+        <span class="ledger-rules" aria-hidden="true"></span>
+        <span class="ledger-sweep" aria-hidden="true"></span>
+        <span class="ledger-pin mono">Term 2 · due 14 Oct</span>
+      </div>
+      <p class="tiny hero-tick" id="hero-tick">Every figure below is indicative. Ask your school for the fee schedule in writing.</p>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">01 · The problem</p>
+      <h2>The panic is not the fees. It is the timing.</h2>
+      <p class="lede">Nigerian households are not uniformly poor and uniformly rich — they are paid monthly and charged termly. That mismatch is where the damage happens: 10–20% a month to a salary-advance lender, trading stock liquidated at a loss, or a child sent home for an unpaid balance weeks before the exams.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card reveal">
+        <span class="card-num">01 / Ibadan</span>
+        <h3>A teacher and a trader, three children</h3>
+        <p>One salary, one business that swings with the season. Public school fees are small, but PTA dues, exam fees, uniforms and new books every September stack into a real number — and all three children resume in the same week.</p>
+      </article>
+      <article class="card reveal" data-delay="1">
+        <span class="card-num">02 / Lagos</span>
+        <h3>A single mother, JSS fees in 5 weeks</h3>
+        <p>The letter arrives on a Friday: ₦268,500 before resumption. Five weeks is enough to raise it in instalments if somebody asks — and not nearly enough if nobody does. Asking is the part most parents were never shown how to do.</p>
+      </article>
+      <article class="card reveal" data-delay="2">
+        <span class="card-num">03 / Kaduna</span>
+        <h3>A civil servant paid late, again</h3>
+        <p>Income arrives, just two or three weeks after the school expects it. The advance that bridges the gap costs more per year than the fees themselves — and the only cure is a plan the bursar has already agreed to.</p>
+      </article>
+    </div>
+    <div class="stat-strip">
+      <div class="stat"><b data-count="3">0</b><span>separate demands a year, each one a deadline</span></div>
+      <div class="stat"><b data-count="435" data-suffix="%">0</b><span>a year — what a 15%-per-month advance really costs if you roll it</span></div>
+      <div class="stat"><b data-count="14" data-suffix=" weeks">0</b><span>is one term. Unpaid weeks are the ones a child can lose</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="planner">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Child &amp; school planner</p>
+      <h2>What each child actually costs per term.</h2>
+      <p class="lede">Start from a realistic band for the school type, then edit every line. Uniform, books and PTA dues are charged once a year, so FeesPlan spreads them across the terms instead of pretending they are termly.</p>
+      <div class="pill-row no-print" role="group" aria-label="Load a worked household">
+        <button class="pill" type="button" data-persona="ibadan">Ibadan · 3 children, mixed schools</button>
+        <button class="pill" type="button" data-persona="lagos">Lagos · one JSS child, 5 weeks out</button>
+        <button class="pill" type="button" data-persona="kaduna">Kaduna · 2 children, salary paid late</button>
+        <button class="pill" type="button" data-persona="clear">Clear children</button>
+      </div>
+    </div>
+
+    <div class="calc-grid">
+      <div class="planner-col">
+        <div class="planner-tools no-print">
+          <label class="field-inline" for="band-preset">Quick start
+            <select id="band-preset">
+              <option value="">Add a child at a band…</option>
+            </select>
+          </label>
+          <button class="btn btn-primary btn-sm" type="button" id="add-child">Add child</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="sync-bill">Send totals to the sinking fund ↓</button>
+        </div>
+        <div class="kids-grid" id="kids"></div>
+        <div class="table-wrap reveal">
+          <table>
+            <caption>Household fees per child <span class="tiny">(indicative — edit the lines above to match your school's letter)</span></caption>
+            <thead>
+              <tr><th>Child</th><th>Class</th><th>School type</th><th class="num">Fees / term</th><th class="num">Extras / term</th><th class="num">Term total</th><th class="num">Per year</th></tr>
+            </thead>
+            <tbody id="kid-rows"></tbody>
+            <tfoot id="kid-foot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Household total, per term</span>
+          <b id="pl-term">₦0</b>
+          <span id="pl-note">add a child to begin</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Fees only (the number on the letter)</span><b id="pl-fees">—</b></div>
+          <div class="line"><span>Hidden extras per term (spread)</span><b id="pl-extras">—</b></div>
+          <div class="line line-strong"><span>Per year (all terms)</span><b id="pl-year">—</b></div>
+          <div class="line"><span>Monthly equivalent</span><b id="pl-month">—</b></div>
+          <div class="line"><span>Weekly equivalent</span><b id="pl-week">—</b></div>
+        </div>
+        <div class="verdict" id="pl-verdict">
+          <h4 id="pl-verdict-title">Nothing entered yet</h4>
+          <p id="pl-verdict-body">Add each child with their school band and the extras, and the household number builds up here.</p>
+        </div>
+        <div class="mini">
+          <div><span>Children</span><b id="pl-count">0</b></div>
+          <div><span>Next term rise</span><b id="pl-rise">—</b></div>
+          <div><span>Costliest child</span><b id="pl-top">—</b></div>
+        </div>
+        <p class="tiny">Extras are grouped as "charged every term" (exam fee, ICT/lab levy, transport, art &amp; sports, boarding) and "charged once a year" (uniform, books, PTA dues), which is how most bursars actually bill.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="horizon">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · The six-year view</p>
+      <h2>Every school letter ends with "with effect from next session".</h2>
+      <p class="lede">School-fee inflation in Nigeria runs 15–25% a year and it is not optional. This is what the same children cost across the horizon, at the rate you enter — and what you must raise every single year to keep them in school.</p>
+    </div>
+    <div class="split-2">
+      <div class="card reveal">
+        <h3>Total to raise each year</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="hz-rate">Annual fee increase</label>
+            <div class="input-group"><span class="prefix">%</span><input id="hz-rate" type="number" min="0" max="60" step="1" value="20"></div>
+          </div>
+          <div class="field">
+            <label for="hz-years">Horizon</label>
+            <select id="hz-years"><option value="4">Next 4 years</option><option value="6" selected>Next 6 years</option><option value="8">Next 8 years</option></select>
+          </div>
+        </div>
+        <div id="hz-bars" role="img" aria-label="Amount to raise each year"></div>
+        <div class="mini">
+          <div><span>6-year total</span><b id="hz-sum">—</b></div>
+          <div><span>Year 6 vs year 1</span><b id="hz-mult">—</b></div>
+          <div><span>Avg a month, year 1</span><b id="hz-avg">—</b></div>
+        </div>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <h3>Who is costing the most, at the end of the horizon</h3>
+        <div id="hz-kids" role="img" aria-label="Per-child cost in the final year"></div>
+        <p class="muted small-copy" id="hz-note">Add children above and this becomes a per-child forecast.</p>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Multi-year funding table</caption>
+            <thead id="hz-head"></thead>
+            <tbody id="hz-body"></tbody>
+          </table>
+        </div>
+        <div class="row no-print">
+          <button class="btn btn-accent btn-sm" type="button" id="hz-csv">Export funding table (CSV)</button>
+          <span class="tiny">CSV opens in Excel or Google Sheets.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sinking">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · Sinking-fund maths</p>
+      <h2>How much, from today, until the first day of term.</h2>
+      <p class="lede">₦240,000 due in eight months is not a crisis — it is ₦30,000 a month. The same ₦240,000 due in three weeks is a crisis. FeesPlan only ever asks the useful question: given the date, what is the number this month and this week?</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="sf-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="sf-bill">Term bill to cover</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="sf-bill" type="number" min="0" step="5000" value="240000" inputmode="numeric"></div>
+            <p class="help">Prefilled with ₦240,000 — press <em>Send totals to the sinking fund</em> to use your own household number.</p>
+          </div>
+          <div class="field">
+            <label for="sf-due">First term begins / due date</label>
+            <input id="sf-due" type="date">
+            <p class="help" id="sf-due-note">Months from today: —</p>
+          </div>
+          <div class="field">
+            <label for="sf-have">Already set aside</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="sf-have" type="number" min="0" step="5000" value="0" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="sf-afford">What you can realistically save monthly</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="sf-afford" type="number" min="0" step="1000" value="32000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="sf-rate">Interest the fund pays (per year)</label>
+            <input id="sf-rate" type="number" min="0" max="30" step="0.5" value="0">
+            <p class="help">Target-savings and staff welfare funds often pay little. Leave at 0 to be safe — raise it only if the bank confirmed a rate.</p>
+          </div>
+          <div class="field">
+            <label for="sf-weeks">Teaching weeks in the term</label>
+            <input id="sf-weeks" type="number" min="6" max="20" step="1" value="14">
+            <p class="help">Used to translate a shortfall into "weeks of school left unpaid".</p>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-ghost btn-sm" type="reset">Reset</button>
+          <span class="tiny">Nothing here is sent anywhere. It is all arithmetic in this tab.</span>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Set aside every month until the due date</span>
+          <b id="sf-monthly">₦0</b>
+          <span id="sf-monthly-note">—</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Months remaining</span><b id="sf-m">—</b></div>
+          <div class="line"><span>Weekly amount (daily-wage earner)</span><b id="sf-weekly">—</b></div>
+          <div class="line"><span>Cover if you save your own number</span><b id="sf-cover">—</b></div>
+          <div class="line line-strong"><span>Shortfall at the due date</span><b id="sf-short">—</b></div>
+          <div class="line"><span>Weeks of the term unfunded</span><b id="sf-weeksunpaid">—</b></div>
+        </div>
+        <div class="verdict" id="sf-verdict">
+          <h4 id="sf-verdict-title">Enter the bill and the date</h4>
+          <p id="sf-verdict-body">This box tells you plainly whether the date is on your side.</p>
+        </div>
+        <div class="mini">
+          <div><span>40% on admission</span><b id="sf-p1">—</b></div>
+          <div><span>30% mid-term</span><b id="sf-p2">—</b></div>
+          <div><span>30% before exams</span><b id="sf-p3">—</b></div>
+        </div>
+        <p class="tiny">The 40 / 30 / 30 part-payment schedule is the shape most Nigerian bursars will accept in writing. Build the dated version in section 06.</p>
+      </aside>
+    </div>
+
+    <div class="card reveal schedule-card">
+      <h3>Part-payment schedule for this term</h3>
+      <p class="muted">Dated, so you can see whether the money lands before the deadline rather than after it.</p>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Suggested part payments</caption>
+          <thead><tr><th>Payment</th><th>Due</th><th class="num">Amount</th><th class="num">Cumulative</th><th class="num">Balance</th><th>Funded by then?</th></tr></thead>
+          <tbody id="sf-sched"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="options">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · The honest comparison</p>
+      <h2>Same bill. Five ways to pay. One of them is cheapest.</h2>
+      <p class="lede">This is the section the fee letter never writes. A "15% for 30 days" advance on ₦80,000 costs ₦12,000 — and if you roll it every month it annualises to over 400% a year. Enter your own numbers and see the ranking, including the option nobody prices: simply asking the school.</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card calc-form opt-form reveal" id="opt-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="op-bill">Term bill being compared</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="op-bill" type="number" min="0" step="5000" value="240000"></div>
+          </div>
+          <div class="field">
+            <label for="op-months">Months until it is due</label>
+            <input id="op-months" type="number" min="0.25" max="36" step="0.25" value="8">
+            <p class="help">Section 04 keeps this in step with your real date. Change it to test a different deadline.</p>
+          </div>
+          <div class="field">
+            <label for="op-fundrate">Fund interest, per year</label>
+            <input id="op-fundrate" type="number" min="0" max="30" step="0.5" value="0">
+          </div>
+          <div class="field">
+            <label for="op-oppcost">Return your money earns elsewhere, per year</label>
+            <input id="op-oppcost" type="number" min="0" max="120" step="1" value="24">
+            <p class="help">Trading stock, a shop float, an agribusiness cycle. This is the lump-sum option's real price.</p>
+          </div>
+          <div class="field">
+            <label for="op-adv-rate">Salary advance, % per month</label>
+            <select id="op-adv-rate"><option value="10">10% per month</option><option value="15" selected>15% per month</option><option value="20">20% per month</option></select>
+          </div>
+          <div class="field">
+            <label for="op-adv-amount">Advance taken (0 = the whole bill)</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="op-adv-amount" type="number" min="0" step="5000" value="80000"></div>
+          </div>
+          <div class="field">
+            <label for="op-adv-months">Months until the advance is cleared</label>
+            <input id="op-adv-months" type="number" min="1" max="12" step="1" value="3">
+          </div>
+          <div class="field">
+            <label for="op-inst">School instalment surcharge, % of bill</label>
+            <input id="op-inst" type="number" min="0" max="25" step="0.5" value="0">
+            <p class="help">Many schools add nothing for 2–3 instalments. Some add 3–5%. Ask, then type the truth.</p>
+          </div>
+          <div class="field">
+            <label for="op-ajo-n">Ajo contributors</label>
+            <input id="op-ajo-n" type="number" min="2" max="100" step="1" value="10">
+          </div>
+          <div class="field">
+            <label for="op-ajo-turn">Your turn position (week)</label>
+            <input id="op-ajo-turn" type="number" min="1" max="100" step="1" value="6">
+          </div>
+          <div class="field">
+            <label for="op-ajo-gap">Chance one member misses a given week</label>
+            <div class="input-group"><span class="prefix">%</span><input id="op-ajo-gap" type="number" min="0" max="60" step="1" value="8"></div>
+          </div>
+          <div class="field">
+            <label for="op-ajo-weeks">Weeks until fees are due</label>
+            <input id="op-ajo-weeks" type="number" min="1" max="60" step="1" value="35">
+          </div>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Cheapest feasible option for this situation</span>
+          <b id="op-winner">—</b>
+          <span id="op-winner-note">—</span>
+        </div>
+        <div class="verdict" id="op-verdict">
+          <h4 id="op-verdict-title">Enter the bill</h4>
+          <p id="op-verdict-body">The ranking, the cost of each and the reason appear here.</p>
+        </div>
+        <div class="mini">
+          <div><span>Advance cost / 30 days</span><b id="op-adv-cost">—</b></div>
+          <div><span>Advance, annualised</span><b id="op-adv-apr">—</b></div>
+          <div><span>Prize vs cheapest</span><b id="op-spread">—</b></div>
+        </div>
+        <p class="tiny band-ink-note">Interest figures illustrate the products parents are actually shown. FeesPlan offers no credit and moves no money.</p>
+      </aside>
+    </div>
+
+    <div class="split-2">
+      <div class="card opt-card reveal">
+        <h3>Total cash cost of each option</h3>
+        <div id="opt-bars" role="img" aria-label="Total cash cost of each payment option"></div>
+      </div>
+      <div class="card opt-card reveal" data-delay="1">
+        <h3>Annualised cost of a monthly advance</h3>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Advance lender pricing</caption>
+            <thead><tr><th>Rate charged</th><th class="num">Cost of ₦80,000 for 30 days</th><th class="num">If rolled monthly</th><th class="num">Flat ×12</th></tr></thead>
+            <tbody id="adv-body"></tbody>
+          </table>
+        </div>
+        <p class="tiny">"(1 + rate)<sup>12</sup> − 1" is the compounded annual figure: what you pay if you need this loan every month of the year. Most parents do.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption>Every option, priced <span class="tiny">(same bill, same deadline)</span></caption>
+        <thead><tr><th>Option</th><th class="num">Cash out</th><th class="num">Extra cost</th><th class="num">Total cash cost</th><th class="num">Annualised cost</th><th>Feasible?</th><th>What to watch</th></tr></thead>
+        <tbody id="opt-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Payment plan builder</p>
+      <h2>A dated plan you can put in front of the bursar.</h2>
+      <p class="lede">Choose the schedule, generate the dates, tick each payment as you make it. The balance and the "confirm by" date recompute — and the printed page is the artefact that turns "I can't pay" into "I will pay this, on this day".</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="pp-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="pp-name">Plan name</label>
+            <input id="pp-name" maxlength="60" placeholder="e.g. Tolu — JSS2, Term 2">
+          </div>
+          <div class="field">
+            <label for="pp-bill">Total for the term</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="pp-bill" type="number" min="0" step="1000" value="240000"></div>
+          </div>
+          <div class="field">
+            <label for="pp-schedule">Schedule</label>
+            <select id="pp-schedule">
+              <option value="403030" selected>Three parts — 40% admission, 30% mid-term, 30% before exams</option>
+              <option value="6040">Two parts — 60% on admission, 40% mid-term</option>
+              <option value="100">One payment on the due date</option>
+              <option value="m4">Four equal monthly payments</option>
+              <option value="w13">Thirteen weekly payments (daily-wage earner)</option>
+              <option value="w26">Twenty-six weekly payments (small weekly sums)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pp-start">First payment date</label>
+            <input id="pp-start" type="date">
+          </div>
+          <div class="field">
+            <label for="pp-due">Term fee deadline</label>
+            <input id="pp-due" type="date">
+          </div>
+          <div class="field">
+            <label for="pp-confirm">Days before each date to confirm with the bursar</label>
+            <input id="pp-confirm" type="number" min="0" max="21" step="1" value="5">
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary btn-sm" type="button" id="pp-build">Build the dated plan</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="pp-save">Save this plan</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="pp-print">Print one-page plan</button>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Balance still owed</span>
+          <b id="pp-balance">₦0</b>
+          <span id="pp-note">build a plan to begin</span>
+        </div>
+        <div class="readout">
+          <div class="line"><span>Term total</span><b id="pp-total">—</b></div>
+          <div class="line"><span>Confirmed paid</span><b id="pp-paid">—</b></div>
+          <div class="line"><span>Payments</span><b id="pp-count">—</b></div>
+          <div class="line line-strong"><span>Next payment due</span><b id="pp-next">—</b></div>
+          <div class="line"><span>Last date vs fee deadline</span><b id="pp-vs">—</b></div>
+        </div>
+        <div class="bar" role="img" aria-label="Share of the term paid" id="pp-bar-wrap"><i id="pp-bar"></i></div>
+        <div class="verdict" id="pp-verdict">
+          <h4 id="pp-verdict-title">No plan yet</h4>
+          <p id="pp-verdict-body">Pick a schedule on the left and press <em>Build the dated plan</em>.</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="print-block">
+      <div class="print-head">
+        <h3>School fees payment plan</h3>
+        <p class="mono" id="ph-meta">—</p>
+        <p class="tiny">Prepared with FeesPlan. Indicative plan for discussion with the bursar — not an offer of credit.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption>Dated payment plan <span class="tiny">(tick a row when the bursar has issued a receipt)</span></caption>
+          <thead><tr><th>#</th><th>Pay by</th><th>For</th><th class="num">Amount</th><th class="num">Cumulative</th><th class="num">Balance</th><th>Confirm by</th><th>Status</th></tr></thead>
+          <tbody id="pp-rows"></tbody>
+          <tfoot id="pp-foot"></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="card reveal saved-card">
+      <h3>Saved plans in this browser</h3>
+      <div class="row no-print saved-tools">
+        <button class="btn btn-accent btn-sm" type="button" id="saved-csv">Export saved plans (CSV)</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="saved-clear">Clear saved plans</button>
+        <span class="tiny" id="saved-count">0 plans saved</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Saved plans</caption>
+          <thead><tr><th>Plan</th><th>Child / term</th><th class="num">Term total</th><th class="num">Paid</th><th class="num">Balance</th><th>Payments</th><th>Saved</th><th></th></tr></thead>
+          <tbody id="saved-body"></tbody>
+          <tfoot id="saved-foot"></tfoot>
+        </table>
+      </div>
+      <p class="tiny" id="saved-empty">No saved plans yet. Build one above and press <b>Save this plan</b>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="letters">
+  <div class="shell" data-tabs>
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Ask properly, in writing</p>
+      <h2>Most parents never ask for an instalment plan. They just assume.</h2>
+      <p class="lede">A fee default is usually negotiated from the school's point of view — but only if somebody writes to them first. Fill the few lines below and FeesPlan drafts a plain, respectful request, a follow-up reminder, and the steps to take if a child is withheld from examinations. Copy it into a text message if that is what the school accepts.</p>
+    </div>
+    <div class="tabs no-print" role="tablist" aria-label="Letters">
+      <button class="tab" role="tab" id="tab-req" aria-selected="true" aria-controls="doc-req" type="button">Instalment request</button>
+      <button class="tab" role="tab" id="tab-rem" aria-selected="false" aria-controls="doc-rem" type="button">Follow-up reminder</button>
+      <button class="tab" role="tab" id="tab-wh" aria-selected="false" aria-controls="doc-wh" type="button">If my child is withheld from exams</button>
+    </div>
+    <div class="letters-grid">
+      <form class="card calc-form reveal" id="lt-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="lt-parent">Your name</label>
+            <input id="lt-parent" maxlength="60" placeholder="e.g. Mrs. Bola Adeyemi" value="Mrs. Bola Adeyemi">
+          </div>
+          <div class="field">
+            <label for="lt-phone">Phone number</label>
+            <input id="lt-phone" maxlength="24" placeholder="e.g. 0803 000 0000" value="0803 000 0000">
+          </div>
+          <div class="field">
+            <label for="lt-school">School name</label>
+            <input id="lt-school" maxlength="70" value="Golden Gate College, Ikorodu">
+          </div>
+          <div class="field">
+            <label for="lt-address">School address</label>
+            <input id="lt-address" maxlength="90" value="12 Ijede Road, Ikorodu, Lagos State">
+          </div>
+          <div class="field">
+            <label for="lt-to">Addressed to</label>
+            <select id="lt-to"><option>The Principal</option><option>The Bursar</option><option>The Principal and the Bursar</option></select>
+          </div>
+          <div class="field">
+            <label for="lt-child">Child's name and class</label>
+            <input id="lt-child" maxlength="70" value="Tolu Adeyemi — JSS 2B">
+          </div>
+          <div class="field">
+            <label for="lt-term">Term and session</label>
+            <input id="lt-term" maxlength="40" value="Second Term, 2025/2026 session">
+          </div>
+          <div class="field">
+            <label for="lt-total">Total fees for the term</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="lt-total" type="number" min="0" step="1000" value="268500"></div>
+          </div>
+          <div class="field">
+            <label for="lt-offer">Amount you can pay first</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="lt-offer" type="number" min="0" step="1000" value="100000"></div>
+          </div>
+          <div class="field">
+            <label for="lt-first">Date of that first payment</label>
+            <input id="lt-first" type="date">
+          </div>
+          <div class="field">
+            <label for="lt-rest">How the balance will be paid</label>
+            <input id="lt-rest" maxlength="90" value="₦84,250 by 30 October and ₦84,250 before the end of the term">
+          </div>
+          <div class="field">
+            <label for="lt-reason">Reason</label>
+            <select id="lt-reason">
+              <option value="salary">Salary arrived late this month</option>
+              <option value="business">A seasonal dip in my trading income</option>
+              <option value="multiple">Three children resuming in the same week</option>
+              <option value="medical">An unexpected medical expense</option>
+              <option value="bereavement">A family bereavement</option>
+              <option value="custom">Something else (write it myself)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="lt-custom">Your own sentence <span class="tiny">used only when "Something else" is chosen</span></label>
+          <textarea id="lt-custom" rows="2" maxlength="180" placeholder="One honest sentence is enough.">My employer has moved its salary date to the last week of the month.</textarea>
+        </div>
+        <div class="row no-print">
+          <button class="btn btn-primary btn-sm" type="button" id="lt-copy">Copy letter to clipboard</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="lt-print">Print letter</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="lt-fill">Pull amounts from my plan</button>
+        </div>
+      </form>
+
+      <div class="letter-wrap reveal" data-delay="1">
+        <div role="tabpanel" id="doc-req" aria-labelledby="tab-req"><pre class="letter-paper" id="letter-out">—</pre></div>
+        <div role="tabpanel" id="doc-rem" aria-labelledby="tab-rem" hidden><pre class="letter-paper" id="letter-rem">—</pre></div>
+        <div role="tabpanel" id="doc-wh" aria-labelledby="tab-wh" hidden>
+          <div class="card">
+            <h3>If your child is kept from examinations</h3>
+            <p class="muted">Steps, not legal advice. Every state and school is different, and the tone that works is calm and paper-tracked.</p>
+            <ol class="steps" id="wh-steps"></ol>
+            <p class="tiny">A withheld child is an education problem before it is a money problem — the fastest lever is almost always a written part-payment the school can accept on the spot.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="circle">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">08 · PTA &amp; ajo circle ledger</p>
+      <h2>Circles fund school fees every day. They also collapse.</h2>
+      <p class="lede">A welfare circle or PTA levy works on one thing only: everybody can see who has paid. Record each contribution as it comes, and this ledger keeps the running balance against the term target, lists who is behind, and exports a CSV that can be read out at the meeting.</p>
+    </div>
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="ci-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="ci-name">Circle / PTA branch name</label>
+            <input id="ci-name" maxlength="60" value="JSS Block — Term 2 fee circle">
+          </div>
+          <div class="field">
+            <label for="ci-child">Payout is for</label>
+            <input id="ci-child" maxlength="60" value="Tolu Adeyemi, JSS 2B">
+          </div>
+          <div class="field">
+            <label for="ci-target">Term target</label>
+            <div class="input-group"><span class="prefix">₦</span><input id="ci-target" type="number" min="0" step="5000" value="240000"></div>
+          </div>
+          <div class="field">
+            <label for="ci-payout">Payout date</label>
+            <input id="ci-payout" type="date">
+          </div>
+          <div class="field">
+            <label for="ci-freq">Cycle</label>
+            <select id="ci-freq"><option value="weekly" selected>Weekly</option><option value="monthly">Monthly</option></select>
+          </div>
+          <div class="field">
+            <label for="ci-weeks">Cycles until payout</label>
+            <input id="ci-weeks" type="number" min="1" max="60" step="1" value="10">
+          </div>
+        </div>
+        <div class="field">
+          <label for="ci-member">Add a contributor</label>
+          <div class="row ci-add">
+            <input id="ci-member" maxlength="40" placeholder="Name — e.g. Auntie Funke">
+            <div class="input-group ci-amt"><span class="prefix">₦</span><input id="ci-amt" type="number" min="0" step="500" placeholder="Each cycle" aria-label="Amount this contributor pays each cycle"></div>
+            <button class="btn btn-primary btn-sm" type="button" id="ci-add">Add</button>
+          </div>
+          <p class="help" id="ci-suggest">Suggested weekly amount per contributor: —</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Contributors</caption>
+            <thead><tr><th>Member</th><th class="num">Per cycle</th><th class="num">Paid</th><th class="num">Owed</th><th class="num">Cycles</th><th></th></tr></thead>
+            <tbody id="ci-members"></tbody>
+          </table>
+        </div>
+      </form>
+
+      <aside class="calc-results reveal" data-delay="1" aria-live="polite">
+        <div class="readout-big">
+          <span>Collected toward the term target</span>
+          <b id="ci-total">₦0</b>
+          <span id="ci-note">add members to start the circle</span>
+        </div>
+        <div class="bar" role="img" aria-label="Progress toward the term target"><i id="ci-bar"></i></div>
+        <div class="readout">
+          <div class="line"><span>Members</span><b id="ci-m">—</b></div>
+          <div class="line"><span>Per cycle if all pay</span><b id="ci-pot">—</b></div>
+          <div class="line"><span>Cycles to hit target</span><b id="ci-cycles">—</b></div>
+          <div class="line line-strong"><span>In arrears now</span><b id="ci-arrears">—</b></div>
+        </div>
+        <div class="verdict" id="ci-verdict">
+          <h4 id="ci-verdict-title">No circle yet</h4>
+          <p id="ci-verdict-body">Add each contributor and record their payments as they arrive.</p>
+        </div>
+        <div class="mini">
+          <div><span>Entries</span><b id="ci-entries">0</b></div>
+          <div><span>Gaps this cycle</span><b id="ci-gaps">0</b></div>
+          <div><span>Payout</span><b id="ci-when">—</b></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="card reveal ledger-card">
+      <h3>Auditable ledger</h3>
+      <div class="row no-print saved-tools">
+        <button class="btn btn-accent btn-sm" type="button" id="ci-csv">Transparency export (CSV)</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="ci-print">Print ledger</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="ci-reset">Reset circle</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption>Every contribution, in order <span class="tiny">(recorded in this browser only)</span></caption>
+          <thead><tr><th>#</th><th>Date</th><th>Member</th><th>Cycle</th><th class="num">Amount</th><th class="num">Running total</th><th class="num">Balance to target</th></tr></thead>
+          <tbody id="ci-ledger"></tbody>
+        </table>
+      </div>
+      <p class="tiny" id="ci-ledger-empty">Nothing recorded yet.</p>
+      <div class="table-wrap arrears-wrap">
+        <table>
+          <caption>Arrears list — who owes what</caption>
+          <thead><tr><th>Member</th><th class="num">Expected by now</th><th class="num">Paid</th><th class="num">Owes</th><th>Status</th></tr></thead>
+          <tbody id="ci-owe"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink" id="rules">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">09 · Assumptions, in the open</p>
+      <h2>Every number this tool uses, and you can change.</h2>
+      <p class="lede">Nothing is hidden. Edit a band and the planner, the sinking fund, the comparison and the letter all follow. Restore the defaults whenever you want to see the indicative figures again.</p>
+    </div>
+    <div class="split-2">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Fee bands by school type (editable)</summary>
+          <div class="acc-body">
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">Editable fee bands</caption>
+                <thead><tr><th>Band</th><th class="num">Fees / term</th><th class="num">Termly extras</th><th class="num">Yearly extras</th><th class="num">Terms</th></tr></thead>
+                <tbody id="band-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Bands are national indications drawn from the ₦120,000–₦1,200,000 a year range private schools charge, and from the levy stack on top of public school fees. Your school's letter beats this table every time.</p>
+            <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="reset-bands">Restore default bands</button>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Inflation and terms</summary>
+          <div class="acc-body"><p>School-fee inflation defaults to 20% a year (editable in section 03); the realistic band is 15–25%. Basic education runs three terms, universities and some federal schools run two sessions; extras charged once a year are divided by that number.</p></div>
+        </details>
+        <details class="acc">
+          <summary>Salary advance and loan maths</summary>
+          <div class="acc-body"><p>A "₦80,000 for 30 days at 15%" advance costs ₦12,000 for the month. Annualised the way lenders actually mean it — rolled every month — that is (1 + 0.15)<sup>12</sup> − 1. FeesPlan shows both the compounded figure and the flat ×12 figure so nobody can hide behind either.</p></div>
+        </details>
+        <details class="acc">
+          <summary>Ajo / esusu circle risk</summary>
+          <div class="acc-body"><p>Each member pays the same amount every week and one member takes the pot each week, so the circle charges no interest. The two real risks are timing (your turn falls after the fee deadline) and gaps (a member misses your week). Coverage without a buffer is (1 − gap)^(members − 1); asking for one spare week squares the failure chance instead of removing it.</p></div>
+        </details>
+        <details class="acc">
+          <summary>What is deliberately not modelled</summary>
+          <div class="acc-body"><p>No school's actual fee schedule, no guarantee that any school accepts instalments, no loan approval, no investment return, and no state-level subsidy or free-education scheme eligibility. Ask your school and your state's SUBEB office about the last one.</p></div>
+        </details>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h3>Worked example, recomputed live</h3>
+        <p class="muted">A ₦240,000 term bill due in eight months, and an ₦80,000 advance at 15% for 30 days:</p>
+        <ol class="steps" id="worked"></ol>
+        <p class="tiny">Change the numbers in sections 04 and 05 and these steps change with them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">10 · Honest limits</p>
+      <h2>What FeesPlan cannot tell you.</h2>
+    </div>
+    <div class="grid-3">
+      <article class="card reveal">
+        <h3>Fees vary enormously</h3>
+        <p>By state, by city, by street. A standard private school in Ibadan and the same brand in Lekki are different economies. Every band here is indicative and every total must be checked against your school's written fee schedule.</p>
+      </article>
+      <article class="card reveal" data-delay="1">
+        <h3>This is not an offer of credit</h3>
+        <p>FeesPlan does not lend, brokering nothing, and moves no money. The advance and instalment percentages illustrate the products parents are actually shown at the gate and on the phone. Confirm any rate in writing before you sign.</p>
+      </article>
+      <article class="card reveal" data-delay="2">
+        <h3>Circles depend on people</h3>
+        <p>The ajo risk figures assume each member misses independently. Real circles fail together — one salary delay becomes three. Treat the coverage percentage as the optimistic case, and keep the ledger in public.</p>
+      </article>
+      <article class="card reveal">
+        <h3>Letters are not legal advice</h3>
+        <p>The draft is a plain request between a parent and a school. The withheld-exams note lists steps to try, in order. It is not advice, and it cannot read your state's education law for you.</p>
+      </article>
+      <article class="card reveal" data-delay="1">
+        <h3>Nothing leaves this page</h3>
+        <p>Saved plans, the ledger and your edits live in this browser's storage. Clear your site data and they are gone — export the CSV before you change phones.</p>
+      </article>
+      <article class="card reveal" data-delay="2">
+        <h3>The only certain number</h3>
+        <p>Is the one the bursar writes down and signs. Ask for the fee schedule in writing, ask what the instalment policy is, ask what happens after week six. FeesPlan turns the answers into a plan.</p>
+      </article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark" aria-hidden="true">FP</span><span style="color:#fff">FeesPlan<small style="color:rgba(255,255,255,.6)">School fees, planned</small></span></a>
+        <p style="margin-top:14px;max-width:46ch">Built for the parent who gets the letter on a Friday and has five weeks to answer it. No account, no upload, no server — and a printed page to hand to the bursar.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#planner">Planner</a><br><a href="#sinking">Sinking fund</a><br><a href="#options">Options compared</a><br><a href="#plan">Payment plan</a><br><a href="#circle">Circle ledger</a><br><a href="data.html">Fees reference</a><br><a href="playbook.html">Fees playbook</a><br><a href="record.html">Saved plans</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../payrite/">Payroll &amp; PAYE</a><br><a href="../landedcost/">Landed cost</a><br><a href="../sealcheck/">Medicine check</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Indicative figures only. Not an offer of credit, not legal or investment advice.</span><span class="mono">FeesPlan · runs offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

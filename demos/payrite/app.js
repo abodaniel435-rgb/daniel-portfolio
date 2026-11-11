@@ -341,7 +341,7 @@
     document.getElementById('add-employee').addEventListener('click', addRoster);
     document.getElementById('clear-roster').addEventListener('click', function () {
       if (!roster().length) { kit.toast('The roster is already empty'); return; }
-      if (!confirmClear('Remove every saved employee from this browser?')) return;
+      if (!window.confirm('Remove every saved employee from this browser?')) return;
       rosterStore.clear();
       paintRoster();
       kit.toast('Roster cleared');
@@ -361,7 +361,6 @@
     });
   }
 
-  function global_ok(message) { return window.confirm(message); }
   function round(n) { return Math.round((Number(n) || 0) * 100) / 100; }
 
   /* ---------- boot ---------- */

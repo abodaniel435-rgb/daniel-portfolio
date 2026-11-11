@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Post-harvest loss, shelf life and storage options for Nigerian crops - CropKeep reference</title>
+<meta name="description" content="Every figure CropKeep applies: unimproved loss and shelf life per crop, what each storage technology costs and prevents, the temperature band each crop stores in, and what crates, sacks and bags do to the batch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="cropkeep.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%234c6b21'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%9C%A6</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">✦</span><span>CropKeep<small>Post-harvest loss maths</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Loss calculator</a>
+      <a href="data.html" class="is-here" aria-current="page">Loss data</a>
+      <a href="playbook.html">Handling playbook</a>
+      <a href="record.html">Batch ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#calculator">Count my loss</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">CropKeep</a> <span aria-hidden="true">/</span> <span aria-current="page">Loss data</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · the numbers the calculator uses</p>
+    <h1 class="reveal" data-delay="1">The loss is decided<br>after the farm gate.</h1>
+    <p class="lede reveal" data-delay="2">Nothing here is measured on your ridge. These are the published ranges and indicative 2026 prices the calculator works from, printed in full so you can argue with them, replace them with your own weigh-in, and see which number actually moved the answer.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>14 crops</b> each with a loss range, a floor and a shelf life</span><span><b>9 options</b> from a ₦3,500 bag to a ₦950,000 cold room</span><span><b>10 °C</b> the step that roughly halves the decay clock</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="fixed">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · What the model assumes</p>
+          <h2 id="fixed-h">The constants you cannot tick your way past</h2>
+          <p class="lede">These are the defaults in the calculator. You can edit every one of them under Limits, and the ranking follows whatever you put in.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>10 °C</b><span>Q10 step: life doubles for each 10 °C you take off</span></div>
+      <div class="metric"><b>2.5 days</b><span>tomato shelf life at 28 °C before any handling</span></div>
+      <div class="metric"><b>₦3,500</b><span>hermetic bag, counted per 50 kg</span></div>
+      <div class="metric"><b>4 months</b><span>season length used to turn cycles into months</span></div>
+      <div class="metric"><b>10%</b><span>capacity headroom the planner allows</span></div>
+      <div class="metric"><b>₦18,000 - ₦45,000</b><span>the refrigerated van hire range it quotes</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="crops">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Crop by crop</p>
+          <h2 id="crops-h">Unimproved loss and shelf life at Nigerian ambient heat</h2>
+          <p class="lede">Baseline is the mid-point of the published unimproved-loss range for that crop in Nigerian conditions. Floor is the best the handling credits alone reach, without cooling. Days are the quoted shelf life at the base temperature; the last column is the same crop at the ambient temperature the calculator selects when you pick it.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find your crop</span><input id="crops-q" type="search" placeholder="crop, class or loss rate" autocomplete="off"></label>
+          <label class="field"><span>Filter by class</span><select id="crops-f"><option value="all">All</option><option>Perishable</option><option>Dry stored</option></select></label>
+          <span class="filter-count" id="crops-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="crops-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Crop</th>
+            <th data-sort="1">Class</th>
+            <th data-sort="2" class="n">Unimproved loss</th>
+            <th data-sort="3" class="n">Published range</th>
+            <th data-sort="4" class="n">Best with handling alone</th>
+            <th data-sort="5" class="n">Shelf life at base temp</th>
+            <th data-sort="6" class="n">At the ambient °C shown</th>
+            <th data-sort="7">What the loss actually is</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Tomato</td><td>Perishable</td><td class="n">40%</td><td class="n">35 - 45%</td><td class="n">8%</td><td class="n">2.5 d at 28 °C</td><td class="n">2.5 d at 28 °C</td><td>Field heat plus a noon cut; soft fruit and rot at the bruise</td></tr>
+            <tr><td>Habanero / scotch bonnet pepper</td><td>Perishable</td><td class="n">35%</td><td class="n">30 - 40%</td><td class="n">9%</td><td class="n">8 d at 26 °C</td><td class="n">6.5 d at 29 °C</td><td>Transpiration and stem mould in a closed stack</td></tr>
+            <tr><td>Garden egg</td><td>Perishable</td><td class="n">32%</td><td class="n">28 - 38%</td><td class="n">10%</td><td class="n">6 d at 26 °C</td><td class="n">4.9 d at 29 °C</td><td>Bruises in a sack and rots at the bruise</td></tr>
+            <tr><td>Leafy greens (ugwu, ugu, spinach)</td><td>Perishable</td><td class="n">45%</td><td class="n">40 - 50%</td><td class="n">15%</td><td class="n">1.6 d at 25 °C</td><td class="n">1.3 d at 28 °C</td><td>Wilts in hours. Same-day market or a shade stall</td></tr>
+            <tr><td>Strawberry</td><td>Perishable</td><td class="n">42%</td><td class="n">35 - 50%</td><td class="n">8%</td><td class="n">2.5 d at 20 °C</td><td class="n">1.9 d at 24 °C</td><td>Botrytis moves fast in humid highland air</td></tr>
+            <tr><td>Banana / plantain</td><td>Perishable</td><td class="n">28%</td><td class="n">25 - 35%</td><td class="n">10%</td><td class="n">10 d at 20 °C</td><td class="n">6.6 d at 26 °C</td><td>Ethylene: the whole bunch follows the first ripe finger</td></tr>
+            <tr><td>Mango</td><td>Perishable</td><td class="n">26%</td><td class="n">20 - 30%</td><td class="n">8%</td><td class="n">8 d at 22 °C</td><td class="n">4.9 d at 29 °C</td><td>Anthracnose plus heat</td></tr>
+            <tr><td>Cassava tubers</td><td>Perishable</td><td class="n">30%</td><td class="n">25 - 35%</td><td class="n">10%</td><td class="n">2.5 d at 27 °C</td><td class="n">2.3 d at 28 °C</td><td>Its own physiology: deterioration starts within 48 - 72 h of harvest</td></tr>
+            <tr><td>Irish potato</td><td>Perishable</td><td class="n">15%</td><td class="n">12 - 20%</td><td class="n">6%</td><td class="n">35 d at 20 °C</td><td class="n">26.5 d at 24 °C</td><td>Greening and sprouting when light and warmth get in</td></tr>
+            <tr><td>Onion (cured bulbs)</td><td>Dry stored</td><td class="n">18%</td><td class="n">15 - 25%</td><td class="n">8%</td><td class="n">60 d at 25 °C</td><td class="n">48.7 d at 28 °C</td><td>Sprouting, which is a temperature story, and rot in a damp store</td></tr>
+            <tr><td>Maize grain</td><td>Dry stored</td><td class="n">18%</td><td class="n">15 - 20%</td><td class="n">3%</td><td class="n">180 d at 28 °C</td><td class="n">180 d at 28 °C</td><td>Weevils and moisture. Above about 13% moisture the aflatoxin risk rises</td></tr>
+            <tr><td>Rice paddy</td><td>Dry stored</td><td class="n">15%</td><td class="n">12 - 18%</td><td class="n">3%</td><td class="n">210 d at 28 °C</td><td class="n">210 d at 28 °C</td><td>Stored too wet: mould and yellowing. Drying is the whole game</td></tr>
+            <tr><td>Groundnut</td><td>Dry stored</td><td class="n">20%</td><td class="n">15 - 25%</td><td class="n">4%</td><td class="n">150 d at 27 °C</td><td class="n">140 d at 28 °C</td><td>The highest aflatoxin risk here. Dry fast, store dry, test before sale</td></tr>
+            <tr><td>Soybean</td><td>Dry stored</td><td class="n">16%</td><td class="n">12 - 20%</td><td class="n">3%</td><td class="n">180 d at 25 °C</td><td class="n">156.7 d at 27 °C</td><td>Seed coat damage in shelling; germination value falls in warmth</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Ambient figures are the calculator's own Q10 arithmetic applied to each crop's stated ambient temperature: life = base days × 0.5^((T - base temp)/10). They are not measurements of your variety, your altitude or this rain year.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="storage">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · What you can buy</p>
+          <h2 id="storage-h">Storage and handling technologies, with their price and what they prevent</h2>
+          <p class="lede">Nine interventions, ranked in the tool by the net naira left this season after paying for the thing itself. Grain technology and cooling technology are not interchangeable: the calculator throws out the wrong one rather than averaging them.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find an option</span><input id="storage-q" type="search" placeholder="name, price or what it needs" autocomplete="off"></label>
+          <label class="field"><span>Filter by power</span><select id="storage-f"><option value="all">All</option><option>None needed</option><option>Grid</option><option>Solar</option><option>Generator</option></select></label>
+          <span class="filter-count" id="storage-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="storage-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Option</th>
+            <th data-sort="1">Works on</th>
+            <th data-sort="2" class="n">Indicative price</th>
+            <th data-sort="3">Priced as</th>
+            <th data-sort="4" class="n">Loss it holds at</th>
+            <th data-sort="5">Temperature it gives</th>
+            <th data-sort="6">Power</th>
+            <th data-sort="7" class="n">Capacity per unit</th>
+            <th data-sort="8" class="n">Life</th>
+            <th data-sort="9">The catch</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Hermetic PICS / MD2 bag</td><td>Dry stored only</td><td class="n">₦3,500</td><td>per 50 kg bag</td><td class="n">3.5%</td><td>Ambient - it seals, it does not cool</td><td>None needed</td><td class="n">50 kg</td><td class="n">3 seasons</td><td>Grain must be dried to safe moisture before sealing. Sealing wet grain trades a weevil problem for a mould one</td></tr>
+            <tr><td>Improved raised or cement store with drying rack</td><td>Dry stored only</td><td class="n">₦380,000</td><td>built</td><td class="n">6%</td><td>Ambient, but dry, raised and vermin-proofed</td><td>None needed</td><td class="n">2,000 kg</td><td class="n">10 seasons</td><td>A structure, not a purchase: the figure is labour and materials at 2026 rates</td></tr>
+            <tr><td>Solar crop dryer, 200 kg tray</td><td>Both</td><td class="n">₦145,000</td><td>per dryer</td><td class="n">5% grain, 25% perishable</td><td>Ambient; it removes water, not heat</td><td>None needed</td><td class="n">200 kg a day of sun</td><td class="n">5 seasons</td><td>Throughput is per sunny day, and it only pays if a buyer exists for the dried product</td></tr>
+            <tr><td>Charcoal cooler / CoolPort</td><td>Perishables only</td><td class="n">₦190,000</td><td>per unit</td><td class="n">15%</td><td>About 15 °C below ambient, never under 8 °C</td><td>None needed</td><td class="n">1,000 kg</td><td class="n">5 seasons</td><td>Worst in humid air. Needs topping with water twice a day and packing in the shade</td></tr>
+            <tr><td>CoolBot cold room</td><td>Perishables only</td><td class="n">₦950,000</td><td>per room</td><td class="n">6%</td><td>8 °C held</td><td>Grid</td><td class="n">3,000 kg</td><td class="n">7 seasons</td><td>About 1.5 kW while running. On a weak grid or a small solar setup the compressor is the problem, not the box</td></tr>
+            <tr><td>Evaporative brick cool chamber</td><td>Perishables only</td><td class="n">₦120,000</td><td>per chamber</td><td class="n">22%</td><td>8 - 14 °C in dry air; modelled as 12 °C below ambient, floor 9 °C</td><td>None needed</td><td class="n">600 kg</td><td class="n">4 seasons</td><td>The zero-energy fridge is at its best in harmattan air and loses most of the advantage in wet-season humidity</td></tr>
+            <tr><td>Refrigerated van hire for the trip</td><td>Perishables only</td><td class="n">₦30,000</td><td>per trip (₦18,000 - ₦45,000 range)</td><td class="n">20%</td><td>10 °C, only while it moves</td><td>Generator</td><td class="n">1,500 kg a trip</td><td class="n">1 season</td><td>It cools the journey, not the field heat. Load it hot and unshaded and most of the benefit is spent before it rolls</td></tr>
+            <tr><td>Immediate processing: paste, powder, gari</td><td>Both</td><td class="n">₦260,000</td><td>per line</td><td class="n">8% perishable, 6% grain</td><td>Ambient; the product is shelf-stable after</td><td>Solar</td><td class="n">1,500 kg</td><td class="n">6 seasons</td><td>Kills the loss problem and creates a market problem. It also needs power you may not have yet</td></tr>
+            <tr><td>Aggregate to a shared cold store</td><td>Perishables only</td><td class="n">₦6,000</td><td>your share of one week</td><td class="n">12%</td><td>8 °C</td><td>Grid</td><td class="n">2,000 kg</td><td class="n">1 season</td><td>Only works with a functioning cooperative or aggregator behind it</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">The loss column is the option's own achieved figure. In the calculator your handling credits are subtracted from it at 40% of the points you earned, and nothing goes below the crop floor in the table above.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="bands">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · Bands and failure modes</p>
+          <h2 id="bands-h">The temperature each crop stores in, and what goes wrong outside it</h2>
+          <p class="lede">Cooler is not automatically better. Every chilling figure below is the temperature at which the calculator flags chilling injury on the shelf-life ladder, and the moisture rules are only stated where this tool applies one.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a crop</span><input id="bands-q" type="search" placeholder="crop, temperature or failure" autocomplete="off"></label>
+          
+          <span class="filter-count" id="bands-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="bands-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Crop</th>
+            <th data-sort="1" class="n">Stores well at</th>
+            <th data-sort="2" class="n">Never below</th>
+            <th data-sort="3" class="n">Where it usually sits</th>
+            <th data-sort="4">Moisture and humidity rule used here</th>
+            <th data-sort="5">What goes wrong outside the band</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Tomato</td><td class="n">28 °C</td><td class="n">10 °C</td><td class="n">28 °C</td><td>Not modelled as a figure: field heat and bruising dominate</td><td>Above 28 °C it ripens past sale in under two days; below 10 °C the skin pits and the flavour goes</td></tr>
+            <tr><td>Pepper</td><td class="n">26 °C</td><td class="n">7 °C</td><td class="n">29 °C</td><td>Loses water fast - it transpires, so a dry airy stack matters more than a cold one</td><td>Closed stacks at 29 °C give stem mould; below 7 °C the skin sinks and softens</td></tr>
+            <tr><td>Garden egg</td><td class="n">26 °C</td><td class="n">7 °C</td><td class="n">29 °C</td><td>Not modelled; crush and heat trap are the losses</td><td>Bruise in a sack and the rot starts exactly there; chilling shows as sunken patches</td></tr>
+            <tr><td>Leafy greens</td><td class="n">25 °C</td><td class="n">4 °C</td><td class="n">28 °C</td><td>Continuous water loss; shade and speed are the only treatments that work</td><td>At 28 °C it has about 1.3 days. There is no storage technology for it, only a same-day sale</td></tr>
+            <tr><td>Strawberry</td><td class="n">20 °C</td><td class="n">1 °C</td><td class="n">24 °C</td><td>Humid air plus standing water spreads botrytis through a tray</td><td>Warm and wet it is unsellable in two days; clean dry trays and shade are the fix</td></tr>
+            <tr><td>Banana / plantain</td><td class="n">20 °C</td><td class="n">13 °C</td><td class="n">26 °C</td><td>Not modelled; ripening rate is the variable</td><td>At 26 °C the bunch runs ahead of you; below 13 °C the peel greys and never yellows properly</td></tr>
+            <tr><td>Mango</td><td class="n">22 °C</td><td class="n">5 °C</td><td class="n">29 °C</td><td>Free moisture on the skin feeds anthracnose</td><td>Heat plus wet skin gives anthracnose blotches; the commercial fix is hot-water treatment, not cold air</td></tr>
+            <tr><td>Cassava tubers</td><td class="n">27 °C</td><td class="n">10 °C</td><td class="n">28 °C</td><td>Internal physiology, not storage humidity</td><td>Deterioration begins within 48 - 72 h whatever you do to the air. Process fast; cold storage is not the answer</td></tr>
+            <tr><td>Irish potato</td><td class="n">20 °C</td><td class="n">4 °C</td><td class="n">24 °C</td><td>Dark, ventilated and dry; light is the enemy</td><td>Light greens the tubers, warmth sprouts them, and a damp corner rots them from the inside</td></tr>
+            <tr><td>Onion</td><td class="n">25 °C</td><td class="n">2 °C</td><td class="n">28 °C</td><td>Cured bulbs, dry raised store, airflow at night</td><td>Damp air sprouts and moulds; the floor is where the moisture comes from</td></tr>
+            <tr><td>Maize grain</td><td class="n">28 °C</td><td class="n">no chilling limit</td><td class="n">28 °C</td><td>About 13% moisture is the line the tool names; above it the aflatoxin risk rises</td><td>Above that moisture, mould and weevils together. A laboratory test, not this page, decides whether it is safe</td></tr>
+            <tr><td>Rice paddy</td><td class="n">28 °C</td><td class="n">no chilling limit</td><td class="n">28 °C</td><td>Dry to safe moisture before storage or the whole stack is at risk</td><td>Milled or stored wet it yellows and heats; drying is the entire game for this crop</td></tr>
+            <tr><td>Groundnut</td><td class="n">27 °C</td><td class="n">no chilling limit</td><td class="n">28 °C</td><td>Dry fast, store dry, test before sale</td><td>The highest aflatoxin risk on this page. Warm and damp shelled nuts are a safety problem, not only a weight problem</td></tr>
+            <tr><td>Soybean</td><td class="n">25 °C</td><td class="n">no chilling limit</td><td class="n">27 °C</td><td>Cool and dry if the seed is to germinate</td><td>Heat and shell damage fall on germination value first, weight second</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Where this table says a figure is not modelled, that is honest silence: the calculator has no humidity input for those crops. Chilling thresholds are the tool's own damage limits, below which more cold makes the batch worse, not better.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="pack">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Crates, sacks and bags</p>
+          <h2 id="pack-h">What each packaging choice costs the batch</h2>
+          <p class="lede">The calculator counts handling as percentage points taken off the loss, and it counts nothing that you did not tick. Sacks, open truck beds and a bare drying floor earn no credit because the tool has no figure for them - the point you lose is the point the crate earns.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a choice</span><input id="pack-q" type="search" placeholder="crate, sack, bag or load" autocomplete="off"></label>
+          
+          <span class="filter-count" id="pack-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="pack-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Choice</th>
+            <th data-sort="1">Belongs to</th>
+            <th data-sort="2" class="n">What CropKeep counts</th>
+            <th data-sort="3" class="n">What it costs</th>
+            <th data-sort="4">Crush, heat-trap or moisture penalty</th>
+            <th data-sort="5">Use it when</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Ventilated plastic crate, filled to the shoulder</td><td>Perishables</td><td class="n">−8 pts</td><td class="n">not priced here</td><td>The fix itself. Stacked with airflow between rows; overfilled, it crushes the row underneath and traps heat anyway</td><td>Any perishable travelling more than a few kilometres</td></tr>
+            <tr><td>Sack, heaped full and tied at the neck</td><td>Perishables</td><td class="n">no credit</td><td class="n">cheapest to buy</td><td>Crushes the bottom layer, traps field heat, and hides the rot until the buyer opens it</td><td>Never for tomato, garden egg or pepper. Grain only, and only for the short trip</td></tr>
+            <tr><td>Woven bag of maize or rice in an open store</td><td>Dry</td><td class="n">no credit</td><td class="n">already yours</td><td>Weevils and ambient moisture; the tool's 15 - 20% maize loss lives here</td><td>Between harvest and drying, and no longer than that</td></tr>
+            <tr><td>Hermetic bag, 50 kg, sealed</td><td>Dry</td><td class="n">the bag itself: 3.5% achieved</td><td class="n">₦3,500 a bag</td><td>None once sealed. Sealed damp, it holds the moisture in with the grain</td><td>Grain you have dried to safe moisture and mean to hold a season</td></tr>
+            <tr><td>Open truck bed, no cover, no vents</td><td>Both</td><td class="n">−6 pts is what you give up</td><td class="n">the fare you were paying anyway</td><td>Sun, dust and wind scorch on the top layer; the load arrives hotter than it left</td><td>Nowhere, if the load can be covered</td></tr>
+            <tr><td>Covered load, stacked with vents</td><td>Both</td><td class="n">−6 pts</td><td class="n">a tarpaulin and a slower loading</td><td>The fix, provided the stack keeps its air gaps</td><td>Every trip, including the short one to the ward market</td></tr>
+            <tr><td>Shallow clean tray, shaded, for berry and soft fruit</td><td>Perishables</td><td class="n">counts inside −4 grading and −6 shade</td><td class="n">not priced here</td><td>Deep heaps bruise and pass botrytis tray to tray</td><td>Strawberry and anything picked into a bowl</td></tr>
+            <tr><td>Loose heap of cassava tubers in the sun</td><td>Perishables</td><td class="n">no credit helps</td><td class="n">nothing</td><td>Deterioration is internal and runs on 48 - 72 h. Packaging cannot stop it</td><td>Only if the gari or paste line is already running the same day</td></tr>
+            <tr><td>Maize dried on a bare floor</td><td>Dry</td><td class="n">no credit; the dryer earns −13 pts against it</td><td class="n">free, and expensive</td><td>Sand, night re-wetting and mould at the edges of the spread</td><td>Now a tray dryer at ₦145,000 exists for the same purpose</td></tr>
+            <tr><td>Onion in a damp dark corner</td><td>Dry</td><td class="n">the raised store earns its own figure instead</td><td class="n">already paid rent</td><td>Sprouting and neck rot; both are airflow and moisture, not pests</td><td>After curing, on racks, with night ventilation</td></tr>
+            <tr><td>Same-day market, no packaging change</td><td>Perishables</td><td class="n">hardware is worth 25 pts less here</td><td class="n">nothing</td><td>Nothing to lose except the handling you did not do</td><td>You are within a morning of the buyer: shade, crates and speed beat any machine</td></tr>
+            <tr><td>Unload and leave the crates in the sun at the gate</td><td>Perishables</td><td class="n">−4 pts if you do not</td><td class="n">labour for ten minutes</td><td>The last hour before the buyer is the most expensive hour of the trip</td><td>Always avoid; the shade at the destination is part of the chain</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Credit points are the tool's own editable handling figures. They come off the crop's unimproved loss and stop at its floor, so no combination of crates and shade can buy you zero.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="verify">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Where these figures are weakest</p>
+          <h2 id="verify-h">Three places your own number will beat ours</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box warn"><h3>The baseline is a literature mid-point</h3><p>It moves with season, variety, altitude, ridge position and who did the picking. Log three batches, weigh what you actually rejected, and put your own figure in the unimproved loss field.</p></div>
+        <div class="note-box "><h3>Transit temperature is guessed</h3><p>The calculator uses the temperature you type, which is usually the shade temperature you remember. Two weeks of a logger in a crate is a cold-chain audit, and it changes these tables for your farm.</p></div>
+        <div class="note-box bad"><h3>Aflatoxin is not arithmetic</h3><p>Hermetic storage suppresses mould by limiting moisture and oxygen. Whether your maize or groundnut is safe to sell is a laboratory result and nothing on these pages substitutes for it.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · Check these against</p>
+          <h2 id="sources-h">Who can confirm what these pages only estimate</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>Published post-harvest loss ranges for Nigerian perishables and stored grain - the source of every percentage in the crop table.</li>
+        <li>Your own weigh-in: the mass that leaves the farm against the mass the buyer accepts. Three batches is enough to replace a literature figure.</li>
+        <li>Two or three local quotations for each option in the storage table. A 20 - 30% spread between suppliers is normal at 2026 prices.</li>
+        <li>Your state agricultural development programme or a commodity association post-harvest officer, for the figures this tool can only estimate.</li>
+        <li>A laboratory test for aflatoxin in maize and groundnut before you claim the lot is safe to sell or eat.</li>
+        <li>A commercial cold-chain audit, or a data logger in one crate for a week, for the temperature the batch actually travelled at.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own batch through these numbers</h2>
+        <p class="lede">The calculator takes the crop tables, the handling credits and the storage options and ranks what pays back at your tonnage, your budget and the power you actually have.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#calculator">Count my loss</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the handling playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the batch ledger</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">✦</span><span style="color:#fff">CropKeep<small style="color:rgba(255,255,255,.6)">Post-harvest loss maths</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one argument: the harvest is already paid for. What happens after the farm gate is temperature, packaging and how fast you move, and all three can be written down.</p>
+      </div>
+      <div>
+        <h4>CropKeep pages</h4>
+        <p><a href="index.html">Loss calculator</a><br><a href="data.html">Loss data</a><br><a href="playbook.html">Handling playbook</a><br><a href="record.html">Batch ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../suncost/">SunCost - solar vs generator</a><br><a href="../marketrate/">MarketRate - fair price today</a><br><a href="../landedcost/">LandedCost - what imports really cost</a><br><a href="../sealcheck/">SealCheck - medicine check</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Loss percentages are mid-points of published post-harvest ranges for Nigerian crops, and every price here is an indicative 2026 market rate. Nothing on these pages is a safety finding: aflatoxin is a laboratory result.</span><span class="mono">CropKeep · Loss data · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#crops-tbl');
+  pages.filter('#crops-tbl', { input: '#crops-q', select: '#crops-f', count: '#crops-count', empty: "No crop here by that name. The calculator knows these fourteen." });
+  pages.sortable('#storage-tbl');
+  pages.filter('#storage-tbl', { input: '#storage-q', select: '#storage-f', count: '#storage-count', empty: "No row here matches that search." });
+  pages.sortable('#bands-tbl');
+  pages.filter('#bands-tbl', { input: '#bands-q', count: '#bands-count', empty: "No row here matches that search." });
+  pages.sortable('#pack-tbl');
+  pages.filter('#pack-tbl', { input: '#pack-q', count: '#pack-count', empty: "No row here matches that search." });
+  var cropsF = document.getElementById('crops-f'); if (cropsF) cropsF.dataset.col = '1';
+  var powerF = document.getElementById('storage-f'); if (powerF) powerF.dataset.col = '6';
+});
+</script>
+</body>
+</html>

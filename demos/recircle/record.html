@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your saved weigh-ins and earnings - ReCircle ledger</title>
+<meta name="description" content="Every load and weigh-in you saved in ReCircle, in one sortable table: kilograms sold, kilograms your count implied, price used, naira earned, scale visibility and dispute flags. Export CSV, print, or clear it. Stored on your device only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="recircle.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%2316704f'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%86%BB</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">↻</span><span>ReCircle<small>Waste that pays you back</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Waste counter</a>
+      <a href="data.html">Prices &amp; weights</a>
+      <a href="playbook.html">Sorting playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Earnings ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#count">Count my waste</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">ReCircle</a> <span aria-hidden="true">/</span> <span aria-current="page">Earnings ledger</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record · this device only</p>
+    <h1 class="reveal" data-delay="1">The ledger is the only<br>witness you are going to get.</h1>
+    <p class="lede reveal" data-delay="2">ReCircle writes every load you add and every weigh-in you log into this browser. This page reads it back, sorts it, totals it, and shows the gap between the kilograms your count implied and the kilograms you were paid for.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>recircle:ledger</b> the store this page reads, live</span><span><b>12%</b> count-versus-scale gap that flags a dispute</span><span><b>CSV + print</b> export the day you sell</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why keep this at all</p>
+          <h2 id="why-h">Three numbers, remembered in the same order by everyone</h2>
+          <p class="lede">Weight, price, record. A household that can state all three is treated differently at the gate, and a group that can produce them in writing can split money without a fight.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>The rows live in this browser on this device under recircle:ledger. Clear site data and they are gone. Export the CSV the day you sell, and keep it with the money.</p></div>
+        <div class="note-box "><h3>It is a working document</h3><p>Add every load straight from the counter, log scale checks from the weigh-in box, and the totals on this page become the statement you print.</p></div>
+        <div class="note-box warn"><h3>It is an argument, not evidence</h3><p>A dispute flag shows that your count and his scale disagreed by more than your tolerance. It does not prove intent. Weigh where you can see, or refuse the load.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Saved weigh-ins</h2>
+          <p class="lede">Read live from the tool's ledger. Removing a row here removes it from the counter too, so export the CSV before you clear anything. The columns are the exact fields ReCircle writes: date, material, unit, kilograms sold, expected kilograms from your count, price, naira earned, buyer, scale visibility, note, dispute flag.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">Date</th>
+              <th data-sort="1">Material</th>
+              <th data-sort="2">Unit</th>
+              <th class="n" data-sort="3">Kg sold</th>
+              <th class="n" data-sort="4">Kg from your count</th>
+              <th class="n" data-sort="5">Price used</th>
+              <th class="n" data-sort="6">Naira earned</th>
+              <th data-sort="7">Buyer</th>
+              <th data-sort="8">Scale seen</th>
+              <th data-sort="9">Flag</th>
+              <th data-sort="10">Note</th>
+              <th class="n" data-sort="11">Logged</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:recircle:ledger</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with the ledger</h2>
+          <p class="lede">A record changes something, or it is just typing. This is the cadence these rows support.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">At the scale</p>
+          <div><h3>Write it before the money moves</h3><p>Date, material, his kilograms, your expected kilograms, the rate, the buyer's name, and whether you saw the reading. Sixty seconds at the gate, and the number is no longer only his.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">Same day</p>
+          <div><h3>Export the CSV</h3><p>localStorage is not a backup. Clearing site data or switching phones erases every row, and a school ledger is worth more than a household's.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">Weekly</p>
+          <div><h3>Read the flagged rows back</h3><p>One flag is a bad day. Three flags against the same buyer in one month is a pattern, and the pattern is the argument.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">Monthly</p>
+          <div><h3>Compare the blended rate</h3><p>Total naira over total kilograms is your real price. If it fell while your sorting got better, someone is repricing your grades and you have not noticed.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">At the meeting</p>
+          <div><h3>Print the statement, not the memory</h3><p>For a school, church or association, the printed rows plus the share-out sheet are what end the debate. Nobody argues with a signed column of kilograms.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="5">
+          <p class="when">Each term</p>
+          <div><h3>Start a clean ledger, keep the file</h3><p>Two years of rows in one browser is not an archive. Export, name the file with the cycle, and clear it so the next term's totals mean something.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Add today's load, or price tomorrow's</h2>
+        <p class="lede">The counter writes to this page directly. No account, no upload, no server sitting between you and your own figures.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#ledger">Back to the ledger</a>
+        <a class="btn btn-ghost" href="index.html#count">Count a load</a>
+        <a class="btn btn-ghost" href="data.html">Prices &amp; weights</a>
+        <a class="btn btn-ghost" href="playbook.html">Sorting playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">↻</span><span style="color:#fff">ReCircle<small style="color:rgba(255,255,255,.6)">Waste that pays you back</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one job: name the material, agree the price, weigh it where you can see it, and keep a record that survives a meeting.</p>
+      </div>
+      <div>
+        <h4>ReCircle pages</h4>
+        <p><a href="index.html">Waste counter</a><br><a href="data.html">Prices &amp; weights</a><br><a href="playbook.html">Sorting playbook</a><br><a href="record.html">Earnings ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../marketrate/">MarketRate - fair price today</a><br><a href="../fuelmeter/">FuelMeter - true cost per kilometre</a><br><a href="../cropkeep/">CropKeep - post-harvest loss maths</a><br><a href="../payrite/">PayRite - payroll and PAYE</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Prices are what buyers quoted around Lagos, Ibadan, Abuja and Onitsha as of October 2026. Indicative, editable, and wrong for your street until you correct them.</span><span class="mono">ReCircle · Earnings ledger · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "date", label: "Date"}, { k: "materialName", label: "Material"}, { k: "unit", label: "Unit"}, { k: "kg", label: "Kg sold", n: true, fmt: (v) => kit.num(v)}, { k: "expectedKg", label: "Kg from your count", n: true, fmt: (v) => kit.num(v)}, { k: "price", label: "Price used", n: true, fmt: (v) => kit.money(v)}, { k: "earned", label: "Naira earned", n: true, fmt: (v) => kit.money(v)}, { k: "buyer", label: "Buyer"}, { k: "checked", label: "Scale seen", fmt: (v) => v === 'yes' ? 'Yes' : (v === 'no' ? 'No' : 'Shown, not verified')}, { k: "dispute", label: "Flag", fmt: (v) => v ? '<span class="badge badge-bad">dispute</span>' : '<span class="muted">no flag</span>'}, { k: "note", label: "Note"}, { k: "added", label: "Logged", n: true, fmt: (v) => kit.dateLabel(new Date(v))}];
+  var handle = pages.cases("recircle:ledger", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 120,
+    emptyTitle: "The ledger is empty",
+    emptyText: "Count a load and press Add this load to the ledger, or use Log this weigh-in after a scale check. Saved records appear here immediately, on this device only.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var s = function (k) { return rows.reduce(function (a, r) { return a + (Number(r[k]) || 0); }, 0); }; var kgT = s('kg'), earn = s('earned'), expT = s('expectedKg'); var gapKg = 0, gapN = 0, seen = 0, disputes = 0, pieces = 0; rows.forEach(function (r) { var e = Number(r.expectedKg) || 0, k = Number(r.kg) || 0, p = Number(r.price) || 0; if (e > k) { gapKg += e - k; gapN += (e - k) * p; } if (String(r.checked) === 'yes') seen++; if (r.dispute || (e > 0 && (e - k) / e * 100 > 12)) disputes++; if (String(r.unit) === 'pc') pieces++; }); return [ { v: kit.amount(kgT, 2) + ' kg', l: 'kilograms you were paid for' }, { v: kit.money(earn), l: 'naira earned across every record' }, { v: kgT > 0 ? kit.money(earn / kgT) + '/kg' : 'not per kg yet', l: 'blended rate across all your material' }, { v: expT > 0 ? kit.amount(expT, 2) + ' kg' : 'none counted', l: 'kilograms your own item counts implied' }, { v: gapKg > 0 ? kit.amount(gapKg, 2) + ' kg' : '0 kg', l: 'count minus scale: the shortfall you were not paid for' }, { v: kit.money(gapN), l: 'that shortfall at the prices you recorded' }, { v: seen + ' of ' + rows.length, l: 'weigh-ins where you actually saw the scale' }, { v: String(disputes), l: 'records past the 12% count-versus-scale tolerance' }, { v: String(pieces), l: 'records priced per piece rather than per kg' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "recircle-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("recircle:ledger", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

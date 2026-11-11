@@ -72,6 +72,14 @@ if (!project) {
       parts.push('<a class="case-link" href="mailto:abodaniel435@gmail.com?subject=' + encodeURIComponent('Source request: ' + project.name) + '">Request the source <span aria-hidden="true">→</span></a>');
     }
     links.innerHTML = parts.join('');
+    if (project.demo && Array.isArray(project.pages) && project.pages.length) {
+      const esc = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+      links.insertAdjacentHTML('beforeend',
+        '<p class="case-pages-label">Also in this site</p><div class="case-pages">' +
+        project.pages.map((page) =>
+          '<a class="case-page-link" href="' + project.demo + page.href + '" target="_blank" rel="noopener noreferrer">' +
+          esc(page.label) + ' <span aria-hidden="true">→</span></a>').join('') + '</div>');
+    }
   }
 
   const actionBar = document.getElementById('caseActions');

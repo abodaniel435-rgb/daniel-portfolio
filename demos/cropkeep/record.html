@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your saved harvest batches and their weighed loss - CropKeep record</title>
+<meta name="description" content="Every batch you logged in CropKeep, in one sortable table with tonnage, value, projected loss, loss avoided against the unimproved rate and the actual figures you weighed after the sale. Stored on this device only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="cropkeep.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%234c6b21'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%9C%A6</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">✦</span><span>CropKeep<small>Post-harvest loss maths</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Loss calculator</a>
+      <a href="data.html">Loss data</a>
+      <a href="playbook.html">Handling playbook</a>
+      <a href="record.html" class="is-here" aria-current="page">Batch ledger</a>
+      <a class="btn btn-primary btn-sm" href="index.html#calculator">Count my loss</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">CropKeep</a> <span aria-hidden="true">/</span> <span aria-current="page">Batch ledger</span></p>
+    <p class="eyebrow reveal" data-delay="1">Record · this device only</p>
+    <h1 class="reveal" data-delay="1">Predict the loss.<br>Then weigh it.</h1>
+    <p class="lede reveal" data-delay="2">CropKeep writes each batch you log, with the crop, the handling, the storage option you chose and the shelf-life arithmetic of that day. This page reads it back, totals it, and shows the gap between what was projected and what you actually lost. That gap is the only number that improves the next projection.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>cropkeep:batches</b> the key this table reads, on this device</span><span><b>1 weigh-in</b> the actual loss after the sale makes it honest</span><span><b>CSV + print</b> the sheet for the store manager or cooperative</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="why">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">00 · Why keep a ledger</p>
+          <h2 id="why-h">The projection is a guess until you weigh it</h2>
+          <p class="lede">Every figure the calculator shows is drawn from published ranges for Nigerian crops. Your ridge, your variety and your rain year disagree with all of them, and only your own weighed loss can settle the argument.</p>
+        </div>
+<div class="grid-3 reveal">        <div class="note-box bad"><h3>It is not a backup</h3><p>Batches live in this browser's storage, in the cropkeep:batches key. Clear site data or change phones and they are gone. Export the CSV before you do either.</p></div>
+        <div class="note-box "><h3>The difference is the whole point</h3><p>A positive difference means your handling was better than projected, and you can spend on it with confidence. A negative one means the baseline was too kind and the technology ranking is overstated.</p></div>
+        <div class="note-box warn"><h3>It is the sheet you hand over</h3><p>Printed, it carries crop, tonnage, value, the storage chosen, projected loss and weighed actual for every batch - what a cooperative store manager or a buyer actually asks for.</p></div>
+        <div class="note-box "><h3>It makes no safety claim</h3><p>Weight and value only. Aflatoxin and pesticide residue are laboratory findings, and nothing logged here is evidence that a lot is safe to sell or eat.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="record">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · Your saved entries</p>
+          <h2 id="record-h">Logged batches</h2>
+          <p class="lede">Read live from the calculator's ledger. Removing a row here removes it from the tool as well. Enter the actual loss in naira after each sale; until you do, the difference column stays empty.</p>
+        </div>
+<div class="reveal">        <div class="metrics reveal" id="rec-metrics"></div>
+        <div class="table-scroll" style="margin-top:16px">
+          <table class="data" id="rec-table">
+            <thead><tr>
+              <th data-sort="0">Batch</th>
+              <th data-sort="1">Crop</th>
+              <th data-sort="2">Class</th>
+              <th class="n" data-sort="3">Harvested kg</th>
+              <th class="n" data-sort="4">Gate ₦ / kg</th>
+              <th class="n" data-sort="5">Batch value</th>
+              <th data-sort="6">Storage chosen</th>
+              <th class="n" data-sort="7">Unimproved %</th>
+              <th class="n" data-sort="8">Projected %</th>
+              <th class="n" data-sort="9">Projected loss</th>
+              <th class="n" data-sort="10">Weighed actual ₦</th>
+              <th class="n" data-sort="11">Shelf days on arrival</th>
+              <th class="n" data-sort="12">Margin days</th>
+              <th class="n" data-sort="13">Days to buyer</th>
+              <th class="n" data-sort="14">Average °C</th>
+              <th class="n" data-sort="15">Logged</th>
+              <th class="n"><span class="sr-only">Remove</span></th>
+            </tr></thead>
+            <tbody id="rec-body"></tbody>
+          </table>
+        </div>
+        <div class="case-strip" style="margin-top:14px">
+          <button class="btn btn-primary btn-sm" id="rec-csv" type="button">Export CSV</button>
+          <button class="btn btn-ghost btn-sm" id="rec-print" type="button">Print this table</button>
+          <button class="btn btn-ghost btn-sm" id="rec-clear" type="button">Clear all entries</button>
+          <span class="filter-count">stored as <code>afrik:cropkeep:batches</code></span>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="band" id="routine">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Turning the record into a decision</p>
+          <h2 id="routine-h">What to do with these numbers</h2>
+          <p class="lede">A record is only useful if something changes because of it. This is the cadence the entries support.</p>
+        </div>
+<div class="rail reveal">        <article class="rail-item" data-reveal-delay="0">
+          <p class="when">Before the cut</p>
+          <div><h3>Log the batch, do not describe it</h3><p>Weight, gate price, days to a buyer and the temperature where it will actually sit. A batch logged from memory afterwards is a story, not a record.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="1">
+          <p class="when">On the day of sale</p>
+          <div><h3>Enter the weighed actual</h3><p>The mass or naira the buyer rejected. The difference column only fills when you do, and it is the column that makes the estimate better.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="2">
+          <p class="when">Every three batches</p>
+          <div><h3>Replace the published baseline</h3><p>Open Limits in the calculator, put your own measured loss in the unimproved field, and stop projecting from the literature.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="3">
+          <p class="when">Weekly</p>
+          <div><h3>Look at margin days, not loss</h3><p>Rows with a margin under half the trip are the ones that will be sold at the panic price next week. Cool them or shorten the journey.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="4">
+          <p class="when">Season end</p>
+          <div><h3>Export the CSV and start fresh</h3><p>Twelve months of browser rows is not an archive. The export is what an aggregator, a store manager or a buyer can be handed.</p></div>
+        </article>
+        <article class="rail-item" data-reveal-delay="5">
+          <p class="when">Next season</p>
+          <div><h3>Bring the record to the adviser</h3><p>Three weeks of weighed losses is a better brief than any estimate, including this one, when your state programme or a cold-chain audit comes to look.</p></div>
+        </article>
+      </div>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Log the next batch, or weigh the last one</h2>
+        <p class="lede">The ledger writes straight from the calculator - no account, no upload, no lead form.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#batches">Back to the batch ledger</a>
+        <a class="btn btn-ghost" href="data.html">Loss data</a>
+        <a class="btn btn-ghost" href="playbook.html">Handling playbook</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">✦</span><span style="color:#fff">CropKeep<small style="color:rgba(255,255,255,.6)">Post-harvest loss maths</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one argument: the harvest is already paid for. What happens after the farm gate is temperature, packaging and how fast you move, and all three can be written down.</p>
+      </div>
+      <div>
+        <h4>CropKeep pages</h4>
+        <p><a href="index.html">Loss calculator</a><br><a href="data.html">Loss data</a><br><a href="playbook.html">Handling playbook</a><br><a href="record.html">Batch ledger</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../suncost/">SunCost - solar vs generator</a><br><a href="../marketrate/">MarketRate - fair price today</a><br><a href="../landedcost/">LandedCost - what imports really cost</a><br><a href="../sealcheck/">SealCheck - medicine check</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Loss percentages are mid-points of published post-harvest ranges for Nigerian crops, and every price here is an indicative 2026 market rate. Nothing on these pages is a safety finding: aflatoxin is a laboratory result.</span><span class="mono">CropKeep · Batch ledger · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#rec-table');
+  var cols = [{ k: "label", label: "Batch"}, { k: "crop", label: "Crop"}, { k: "klass", label: "Class"}, { k: "kg", label: "Harvested kg", n: true, fmt: (v) => kit.num(v)}, { k: "price", label: "Gate ₦ / kg", n: true, fmt: (v) => kit.money(v)}, { k: "value", label: "Batch value", n: true, fmt: (v) => kit.money(v)}, { k: "storage", label: "Storage chosen"}, { k: "baselinePct", label: "Unimproved %", n: true, fmt: (v) => kit.amount(v, 1) + '%'}, { k: "lossPct", label: "Projected %", n: true, fmt: (v) => kit.amount(v, 1) + '%'}, { k: "lossNaira", label: "Projected loss", n: true, fmt: (v) => kit.money(v)}, { k: "actual", label: "Weighed actual ₦", n: true, fmt: (v) => kit.money(v)}, { k: "shelfDays", label: "Shelf days on arrival", n: true, fmt: (v) => kit.num(v)}, { k: "marginDays", label: "Margin days", n: true, fmt: (v) => kit.num(v)}, { k: "daysToMarket", label: "Days to buyer", n: true, fmt: (v) => kit.num(v)}, { k: "temp", label: "Average °C", n: true, fmt: (v) => kit.num(v)}, { k: "date", label: "Logged", n: true, fmt: (v) => kit.dateLabel(new Date(v))}];
+  var handle = pages.cases("cropkeep:batches", cols, {
+    body: '#rec-body', summary: '#rec-metrics', limit: 100,
+    emptyTitle: "No batches logged yet",
+    emptyText: "Fill the calculator, press Add this batch to the ledger, and come back. Logged batches appear here immediately, on this device only.",
+    summaryFn: function (rows) {
+    var out = '<div class="metric"><b>' + rows.length + '</b><span>entries on this device</span></div>';
+    var t = (function (rows) { var sum = function (k) { return rows.reduce(function (a, r) { return a + (Number(r[k]) || 0); }, 0); }; var kg = sum('kg'), value = sum('value'), proj = sum('lossNaira'); var avoided = rows.reduce(function (a, r) { return a + (Number(r.value) || 0) * ((Number(r.baselinePct) || 0) - (Number(r.lossPct) || 0)) / 100; }, 0); var weighed = rows.filter(function (r) { return r.actual !== null && r.actual !== undefined && r.actual !== ''; }); var gap = weighed.reduce(function (a, r) { return a + ((Number(r.lossNaira) || 0) - Number(r.actual)); }, 0); return [ { v: kit.amount(kg / 1000, 2) + ' t', l: 'tonnage logged on this device' }, { v: kit.money(value), l: 'value of everything you harvested here' }, { v: kit.money(proj), l: 'projected loss at the handling you recorded' }, { v: kit.money(avoided), l: 'loss avoided against the unimproved rate' }, { v: rows.length ? kit.amount(sum('marginDays') / rows.length, 1) + ' d' : 'not enough rows', l: 'average shelf-life margin on arrival' }, { v: weighed.length ? (gap >= 0 ? '+' : '-') + kit.money(Math.abs(gap)) : 'nothing weighed yet', l: weighed.length ? 'actual against projection, ' + weighed.length + ' of ' + rows.length + ' batches weighed' : 'enter the loss after the sale to get this' } ]; })(rows);
+    t.forEach(function (m) {
+      out += '<div class="metric"><b>' + m.v + '</b><span>' + m.l + '</span></div>';
+    });
+    return out;
+  }
+  });
+  kit.on(document, 'click', '#rec-csv', function () {
+    var rows = handle.all();
+    if (!rows.length) { kit.toast('Nothing to export yet'); return; }
+    var keys = cols.map(function (c) { return c.k; });
+    kit.csv([cols.map(function (c) { return c.label; })].concat(rows.map(function (r) {
+      return keys.map(function (k) { return typeof r[k] === 'object' ? JSON.stringify(r[k]) : r[k]; });
+    })), "cropkeep-record.csv");
+    kit.toast('Downloaded ' + rows.length + ' entries');
+  });
+  kit.on(document, 'click', '#rec-print', function () { kit.print(); });
+  kit.on(document, 'click', '#rec-clear', function () {
+    if (!handle.all().length) { kit.toast('The record is already empty'); return; }
+    if (!confirm('Delete every saved entry on this device? Export the CSV first if you need them.')) return;
+    kit.store("cropkeep:batches", []).write([]);
+    handle.render();
+    kit.toast('Record cleared');
+  });
+});
+</script>
+</body>
+</html>

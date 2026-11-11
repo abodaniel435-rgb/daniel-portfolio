@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiderPool — fill the empty seat on the inter-city trip and split the fare honestly</title>
+<meta name="description" content="Work out what an inter-city seat in Nigeria really costs, who should pay what when riders travel different distances, which stops are worth making, and what the trip looks like on paper. Everything is computed in your browser: no server, no matching, no payment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="riderpool.css?v=3">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%233c4a99'/><circle cx='12' cy='12' r='4' fill='%23dd9f3b'/><circle cx='22' cy='19' r='3' fill='white'/><path d='M8 24c3-4 9-5 15-4' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/></svg>">
+</head>
+<body>
+<a class="skip-link" href="#build">Skip to the trip builder</a>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">⇄</span><span>RiderPool<small>the empty seat, split fairly</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav">
+      <a href="#build">Trip &amp; fare</a>
+      <a href="#pricing">Fair pricing</a>
+      <a href="#split">Who pays what</a>
+      <a href="#sequence">Stops &amp; ETA</a>
+      <a href="#card">Trip card</a>
+      <a href="#ledger">Ledger</a>
+      <a href="data.html">Fare data</a>
+      <a href="playbook.html">Park playbook</a>
+      <a href="record.html">Trip ledger</a>
+      <a class="btn btn-ink btn-sm" href="#build">Price a trip</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <span class="hero-orbit" aria-hidden="true"></span>
+  <div class="shell split">
+    <div class="hero-copy">
+      <p class="eyebrow">Seat maths · fare splits · stop economics</p>
+      <h1>Fill the empty seat.<br>Then split the fare<br><em>honestly</em>.</h1>
+      <p class="lede">A seven-seater leaves Benin for Lagos with four seats empty and a fare built on habit. RiderPool does the arithmetic a driver and the riders keep arguing about: what the trip actually costs, what one seat must carry, whether a detour pickup pays for itself, and which of the four ways of splitting the money is fairest when people ride different distances. It produces a printable trip card and manifest. It matches nobody and moves no money — all the maths happens in this browser.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#build">Build a trip</a>
+        <a class="btn btn-ghost" href="#split">Compare split modes <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b data-count="245" data-suffix=" km">0</b><span>Benin City → Lagos, the corridor the tool opens on</span></div>
+        <div class="stat"><b data-count="4" data-suffix=" seats">0</b><span>empty in a Sienna that needs ten to break even at ₦9,000</span></div>
+        <div class="stat"><b data-count="0" data-suffix=" servers">0</b><span>no matching, no payment, no account. Say it plainly below</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame float"><img src="../_media/riderpool-hero.webp" width="1536" height="1024" alt="Passengers loading luggage into a seven-seater at an inter-city motor park in the early morning" fetchpriority="high"></div>
+    </div>
+  </div>
+  <span class="hero-glow" aria-hidden="true"></span>
+</section>
+
+<section class="band" id="problem">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">00 · Why the fare is always wrong</p>
+      <h2>Everyone quotes a seat price. Almost nobody can say what it covers.</h2>
+      <p class="lede">The driver quotes from the park. The rider haggles from last year. Neither is wrong — but the number that leaves the motor park usually forgets wear, the return leg, the levies, and the fact that the person alighting at Ogba used a tenth of the trip the person going to Ibadan used.</p>
+    </div>
+
+    <div class="grid-3 problem-grid">
+      <div class="card reveal">
+        <span class="card-num">A · the silent gap</span>
+        <p class="big-figure"><b data-count="5987" data-prefix="₦">0</b><span>/ seat</span></p>
+        <h3>What a seat costs, minus what a seat is sold for</h3>
+        <p>On the default Benin → Lagos Sienna trip, one of six seats carries ₦14,987 of cost. At the ₦9,000 the park quotes, the trip is ₦35,922 short before the driver pays for anything. The gap is not greed — it is uncounted lines.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <span class="card-num">B · the unequal seat</span>
+        <p class="big-figure"><b data-count="40" data-suffix="%">0</b></p>
+        <h3>Equal splits punish the short rider</h3>
+        <p>Split the money evenly and the person riding 40 km pays the same as the one riding 245 km. RiderPool prices every seat by the distance actually travelled and shows how far each method drifts from that.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <span class="card-num">C · the free detour</span>
+        <p class="big-figure"><b data-count="18" data-prefix="₦" data-suffix="/km">0</b></p>
+        <h3>A diversion has a price, and someone pays it</h3>
+        <p>Eleven extra kilometres to drop someone inside a estate is fuel, wear and 22 minutes shared by everyone still in the car. The stop optimiser puts a number on it and flags the stops that cost more than they bring.</p>
+      </div>
+    </div>
+
+    <div class="who-row reveal">
+      <span class="tiny who-label">Built for</span>
+      <span class="who">Sienna / Hiace driver on a corridor</span>
+      <span class="who">Rider tired of "it's just ₦9,000"</span>
+      <span class="who">Union member pricing a route</span>
+      <span class="who">Friends sharing one car to a wedding</span>
+      <span class="who">Parcel sender buying space, not a seat</span>
+      <span class="who">Church / office organising a run</span>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">01 · How this works without an app</p>
+      <h2>There is no pool to join. There is a spreadsheet that argues honestly.</h2>
+      <p class="lede">This is a static page on GitHub Pages. It cannot see other people, cannot ping a server, cannot hold your money and cannot tell you who is boarding at Oba. Real pooling happens on a phone call and a WhatsApp thread; what a tool can do is make the numbers in that thread checkable. Here is the whole workflow:</p>
+    </div>
+
+    <div class="grid-2 how-grid">
+      <ol class="steps reveal" id="how-steps">
+        <li>One person — driver or organiser — fills the trip builder on this page. Twelve inputs, no account.</li>
+        <li>The fare maths, the four split modes and the stop economics compute live in their browser.</li>
+        <li>They press <b>Copy trip card</b> and paste the plain-text card into the WhatsApp group, or print the manifest and carry it to the park.</li>
+        <li>Interested riders reply with their own numbers — who boards where, who alights where, who has luggage — and the organiser types those in and re-sends. That round trip <em>is</em> the matching layer. It is deliberately a human conversation.</li>
+        <li>Money changes hands in person, as it already does. The page records who has paid only so the organiser's ledger matches reality; nothing is transferred, escrowed or verified.</li>
+        <li>Before departure, both sides work the printed checklists. The six-character trip code is an agreed reference for that conversation — a checksum on a shared piece of paper, not a booking number.</li>
+      </ol>
+
+      <div class="stack">
+        <div class="card reveal" data-delay="1">
+          <h3>What it never claims to be</h3>
+          <ul class="checklist tiny never-list">
+            <li>Not a transport company: it owns no vehicles and employs no drivers.</li>
+            <li>Not a marketplace: the published-trips board is <b>clearly labelled sample data</b> that ships with the page.</li>
+            <li>Not an insurer or verifier: it checks no licence, no roadworthiness and no identity.</li>
+            <li>Not a payment rail: no gateway, no wallet, no refund mechanism.</li>
+          </ul>
+        </div>
+        <div class="card reveal" data-delay="2">
+          <h3>Where the numbers come from</h3>
+          <p>Corridor distances, fuel prices, vehicle economy and every levy on this page are <b>editable reference tables</b> with an "as of" date you set. There is no live feed — static hosting cannot have one. Update the table when the pump or the park changes, and the whole tool follows.</p>
+        </div>
+        <div class="card reveal" data-delay="3">
+          <h3>Where your data lives</h3>
+          <p>Only in this browser's <span class="mono">localStorage</span>: trips, rider names, phone numbers, your own travel log. Export as CSV, print, or clear it in one click. Nothing is uploaded because there is nowhere to upload it to.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="build">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · Trip builder and fare maths</p>
+      <h2>What the trip costs. What one seat must carry.</h2>
+      <p class="lede">Pick a corridor or type your own distance, pick the vehicle class, and put in the money lines a driver actually faces: fuel, wear share, tolls, the park levy, the driver's cut. The panel answers the only two questions that matter — what a seat truly costs, and how many seats at your asking price it takes to break even.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="card calc-form reveal" id="trip-form" autocomplete="off">
+        <h4 class="form-h">The trip</h4>
+        <div class="form-grid">
+          <div class="field">
+            <label for="r-corridor">Corridor</label>
+            <select id="r-corridor" name="r-corridor"></select>
+            <p class="help">Distances and hours come from the editable <a href="#assumptions">corridor table</a>.</p>
+          </div>
+          <div class="field">
+            <label for="r-class">Vehicle class</label>
+            <select id="r-class" name="r-class"></select>
+            <p class="help" id="r-class-help">Seat count and economy are editable under Assumptions.</p>
+          </div>
+          <div class="field">
+            <label for="r-from">Leaving from</label>
+            <input id="r-from" name="r-from" maxlength="40" value="Benin City">
+          </div>
+          <div class="field">
+            <label for="r-to">Going to</label>
+            <input id="r-to" name="r-to" maxlength="40" value="Lagos">
+          </div>
+          <div class="field">
+            <label for="r-km">Distance <span class="tiny">km, one way unless return is ticked</span></label>
+            <div class="input-group"><span class="prefix">km</span><input id="r-km" name="r-km" type="number" min="1" max="2000" step="5" value="245" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="r-hours">Driving time <span class="tiny">hours, no buffer</span></label>
+            <div class="input-group"><span class="prefix">h</span><input id="r-hours" name="r-hours" type="number" min="0.25" max="30" step="0.25" value="4" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="r-seats">Seats offered <span class="tiny">excluding the driver</span></label>
+            <input id="r-seats" name="r-seats" type="number" min="1" max="40" step="1" value="6" inputmode="numeric">
+            <p class="help" id="r-seats-help"></p>
+          </div>
+          <div class="field">
+            <label for="r-sold">Seats you expect to sell</label>
+            <input id="r-sold" name="r-sold" type="number" min="0" max="40" step="1" value="5" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="r-date">Travel date</label>
+            <input id="r-date" name="r-date" type="date">
+          </div>
+          <div class="field">
+            <label for="r-time">Departure window opens</label>
+            <input id="r-time" name="r-time" type="time" value="06:00">
+          </div>
+          <div class="field">
+            <label for="r-pickup">Pickup area / motor park</label>
+            <input id="r-pickup" name="r-pickup" maxlength="50" value="Oak Avenue, Benin">
+          </div>
+          <div class="field">
+            <label for="r-drop">Drop-off area</label>
+            <input id="r-drop" name="r-drop" maxlength="50" value="CMS / Ikeja, Lagos">
+          </div>
+        </div>
+
+        <h4 class="form-h">The money lines</h4>
+        <div class="form-grid">
+          <div class="field">
+            <label for="r-price-from">Reference pump price</label>
+            <select id="r-price-from" name="r-price-from"></select>
+            <p class="help">Choosing one fills the ₦/L box. It is a table you edit, not a live price.</p>
+          </div>
+          <div class="field">
+            <label for="r-price">Fuel price <span class="tiny">₦ per litre</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="r-price" name="r-price" type="number" min="200" max="6000" step="10" value="1650" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="r-kml">Economy <span class="tiny">km per litre</span></label>
+            <input id="r-kml" name="r-kml" type="number" min="1" max="60" step="0.5" value="9" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="r-wear">Wear share <span class="tiny">₦ per km</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="r-wear" name="r-wear" type="number" min="0" max="2000" step="1" value="49" inputmode="decimal"></div>
+            <p class="help">Tyres, oil, servicing, repairs — per kilometre, from the class table.</p>
+          </div>
+          <div class="field">
+            <label for="r-tolls">Tolls <span class="tiny">₦ whole trip</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="r-tolls" name="r-tolls" type="number" min="0" max="200000" step="100" value="5000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="r-levy">Union / park levy <span class="tiny">₦ whole trip</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="r-levy" name="r-levy" type="number" min="0" max="200000" step="250" value="3000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="r-driver">Driver's cut <span class="tiny">₦, what the driver keeps</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="r-driver" name="r-driver" type="number" min="0" max="500000" step="500" value="25000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="r-fare">Asking fare <span class="tiny">₦ per seat</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="r-fare" name="r-fare" type="number" min="0" max="500000" step="250" value="9000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="r-buffer">Delay buffer <span class="tiny">% on driving time</span></label>
+            <div class="input-group"><span class="prefix">%</span><input id="r-buffer" name="r-buffer" type="number" min="0" max="60" step="1" value="10" inputmode="numeric"></div>
+            <p class="help">Used for the ETA chain and the check-in window.</p>
+          </div>
+          <div class="field">
+            <label for="r-recover">Return-leg recovery <span class="tiny">% of cost added</span></label>
+            <div class="input-group"><span class="prefix">%</span><input id="r-recover" name="r-recover" type="number" min="0" max="100" step="5" value="0" inputmode="numeric"></div>
+            <p class="help">If the car comes back empty, load part of that leg into this fare.</p>
+          </div>
+        </div>
+
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="r-return"><span class="track"></span><span>Charge the return leg as a trip <span class="tiny">(doubles distance, time and fuel)</span></span></label>
+          <label class="switch"><input type="checkbox" id="r-night"><span class="track"></span><span>Night departure <span class="tiny">(adds the surcharge)</span></span></label>
+          <label class="switch"><input type="checkbox" id="r-lugseat"><span class="track"></span><span>Selling luggage space as a seat <span class="tiny">(one ₦2,000 line, one fewer body)</span></span></label>
+        </div>
+
+        <h4 class="form-h">Parcels riding along <span class="tiny">revenue that is not a person</span></h4>
+        <div class="form-grid parcel-grid">
+          <div class="field">
+            <label for="r-p1">Small parcel <span class="tiny" id="r-p1-rate">₦800</span></label>
+            <input id="r-p1" name="r-p1" type="number" min="0" max="40" step="1" value="0" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="r-p2">Carton <span class="tiny" id="r-p2-rate">₦2,000</span></label>
+            <input id="r-p2" name="r-p2" type="number" min="0" max="40" step="1" value="0" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="r-p3">30 kg sack <span class="tiny" id="r-p3-rate">₦3,500</span></label>
+            <input id="r-p3" name="r-p3" type="number" min="0" max="40" step="1" value="0" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="r-p4">Freezer-size <span class="tiny" id="r-p4-rate">₦9,000</span></label>
+            <input id="r-p4" name="r-p4" type="number" min="0" max="20" step="1" value="0" inputmode="numeric">
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-ghost btn-sm" type="button" id="trip-reset">Reset to the Benin → Lagos example</button>
+          <span class="tiny" id="trip-note">Nothing here leaves your browser.</span>
+        </div>
+      </form>
+
+      <aside class="calc-results" aria-live="polite">
+        <div class="readout-big">
+          <b id="f-total">₦0</b>
+          <span id="f-total-note">true cost of the trip, every line counted</span>
+        </div>
+
+        <div class="card">
+          <div class="readout">
+            <div class="line"><span>Fuel — <b class="mono" id="f-litres-inline">—</b></span><b id="f-fuel">—</b></div>
+            <div class="line"><span>Wear share (tyres, oil, service)</span><b id="f-wear">—</b></div>
+            <div class="line"><span>Tolls + union / park levy</span><b id="f-extras">—</b></div>
+            <div class="line"><span>Driver's cut</span><b id="f-cut">—</b></div>
+            <div class="line" id="f-recover-line"><span>Return-leg recovery</span><b>—</b></div>
+            <div class="line line-strong"><span>Trip cost to cover <span class="tiny" id="f-cover-note"></span></span><b id="f-cover">—</b></div>
+            <div class="line"><span>Seats offered (excl. driver)</span><b id="f-seats">—</b></div>
+            <div class="line line-strong"><span>What one seat actually costs</span><b id="f-perseat">—</b></div>
+            <div class="line"><span>Cost per kilometre, whole car</span><b id="f-perkm">—</b></div>
+            <div class="line"><span>Cost per seat-kilometre</span><b id="f-perseatkm">—</b></div>
+            <div class="line"><span>At your asking fare, all seats sold</span><b id="f-profit">—</b></div>
+          </div>
+        </div>
+
+        <div class="card breakeven-card">
+          <h4>Break-even at <span class="mono" id="be-fare">₦9,000</span> a seat</h4>
+          <div class="be-track"><i id="be-bar"></i><span class="be-cap" id="be-cap"></span></div>
+          <p class="be-read"><b id="be-seats">—</b><span id="be-sub">seats must sell to cover the trip</span></p>
+          <p class="tiny" id="be-honest"></p>
+        </div>
+
+        <div class="verdict" id="fare-verdict" role="status">
+          <h4 id="fare-verdict-title">—</h4>
+          <p id="fare-verdict-body">—</p>
+        </div>
+
+        <div class="mini">
+          <div><span>Litres burned</span><b id="m-litres">—</b></div>
+          <div><span>Viable fare, full house</span><b id="m-viable">—</b></div>
+          <div><span>₦ of cost per empty seat</span><b id="m-empty">—</b></div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <caption>Fare ladder — what it takes to work</caption>
+            <thead><tr><th>Asking fare</th><th class="num">Seats to break even</th><th class="num">Fits the car?</th><th class="num">Result if <span id="fl-sold">5</span> sell</th></tr></thead>
+            <tbody id="ladder-body"></tbody>
+          </table>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Fair pricing per seat</p>
+      <h2>Not all seats are the same seat.</h2>
+      <p class="lede">Front-row legroom, the last row behind the axle, a child on a lap, a student, a night run, a bag sold as a seat, and a pickup that pulls the car eleven kilometres off the line. Each is a real difference and each should move the price a little — but the adjustments have to add up, or you are quietly re-inflating everyone's fare.</p>
+    </div>
+
+    <div class="grid-2">
+      <form class="card reveal" id="adj-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="field">
+            <label for="a-front">Front row premium <span class="tiny">%</span></label>
+            <div class="input-group"><span class="prefix">%</span><input id="a-front" type="number" min="-20" max="40" step="1" value="8" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="a-last">Last row discount <span class="tiny">%</span></label>
+            <div class="input-group"><span class="prefix">%</span><input id="a-last" type="number" min="-40" max="20" step="1" value="-7" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="a-child">Child (on a lap) <span class="tiny">%</span></label>
+            <div class="input-group"><span class="prefix">%</span><input id="a-child" type="number" min="-100" max="20" step="5" value="-50" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="a-student">Student <span class="tiny">%</span></label>
+            <div class="input-group"><span class="prefix">%</span><input id="a-student" type="number" min="-100" max="20" step="5" value="-15" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="a-night">Night surcharge <span class="tiny">%</span></label>
+            <div class="input-group"><span class="prefix">%</span><input id="a-night" type="number" min="0" max="60" step="1" value="10" inputmode="decimal"></div>
+          </div>
+          <div class="field">
+            <label for="a-lug">Luggage sold as a seat <span class="tiny">₦</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="a-lug" type="number" min="0" max="50000" step="250" value="2000" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label for="a-detour">Diverted km, charged per seat <span class="tiny">₦/km/seat</span></label>
+            <div class="input-group"><span class="prefix">₦</span><input id="a-detour" type="number" min="0" max="500" step="1" value="18" inputmode="decimal"></div>
+            <p class="help">What everyone already aboard pays when the car leaves the line for one pickup.</p>
+          </div>
+          <div class="field">
+            <label for="a-detour-km">Typical diversion <span class="tiny">km</span></label>
+            <div class="input-group"><span class="prefix">km</span><input id="a-detour-km" type="number" min="0" max="60" step="1" value="11" inputmode="numeric"></div>
+          </div>
+        </div>
+        <div class="verdict" id="adj-verdict">
+          <h4 id="adj-verdict-title">—</h4>
+          <p id="adj-verdict-body">—</p>
+        </div>
+        <p class="tiny">The premium rows and the discount rows are compared against your asking fare of <span class="mono" id="adj-base">—</span>. Adjustments are percentages of the seat price; the detour charge is flat per seat and is what the optimiser in section 05 uses too.</p>
+      </form>
+
+      <div class="stack">
+        <div class="table-wrap reveal">
+          <table>
+            <caption>Seat price board</caption>
+            <thead><tr><th>Seat type</th><th class="num">Adjustment</th><th class="num">Price</th><th>Who it is for</th></tr></thead>
+            <tbody id="seat-price-body"></tbody>
+          </table>
+        </div>
+        <div class="table-wrap reveal" data-delay="1">
+          <table>
+            <caption>Parcels — space sold, not seats</caption>
+            <thead><tr><th>Class</th><th class="num">Rate ₦</th><th class="num">On this trip</th><th class="num">Revenue</th></tr></thead>
+            <tbody id="parcel-body"></tbody>
+            <tfoot id="parcel-foot"></tfoot>
+          </table>
+        </div>
+        <div class="card reveal" data-delay="2">
+          <h4>Detour arithmetic</h4>
+          <div class="readout">
+            <div class="line"><span>Diversion</span><b id="dt-km">—</b></div>
+            <div class="line"><span>Charged per seat aboard</span><b id="dt-per">—</b></div>
+            <div class="line line-strong"><span>Adds to a full car</span><b id="dt-total">—</b></div>
+            <div class="line"><span>Fuel + wear the diversion really costs</span><b id="dt-real">—</b></div>
+          </div>
+          <p class="tiny" id="dt-note"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="split">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">04 · Who pays what</p>
+      <h2>Four ways to split the same money. Only one is honest about distance.</h2>
+      <p class="lede">This is the argument at every motor park. Enter who boards where and who alights where, then compare the four methods people actually use. The yardstick is <em>cost causation</em> — each rider's share of the distance consumed — and the fairest method is the one whose payments drift least from it while still collecting the whole cost.</p>
+    </div>
+
+    <div class="grid-2 editors">
+      <div class="card reveal">
+        <h4>Stops along the corridor</h4>
+        <p class="help">Kilometres are measured from where the trip starts. Add, rename or delete freely — this drives the ETA chain and the optimiser too.</p>
+        <div class="table-wrap tight">
+          <table>
+            <thead><tr><th>Stop</th><th class="num">km along</th><th class="num">Detour km</th><th class="num">Detour min</th><th></th></tr></thead>
+            <tbody id="stops-body"></tbody>
+          </table>
+        </div>
+        <div class="row"><button class="btn btn-ghost btn-sm" type="button" id="st-add">Add a stop</button><button class="btn btn-ghost btn-sm" type="button" id="st-reset">Restore sample stops</button></div>
+      </div>
+
+      <div class="card reveal" data-delay="1">
+        <h4>Seats and who is in them</h4>
+        <p class="help">One row per seat offered. Names are only ever printed on your own manifest — nobody else can see them.</p>
+        <div class="table-wrap tight">
+          <table>
+            <thead><tr><th>Rider</th><th>Boards</th><th>Alights</th><th>Position</th><th>Type</th><th class="num">km</th></tr></thead>
+            <tbody id="seats-body"></tbody>
+          </table>
+        </div>
+        <p class="tiny" id="seats-note"></p>
+      </div>
+    </div>
+
+    <div class="table-wrap reveal modes-wrap">
+      <table>
+        <caption>The four methods, scored</caption>
+        <thead><tr><th>Method</th><th class="num">Collected</th><th class="num">Gap vs cost</th><th class="num">Avg drift from cost share</th><th class="num">Worst drift</th><th>Verdict</th></tr></thead>
+        <tbody id="mode-body"></tbody>
+      </table>
+      <p class="tiny modes-foot" id="mode-note"></p>
+    </div>
+
+    <div class="table-wrap reveal split-wrap">
+      <table>
+        <caption>Per-rider amounts under each method</caption>
+        <thead id="split-head"></thead>
+        <tbody id="split-body"></tbody>
+        <tfoot id="split-foot"></tfoot>
+      </table>
+    </div>
+
+    <div class="grid-2 split-bottom">
+      <div class="card reveal">
+        <h4>What each rider pays</h4>
+        <div id="split-bars"></div>
+      </div>
+      <div class="verdict reveal" id="split-verdict" data-delay="1" role="status">
+        <h4 id="split-verdict-title">—</h4>
+        <p id="split-verdict-body">—</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sequence">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Stop sequence and ETA chain</p>
+      <h2>Every detour is a price, and every minute is somebody's afternoon.</h2>
+      <p class="lede">Order the stops the way the road allows, and read what each one costs: extra kilometres, extra minutes, the naira the diversion burns, and what the boarding riders bring. A stop whose cost outruns its revenue gets flagged. The timeline below is the arrival chain with your delay buffer applied.</p>
+    </div>
+
+    <div class="seq-tools reveal">
+      <button class="btn btn-primary btn-sm" type="button" id="seq-optimize">Sort into driving order</button>
+      <button class="btn btn-ghost btn-sm" type="button" id="seq-reset">Restore sample sequence</button>
+      <label class="field seq-cruise">
+        <span class="sr-only" id="cruise-label">Average speed used for the ETA chain</span>
+        <label for="seq-speed">Average speed on the run</label>
+        <div class="input-group"><span class="prefix">km/h</span><input id="seq-speed" type="number" min="10" max="120" step="5" value="62" inputmode="numeric"></div>
+      </label>
+      <label class="field seq-stopmin">
+        <label for="seq-stopmin">Minutes per stop</label>
+        <div class="input-group"><span class="prefix">min</span><input id="seq-stopmin" type="number" min="0" max="45" step="1" value="6" inputmode="numeric"></div>
+      </label>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption>Stop economics, in the order the car will do them</caption>
+        <thead><tr><th class="num">#</th><th>Stop</th><th class="num">km along</th><th class="num">Detour km</th><th class="num">Extra min</th><th class="num">Cost of stop</th><th class="num">Boards</th><th class="num">Fare revenue</th><th class="num">Net</th></tr></thead>
+        <tbody id="seq-body"></tbody>
+        <tfoot id="seq-foot"></tfoot>
+      </table>
+    </div>
+    <p class="tiny seq-warn" id="seq-warn" role="status"></p>
+
+    <div class="timeline-card reveal">
+      <div class="tl-head">
+        <p class="eyebrow">ETA chain</p>
+        <h3 id="tl-title">—</h3>
+        <p class="tiny" id="tl-sub">—</p>
+      </div>
+      <div class="timeline" id="timeline" role="img" aria-label="Timeline of estimated arrival times at each stop"></div>
+      <div class="tl-facts">
+        <div><span>Wheels-off</span><b id="eta-depart">—</b></div>
+        <div><span>Arrive, no buffer</span><b id="eta-plain">—</b></div>
+        <div><span>Arrive, +<span id="eta-buffer-pct">10</span>% buffer</span><b id="eta-buffered">—</b></div>
+        <div><span>Time lost to detours</span><b id="eta-lost">—</b></div>
+        <div><span>Check-in window</span><b id="eta-checkin">—</b></div>
+      </div>
+      <p class="tiny" id="tl-note">The window each rider should hear on the phone: expected arrival either side of the buffered estimate.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="card">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Trip card, checklists and manifest</p>
+      <h2>The paper that travels with the trip.</h2>
+      <p class="lede">Pooling between people who already know each other needs one thing: a shared, unambiguous statement of what was agreed. RiderPool generates a six-character trip code from your inputs, a copyable card for the group chat, two checklists, and a manifest with a signature box for every seat.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="stack">
+        <div class="card code-card reveal">
+          <p class="eyebrow">Trip code</p>
+          <p class="code" id="trip-code" aria-live="polite">------</p>
+          <p class="tiny" id="code-note">Derived from route, date, vehicle and seat count — the same inputs always give the same code, so two people can check they are pricing the same trip.</p>
+        </div>
+
+        <div class="card reveal" data-delay="1">
+          <h4>Published trip card</h4>
+          <pre class="trip-card mono" id="card-out">Fill the builder and the card appears here.</pre>
+          <div class="row wrap-row">
+            <button class="btn btn-accent btn-sm" type="button" id="card-copy">Copy trip card</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="card-print">Print card + manifest</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="ledger-save">Save to ledger</button>
+          </div>
+          <p class="tiny" id="card-note">Copy puts plain text on your clipboard so you can paste it into a chat. Nothing is published anywhere by this page.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card reveal" data-delay="2">
+          <h4>Driver pre-departure checklist</h4>
+          <ul class="check-list" id="dcheck">
+            <li><label><input type="checkbox" id="d1"> Plate and district inspected, matches the card</label></li>
+            <li><label><input type="checkbox" id="d2"> Seat belts counted and working — one per body aboard</label></li>
+            <li><label><input type="checkbox" id="d3"> Spare tyre inflated, jack and wheel brace present</label></li>
+            <li><label><input type="checkbox" id="d4"> First-aid kit and fire extinguisher in the car</label></li>
+            <li><label><input type="checkbox" id="d5"> Driver's licence and ID seen by a rider, not just promised</label></li>
+            <li><label><input type="checkbox" id="d6"> One contact number shared with every rider and one back home</label></li>
+            <li><label><input type="checkbox" id="d7"> No overloading: bodies counted against seats offered</label></li>
+            <li><label><input type="checkbox" id="d8"> No driving past <input class="inline-time" type="time" id="d8-time" value="21:00" aria-label="Cut-off hour for night driving"> at night on this run</label></li>
+            <li><label><input type="checkbox" id="d9"> Insurance and roadworthiness certificate in the glovebox</label></li>
+            <li><label><input type="checkbox" id="d10"> Fuel plan agreed — who carries the money for the next fill-up</label></li>
+          </ul>
+          <p class="score-row"><b id="dcheck-score">0 / 10</b><span class="bar dbar"><i id="dcheck-bar"></i></span></p>
+          <div class="verdict" id="dcheck-verdict">
+            <h4 id="dcheck-title">Nothing checked yet</h4>
+            <p id="dcheck-body">Work the list before the car moves. It is your list, on your paper.</p>
+          </div>
+        </div>
+
+        <div class="card reveal" data-delay="3">
+          <h4>Rider checklist</h4>
+          <ul class="check-list" id="rcheck">
+            <li><label><input type="checkbox" id="q1"> I have seen the driver's ID and noted the plate</label></li>
+            <li><label><input type="checkbox" id="q2"> Someone at home has the trip card and the code</label></li>
+            <li><label><input type="checkbox" id="q3"> I know the seat I am in and the drop-off agreed</label></li>
+            <li><label><input type="checkbox" id="q4"> I counted the bodies before we left — no standing</label></li>
+            <li><label><input type="checkbox" id="q5"> Fare and what it covers are written, not remembered</label></li>
+            <li><label><input type="checkbox" id="q6"> I will not ride if the belt is broken or the tyre is cord</label></li>
+          </ul>
+          <p class="score-row"><b id="rcheck-score">0 / 6</b><span class="bar rbar"><i id="rcheck-bar"></i></span></p>
+          <p class="tiny" id="checkin-note">Check-in window for this trip: <b class="mono" id="checkin-window">—</b>. Rider expected to confirm in that band; after it, the back-home number gets the call.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap reveal manifest-wrap">
+      <table class="manifest">
+        <caption>Manifest — one line per seat, signature box per rider</caption>
+        <thead><tr><th class="num">Seat</th><th>Rider name</th><th>Phone</th><th>Position</th><th>Pickup</th><th>Drop-off</th><th class="num">Owed ₦</th><th>Paid</th><th>Signature</th></tr></thead>
+        <tbody id="manifest-body"></tbody>
+        <tfoot id="manifest-foot"></tfoot>
+      </table>
+      <div class="row manifest-tools">
+        <button class="btn btn-accent btn-sm" type="button" id="manifest-csv">Export manifest CSV</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="manifest-print">Print manifest</button>
+        <span class="tiny" id="manifest-note"></span>
+      </div>
+    </div>
+
+    <div class="print-sheet" id="print-sheet" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section class="band-ink" id="ledger">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">07 · Your ledger</p>
+      <h2>Who has paid, who still owes, and whether the month worked.</h2>
+      <p class="lede">Saved trips keep their seat list so you can mark fares paid as the money actually arrives. The monthly summary reads the same rows: trips run, cash in, fuel out, earnings per kilometre and the corridor that pays best. Export it as CSV, or print the sheet and take it to the cooperative meeting.</p>
+    </div>
+
+    <div class="tabs reveal" data-tabs>
+      <button class="tab" type="button" role="tab" id="tab-trips" aria-selected="true" aria-controls="panel-trips">Trip ledger</button>
+      <button class="tab" type="button" role="tab" id="tab-travel" aria-selected="false" aria-controls="panel-travel">My travel</button>
+    </div>
+
+    <div id="panel-trips" role="tabpanel" aria-labelledby="tab-trips">
+      <div class="roster-tools">
+        <button class="btn btn-accent btn-sm" type="button" id="lg-save">Save the current trip</button>
+        <label class="sr-only" for="lg-month">Filter by month</label>
+        <select id="lg-month" class="ghost-select"></select>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="lg-csv">Export ledger CSV</button>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="lg-print">Print monthly sheet</button>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="lg-clear">Clear ledger</button>
+        <span class="tiny roster-count" id="lg-count">0 trips</span>
+      </div>
+
+      <div class="ledger-summary">
+        <div><span>Trips in view</span><b id="lg-trips">—</b></div>
+        <div><span>Collected</span><b id="lg-paid">—</b></div>
+        <div><span>Still owed</span><b id="lg-owed">—</b></div>
+        <div><span>Fuel spent</span><b id="lg-fuel">—</b></div>
+        <div><span>Net per trip</span><b id="lg-net">—</b></div>
+        <div><span>Net per km</span><b id="lg-perkm">—</b></div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Saved trips</caption>
+          <thead><tr><th>Date</th><th>Route</th><th>Code</th><th class="num">Seats</th><th class="num">Fare</th><th class="num">Cost</th><th class="num">Paid</th><th class="num">Balance</th><th></th></tr></thead>
+          <tbody id="ledger-body"></tbody>
+          <tfoot id="ledger-foot"></tfoot>
+        </table>
+      </div>
+      <p class="tiny roster-empty" id="ledger-empty">No trips saved yet. Build one above and press <b>Save to ledger</b> — the seat list comes with it, so you can tick people off as they pay.</p>
+    </div>
+
+    <div id="panel-travel" role="tabpanel" aria-labelledby="tab-travel" hidden>
+      <div class="log-grid">
+        <form class="card log-form" id="tv-form" autocomplete="off">
+          <h4>Log a trip you rode as a passenger</h4>
+          <div class="form-grid">
+            <div class="field">
+              <label for="v-date">Date</label>
+              <input id="v-date" type="date">
+            </div>
+            <div class="field">
+              <label for="v-route">Route</label>
+              <input id="v-route" maxlength="40" placeholder="e.g. Benin → Lagos" value="Benin → Lagos">
+            </div>
+            <div class="field">
+              <label for="v-fare">You paid</label>
+              <div class="input-group"><span class="prefix">₦</span><input id="v-fare" type="number" min="0" max="500000" step="100" value="9000" inputmode="numeric"></div>
+            </div>
+            <div class="field">
+              <label for="v-km">Distance you rode</label>
+              <div class="input-group"><span class="prefix">km</span><input id="v-km" type="number" min="1" max="2000" step="5" value="245" inputmode="numeric"></div>
+            </div>
+            <div class="field">
+              <label for="v-mode">How</label>
+              <select id="v-mode">
+                <option value="Shared minibus">Shared minibus</option>
+                <option value="Inter-city bus" selected>Inter-city bus</option>
+                <option value="Pooled seat in a private car">Pooled seat in a private car</option>
+                <option value="Keke / taxi">Keke or taxi</option>
+                <option value="Okada">Okada</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="v-luggage">Luggage paid extra <span class="tiny">₦</span></label>
+              <div class="input-group"><span class="prefix">₦</span><input id="v-luggage" type="number" min="0" max="50000" step="100" value="0" inputmode="numeric"></div>
+            </div>
+          </div>
+          <div class="row"><button class="btn btn-accent btn-sm" type="button" id="tv-add">Add to my travel</button><span class="tiny" id="tv-error" role="status"></span></div>
+        </form>
+        <div class="learn-card">
+          <p class="eyebrow">Your travel cost</p>
+          <b id="tv-avg">—</b>
+          <p class="mono" id="tv-sub">no entries yet</p>
+          <div class="learn-row">
+            <div><span>Trips logged</span><b id="tv-count">—</b></div>
+            <div><span>Spent</span><b id="tv-spent">—</b></div>
+            <div><span>Best ₦/km</span><b id="tv-best">—</b></div>
+          </div>
+          <svg id="tv-spark" class="sparkline-slot" viewBox="0 0 300 74" preserveAspectRatio="none" role="img" aria-label="Trend of naira per kilometre paid as a passenger"></svg>
+          <div class="verdict" id="tv-verdict">
+            <h4 id="tv-title">—</h4>
+            <p id="tv-body">Log two trips and this compares what you paid with what the seat genuinely costs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Personal travel log</caption>
+          <thead><tr><th>Date</th><th>Route</th><th>Mode</th><th class="num">Paid ₦</th><th class="num">km</th><th class="num">₦/km</th><th>Baggage</th><th></th></tr></thead>
+          <tbody id="tv-body"></tbody>
+          <tfoot id="tv-foot"></tfoot>
+        </table>
+      </div>
+      <div class="roster-tools">
+        <button class="btn btn-accent btn-sm" type="button" id="tv-csv">Export my travel CSV</button>
+        <button class="btn btn-ghost btn-sm roster-ghost" type="button" id="tv-clear">Clear my travel</button>
+        <span class="tiny roster-count" id="tv-note">0 entries</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="board">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">08 · Sample board — nobody here is real</p>
+      <h2>What a published trip looks like, and what joining one does.</h2>
+      <p class="lede">These rows ship with the page. They are demonstrations of the trip-card format and the fare maths on known corridors — not drivers, not phones, not offers. Pressing <em>Join</em> copies the row into your own ledger as a pending line so you can see how the money would work. It contacts nobody.</p>
+    </div>
+
+    <div class="sample-flag reveal" role="note">
+      <b>SAMPLE DATA</b><span>Written into <span class="mono">app.js</span>. There is no backend to post to, no driver behind these seats and no way for anyone to see what you press here.</span>
+    </div>
+
+    <div class="board-tools reveal">
+      <div class="field">
+        <label for="bd-corridor">Corridor</label>
+        <select id="bd-corridor"></select>
+      </div>
+      <div class="field">
+        <label for="bd-day">Day</label>
+        <select id="bd-day"></select>
+      </div>
+      <div class="field">
+        <label for="bd-sort">Sort by</label>
+        <select id="bd-sort">
+          <option value="fare-asc">Fare, cheapest first</option>
+          <option value="fare-desc">Fare, dearest first</option>
+          <option value="seats">Most seats left</option>
+          <option value="value">Best ₦ per km</option>
+        </select>
+      </div>
+      <p class="tiny board-count" id="bd-count"></p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only">Sample published trips</caption>
+        <thead><tr><th>Departs</th><th>Corridor</th><th>Class</th><th class="num">Seats left</th><th class="num">Fare ₦</th><th class="num">Distance</th><th class="num">₦/km</th><th class="num">True seat cost</th><th>Value</th><th></th></tr></thead>
+        <tbody id="board-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="assumptions">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">09 · Editable assumptions</p>
+      <h2>Every reference number on this page is yours to change.</h2>
+      <p class="lede">Corridor distances, vehicle economy, pump prices, parcel rates and fare adjustments are tables, not constants. They are what you last saw at the park or the pump — set the "as of" date so future-you knows how stale they are. Changes save to this browser and flow through every section.</p>
+    </div>
+
+    <div class="grid-2 assumptions">
+      <div class="reveal">
+        <details class="acc" open>
+          <summary>Corridor table <span class="tiny">distance, hours</span></summary>
+          <div class="acc-body">
+            <div class="field-inline">
+              <label for="rp-asof">These figures are current as of</label>
+              <input id="rp-asof" type="date">
+            </div>
+            <div class="table-wrap tight">
+              <table>
+                <thead><tr><th>Corridor</th><th class="num">km</th><th class="num">Hours</th></tr></thead>
+                <tbody id="corridor-body"></tbody>
+              </table>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-corridors">Restore default corridors</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Vehicle classes <span class="tiny">seats, km/L, wear ₦/km</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap tight">
+              <table>
+                <thead><tr><th>Class</th><th class="num">Seats</th><th class="num">km/L</th><th class="num">Wear ₦/km</th><th class="num">Typical tolls ₦</th><th class="num">Typical levy ₦</th></tr></thead>
+                <tbody id="class-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">Wear ₦/km is the whole car: tyres, oil, servicing, repairs, minus fuel. A Sienna doing 1,800 km a month on Nigerian roads replaces tyres roughly every 14 months — that is a real per-kilometre number, and it is not zero.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-classes">Restore default classes</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Reference pump prices <span class="tiny">₦ per litre, editable</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap tight">
+              <table>
+                <thead><tr><th>City / state</th><th class="num">Petrol ₦/L</th><th class="num">AGO ₦/L</th></tr></thead>
+                <tbody id="price-body"></tbody>
+              </table>
+            </div>
+            <p class="tiny">No live feed exists on a static page. Type what you paid; set the date above; the whole tool follows.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-prices">Restore default prices</button>
+          </div>
+        </details>
+      </div>
+
+      <div class="reveal" data-delay="1">
+        <details class="acc">
+          <summary>Parcel rate card <span class="tiny">space sold, not seats</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap tight">
+              <table>
+                <thead><tr><th>Class</th><th class="num">Rate ₦</th></tr></thead>
+                <tbody id="parcel-rate-body"></tbody>
+              </table>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-parcels">Restore default rates</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Fair-pricing adjustments <span class="tiny">seat premiums and discounts</span></summary>
+          <div class="acc-body">
+            <div class="table-wrap tight">
+              <table>
+                <thead><tr><th>Adjustment</th><th class="num">Value</th><th>Unit</th></tr></thead>
+                <tbody id="adj-body"></tbody>
+              </table>
+            </div>
+            <button class="btn btn-ghost btn-sm" type="button" id="reset-adj">Restore default adjustments</button>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Safety window defaults</summary>
+          <div class="acc-body">
+            <div class="form-grid">
+              <div class="field">
+                <label for="s-checkin">Check-in window <span class="tiny">± minutes</span></label>
+                <div class="input-group"><span class="prefix">min</span><input id="s-checkin" type="number" min="5" max="180" step="5" value="45" inputmode="numeric"></div>
+              </div>
+              <div class="field">
+                <label for="s-minspeed">Flag a stop as uneconomic below <span class="tiny">₦ net</span></label>
+                <div class="input-group"><span class="prefix">₦</span><input id="s-minspeed" type="number" min="0" max="50000" step="250" value="0" inputmode="numeric"></div>
+              </div>
+            </div>
+            <p class="tiny">The ±45 minute window is the number you read to a rider on the phone: "be at the park between 6:15 and 7:00". Widen it if your park is chaos; narrow it if your riders are punctual.</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>How each method is scored</summary>
+          <div class="acc-body">
+            <p>Cost causation is the yardstick: a rider's fair share is the whole trip cost multiplied by the kilometres they ride, divided by the sum of everyone's kilometres. For every method we then measure how far each rider's payment drifts from that share, and whether the method collects the full cost. Low drift with a full collection is the honest answer; the rest are conventions.</p>
+            <p class="tiny">The driver's cut, tolls and levies are treated as common costs inside the pool — they do not vary by rider. A method that recovers less than the total is not fair, it is a loss.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="card reveal worked-card">
+      <h3>Worked example, start to finish</h3>
+      <p class="muted small-copy">Benin City → Lagos in a Sienna: 245 km at 9 km/L, ₦1,650 a litre, ₦49/km wear, ₦5,000 tolls, ₦3,000 levies, ₦25,000 to the driver, six seats on sale at ₦9,000. Recomputed live from whatever you have configured.</p>
+      <ol class="steps" id="worked"></ol>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="shell">
+    <div class="section-head reveal">
+      <p class="eyebrow">10 · Honest limits</p>
+      <h2>What this tool refuses to pretend.</h2>
+    </div>
+    <div class="grid-3 limits-grid">
+      <div class="card reveal">
+        <span class="card-num">Nobody is verified</span>
+        <h3>No driver, no identity, no vehicle check</h3>
+        <p>RiderPool has never seen the car, the licence, the insurance or the tyre. The checklists exist because the humans in the trip are the only verification layer that has ever worked on these roads.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <span class="card-num">No matching</span>
+        <h3>It cannot find you a rider</h3>
+        <p>There is no pool, no queue, no notification. The sample board is fiction written into the source file. Real pooling is a phone call, and this page's job is to make the numbers in that call checkable.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <span class="card-num">No money moves</span>
+        <h3>Not a payment system</h3>
+        <p>Nothing is charged, held, escrowed or refunded. "Mark paid" is a pencil tick in your own browser; if the phone dies on the way to the park, your ledger dies with it unless you exported it.</p>
+      </div>
+      <div class="card reveal">
+        <span class="card-num">Costs are estimates</span>
+        <h3>Fuel, wear and levies are yours to correct</h3>
+        <p>Economy figures are averages, not measurements of your engine. Union levies, "orientation" charges and barrier demands vary by park and by day. Where the table says ₦3,000 and the agent says more, the table is wrong and you should edit it.</p>
+      </div>
+      <div class="card reveal" data-delay="1">
+        <span class="card-num">Safety is not arithmetic</span>
+        <h3>A fair fare has never prevented a crash</h3>
+        <p>Overloading, night driving and worn tyres are decisions, not numbers. The tool makes the cost of an extra body visible; it cannot stop the extra body from boarding.</p>
+      </div>
+      <div class="card reveal" data-delay="2">
+        <span class="card-num">Legality sits elsewhere</span>
+        <h3>Routing, permits and fare caps are local</h3>
+        <p>What a park union permits, what your route requires and what you may charge are decided by state law and local practice, not by this calculator. It prices honestly. It does not advise.</p>
+      </div>
+    </div>
+    <ul class="crosslist tiny limits-note reveal">
+      <li>The ETA chain assumes the average speed you type and the buffer you set. A bus lane, a toll queue or a flooded section will beat both.</li>
+      <li>Distance-based splitting is only as good as the stop kilometres you enter; "245 km" typed by memory moves every rider's share.</li>
+      <li>Break-even counts seats, not legal seats. If the class says six and eight bodies board, the maths is right and the trip is not.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">⇄</span><span style="color:#fff">RiderPool<small style="color:rgba(255,255,255,.6)">fill the seat, split it honestly</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">For the driver asked "how did you get ₦9,000?" and the rider who wants the real answer. Static HTML, no server, no account.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <p><a href="#build">Trip and fare maths</a><br><a href="#pricing">Fair pricing per seat</a><br><a href="#split">Who pays what</a><br><a href="#sequence">Stops and ETA</a><br><a href="#card">Trip card and manifest</a><br><a href="data.html">Fare data</a><br><a href="playbook.html">Park playbook</a><br><a href="record.html">Trip ledger</a></p>
+      </div>
+      <div>
+        <h4>More tools</h4>
+        <p><a href="../fuelmeter/">FuelMeter — cost per kilometre</a><br><a href="../payrite/">PayRite — payroll maths</a><br><a href="../rentjury/">RentJury — tenancy</a><br><a href="../../">All work</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Sample board is fiction. Nothing here is a booking, a quote or a fare ruling.</span><span class="mono">RiderPool · works offline · data stays in your browser</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>

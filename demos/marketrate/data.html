@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nigerian market units, price ranges, seasons and haul routes — MarketRate reference</title>
+<meta name="description" content="What a crate, mudu, basket, tubu, keg and paint bucket really weigh, what the staples cost at farm gate, wholesale and city retail, which month moves which crop, and what each produce route charges per crate.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="marketrate.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%231f6b3c'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>%E2%82%A6</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">₦</span><span>MarketRate<small>the fair price today</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Open the board</a>
+      <a href="data.html" class="is-here" aria-current="page">Market data</a>
+      <a href="playbook.html">Trading playbook</a>
+      <a href="record.html">Trade log</a>
+      <a class="btn btn-primary btn-sm" href="index.html#board">Open the board</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">MarketRate</a> <span aria-hidden="true">/</span> <span aria-current="page">Market data</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · the board's own inputs</p>
+    <h1 class="reveal" data-delay="1">Nobody prices per kilogram.<br><em>Everybody prices per crate.</em></h1>
+    <p class="lede reveal" data-delay="2">This page is the arithmetic underneath the board: the unit weights that turn a price into a comparison, the tier prices that make a spread real, the seasonal shape that tells you which way the month is going, and the road costs that decide whether a trip pays at all. Every figure is editable on the board, and yours replace these the moment you type them.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>22 kg</b> one wooden crate of tomato</span><span><b>0.35 kg</b> one struck mudu</span><span><b>₦244/km</b> the default transport rate</span><span><b>±28%</b> the seasonal swing the index applies</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="shape">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · The six numbers that drive every answer</p>
+          <h2 id="shape-h">Change these and the whole tool changes with them</h2>
+          <p class="lede">The board, the haul calculator, the season panel and the fair-price band all read from the same small set of assumptions. They live in section 09 of the tool, and they are deliberately rounded: two significant figures, honestly.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>22 kg</b><span>the crate of tomato, wood included</span></div>
+      <div class="metric"><b>50 kg</b><span>the bag, for rice, maize, beans and onion</span></div>
+      <div class="metric"><b>₦244/km</b><span>default one-way transport rate</span></div>
+      <div class="metric"><b>20%</b><span>reference loss on a hot soft-crop haul</span></div>
+      <div class="metric"><b>4%</b><span>reference loss on grain, and it is weevils and theft, not heat</span></div>
+      <div class="metric"><b>3.11×</b><span>gross spread on tomato, Zaria gate to Mile 12, before one cost line</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="units">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · Units and what they really weigh</p>
+          <h2 id="units-h">The unit is the trick. Here is what each one is worth in kilograms.</h2>
+          <p class="lede">₦1,100 a mudu can be dearer per kilogram than ₦26,000 a crate, and a 25 litre keg of palm oil is 22.7 kg of oil, not 25 kg. Weigh one unit of each once, keep the number, and every offer on the market becomes comparable. These are the weights the board plans with.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a unit or a crop</span><input id="units-q" type="search" placeholder="crate, mudu, garri, yam, bucket" autocomplete="off"></label>
+          <label class="field"><span>How the seller measures it</span><select id="units-f"><option value="all">All</option><option>Weighed</option><option>Counted</option><option>Struck</option><option>Heaped</option></select></label>
+          <span class="filter-count" id="units-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="units-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Unit as it is quoted</th>
+            <th data-sort="1">What it usually holds</th>
+            <th data-sort="2" class="n">Plan with (kg)</th>
+            <th data-sort="3">Measured by</th>
+            <th data-sort="4">Where the number hides</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Crate, wooden</td><td>Tomato, mixed grade</td><td class="n">22</td><td>Weighed</td><td>the wood alone is close to 2 kg, and a crate rinsed this morning carries water you pay for</td></tr>
+            <tr><td>Crate, wooden</td><td>Watermelon, mixed sizes</td><td class="n">25</td><td>Weighed</td><td>the board quotes watermelon at 25 kg, not the tomato crate's 22. One big fruit under three small ones is a 25 kg crate of air</td></tr>
+            <tr><td>Crate, wooden</td><td>Pepper on the northern route</td><td class="n">22</td><td>Counted</td><td>pepper trades by the 8 kg basket here. If you are quoted a crate, ask for kilograms before you agree the price</td></tr>
+            <tr><td>Basket, woven</td><td>Pepper (rodo), fresh</td><td class="n">8</td><td>Heaped</td><td>heaped on purpose. Struck level, the same basket is nearer 5 kg, so ask which one the price refers to. Leaf in the same basket settles by a third while you wait in the queue</td></tr>
+            <tr><td>Mudu, calabash</td><td>Beans (brown honey)</td><td class="n">0.35</td><td>Struck</td><td>the board's mudu is struck level. A roadside mudu filled by hand is a different quantity at the same price</td></tr>
+            <tr><td>Mudu, calabash</td><td>Maize grain</td><td class="n">0.35</td><td>Struck</td><td>the board's price is for a struck mudu. If the seller heaps it to 0.5 kg you have about 43% more grain for the same money, near 30% less per kilogram. If it comes level but shallow you lost that margin without seeing it</td></tr>
+            <tr><td>Mudu, calabash</td><td>Rice, milled local</td><td class="n">0.35</td><td>Heaped</td><td>rice is quoted per mudu in the south-west and per litre in the north. Ask which one you are being sold</td></tr>
+            <tr><td>Mudu, calabash</td><td>Ogbono, in shell</td><td class="n">0.35</td><td>Struck</td><td>shell is real weight. Shelled ogbono in the same mudu is dearer per kilogram, not cheaper</td></tr>
+            <tr><td>Bag, woven</td><td>Rice (local, milled 7032)</td><td class="n">50</td><td>Weighed</td><td>a sealed 50 kg bag can arrive at 48 kg. Weigh one bag out of ten, not the whole lorry</td></tr>
+            <tr><td>Bag, woven</td><td>Maize grain, for the mills</td><td class="n">50</td><td>Weighed</td><td>moisture is the hidden discount. Grain at 16% moisture is 50 kg partly made of water you will pay to dry</td></tr>
+            <tr><td>Bag, woven</td><td>Onion, bulbs</td><td class="n">50</td><td>Counted</td><td>the imported and local mix decides the price. A bag of shrivelled local is not the board's bag</td></tr>
+            <tr><td>Bag, woven</td><td>Yam, small tubers</td><td class="n">50</td><td>Counted</td><td>yam trades by the cluster here. A bag of smalls is a different good with a familiar name</td></tr>
+            <tr><td>Tubu, cluster</td><td>Yam (Puna)</td><td class="n">30</td><td>Counted</td><td>count the tubers inside the cluster. Six smalls is not three bigs, and the skin looks the same from outside</td></tr>
+            <tr><td>Keg, plastic 25 litre</td><td>Garri, white fine</td><td class="n">25</td><td>Struck</td><td>shake it at the gate and dry garri settles short of the rim. Level it with your hand, not the seller's</td></tr>
+            <tr><td>Keg, plastic 25 litre</td><td>Palm oil, red</td><td class="n">22.7</td><td>Weighed</td><td>oil is a liquid: 25 litres is 22.7 kg. The board already carries that figure, so use it</td></tr>
+            <tr><td>Paint bucket, 16 litre</td><td>Maize, rice, beans, garri</td><td class="n">12</td><td>Heaped</td><td>the poorest unit in the market. The same bucket holds about 12 kg of grain and about 9 kg of garri, so never compare a bucket price with a keg price in kilograms</td></tr>
+            <tr><td>Bunch</td><td>Plantain, cooked type</td><td class="n">25</td><td>Counted</td><td>bunch weight is finger count. A hand missing from the middle is three kilograms gone</td></tr>
+            <tr><td>Calabash, large</td><td>Egusi, dried, in shell</td><td class="n">12</td><td>Heaped</td><td>egusi goes by the calabash at the gate and by the mudu in the city. Same seed, four different prices</td></tr>
+            <tr><td>Flat</td><td>Eggs, hybrid medium, 30 count</td><td class="n">1.85</td><td>Counted</td><td>count is everything: a flat of 28 is not a flat. Cracks are a discount you negotiate, not a spoilage line</td></tr>
+            <tr><td>Carton</td><td>Titus (frozen mackerel), graded</td><td class="n">10</td><td>Counted</td><td>glaze ice is weight. Defrosted, the carton gives up 5-10% before it reaches your buyer</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Weights are rounded planning figures, the same ones the board uses. Where a commodity carries its own weight on the board, the commodity wins over the unit. Confirm by weighing or counting once, then type your number into section 09.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="prices">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Price ranges by tier and by season</p>
+          <h2 id="prices-h">Farm gate, wholesale desk, city retail, and where the month puts them</h2>
+          <p class="lede">Three tiers of the same unit, plus what the board's seasonal shape says the same unit is worth in the glut month and in that crop's own lean month. The glut and lean figures are the retail price at 0.72× and 1.28×, which is the ±28% swing the index applies. They are not forecasts.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a commodity</span><input id="prices-q" type="search" placeholder="tomato, garri, yam, beans" autocomplete="off"></label>
+          <label class="field"><span>Filter by crop class</span><select id="prices-f"><option value="all">All</option><option>soft</option><option>semi</option><option>grain</option><option>dry</option><option>tuber</option><option>leaf</option><option>fresh</option></select></label>
+          <span class="filter-count" id="prices-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="prices-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Commodity</th>
+            <th data-sort="1">Board unit</th>
+            <th data-sort="2" class="n">kg</th>
+            <th data-sort="3" class="n">Farm gate</th>
+            <th data-sort="4" class="n">Wholesale</th>
+            <th data-sort="5" class="n">City retail</th>
+            <th data-sort="6" class="n">Glut month, about</th>
+            <th data-sort="7" class="n">Lean month, about</th>
+            <th data-sort="8" class="n">Retail ÷ gate</th>
+            <th data-sort="9">Lean month</th>
+            <th data-sort="10">Crop class</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Tomato (mixed varieties)</td><td>crate</td><td class="n">22</td><td class="n">₦9,000</td><td class="n">₦17,500</td><td class="n">₦28,000</td><td class="n">₦20,000</td><td class="n">₦36,000</td><td class="n">3.11×</td><td>April</td><td>soft</td></tr>
+            <tr><td>Pepper (rodo)</td><td>basket</td><td class="n">8</td><td class="n">₦6,500</td><td class="n">₦11,000</td><td class="n">₦17,000</td><td class="n">₦12,000</td><td class="n">₦22,000</td><td class="n">2.62×</td><td>June</td><td>semi</td></tr>
+            <tr><td>Onion (bulb)</td><td>bag</td><td class="n">50</td><td class="n">₦42,000</td><td class="n">₦55,000</td><td class="n">₦78,000</td><td class="n">₦56,000</td><td class="n">₦100,000</td><td class="n">1.86×</td><td>February</td><td>semi</td></tr>
+            <tr><td>Watermelon</td><td>crate</td><td class="n">25</td><td class="n">₦7,000</td><td class="n">₦10,000</td><td class="n">₦15,000</td><td class="n">₦11,000</td><td class="n">₦19,000</td><td class="n">2.14×</td><td>June</td><td>soft</td></tr>
+            <tr><td>Ugu / bitter leaf</td><td>basket</td><td class="n">4</td><td class="n">₦3,000</td><td class="n">₦4,500</td><td class="n">₦7,000</td><td class="n">₦5,000</td><td class="n">₦9,000</td><td class="n">2.33×</td><td>April</td><td>leaf</td></tr>
+            <tr><td>Rice (local, milled)</td><td>bag</td><td class="n">50</td><td class="n">₦58,000</td><td class="n">₦66,000</td><td class="n">₦78,000</td><td class="n">₦56,000</td><td class="n">₦100,000</td><td class="n">1.34×</td><td>May</td><td>grain</td></tr>
+            <tr><td>Maize (grain)</td><td>bag</td><td class="n">50</td><td class="n">₦34,000</td><td class="n">₦41,000</td><td class="n">₦50,000</td><td class="n">₦36,000</td><td class="n">₦64,000</td><td class="n">1.47×</td><td>September</td><td>grain</td></tr>
+            <tr><td>Millet (sanmina)</td><td>bag</td><td class="n">50</td><td class="n">₦32,000</td><td class="n">₦38,000</td><td class="n">₦46,000</td><td class="n">₦33,000</td><td class="n">₦59,000</td><td class="n">1.44×</td><td>September</td><td>grain</td></tr>
+            <tr><td>Beans (brown honey)</td><td>bag</td><td class="n">50</td><td class="n">₦78,000</td><td class="n">₦92,000</td><td class="n">₦105,000</td><td class="n">₦75,500</td><td class="n">₦134,500</td><td class="n">1.35×</td><td>July</td><td>grain</td></tr>
+            <tr><td>Groundnut (shelled)</td><td>keg</td><td class="n">25</td><td class="n">₦40,000</td><td class="n">₦48,000</td><td class="n">₦58,000</td><td class="n">₦42,000</td><td class="n">₦74,000</td><td class="n">1.45×</td><td>July</td><td>grain</td></tr>
+            <tr><td>Egusi (seed)</td><td>calabash</td><td class="n">12</td><td class="n">₦26,000</td><td class="n">₦32,000</td><td class="n">₦40,000</td><td class="n">₦29,000</td><td class="n">₦51,000</td><td class="n">1.54×</td><td>October</td><td>dry</td></tr>
+            <tr><td>Garri (white, fine)</td><td>keg</td><td class="n">25</td><td class="n">₦12,000</td><td class="n">₦15,000</td><td class="n">₦19,000</td><td class="n">₦13,500</td><td class="n">₦24,500</td><td class="n">1.58×</td><td>September</td><td>dry</td></tr>
+            <tr><td>Cassava flour (high grade)</td><td>bag</td><td class="n">50</td><td class="n">₦46,000</td><td class="n">₦54,000</td><td class="n">₦64,000</td><td class="n">₦46,000</td><td class="n">₦82,000</td><td class="n">1.39×</td><td>October</td><td>dry</td></tr>
+            <tr><td>Palm oil (red)</td><td>keg</td><td class="n">22.7</td><td class="n">₦46,000</td><td class="n">₦54,000</td><td class="n">₦64,000</td><td class="n">₦46,000</td><td class="n">₦82,000</td><td class="n">1.39×</td><td>November</td><td>dry</td></tr>
+            <tr><td>Cassava (fresh)</td><td>bag</td><td class="n">50</td><td class="n">₦14,000</td><td class="n">₦19,000</td><td class="n">₦26,000</td><td class="n">₦18,500</td><td class="n">₦33,500</td><td class="n">1.86×</td><td>March</td><td>tuber</td></tr>
+            <tr><td>Yam (Puna)</td><td>tubu</td><td class="n">30</td><td class="n">₦24,000</td><td class="n">₦32,000</td><td class="n">₦44,000</td><td class="n">₦31,500</td><td class="n">₦56,500</td><td class="n">1.83×</td><td>February</td><td>tuber</td></tr>
+            <tr><td>Plantain</td><td>bunch</td><td class="n">25</td><td class="n">₦9,000</td><td class="n">₦13,000</td><td class="n">₦18,500</td><td class="n">₦13,500</td><td class="n">₦23,500</td><td class="n">2.06×</td><td>August</td><td>semi</td></tr>
+            <tr><td>Eggs (flat of 30)</td><td>flat</td><td class="n">1.85</td><td class="n">₦5,200</td><td class="n">₦6,000</td><td class="n">₦7,600</td><td class="n">₦5,500</td><td class="n">₦9,700</td><td class="n">1.46×</td><td>December</td><td>fresh</td></tr>
+            <tr><td>Chicken (broiler)</td><td>bird</td><td class="n">2.2</td><td class="n">₦6,500</td><td class="n">₦7,800</td><td class="n">₦10,000</td><td class="n">₦7,200</td><td class="n">₦12,800</td><td class="n">1.54×</td><td>December</td><td>fresh</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Tier prices are the board's own reference row for each commodity, dated by the prices-as-of field. Glut and lean columns apply the default ±28% swing to the retail figure; set your own swing in section 09 and the season panel moves with it.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="desks">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · What each desk adds</p>
+          <h2 id="desks-h">The same crate costs different money at different market gates</h2>
+          <p class="lede">Every market on the board carries a multiplier: rent, levy culture, porter habit, distance from the farm belt. The tool prices a commodity by taking its tier figure and scaling it by that desk's multiplier, so you can see the spread before you hire a truck. The tomato column is what ₦9,000 at the gate, ₦17,500 wholesale and ₦28,000 at retail becomes at that desk.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a market</span><input id="desks-q" type="search" placeholder="Mile 12, Berkiji, Wuse, gate" autocomplete="off"></label>
+          <label class="field"><span>Filter by tier</span><select id="desks-f"><option value="all">All</option><option>farm gate</option><option>wholesale</option><option>city retail</option></select></label>
+          <span class="filter-count" id="desks-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="desks-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Market</th>
+            <th data-sort="1">City</th>
+            <th data-sort="2">Tier</th>
+            <th data-sort="3" class="n">Multiplier</th>
+            <th data-sort="4" class="n">A crate of tomato here</th>
+            <th data-sort="5">What the multiplier is paying for</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Zaria farm gate</td><td>Zaria</td><td>farm gate</td><td class="n">×1.00</td><td class="n">₦9,000</td><td>the reference gate the board's farm prices are quoted at</td></tr>
+            <tr><td>Baguda gate</td><td>Zaria</td><td>farm gate</td><td class="n">×0.94</td><td class="n">₦8,460</td><td>assembly market, cheapest full load in the state, longest wait to fill a truck</td></tr>
+            <tr><td>Kano farm gate</td><td>Kano</td><td>farm gate</td><td class="n">×0.96</td><td class="n">₦8,640</td><td>northern aggregation point, good grain, thin perishable supply</td></tr>
+            <tr><td>Nsukka line gate</td><td>Nsukka</td><td>farm gate</td><td class="n">×0.92</td><td class="n">₦8,280</td><td>roots, pepper and leaf onto the Enugu road</td></tr>
+            <tr><td>Sabon Tade</td><td>Zaria</td><td>wholesale</td><td class="n">×0.92</td><td class="n">₦16,100</td><td>day market, low rent, cash and carry</td></tr>
+            <tr><td>Berkiji Ojo</td><td>Lagos</td><td>wholesale</td><td class="n">×0.86</td><td class="n">₦15,050</td><td>trucks unload here before the city marks it up. Fast, loud, no credit</td></tr>
+            <tr><td>Agbowo</td><td>Ibadan</td><td>wholesale</td><td class="n">×0.82</td><td class="n">₦14,350</td><td>western-belt wholesale, the cheapest city price on the board</td></tr>
+            <tr><td>Dei-Armants</td><td>Abuja</td><td>wholesale</td><td class="n">×0.92</td><td class="n">₦16,100</td><td>wholesale for the FCT satellite towns, distance built into the price</td></tr>
+            <tr><td>Nkwo Agu</td><td>Onitsha</td><td>wholesale</td><td class="n">×0.94</td><td class="n">₦16,450</td><td>east-side wholesale on the main market's overflow</td></tr>
+            <tr><td>Munsu</td><td>Kano</td><td>wholesale</td><td class="n">×0.90</td><td class="n">₦15,750</td><td>industrial-route wholesale, grain and groundnut first</td></tr>
+            <tr><td>Okpara</td><td>Enugu</td><td>wholesale</td><td class="n">×0.90</td><td class="n">₦15,750</td><td>en-route wholesale before Ogbete marks it again</td></tr>
+            <tr><td>Mile 12</td><td>Lagos</td><td>city retail</td><td class="n">×1.00</td><td class="n">₦28,000</td><td>the reference city retail desk, and the destination of the worked example</td></tr>
+            <tr><td>Oshodi TBS</td><td>Lagos</td><td>city retail</td><td class="n">×0.90</td><td class="n">₦25,200</td><td>cheaper on grade, faster on turnover, worst on quality</td></tr>
+            <tr><td>Bodija</td><td>Ibadan</td><td>city retail</td><td class="n">×0.96</td><td class="n">₦26,880</td><td>planned market, moderate rents, orderly porter arrangement, the control desk for Lagos</td></tr>
+            <tr><td>Wuse Market</td><td>Abuja</td><td>city retail</td><td class="n">×1.06</td><td class="n">₦29,680</td><td>highest rents in the city, best cold chain, buyer who does not haggle</td></tr>
+            <tr><td>Garki Market</td><td>Abuja</td><td>city retail</td><td class="n">×1.00</td><td class="n">₦28,000</td><td>the second city-centre desk, useful as the control when Wuse says no</td></tr>
+            <tr><td>Onitsha Main Market</td><td>Onitsha</td><td>city retail</td><td class="n">×1.02</td><td class="n">₦28,560</td><td>largest goods flow in the south-east, distribution rather than consumption</td></tr>
+            <tr><td>Rumuokoro</td><td>Port Harcourt</td><td>city retail</td><td class="n">×1.04</td><td class="n">₦29,120</td><td>refinery-city retail, everything arrives by road and shows it</td></tr>
+            <tr><td>Makurdi Central</td><td>Makurdi</td><td>city retail</td><td class="n">×0.94</td><td class="n">₦26,320</td><td>Benue's main produce market, rice and yam close to the farm</td></tr>
+            <tr><td>Okhua</td><td>Benin City</td><td>city retail</td><td class="n">×0.88</td><td class="n">₦24,640</td><td>middle-belt resale, cheap because it is on the way, not because it is short</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Multipliers are editable in section 09 and they apply to the commodity's own tier price, so a farm gate desk is never charged retail. Change a multiplier and the haul calculator, the fair-price band and the trade log's market suggestions all follow.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="months">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Month by month</p>
+          <h2 id="months-h">Which way each crop group moves, and what to do about it</h2>
+          <p class="lede">Direction, not prediction. Each commodity carries its own lean month on the board and the index swings around it; this table is the same shape read across the whole year, so you can see whether the month you are standing in is giving you an edge or taking one away.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a month or a crop</span><input id="months-q" type="search" placeholder="september, maize, yam, glut" autocomplete="off"></label>
+          
+          <span class="filter-count" id="months-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="months-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Month</th>
+            <th data-sort="1">What the market year is doing</th>
+            <th data-sort="2">Grains</th>
+            <th data-sort="3">Soft produce and leaf</th>
+            <th data-sort="4">Tubers and bunch</th>
+            <th data-sort="5">Dry goods and oil</th>
+            <th data-sort="6">What to do with it</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>January</td><td>Harmattan dust, dry-season vegetables under irrigation, granaries opening</td><td>Rising</td><td>Rising</td><td>Rising</td><td>Flat</td><td>Old stocks are thinning. If you are buying grain for a later delivery, price it now and check the moisture</td></tr>
+            <tr><td>February</td><td>Yam and onion at their dearest before the transplant</td><td>Flat</td><td>Rising</td><td>Peak</td><td>Flat</td><td>A tubu of yam is worth what the shed cost you four months ago. Sell it, do not admire it</td></tr>
+            <tr><td>March</td><td>First new-season cassava, garri plants working, rains arriving in the south</td><td>Flat</td><td>Rising</td><td>Falling</td><td>Rising</td><td>Clear the old yam. Fresh cassava at the gate is about to undercut it</td></tr>
+            <tr><td>April</td><td>Irrigated and early-field tomato at its peak, worst quality of the year</td><td>Falling</td><td>Peak</td><td>Falling</td><td>Rising</td><td>Buy grade rather than price. A peak-month crate of soft tomato is where spoilage takes its cut</td></tr>
+            <tr><td>May</td><td>Rice dear before its own new crop, field tomato arriving</td><td>Rising</td><td>Falling</td><td>Falling</td><td>Rising</td><td>Two different decisions in one month. Do not price the rice off the tomato trend</td></tr>
+            <tr><td>June</td><td>Pepper and watermelon dear before their harvest</td><td>Rising</td><td>Peak</td><td>Flat</td><td>Rising</td><td>Haul pepper into the city now only if the load will fill. Half a truck on a peak month spread still loses</td></tr>
+            <tr><td>July</td><td>Beans and groundnut at their lean, new yam weeks away</td><td>Peak</td><td>Falling</td><td>Flat</td><td>Rising</td><td>Your stored beans are worth most this month. Sell forward only if the buyer pays cash now</td></tr>
+            <tr><td>August</td><td>Rains at their heaviest, roads bad, plantain dear</td><td>Falling</td><td>Falling</td><td>Peak</td><td>Flat</td><td>Plantain is dear because the roads are bad, not because bunches are scarce. Haul cost, not price, is the risk</td></tr>
+            <tr><td>September</td><td>The hungry season: old maize and millet nearly gone, new crop still in the ground</td><td>Peak</td><td>Falling</td><td>Falling</td><td>Peak</td><td>Best month to have stored, worst month to be buying. Garri, maize and millet all lean here</td></tr>
+            <tr><td>October</td><td>New crop everywhere, the early harvest festival, roads drying</td><td>Glut</td><td>Glut</td><td>Glut</td><td>Falling</td><td>The month to buy what you will sell later, provided the class stores. Grain and dry goods yes, soft produce no</td></tr>
+            <tr><td>November</td><td>Grain glut at its cheapest, tomato and pepper at their lowest</td><td>Glut</td><td>Falling</td><td>Flat</td><td>Falling</td><td>Dry grain to below 13-14% moisture before a sack of it touches your floor. Aflatoxin is a rejection, not a cost line</td></tr>
+            <tr><td>December</td><td>Festive demand lifts eggs, chicken and fish; tomato starts climbing again</td><td>Flat</td><td>Rising</td><td>Rising</td><td>Rising</td><td>Fresh goods peak here on demand, not on scarcity. Sell them the week they arrive and keep nothing over the holiday</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Direction words only, on purpose. The number the tool works with is the commodity's own index: 1 + swing × cosine of the distance from its lean month, which is why the same month is a peak for yam and a glut for maize.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="routes">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · The road, priced</p>
+          <h2 id="routes-h">Transport cost per crate on the routes that actually carry produce</h2>
+          <p class="lede">Trip cost is the board's default rate of ₦244 per kilometre times the distance, unless your driver quotes a fixed figure. The last column adds the default levies of ₦12,000 for the trip and ₦300 per unit for porters, because a transport figure without them is a half truth.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a route</span><input id="routes-q" type="search" placeholder="Zaria, Lagos, Makurdi, Enugu" autocomplete="off"></label>
+          
+          <span class="filter-count" id="routes-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="routes-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Route</th>
+            <th data-sort="1" class="n">Distance (km)</th>
+            <th data-sort="2" class="n">Trip at ₦244/km</th>
+            <th data-sort="3">What usually goes</th>
+            <th data-sort="4" class="n">Units on the load</th>
+            <th data-sort="5" class="n">Transport per unit</th>
+            <th data-sort="6" class="n">With levies and porters</th>
+            <th data-sort="7">What decides the trip</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Zaria → Lagos</td><td class="n">780</td><td class="n">₦190,320</td><td>Tomato, crate</td><td class="n">350 crates</td><td class="n">₦544</td><td class="n">₦878</td><td>the worked example. Break-even is 16 crates; below that the driver and the levies own the margin</td></tr>
+            <tr><td>Ibadan → Lagos</td><td class="n">130</td><td class="n">₦31,720</td><td>Tomato, pepper, leaf</td><td class="n">300 crates</td><td class="n">₦106</td><td class="n">₦446</td><td>short enough that spoilage is a queue problem, not a road problem</td></tr>
+            <tr><td>Ibadan → Zaria</td><td class="n">700</td><td class="n">₦170,800</td><td>Return load: oil, garri, flour</td><td class="n">320 units</td><td class="n">₦534</td><td class="n">₦871</td><td>the northbound leg is where a round trip is won or lost. Quote it separately</td></tr>
+            <tr><td>Makurdi → Lagos</td><td class="n">470</td><td class="n">₦114,680</td><td>Rice, yam</td><td class="n">250 bags</td><td class="n">₦459</td><td class="n">₦807</td><td>Benue grain moves by the bag, so a per-crate habit will misprice the whole load</td></tr>
+            <tr><td>Makurdi → Abuja</td><td class="n">200</td><td class="n">₦48,800</td><td>Rice, yam</td><td class="n">220 bags</td><td class="n">₦222</td><td class="n">₦576</td><td>the shortest good grain route on the board. Worth a second truck before a first</td></tr>
+            <tr><td>Kano → Lagos</td><td class="n">840</td><td class="n">₦204,960</td><td>Groundnut, beans, onion</td><td class="n">200 bags</td><td class="n">₦1,025</td><td class="n">₦1,385</td><td>longest northern haul south. Grain tolerates it; anything soft does not</td></tr>
+            <tr><td>Nsukka → Lagos</td><td class="n">700</td><td class="n">₦170,800</td><td>Pepper, leaf, tuber</td><td class="n">300 baskets</td><td class="n">₦569</td><td class="n">₦909</td><td>the basket is a small unit, so the per-unit transport looks harmless and the total does not</td></tr>
+            <tr><td>Enugu → Lagos</td><td class="n">740</td><td class="n">₦180,560</td><td>Pepper, plantain, palm oil</td><td class="n">280 units</td><td class="n">₦645</td><td class="n">₦988</td><td>overlaps the Nsukka load. Two near-identical routes is a rate conversation with your driver</td></tr>
+            <tr><td>Abuja → Lagos</td><td class="n">760</td><td class="n">₦185,440</td><td>Watermelon, tomato, poultry</td><td class="n">300 crates</td><td class="n">₦618</td><td class="n">₦958</td><td>the FCT buys as much as it sends, so loads are easier both ways</td></tr>
+            <tr><td>Abuja → Jos</td><td class="n">180</td><td class="n">₦43,920</td><td>Potato, temperate vegetable</td><td class="n">250 crates</td><td class="n">₦176</td><td class="n">₦524</td><td>short, cool, and one of the few routes where a soft crop survives intact</td></tr>
+            <tr><td>Onitsha → Lagos</td><td class="n">660</td><td class="n">₦161,040</td><td>Dry goods, imported bagged goods</td><td class="n">250 units</td><td class="n">₦644</td><td class="n">₦992</td><td>distribution traffic rather than farm traffic, so the levies are the line to watch</td></tr>
+            <tr><td>Port Harcourt → Lagos</td><td class="n">660</td><td class="n">₦161,040</td><td>Fish, oil, cassava</td><td class="n">260 baskets</td><td class="n">₦619</td><td class="n">₦966</td><td>cold-chain cost is not in this column, and it should be in your head</td></tr>
+            <tr><td>Enugu → Port Harcourt</td><td class="n">60</td><td class="n">₦14,640</td><td>Pepper, leaf, tuber</td><td class="n">250 baskets</td><td class="n">₦59</td><td class="n">₦407</td><td>the trip is cheap; the two sets of porters are not. Short routes are levy routes</td></tr>
+            <tr><td>Onitsha → Port Harcourt</td><td class="n">250</td><td class="n">₦61,000</td><td>Fish, dry goods</td><td class="n">200 baskets</td><td class="n">₦305</td><td class="n">₦665</td><td>small load assumption because the buyers take part of it on the way</td></tr>
+            <tr><td>Akure → Lagos</td><td class="n">400</td><td class="n">₦97,600</td><td>Leaf, pepper, cassava products</td><td class="n">250 baskets</td><td class="n">₦390</td><td class="n">₦738</td><td>leaf on this distance is a race. Sell at the gate unless the truck leaves before dawn</td></tr>
+            <tr><td>Benin City → Lagos</td><td class="n">320</td><td class="n">₦78,080</td><td>Cassava, oil, fruit</td><td class="n">300 baskets</td><td class="n">₦260</td><td class="n">₦600</td><td>the middle-belt run: cheap road, high handling, price decided at unloading</td></tr>
+            <tr><td>Jos → Lagos</td><td class="n">700</td><td class="n">₦170,800</td><td>Irish potato, temperate crop</td><td class="n">200 bags</td><td class="n">₦854</td><td class="n">₦1,214</td><td>a bag unit and a long road: the highest per-unit haul here that still pays, because the price gap is wide</td></tr>
+            <tr><td>Maiduguri → Lagos</td><td class="n">1,100</td><td class="n">₦268,400</td><td>Millet, groundnut, onion</td><td class="n">180 bags</td><td class="n">₦1,491</td><td class="n">₦1,858</td><td>the distance alone sets the floor. Only dense dry goods survive the arithmetic</td></tr>
+            <tr><td>Zaria → Kano</td><td class="n">45</td><td class="n">₦10,980</td><td>Tomato, pepper</td><td class="n">350 crates</td><td class="n">₦31</td><td class="n">₦366</td><td>transport is almost free at this distance, and the levy and porter line is the whole decision</td></tr>
+            <tr><td>Ibadan → Abuja</td><td class="n">630</td><td class="n">₦153,720</td><td>Tomato, flour, oil</td><td class="n">300 crates</td><td class="n">₦512</td><td class="n">₦852</td><td>the western-belt to FCT run, where a wholesale price at Agbowo becomes a retail price at Wuse</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Distances are the board's inter-city table, editable per trip. The per-unit figures assume the load shown; fill less and the same trip costs more each, which is exactly what the break-even quantity in section 04 of the tool is telling you.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="verify">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · Making these yours</p>
+          <h2 id="verify-h">Three edits that change every answer on this page</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box "><h3>Type this morning's prices into the board</h3><p>The reference rows are a starting shape with an as-of date. Change one farm-gate figure and the spread, the fair band and the break-even quantity all move with it, because they are the same numbers read three ways.</p></div>
+        <div class="note-box warn"><h3>Weigh the unit before you argue about the price</h3><p>A crate that comes to you at 19 kg of goods and 3 kg of wet wood is not the board's crate. Set the kilogram figure in section 09, or override it per commodity, and stop comparing labels.</p></div>
+        <div class="note-box bad"><h3>Replace the rate with your driver's quote</h3><p>₦244 per kilometre is a planning default, not a market. A driver who quotes ₦190,000 for the Zaria trip and one who quotes ₦244 × 780 are quoting the same trip; a third who wants ₦260,000 is telling you something about fuel, return load or his own calendar.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">08 · Where to check these figures</p>
+          <h2 id="sources-h">Ask for the dated table, not the website</h2>
+          <p class="lede">Real prices come from people who are at the market. This page exists so you can see what the tool assumed, not so you can avoid asking.</p>
+        </div>
+<ul class="sources reveal">        <li>The market union or market women's association at the specific market you trade in, for the day's tier price and the levy schedule.</li>
+        <li>The commodity traders' association for your crop, for the crate, basket and mudu conventions that actually apply on that route.</li>
+        <li>The monthly public agricultural marketing price reports (the FMARD and NAICS series) and the price tables your state marketing board issues, asked for by date.</li>
+        <li>Your own trade log, exported as CSV from the record page. Twelve months of your own buys and sells is the only price history that describes your market.</li>
+        <li>One physical scale and one counted crate. Weigh twice, then trust the number you wrote down.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own morning into it</h2>
+        <p class="lede">The board takes your prices, the haul calculator turns them into a break-even quantity, and the trade log keeps the record of what you actually did.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#board">Open the price board</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the trade log</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">₦</span><span style="color:#fff">MarketRate<small style="color:rgba(255,255,255,.6)">the fair price today</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one habit: write the unit, the tier and the four costs down before any money moves. Your own prices always beat the reference figures.</p>
+      </div>
+      <div>
+        <h4>MarketRate pages</h4>
+        <p><a href="index.html">Open the board</a><br><a href="data.html">Market data</a><br><a href="playbook.html">Trading playbook</a><br><a href="record.html">Trade log</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../cropkeep/">CropKeep — post-harvest loss maths</a><br><a href="../landedcost/">LandedCost — what imports really cost</a><br><a href="../payrite/">PayRite — payroll and PAYE</a><br><a href="../suncost/">SunCost — solar vs generator</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Every figure here is an indicative planning shape, rounded on purpose, and your edited board replaces it. Not a price quotation, not a market feed.</span><span class="mono">MarketRate · Market data · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#units-tbl');
+  pages.filter('#units-tbl', { input: '#units-q', select: '#units-f', count: '#units-count', empty: "No row here matches that search." });
+  pages.sortable('#prices-tbl');
+  pages.filter('#prices-tbl', { input: '#prices-q', select: '#prices-f', count: '#prices-count', empty: "No row here matches that search." });
+  pages.sortable('#desks-tbl');
+  pages.filter('#desks-tbl', { input: '#desks-q', select: '#desks-f', count: '#desks-count', empty: "No row here matches that search." });
+  pages.sortable('#months-tbl');
+  pages.filter('#months-tbl', { input: '#months-q', count: '#months-count', empty: "No row here matches that search." });
+  pages.sortable('#routes-tbl');
+  pages.filter('#routes-tbl', { input: '#routes-q', count: '#routes-count', empty: "No row here matches that search." });
+  var unitSel = document.querySelector('#units-f'); if (unitSel) unitSel.dataset.col = '3';
+  var clsSel = document.querySelector('#prices-f'); if (clsSel) clsSel.dataset.col = '10';
+  var tierSel = document.querySelector('#desks-f'); if (tierSel) tierSel.dataset.col = '2';
+});
+</script>
+</body>
+</html>

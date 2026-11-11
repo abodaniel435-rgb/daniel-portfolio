@@ -52,12 +52,18 @@
 
   function store(key, fallback) {
     var full = 'afrik:' + key;
+    // Callers push into what read() returns, so the fallback must never be handed
+    // out by reference — a cleared store would still report its old rows.
+    function fresh() {
+      if (fallback === null || fallback === undefined) return fallback;
+      try { return JSON.parse(JSON.stringify(fallback)); } catch (e) { return fallback; }
+    }
     return {
       read: function () {
         try {
           var raw = global.localStorage.getItem(full);
-          return raw ? JSON.parse(raw) : fallback;
-        } catch (e) { return fallback; }
+          return raw ? JSON.parse(raw) : fresh();
+        } catch (e) { return fresh(); }
       },
       write: function (value) {
         try { global.localStorage.setItem(full, JSON.stringify(value)); return true; }
@@ -201,7 +207,7 @@
   }
 
   function activeLinks() {
-    var links = $$('.nav a[href^="#"]');
+    var links = $$('.nav a[href^="#"]:not(.btn)');
     if (!links.length || !('IntersectionObserver' in global)) return;
     var map = {};
     links.forEach(function (l) { map[l.getAttribute('href').slice(1)] = l; });

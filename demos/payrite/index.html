@@ -7,8 +7,8 @@
 <meta name="description" content="Calculate PAYE, pension, NHF and net pay for Nigerian staff, compare the take-home impact of rent relief, and keep a payroll roster you can export. Runs entirely in your browser.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../_kit/kit.css">
-<link rel="stylesheet" href="payrite.css">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="payrite.css?v=3">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23146b5a'/><path d='M9 22V10h7a4 4 0 010 8H9' stroke='white' stroke-width='2.4' fill='none'/></svg>">
 </head>
 <body>
@@ -23,6 +23,9 @@
       <a href="#breakdown">Breakdown</a>
       <a href="#roster">Roster</a>
       <a href="#rules">Rules used</a>
+      <a href="data.html">Rates &amp; rules</a>
+      <a href="playbook.html">Payroll playbook</a>
+      <a href="record.html">Payroll log</a>
       <a class="btn btn-ink btn-sm" href="#calculator">Start payroll</a>
     </nav>
   </div>
@@ -106,8 +109,9 @@
             <p class="help">Some sectors (state agencies) run 10% employee.</p>
           </div>
           <div class="field">
-            <label for="staff">Staff count <span class="tiny">for the roster</span></label>
+            <label for="staff">Staff on this package</label>
             <input id="staff" name="staff" type="number" min="1" max="500" value="1">
+            <p class="help">Adds this many identical lines to the roster in one go.</p>
           </div>
         </div>
 
@@ -276,7 +280,7 @@
       </div>
       <div>
         <h4>Sections</h4>
-        <p><a href="#calculator">Calculate</a><br><a href="#breakdown">Breakdown</a><br><a href="#roster">Roster</a><br><a href="#rules">Rules used</a></p>
+        <p><a href="#calculator">Calculate</a><br><a href="#breakdown">Breakdown</a><br><a href="#roster">Roster</a><br><a href="#rules">Rules used</a><br><a href="data.html">Rates &amp; rules</a><br><a href="playbook.html">Payroll playbook</a><br><a href="record.html">Payroll log</a></p>
       </div>
       <div>
         <h4>More tools</h4>
@@ -287,7 +291,7 @@
   </div>
 </footer>
 
-<script src="../_kit/kit.js"></script>
-<script src="app.js"></script>
+<script src="../_kit/kit.js?v=3"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nigerian school fees: term calendar, levy list, fee bands and sinking fund maths · FeesPlan reference</title>
+<meta name="description" content="When each term's fees are actually due, every levy that sits beside tuition and whether it is refundable, the fee bands by school type per term, and what a sinking fund does month by month against an instalment plan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_kit/kit.css?v=3">
+<link rel="stylesheet" href="../_kit/pages.css?v=3">
+<link rel="stylesheet" href="feesplan.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%232f4a8c'/><text x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>FP</text></svg>">
+</head>
+<body>
+<a class="skip-link" href="#doc">Skip to the content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="shell head-inner">
+    <a class="brand" href="."><span class="brand-mark">FP</span><span>FeesPlan<small>School fees, planned</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open navigation</span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Planner</a>
+      <a href="data.html" class="is-here" aria-current="page">Fees reference</a>
+      <a href="playbook.html">Fees playbook</a>
+      <a href="record.html">Saved plans</a>
+      <a class="btn btn-primary btn-sm" href="index.html#plan">Build a dated plan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="doc">
+<section class="page-hero">
+  <div class="shell">
+    <p class="crumbs reveal"><a href="../../">Portfolio</a> <span aria-hidden="true">/</span> <a href=".">FeesPlan</a> <span aria-hidden="true">/</span> <span aria-current="page">Fees reference</span></p>
+    <p class="eyebrow reveal" data-delay="1">Reference · what a fee bill is made of</p>
+    <h1 class="reveal" data-delay="1">What a term really costs,<br>line by line.</h1>
+    <p class="lede reveal" data-delay="2">A fee letter gives you one number and a date. The number is tuition plus eight extra lines, and the date is really three dates. Every figure FeesPlan applies is written out here so you can compare it with your own school's letter instead of arguing from memory.</p>
+    <div class="hero-rule reveal" data-delay="3"><span><b>8 extra lines</b> charged beside tuition, 5 termly and 3 yearly</span><span><b>3 due dates</b> admission, four weeks in, nine weeks in</span><span><b>40 / 30 / 30</b> the part-payment shape most bursars accept</span></div>
+  </div>
+</section>
+
+<section class="band section-tight">
+  <div class="shell doc">
+    <nav class="toc" aria-label="On this page"><h2>On this page</h2><ol></ol></nav>
+    <div>
+    <section class="band" id="shape">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">01 · The shape of the year</p>
+          <h2 id="shape-h">Five numbers that decide whether you plan or panic</h2>
+          <p class="lede">The mismatch is simple: you are paid monthly and charged termly. These are the figures that describe the gap.</p>
+        </div>
+<div class="metrics reveal">      <div class="metric"><b>3 demands</b><span>separate lump sums a year, each with its own deadline</span></div>
+      <div class="metric"><b>14 weeks</b><span>one term; unpaid weeks are the ones a child can lose</span></div>
+      <div class="metric"><b>15-25%</b><span>the yearly rise announced in a single letter</span></div>
+      <div class="metric"><b>₦30,000</b><span>what a ₦240,000 term becomes with eight months' notice</span></div>
+      <div class="metric"><b>435% a year</b><span>what a 15% monthly advance costs if you roll it every month</span></div>
+      <div class="metric"><b>₦0</b><span>the honest interest to assume on a sinking fund until a bank confirms a rate</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="calendar">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">02 · The school year</p>
+          <h2 id="calendar-h">When the money is actually due, month by month</h2>
+          <p class="lede">Fees are not charged once. Each term opens with an admission payment, takes a second payment about four weeks in, and closes nine weeks in with the examination payment. This is that year, in order.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a month or an event</span><input id="calendar-q" type="search" placeholder="september, admission, exams, pta" autocomplete="off"></label>
+          
+          <span class="filter-count" id="calendar-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="calendar-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">When</th>
+            <th data-sort="1">What the school asks for</th>
+            <th data-sort="2">Share of that term</th>
+            <th data-sort="3">What should already be saved</th>
+            <th data-sort="4">Where parents get caught</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>September, resumption week</td><td>First-term fees plus the once-a-year lines: uniform, books, PTA dues</td><td>40% on admission day, plus every one-off</td><td>Eight months of saving, or a dated plan the bursar has acknowledged</td><td>The one-off items land only here, so the first term is always the biggest cheque of the year</td></tr>
+            <tr><td>October, about four weeks in</td><td>The mid-term instalment on the agreed plan</td><td>30%</td><td>The fund has covered 70% of the bill since month six</td><td>Nobody telephones you for a date that was written on a letter in June</td></tr>
+            <tr><td>November, nine weeks in</td><td>The examination payment and the closing 30%</td><td>30%</td><td>The term should be clean before papers are printed</td><td>This is the window in which a child is kept from the examinations</td></tr>
+            <tr><td>December, final week</td><td>Boarding, feeding and bus balances before the holidays</td><td>nil if you kept the shape</td><td>Nothing left owing on the first term</td><td>Borrowing in December to clear a small balance is paid for twice</td></tr>
+            <tr><td>January, second term resumes</td><td>Second-term fees at whatever the session's new figures are</td><td>40%</td><td>Your monthly amount should have risen with the increase</td><td>The rise is announced once, in one letter; the fund feels it in every month after it</td></tr>
+            <tr><td>February</td><td>Mid-term instalment</td><td>30%</td><td>Two payments made, one to go</td><td>A salary delayed in February becomes a 15% advance if there is no fund behind it</td></tr>
+            <tr><td>March</td><td>The closing 30% before second-term exams</td><td>30%</td><td>The term closed</td><td>A balance carried out of the second term lands on a third bill you are already funding</td></tr>
+            <tr><td>March or April, third term resumes</td><td>Third-term fees and the last admission payment of the session</td><td>40%</td><td>This fund should have been open since the first term</td><td>A balance carried into the final term has no term after it to absorb the debt</td></tr>
+            <tr><td>April</td><td>Mid-term instalment</td><td>30%</td><td>Half the term settled</td><td>This is the term families promise to clear in July and then cannot</td></tr>
+            <tr><td>May</td><td>The closing 30%</td><td>30%</td><td>The account clean before revision season</td><td>Every unpaid naira here becomes a conversation about your child's papers</td></tr>
+            <tr><td>May or June, PTA annual meeting</td><td>Dues and any new levy voted at the meeting</td><td>not on the fee letter at all</td><td>A small one-off you did not budget for</td><td>A levy voted in a meeting you did not attend still arrives on your bill</td></tr>
+            <tr><td>June, end-of-session examinations</td><td>Nothing, if the account is clear</td><td>nil</td><td>A statement of account, not a memory</td><td>This is the most expensive week of the year to be behind</td></tr>
+            <tr><td>July, next session's letter</td><td>The new fee schedule, usually 15-25% above this year</td><td>nothing due yet</td><td>The month in which next year is decided</td><td>A letter opened at the gate is a letter budgeted too late</td></tr>
+            <tr><td>August</td><td>Resumption date, the deadline, the books list</td><td>the first payment is about to fall</td><td>The new monthly amount starts here or it starts nowhere</td><td>Book and uniform prices move before the bill is even read</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Indicative shape, not a calendar. Your school sets its own resumption and deadline dates, and the shape most bursars accept in writing is 40% on admission, 30% about four weeks later, 30% before the examinations. Build the plan on the dates in your letter, in section 06.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="levies">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">03 · Beside tuition</p>
+          <h2 id="levies-h">Every line that appears on a fee bill, and whether it comes back</h2>
+          <p class="lede">The hidden extras are not hidden from the school; they are simply written below the total. The planner carries eight of them per child, and the rest are school-specific charges you should still price.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Search the levy list</span><input id="levies-q" type="search" placeholder="name, refundable, every term, once a year" autocomplete="off"></label>
+          <label class="field"><span>Or filter by how often</span><select id="levies-f"><option value="all">All</option><option>Charged every term</option><option>Once a year</option><option>Once, at admission</option><option>Only if you use it</option></select></label>
+          <span class="filter-count" id="levies-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="levies-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Line on the bill</th>
+            <th data-sort="1">What it pays for</th>
+            <th data-sort="2">How often</th>
+            <th data-sort="3">Refundable</th>
+            <th data-sort="4">Where it sits in the planner</th>
+            <th data-sort="5">Ask before you pay</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>School fees, the tuition line</td><td>Teaching, the class, the teachers</td><td>Charged every term</td><td>No</td><td>The fees box for each child</td><td>Ask what the figure excludes, because the eight extra lines below usually sit outside it</td></tr>
+            <tr><td>Exam fee and result processing</td><td>Setting, printing and scoring the term's papers</td><td>Charged every term</td><td>No</td><td>Exam fee</td><td>Ask whether the practice papers and the external papers are charged separately</td></tr>
+            <tr><td>ICT / digital learning levy</td><td>Devices, the computer room, subscriptions</td><td>Charged every term</td><td>No</td><td>ICT / lab levy</td><td>Ask what your child actually uses, and whether the same levy is charged in the early years</td></tr>
+            <tr><td>Science lab and practicals</td><td>Consumables for practical lessons</td><td>Charged every term</td><td>No</td><td>Folded into ICT / lab levy; there is no separate line</td><td>Ask whether it applies below JSS 1 and have the answer on the bill</td></tr>
+            <tr><td>Art, sports and sports day</td><td>Games, inter-house, the annual sports day</td><td>Charged every term</td><td>No</td><td>Art, sports and sports day</td><td>Ask which part of it is optional and which part is the term's timetable</td></tr>
+            <tr><td>Bus / transport</td><td>The seat, the route, the driver and the fuel</td><td>Charged every term</td><td>No</td><td>Transport</td><td>Ask whether it is charged per child or per seat, and what happens on the weeks school is not sitting</td></tr>
+            <tr><td>Boarding / hostel</td><td>The bed and the house</td><td>Charged every term</td><td>Depends entirely on the school's own policy</td><td>Boarding / hostel, zero in the day-school bands</td><td>Ask in writing what comes back if your child leaves the house in week three</td></tr>
+            <tr><td>Feeding</td><td>Meals and snacks through the term</td><td>Only if you use it</td><td>No</td><td>Not a separate line; most hostels bill it with boarding</td><td>Ask whether the figure covers the days the school is closed for a holiday or an event</td></tr>
+            <tr><td>Uniform, shoes and house kit</td><td>What the child wears to class, to sport, to assembly</td><td>Once a year</td><td>No</td><td>Uniform and shoes, spread across the terms by the planner</td><td>Ask how many sets are priced, and what a child who grows in November costs you</td></tr>
+            <tr><td>Books, work texts and materials</td><td>The list that changes with the class</td><td>Once a year</td><td>No</td><td>Books and materials</td><td>Ask which titles are compulsory and which are a bookshop's suggestion</td></tr>
+            <tr><td>PTA / association dues</td><td>The parents' association, its meetings, its projects</td><td>Once a year</td><td>No</td><td>PTA / association dues</td><td>Ask whether dues are per child or per family, and have the answer written on the bill</td></tr>
+            <tr><td>Development levy / building fund</td><td>Classrooms, halls, water, security works</td><td>Once a year</td><td>No</td><td>Not one of the eight lines; add it to the term you pay it</td><td>Ask what last year's levy built, and whether it sits inside the fee letter or beside it</td></tr>
+            <tr><td>Admission or application fee</td><td>Putting your child on the register</td><td>Once, at admission</td><td>No</td><td>Not a planner line; add it to the first term</td><td>Ask whether it is charged again in the second and third term</td></tr>
+            <tr><td>Caution / damages deposit</td><td>Furniture, glass, instruments, the bed</td><td>Once, at admission</td><td>Refundable in principle, which is why the rules must be in writing</td><td>Not a planner line</td><td>Ask what it is held against, who assesses the damage, and when it is returned</td></tr>
+            <tr><td>Class, prize day and graduation items</td><td>The end-of-session event, the yearbook, the gown</td><td>Once a year</td><td>No</td><td>Not a planner line; add it to the final term</td><td>Ask for the itemised list before you commit; the SS3 bill usually arrives after the fees are paid</td></tr>
+            <tr><td>Report card, ID card, result book</td><td>Paperwork carrying your child's name</td><td>Once a year</td><td>No</td><td>Not a planner line; small enough to fold into books</td><td>Ask whether replacing one lost card means paying the whole set again</td></tr>
+            <tr><td>Holiday, weekend or extra lessons</td><td>Teaching time outside the timetable</td><td>Only if you use it</td><td>No</td><td>Not a planner line</td><td>Ask whether it is genuinely optional before you pay it as though it were compulsory</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">The planner's eight extra lines per child are exam fee, ICT / lab levy, transport, art and sports, boarding, uniform and shoes, books and materials, and PTA dues. Five are charged every term and three once a year, which is why the yearly figures are divided by three. Everything else on your bill is school-specific: add it to the term you will actually pay it.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="bands">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">04 · Fee bands by school type</p>
+          <h2 id="bands-h">What each band costs per term, and what it costs on resumption day</h2>
+          <p class="lede">These are the tool's own default bands, quoted exactly. A public school's tuition line is small and its levy stack is not. A school type is not a promise about a single school: the same brand on two streets is two economies.</p>
+        </div>
+<div class="reveal">
+        <div class="filter-bar">
+          <label class="field"><span>Find a band or a term</span><input id="bands-q" type="search" placeholder="standard, university, first term, session" autocomplete="off"></label>
+          
+          <span class="filter-count" id="bands-count"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="data" id="bands-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Band</th>
+            <th data-sort="1">Which term</th>
+            <th data-sort="2" class="n">Fees / term</th>
+            <th data-sort="3" class="n">Charged every term</th>
+            <th data-sort="4" class="n">Charged once a year</th>
+            <th data-sort="5" class="n">Cash on that day</th>
+            <th data-sort="6" class="n">Per year</th>
+            <th data-sort="7" class="n">Monthly to fund it</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Public school (state)</td><td>First term</td><td class="n">₦12,000</td><td class="n">₦18,500</td><td class="n">₦13,000</td><td class="n">₦43,500</td><td class="n">₦104,500</td><td class="n">₦8,700</td></tr>
+            <tr><td>Public school (state)</td><td>Second term</td><td class="n">₦12,000</td><td class="n">₦18,500</td><td class="n">none</td><td class="n">₦30,500</td><td class="n">₦104,500</td><td class="n">₦8,700</td></tr>
+            <tr><td>Public school (state)</td><td>Third term</td><td class="n">₦12,000</td><td class="n">₦18,500</td><td class="n">none</td><td class="n">₦30,500</td><td class="n">₦104,500</td><td class="n">₦8,700</td></tr>
+            <tr><td>Low-cost private</td><td>First term</td><td class="n">₦35,000</td><td class="n">₦29,000</td><td class="n">₦18,500</td><td class="n">₦82,500</td><td class="n">₦210,500</td><td class="n">₦17,500</td></tr>
+            <tr><td>Low-cost private</td><td>Second term</td><td class="n">₦35,000</td><td class="n">₦29,000</td><td class="n">none</td><td class="n">₦64,000</td><td class="n">₦210,500</td><td class="n">₦17,500</td></tr>
+            <tr><td>Low-cost private</td><td>Third term</td><td class="n">₦35,000</td><td class="n">₦29,000</td><td class="n">none</td><td class="n">₦64,000</td><td class="n">₦210,500</td><td class="n">₦17,500</td></tr>
+            <tr><td>Standard private</td><td>First term</td><td class="n">₦120,000</td><td class="n">₦60,000</td><td class="n">₦38,000</td><td class="n">₦218,000</td><td class="n">₦578,000</td><td class="n">₦48,200</td></tr>
+            <tr><td>Standard private</td><td>Second term</td><td class="n">₦120,000</td><td class="n">₦60,000</td><td class="n">none</td><td class="n">₦180,000</td><td class="n">₦578,000</td><td class="n">₦48,200</td></tr>
+            <tr><td>Standard private</td><td>Third term</td><td class="n">₦120,000</td><td class="n">₦60,000</td><td class="n">none</td><td class="n">₦180,000</td><td class="n">₦578,000</td><td class="n">₦48,200</td></tr>
+            <tr><td>Premium private</td><td>First term</td><td class="n">₦450,000</td><td class="n">₦140,000</td><td class="n">₦100,000</td><td class="n">₦690,000</td><td class="n">₦1,870,000</td><td class="n">₦155,800</td></tr>
+            <tr><td>Premium private</td><td>Second term</td><td class="n">₦450,000</td><td class="n">₦140,000</td><td class="n">none</td><td class="n">₦590,000</td><td class="n">₦1,870,000</td><td class="n">₦155,800</td></tr>
+            <tr><td>Premium private</td><td>Third term</td><td class="n">₦450,000</td><td class="n">₦140,000</td><td class="n">none</td><td class="n">₦590,000</td><td class="n">₦1,870,000</td><td class="n">₦155,800</td></tr>
+            <tr><td>University, public</td><td>First session</td><td class="n">₦150,000</td><td class="n">₦358,000</td><td class="n">₦35,000</td><td class="n">₦543,000</td><td class="n">₦1,051,000</td><td class="n">₦87,600</td></tr>
+            <tr><td>University, public</td><td>Second session</td><td class="n">₦150,000</td><td class="n">₦358,000</td><td class="n">none</td><td class="n">₦508,000</td><td class="n">₦1,051,000</td><td class="n">₦87,600</td></tr>
+            <tr><td>University, private</td><td>First session</td><td class="n">₦650,000</td><td class="n">₦560,000</td><td class="n">₦60,000</td><td class="n">₦1,270,000</td><td class="n">₦2,480,000</td><td class="n">₦206,700</td></tr>
+            <tr><td>University, private</td><td>Second session</td><td class="n">₦650,000</td><td class="n">₦560,000</td><td class="n">none</td><td class="n">₦1,210,000</td><td class="n">₦2,480,000</td><td class="n">₦206,700</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">Charged every term means exam fee, ICT or lab levy, transport, art and sports and, where the band has it, boarding. Charged once a year means uniform, books and PTA dues, which the planner divides by three (or by two sessions at university). Monthly to fund it is the year divided by twelve, and the premium band deliberately sits at the top of, and just past, the ₦120,000 to ₦1,200,000 a year range private basic education is usually quoted in. Edit the bands in section 09 and every figure here follows. Your school's letter beats this table.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="fund">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">05 · Fund versus instalments</p>
+          <h2 id="fund-h">The same ₦240,000 bill, month by month, under both shapes</h2>
+          <p class="lede">Both routes need the same discipline: ₦30,000 set aside every month for eight months. The only difference is when the school is paid, and how many months your child is carrying a balance you have not cleared.</p>
+        </div>
+<div class="reveal">
+
+        <div class="table-scroll">
+          <table class="data" id="fund-tbl">
+            
+            <thead><tr>
+            <th data-sort="0">Month</th>
+            <th data-sort="1" class="n">Into the fund</th>
+            <th data-sort="2" class="n">Fund before paying out</th>
+            <th data-sort="3" class="n">One payment: paid</th>
+            <th data-sort="4" class="n">One payment: owed</th>
+            <th data-sort="5" class="n">40 / 30 / 30: paid</th>
+            <th data-sort="6" class="n">40 / 30 / 30: owed</th>
+            <th data-sort="7">What this month decides</th>
+            </tr></thead>
+            <tbody>
+            <tr><td>Month 1</td><td class="n">₦30,000</td><td class="n">₦30,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>The month the shape is chosen; nothing is owed yet</td></tr>
+            <tr><td>Month 2</td><td class="n">₦30,000</td><td class="n">₦60,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>The transfer is the plan. The balance is still decoration</td></tr>
+            <tr><td>Month 3</td><td class="n">₦30,000</td><td class="n">₦90,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>This is where a fund stops being an intention and starts being money</td></tr>
+            <tr><td>Month 4</td><td class="n">₦30,000</td><td class="n">₦120,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>The fund now covers the 40% admission payment on its own</td></tr>
+            <tr><td>Month 5</td><td class="n">₦30,000</td><td class="n">₦150,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>From here a shortfall is a date problem, not a money problem</td></tr>
+            <tr><td>Month 6</td><td class="n">₦30,000</td><td class="n">₦180,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>Admission plus mid-term, ₦168,000, are already in the fund</td></tr>
+            <tr><td>Month 7</td><td class="n">₦30,000</td><td class="n">₦210,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>One month left; anything pulled forward here becomes your cushion</td></tr>
+            <tr><td>Month 8, admission</td><td class="n">₦30,000</td><td class="n">₦240,000</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦96,000</td><td class="n">₦144,000</td><td>Path A settles the term. Path B keeps ₦144,000 open for nine more weeks</td></tr>
+            <tr><td>Month 9, four weeks in</td><td class="n">₦0</td><td class="n">₦144,000</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦72,000</td><td class="n">₦72,000</td><td>The mid-term date arrives whether or not the month was kind</td></tr>
+            <tr><td>Month 10, nine weeks in</td><td class="n">₦0</td><td class="n">₦72,000</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦72,000</td><td class="n">₦0</td><td>Before the examinations. Path B closes here, on the school's date, not yours</td></tr>
+            <tr><td>Month 11</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦0</td><td class="n">₦0</td><td>Clean account. Ask for the written statement and keep it with the receipts</td></tr>
+            <tr><td>Month 12</td><td class="n">₦30,000</td><td class="n">₦30,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td class="n">₦0</td><td class="n">₦240,000</td><td>The next term's fund opens in the same month the old one closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny muted">One bill of ₦240,000 at ₦30,000 a month for eight months, with the fund paying no interest, which is the arithmetic in section 04 and the worked example in section 09. The fund column follows the instalment route because that is the balance you have to watch; after a single payment the fund is empty and month 12 opens the next term. Change the bill, the date or the monthly amount in the calculator and this shape changes with it.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="misread">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">06 · Three figures parents are sold badly</p>
+          <h2 id="misread-h">Where a fee conversation stops being arithmetic</h2>
+          
+        </div>
+<div class="grid-3 reveal">        <div class="note-box warn"><h3>The bill is not the year</h3><p>A term figure multiplied by three is not what you will pay if the school raises fees for the session and charges the once-a-year items in September. Write the year first, then divide it.</p></div>
+        <div class="note-box bad"><h3>An advance rate is never monthly</h3><p>15% charged on the balance you still owe, for three months, is not 15%. The comparison section shows the cost of the month, the compounded year and the flat times twelve, because lenders quote whichever of the three flatters them.</p></div>
+        <div class="note-box "><h3>A fund that earns nothing is not a failure</h3><p>Target-savings and staff welfare accounts often pay very little, and a plan built on a rate nobody confirmed leaves you short in the month you need the money. Assume zero until your bank says otherwise in writing.</p></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="shell">
+        <div class="section-head reveal">
+          <p class="eyebrow">07 · What to check these against</p>
+          <h2 id="sources-h">What every figure above should be compared with</h2>
+          
+        </div>
+<ul class="sources reveal">        <li>Your school's written fee schedule for the session, with the instalment policy attached to it.</li>
+        <li>The resumption date and the fee deadline on your own letter, which override every month named above.</li>
+        <li>The receipts for each payment and the statement of account the bursary issues at the end of a term.</li>
+        <li>The advance or loan offer sheet: the rate per month, the number of months, and what it costs to clear early.</li>
+        <li>The circle ledger, the contribution, the turn order and the payout date, in writing and visible to every member.</li>
+        <li>Section 09 of the calculator, where every band, assumption and rate used on this page is editable.</li>
+      </ul>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="band band-ink">
+  <div class="shell">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Next</p>
+        <h2>Put your own bill through the arithmetic</h2>
+        <p class="lede">The planner costs each child with their own extras, turns the total into a monthly amount against your real date, and ranks the five ways you could pay it.</p>
+      </div>
+      <div class="hero-actions reveal" data-delay="2">
+        <a class="btn btn-accent" href="index.html#planner">Cost my children's term</a>
+        <a class="btn btn-ghost" href="playbook.html">Read the playbook</a>
+        <a class="btn btn-ghost" href="record.html">Open the saved plans</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="." style="color:#fff"><span class="brand-mark">FP</span><span style="color:#fff">FeesPlan<small style="color:rgba(255,255,255,.6)">School fees, planned</small></span></a>
+        <p style="margin-top:14px;max-width:44ch">Four pages, one job: turn three lump sums a year into a monthly amount, a dated plan and a letter the bursar can sign.</p>
+      </div>
+      <div>
+        <h4>FeesPlan pages</h4>
+        <p><a href="index.html">Planner</a><br><a href="data.html">Fees reference</a><br><a href="playbook.html">Fees playbook</a><br><a href="record.html">Saved plans</a></p>
+      </div>
+      <div>
+        <h4>Other tools</h4>
+        <p><a href="../payrite/">PayRite · payroll and PAYE</a><br><a href="../marketrate/">MarketRate · fair price today</a><br><a href="../landedcost/">LandedCost · what imports really cost</a><br><a href="../sealcheck/">SealCheck · is that medicine real</a></p>
+      </div>
+    </div>
+    <div class="foot-note"><span>Figures are indicative national shapes, not your school's bill. Not an offer of credit, and not legal advice; ask for your school's fee schedule in writing.</span><span class="mono">FeesPlan · Fees reference · works offline once loaded</span></div>
+  </div>
+</footer>
+
+<script src="../_kit/kit.js?v=3"></script>
+<script src="../_kit/pages.js?v=3"></script>
+<script>
+
+pages.boot(function () {
+  pages.sortable('#calendar-tbl');
+  pages.filter('#calendar-tbl', { input: '#calendar-q', count: '#calendar-count', empty: "No row here matches that search." });
+  pages.sortable('#levies-tbl');
+  pages.filter('#levies-tbl', { input: '#levies-q', select: '#levies-f', count: '#levies-count', empty: "No line on this list matches that search." });
+  pages.sortable('#bands-tbl');
+  pages.filter('#bands-tbl', { input: '#bands-q', count: '#bands-count', empty: "No row here matches that search." });
+  pages.sortable('#fund-tbl');
+});
+</script>
+</body>
+</html>
