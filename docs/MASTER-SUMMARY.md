@@ -106,9 +106,23 @@ Known packaging notes:
 - ForgeStack: preflight PASS, live blueprint, generation, MySQL install, generated site booking/tracking/admin/outbox all exercised.
 - Hotel Miramar and Campus Coin: admin login and gated routes tested against MySQL; real dashboard data.
 
+## 6b. Verified on the live site
+
+Pushed to `abodaniel435-rgb/daniel-portfolio` (`28fc479..491b05e`) and re-checked against `https://abodaniel435-rgb.github.io/daniel-portfolio/`, not just locally:
+
+- `projects.js` published byte-for-byte (44,653 B, 26 projects), `git ls-remote origin main` agrees with the local HEAD, and `demos/cropkeep/index.html` + `app.js` return exactly their committed byte counts.
+- All 40 tool pages (10 × `index`/`data`/`playbook`/`record`) return 200, and the regression sweep run **against the live URL** reports 16 of 16 `ok` with the same readouts as locally.
+- The four `_kit` files are live (`kit.js` at 13,794 B, the version carrying the store fix), so no tool is served a stale kit.
+- Coach Studio, live: opening a demo shows `pushup-01.webp` at "Phase 1 of 3" and the sequence advances on its own; ArrowRight → `pushup-02.webp`, ArrowLeft → `pushup-01.webp`; the timeline carries three phase nodes; a second exercise opens as "Bodyweight Squat" with `squat-01/02/03.webp`. All 24 instructor frames return 200.
+- PayRite's case study lists its three secondary pages and each href resolves to the published `demos/payrite/…` document.
+- `.env`, `site.env`, `*.sqlite3` and other development files return 404 — nothing that should have stayed local got published.
+
+One caveat worth knowing: the first sweep after publishing flagged `cropkeep`, `riderpool` and `recircle`. Those three files were byte-identical to the commit, and re-running the same three immediately reported `ok` — GitHub Pages serves the first request for a newly published asset slowly enough that the harness's 110 ms scroll steps outrun the IntersectionObservers. A live FAIL on a brand-new push is worth re-running before treating it as a defect.
+
 ## 7. Outstanding / optional
 
-- Nothing required by the brief is unfinished in this workspace. The work now has to be *delivered twice more*: the ten tools, their thirty pages, the fitness Coach Studio and the portfolio registry must be pushed to GitHub Pages (owner action, or the next step here), and the 24 packages still need uploading to cPanel by the owner.
+- Nothing required by the brief is unfinished in this workspace, and the portfolio itself is now published (section 6b). The remaining work belongs to cPanel: 24 packages sit in `C:\Users\HI\Downloads` waiting to be uploaded, and the ten tools are already live on GitHub Pages — deploying them to a host is optional, only needed if he wants them off Pages or under his own domain.
+- The generator tooling (`tools/build_pages.mjs`, `tools/pages/*.mjs`, `tools/link_pages.mjs`, `tools/build_demo_zips.py`, `tools/verify_demos.mjs`) lives in the workspace, not in the Pages repository, so the site is self-sufficient but regenerating a page needs the workspace. Moving the generators into the repo is a deliberate choice, not an oversight to fix silently.
 - Optional polish: re-encode the Hotel Miramar tour video to 720p if a smaller download is wanted; add screenshots to generated `docs/` on future builds.
 - The generated Kite Courier and the six deploy-ready PHP builds have no public URL yet — deployment is an owner action (packages + guides are ready).
 - Hotel Miramar and Campus Coin still carry their development passwords until the owner rotates them on the deployed copy.
