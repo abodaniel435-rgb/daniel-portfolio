@@ -115,7 +115,7 @@
          callback lands after the first paint on a slow device. Reading layout
          first keeps the entrance transition rather than jumping to the end. */
       var box = el.getBoundingClientRect();
-      if (box.top < global.innerHeight && box.bottom > 0) {
+      if (box.top < global.innerHeight) {
         void el.offsetWidth;
         el.classList.add('is-in');
       } else {
@@ -132,7 +132,9 @@
       items.forEach(function (el) {
         if (el.classList.contains('is-in')) return;
         var b = el.getBoundingClientRect();
-        if (b.top < global.innerHeight - 24 && b.bottom > 0) el.classList.add('is-in');
+        /* Also catch anything already scrolled past: a skipped observer callback
+           must not leave a block above the viewport permanently transparent. */
+        if (b.top < global.innerHeight - 24) el.classList.add('is-in');
       });
     }
     function queue() {

@@ -119,9 +119,11 @@ section { padding: clamp(56px, 7vw, 104px) 0; position: relative; }
 .nav a:not(.btn).is-active { color: var(--ink); background: color-mix(in srgb, var(--accent) 26%, transparent); }
 .menu-toggle { display: none; margin-left: auto; width: 44px; height: 40px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); cursor: pointer; }
 .menu-toggle span { display: block; width: 18px; height: 2px; background: var(--ink); margin: 3px auto; border-radius: 2px; transition: transform .25s var(--ease), opacity .2s; }
-@media (max-width: 900px) {
+/* Below 1200px the widest menus cannot stay on one line beside the brand and CTA,
+   so the header uses the collapsible menu instead of wrapping into two rows. */
+@media (max-width: 1199px) {
   .menu-toggle { display: block; }
-  .nav { position: fixed; inset: 68px 0 auto; flex-direction: column; align-items: stretch; gap: 2px; padding: 14px 20px 22px; background: var(--paper); border-bottom: 1px solid var(--line); box-shadow: var(--shadow-md); transform: translateY(-130%); transition: transform .32s var(--ease); }
+  .nav { position: fixed; inset: 68px 0 auto; flex-direction: column; align-items: stretch; gap: 2px; padding: 14px 20px 22px; background: var(--paper); border-bottom: 1px solid var(--line); box-shadow: var(--shadow-md); transform: translateY(-130%); transition: transform .32s var(--ease); max-height: calc(100vh - 68px); max-height: calc(100dvh - 68px); overflow-y: auto; overscroll-behavior: contain; }
   .nav.is-open { transform: translateY(0); }
   .nav a:not(.btn) { padding: 13px 12px; font-size: 1.02rem; }
 }
@@ -680,8 +682,8 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 
 /* --- one-line navigation on wide screens --- */
 
-@media (min-width: 901px) {
-  .kit-anim .head-inner { gap: 12px; position: relative; padding-right: 176px; }
+@media (min-width: 1200px) {
+  .kit-anim .head-inner { gap: 12px; position: relative; padding-right: 176px; width: min(100% - 40px, 1360px); }
   .kit-anim .nav .btn {
     position: absolute; right: 0; top: 50%; transform: translateY(-50%);
     margin: 0;
@@ -692,7 +694,7 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   .kit-anim .nav a:not(.btn) { padding: 7px 7px; font-size: .82rem; }
   .kit-anim .nav .btn { padding-inline: 14px; }
 }
-@media (min-width: 901px) and (max-width: 1140px) {
+@media (min-width: 1200px) and (max-width: 1320px) {
   .kit-anim .brand small { display: none; }
   .kit-anim .nav a:not(.btn) { padding: 6px 6px; font-size: .79rem; }
 }
