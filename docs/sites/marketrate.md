@@ -32,7 +32,7 @@ If you would rather keep the repository layout, upload `demos/marketrate/`, `dem
 4. No database, no users, no cron jobs, no environment variables. Nothing to configure on the server.
 5. Make sure `.htaccess` (if the host injects one) does not rewrite `.css`, `.js` or `.webp`.
 6. Open `https://marketrate.yourdomain.com/` and confirm the certificate is active; the clipboard and download features expect a secure context.
-7. **Hard-refresh** (`Ctrl+Shift+R`) after any kit edit. All four pages request `../_kit/kit.css?v=3`, `kit.js?v=3`, `pages.css?v=3` and `pages.js?v=3`, and the tool's own `app.js` and stylesheet carry the same suffix. The number lives in `KIT_VERSION` in `tools/build_pages.mjs` and in the four `index.html` links — bump both together when the kit changes, or a returning visitor gets the old copy on one page and the new one on the rest.
+7. **Hard-refresh** (`Ctrl+Shift+R`) after any kit edit. All four pages request `../_kit/kit.css?v=5`, `kit.js?v=5`, `pages.css?v=5` and `pages.js?v=5`, and the tool's own `app.js` and stylesheet carry the same suffix. The number lives in `KIT_VERSION` in `tools/build_pages.mjs` and in the four `index.html` links — bump both together when the kit changes, or a returning visitor gets the old copy on one page and the new one on the rest.
 
 ## 4. Configuration / keeping it accurate
 - Editable in the page, persisted per browser: every board cell, the unit-to-kilogram table, spoilage loss per class, market multipliers, the transport rate (₦244/km default), the seasonal amplitude (±28% default), and the "Prices as of" date input. `Save my prices`, `Restore reference data` and `Export CSV` sit above the table, with matching restore buttons on the three assumption tables in section 09.

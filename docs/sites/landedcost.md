@@ -31,7 +31,7 @@ If you keep the repository layout, upload `demos/landedcost/`, `demos/_kit/` and
 3. Permissions: folders `755`, files `644`. Nothing executes server-side.
 4. No database, no cron job, no API keys. There is no exchange-rate endpoint to configure: the naira rate is a typed field.
 5. Load over **https** and confirm the certificate before sharing the URL with anyone.
-6. **Hard-refresh** (`Ctrl+Shift+R`) after any kit edit. All four pages request `../_kit/kit.css?v=3`, `kit.js?v=3`, `pages.css?v=3` and `pages.js?v=3`, and the tool's own `app.js` and stylesheet carry the same suffix. The number lives in `KIT_VERSION` in `tools/build_pages.mjs` and in the four `index.html` links — bump both together when the kit changes, or a returning visitor gets the old copy on one page and the new one on the rest.
+6. **Hard-refresh** (`Ctrl+Shift+R`) after any kit edit. All four pages request `../_kit/kit.css?v=5`, `kit.js?v=5`, `pages.css?v=5` and `pages.js?v=5`, and the tool's own `app.js` and stylesheet carry the same suffix. The number lives in `KIT_VERSION` in `tools/build_pages.mjs` and in the four `index.html` links — bump both together when the kit changes, or a returning visitor gets the old copy on one page and the new one on the rest.
 
 ## 4. Configuration / keeping it accurate
 - Editable in the page and persisted (`afrik:landedcost:rules`): the levy table, the tariff bands and every fixed charge, with a `Restore default rates` button. Also per quotation: currency, naira rate, price mode (per unit or total), carton count and dimensions, freight mode, insurance basis, origin inland haulage and THC for EXW, excise/surcharge/stamp/VAT-reclaim switches, dwell and detention days, finance rate, truck and distance, margin and credit days.

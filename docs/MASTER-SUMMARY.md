@@ -54,7 +54,7 @@ Each is a four-page static site — the tool, a `data.html` carrying the publish
 | RiderPool | A half-empty minivan and a fare built on habit that nobody can justify | `docs/sites/riderpool.md` |
 | ReCircle | Recyclable material leaves homes for nothing on scales the seller cannot check | `docs/sites/recircle.md` |
 
-They share one zero-dependency design system (`demos/_kit/`) — `kit.css`/`kit.js` for the tools and `pages.css`/`pages.js` for the generated pages — and are versioned as `?v=3` so a kit change cannot be served stale.
+They share one zero-dependency design system (`demos/_kit/`) — `kit.css`/`kit.js` for the tools and `pages.css`/`pages.js` for the generated pages — and are versioned as `?v=5` so a kit change cannot be served stale.
 
 ### Left untouched, as instructed
 
@@ -85,7 +85,7 @@ Two scripts, both in `tools/`, both writing flat archives to `C:\Users\HI\Downlo
 
 **`build_zips.py` — 14 full-stack sites**, suffix `-cPanel.zip`: ThatGuys-Fitness, SkyCast, ABOSODION-Farm, Moonlight-Events, Trinity-Lightings, RentJury, MediTrack, AjoCircle, FarmCoop, RoutePilot, Hotel-Miramar, Campus-Coin, ForgeStack, Kite-Courier.
 
-**`build_demo_zips.py` — 10 browser tools**, suffix `-tool.zip`: SealCheck 156 KB, PayRite 163 KB, FuelMeter 163 KB, FeesPlan 177 KB, SunCost 203 KB, CropKeep 226 KB, LandedCost 231 KB, RiderPool 240 KB, MarketRate 262 KB, ReCircle 274 KB. Each archive is self-contained: `<slug>/` (tool page plus `data.html`, `playbook.html`, `record.html`), the four `_kit/` files and only the `_media/` images that tool actually references. Extract into the document root so the tools' `../_kit/` and `../_media/` paths resolve — every zip unpacks to the same `document root` layout and one tool per extraction is enough to go live.
+**`build_demo_zips.py` — 10 browser tools**, suffix `-tool.zip`: SealCheck 165 KB, PayRite 172 KB, FuelMeter 172 KB, FeesPlan 186 KB, SunCost 212 KB, CropKeep 236 KB, LandedCost 240 KB, RiderPool 249 KB, MarketRate 271 KB, ReCircle 283 KB. Each archive is self-contained: `<slug>/` (tool page plus `data.html`, `playbook.html`, `record.html`), the four `_kit/` files and only the `_media/` images that tool actually references. Extract into the document root so the tools' `../_kit/` and `../_media/` paths resolve — every zip unpacks to the same `document root` layout and one tool per extraction is enough to go live.
 
 Known packaging notes:
 - Hotel Miramar's 265 MB hero video (`app/static/videos/hotel-miramar-tour.mp4`) is excluded from the zip to stay under cPanel upload limits. Upload it separately with File Manager/FTP to the same path; without it the poster image remains and the layout is unaffected.
@@ -118,6 +118,18 @@ Pushed to `abodaniel435-rgb/daniel-portfolio` (`28fc479..491b05e`) and re-checke
 - `.env`, `site.env`, `*.sqlite3` and other development files return 404 — nothing that should have stayed local got published.
 
 One caveat worth knowing: the first sweep after publishing flagged `cropkeep`, `riderpool` and `recircle`. Those three files were byte-identical to the commit, and re-running the same three immediately reported `ok` — GitHub Pages serves the first request for a newly published asset slowly enough that the harness's 110 ms scroll steps outrun the IntersectionObservers. A live FAIL on a brand-new push is worth re-running before treating it as a defect.
+
+## 6c. The motion pass (kit v5)
+
+The ten tools and their 30 generated pages were pushed from a flat design to a materially more expressive one, written once in the shared kit so no page drifts from the others:
+
+- **A lit stage for every hero.** Tools and generated pages both open on a rounded dark panel built from three brand-coloured radial gradients, a 46px lattice that drifts slowly under a radial mask, and a highlight band that crosses the panel every nine seconds. Generated-page headlines carry a slow cream-to-mint gradient; tool headlines keep their gradient `em` accent.
+- **Entrances you can see.** Sections fade and lift from `translate3d(0,30px,0) scale(.98)` with a 6px blur that clears, staggered in reading order. Cards tilt in from 9 degrees on a shared perspective, get a gradient top edge that draws from the left, and a sheen that crosses on hover. Numbers count up on first view (12 metric cards on RiderPool alone). Table rows rise in sequence; the contents rail grows a progress dot that follows the reader; timeline rails draw their line and pop each dot; sort headers and filter bars animate their state changes.
+- **Motion is opt-in and removable.** Every rule lives under `.kit-anim`, which `kit.js` adds before first paint only when the visitor has not asked for reduced motion; with JavaScript off or reduced motion requested the pages render exactly as before, fully visible. Printing hides the progress rail and forces every row visible.
+- **Reveals no longer depend on one observer.** Content already in the first viewport reveals immediately, and a throttled scroll sweep backs up IntersectionObserver, which some embedded and narrow-viewport renderers never fire. Before this, a slow first callback could leave the top of a page blank.
+- **Two defects found and fixed while doing it.** On phones the horizontal contents rail was sizing the single grid column to 4,811px, pushing the page body off-screen; `.doc > *` now takes `min-width: 0` and the rail scrolls inside its own box. In the header, a 132px reservation for the primary button clipped SealCheck's longer "Run the 14 checks" label at tablet widths; the reservation is 176px and the brand tagline plus link padding tighten below 1140px.
+
+Verification after the pass, all on the local build: `verify_demos.mjs` reports 16 of 16 index pages `ok`; the new `tools/verify_pages.mjs` exercises all 30 generated pages — contents rail built, every reveal shown, metrics and table rows visible, click-to-sort reordering the first table, live filtering emptying it — and reports 30 of 30 pass. Screenshots were checked at 1440, 1024 and 390 CSS pixels.
 
 ## 7. Outstanding / optional
 

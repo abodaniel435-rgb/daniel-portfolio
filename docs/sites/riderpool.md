@@ -31,7 +31,7 @@ If you keep the repository layout, upload `demos/riderpool/`, `demos/_kit/` and 
 3. Permissions: folders `755`, files `644`. Nothing executes server-side.
 4. No database, no cron job, no SMTP setup. The manifest and trip card are printed or copied by the visitor; the tool sends nothing anywhere.
 5. Load over **https** and confirm the certificate before sharing the URL with anyone.
-6. **Hard-refresh** (`Ctrl+Shift+R`) after any kit edit. All four pages request `../_kit/kit.css?v=3`, `kit.js?v=3`, `pages.css?v=3` and `pages.js?v=3`, and the tool's own `app.js` and stylesheet carry the same suffix. The number lives in `KIT_VERSION` in `tools/build_pages.mjs` and in the four `index.html` links — bump both together when the kit changes, or a returning visitor gets the old copy on one page and the new one on the rest.
+6. **Hard-refresh** (`Ctrl+Shift+R`) after any kit edit. All four pages request `../_kit/kit.css?v=5`, `kit.js?v=5`, `pages.css?v=5` and `pages.js?v=5`, and the tool's own `app.js` and stylesheet carry the same suffix. The number lives in `KIT_VERSION` in `tools/build_pages.mjs` and in the four `index.html` links — bump both together when the kit changes, or a returning visitor gets the old copy on one page and the new one on the rest.
 
 ## 4. Configuration / keeping it accurate
 - Editable in the page and persisted under thirteen `afrik:riderpool:*` keys: `corridors`, `classes`, `prices`, `parcels` and `adj` (the five assumption tables in `#assumptions`), plus `trip` (the current build), `stops`, `seats`, `safety`, `checks`, `travel`, `ledger` and `asof`.

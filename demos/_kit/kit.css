@@ -357,10 +357,389 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 @media (max-width: 880px) { .foot-grid { grid-template-columns: 1fr; } }
 .foot-note { margin-top: 34px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .14); font-size: .84rem; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
+/* ==========================================================================
+   MOTION LAYER
+   Everything below only applies once kit.js has put .kit-anim on <html>.
+   Without JavaScript the page is simply static and fully visible, so a
+   failed script can never leave a blank section behind.
+   ========================================================================== */
+
+.kit-anim { --ease-expo: cubic-bezier(.16, 1, .3, 1); --ease-back: cubic-bezier(.34, 1.56, .64, 1); }
+
+/* --- ambient field: two slow auroras behind the whole page --- */
+
+.kit-anim body::after {
+  content: ""; position: fixed; z-index: -1; inset: -25vmax; pointer-events: none;
+  background:
+    radial-gradient(38vmax 30vmax at 18% 12%, color-mix(in srgb, var(--brand) 20%, transparent), transparent 62%),
+    radial-gradient(34vmax 30vmax at 82% 26%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 64%),
+    radial-gradient(30vmax 26vmax at 58% 88%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 66%);
+  filter: blur(18px);
+  animation: kit-drift 34s ease-in-out infinite alternate;
+}
+
+@keyframes kit-drift {
+  0% { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  50% { transform: translate3d(2.5%, 1.8%, 0) scale(1.06); }
+  100% { transform: translate3d(-1%, 2.4%, 0) scale(1.02); }
+}
+
+/* --- scroll progress rail --- */
+
+.kit-progress { position: fixed; inset: 0 0 auto; height: 3px; z-index: 60; pointer-events: none; }
+.kit-progress i {
+  display: block; height: 100%; transform-origin: 0 50%; transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, var(--brand), var(--accent) 60%, var(--brand));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 70%, transparent);
+  transition: transform .12s linear;
+}
+
+/* --- cursor spotlight --- */
+
+.kit-spot {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
+  transition: opacity .6s var(--ease-expo);
+  background: radial-gradient(420px 420px at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+}
+.kit-anim.kit-pointer .kit-spot { opacity: 1; }
+
+/* --- entrance: every .reveal arrives with a blur-and-rise wipe --- */
+
+.kit-anim .reveal {
+  opacity: 0; transform: translate3d(0, 30px, 0) scale(.98); filter: blur(6px);
+  transition:
+    opacity .7s var(--ease-expo),
+    transform .85s var(--ease-expo),
+    filter .7s var(--ease-expo);
+  transition-delay: var(--dl, 0ms);
+}
+.kit-anim .reveal.is-in { opacity: 1; transform: none; filter: blur(0); }
+
+/* --- hero: drifting aurora, live orbit rings, flowing headline accent --- */
+
+.kit-anim .hero::before {
+  content: ""; position: absolute; inset: -35% -12% auto -12%; height: 165%; z-index: 0;
+  pointer-events: none; filter: blur(46px); opacity: .9;
+  background:
+    radial-gradient(26vmax 20vmax at 24% 34%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 64%),
+    radial-gradient(22vmax 18vmax at 74% 56%, color-mix(in srgb, var(--brand) 30%, transparent), transparent 66%);
+  animation: kit-hero-drift 22s ease-in-out infinite alternate;
+}
+@keyframes kit-hero-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(4%, -3%, 0) scale(1.12); }
+}
+
+.kit-anim .hero-orbit {
+  animation: kit-orbit 18s linear infinite;
+  border-color: color-mix(in srgb, var(--brand) 26%, transparent);
+}
+.kit-anim .hero-orbit::before,
+.kit-anim .hero-orbit::after {
+  content: ""; position: absolute; inset: 14%; border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--accent) 40%, transparent);
+  animation: kit-orbit-rev 26s linear infinite;
+}
+.kit-anim .hero-orbit::after {
+  inset: 30%; border-style: solid; opacity: .55;
+  animation: kit-ring-pulse 4.6s var(--ease-expo) infinite;
+}
+@keyframes kit-orbit { to { transform: rotate(360deg); } }
+@keyframes kit-orbit-rev { to { transform: rotate(-360deg); } }
+@keyframes kit-ring-pulse {
+  0% { transform: scale(1); opacity: .55; }
+  70% { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1.22); opacity: 0; }
+}
+
+.kit-anim .hero h1 {
+  clip-path: inset(0 0 0 0);
+  animation: kit-title-in 1.05s var(--ease-expo) both;
+}
+@keyframes kit-title-in {
+  from { opacity: 0; transform: translateY(26px); clip-path: inset(0 0 40% 0); }
+  to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+
+.kit-anim .hero h1 em {
+  background: linear-gradient(100deg, var(--brand) 0%, var(--accent) 34%, var(--brand-2) 62%, var(--accent) 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  animation: kit-text-flow 9s linear infinite;
+}
+@keyframes kit-text-flow { to { background-position: -260% 0; } }
+
+/* the eyebrow's existing rule is a 26px bar — give it a streak instead of a dot */
+.kit-anim .eyebrow::before {
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 65%, transparent);
+  transform-origin: 0 50%;
+  animation: kit-streak 1.1s var(--ease-expo) both, kit-streak-glow 3.4s 1.1s ease-in-out infinite;
+}
+@keyframes kit-streak { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes kit-streak-glow {
+  0%, 100% { box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 45%, transparent); }
+  50% { box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 85%, transparent); }
+}
+
+/* --- cards: lift, accent bar and a sheen that sweeps on hover --- */
+
+.kit-anim .card, .kit-anim .tile, .kit-anim .stat {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0, var(--ty, 0), 0);
+  transition: transform .45s var(--ease-expo), box-shadow .45s var(--ease-expo), border-color .3s ease;
+  will-change: transform;
+}
+.kit-anim .card:hover, .kit-anim .tile:hover, .kit-anim .stat:hover {
+  --ty: -7px; border-color: color-mix(in srgb, var(--brand) 34%, var(--line));
+  box-shadow: 0 26px 60px -30px color-mix(in srgb, var(--brand) 55%, transparent), var(--shadow-md);
+}
+
+.kit-anim .card::after, .kit-anim .tile::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(108deg, transparent 34%, color-mix(in srgb, var(--accent) 22%, #fff) 48%, transparent 62%);
+  background-size: 280% 100%; background-position: 145% 0;
+  transition: background-position 1.1s var(--ease-expo);
+  mix-blend-mode: soft-light;
+}
+.kit-anim .card:hover::after, .kit-anim .tile:hover::after { background-position: -45% 0; }
+.kit-anim .card, .kit-anim .tile { position: relative; }
+
+/* --- buttons: shine sweep, press feedback, magnetic pull via --mx --- */
+
+.kit-anim .btn { position: relative; overflow: hidden; isolation: isolate; }
+.kit-anim .btn::after {
+  content: ""; position: absolute; top: -20%; bottom: -20%; left: -70%; width: 45%; z-index: -1;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .5), transparent);
+  transform: skewX(-18deg); transition: left .75s var(--ease-expo);
+}
+.kit-anim .btn:hover::after { left: 130%; }
+.kit-anim .btn:active { transform: translateY(1px) scale(.98); }
+.kit-anim .btn-primary, .kit-anim .btn-accent, .kit-anim .btn-ink {
+  box-shadow: 0 10px 24px -14px color-mix(in srgb, var(--brand) 75%, transparent);
+}
+.kit-anim .btn-primary:hover, .kit-anim .btn-accent:hover, .kit-anim .btn-ink:hover {
+  box-shadow: 0 18px 38px -16px color-mix(in srgb, var(--brand) 80%, transparent);
+}
+
+/* --- readouts: a bloom every time a number changes --- */
+
+.kit-anim .readout-big { isolation: isolate; }
+.kit-anim .readout-big::before {
+  content: ""; position: absolute; inset: 12px; border-radius: calc(var(--radius) - 6px);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); opacity: 0;
+  pointer-events: none;
+}
+.kit-anim .readout-big.is-bumped::before { animation: kit-bloom-ring .9s var(--ease-expo) forwards; }
+.kit-anim .readout-big.is-bumped b { animation: kit-bloom .75s var(--ease-back); }
+@keyframes kit-bloom-ring {
+  0% { opacity: .9; transform: scale(.97); }
+  100% { opacity: 0; transform: scale(1.06); }
+}
+@keyframes kit-bloom {
+  0% { transform: scale(.94); text-shadow: 0 0 0 transparent; }
+  45% { transform: scale(1.055); text-shadow: 0 0 26px color-mix(in srgb, var(--accent) 75%, transparent); }
+  100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
+}
+.kit-anim .readout-big b { transform-origin: 0 70%; display: inline-block; }
+.kit-anim .stat b.is-bumped { animation: kit-bloom .75s var(--ease-back); }
+.kit-anim .stat b { display: inline-block; transform-origin: 0 70%; }
+
+/* --- bars and charts: overshoot fill with a glowing head --- */
+
+.kit-anim .bar i, .kit-anim .bar-fill {
+  transition: width 1.15s var(--ease-back);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 55%, transparent);
+  position: relative;
+}
+.kit-anim .bar i::after, .kit-anim .bar-fill::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
+  background-size: 200% 100%;
+  animation: kit-sheen 2.6s linear infinite;
+}
+@keyframes kit-sheen { to { background-position: -200% 0; } }
+
+.kit-anim .spark path.line { stroke-dasharray: 1200; stroke-dashoffset: 1200; }
+.kit-anim .spark.is-in path.line { animation: kit-draw 1.6s var(--ease-expo) forwards; }
+@keyframes kit-draw { to { stroke-dashoffset: 0; } }
+
+.kit-anim .donut .value { transform-origin: 50% 50%; animation: kit-pop .9s var(--ease-back) both; }
+@keyframes kit-pop { from { transform: scale(.6) rotate(-14deg); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* --- live dot, nav, header, section rules --- */
+
+.kit-anim .pulse { position: relative; }
+.kit-anim .pulse::after {
+  content: ""; position: absolute; inset: -6px; border-radius: inherit;
+  border: 1px solid currentColor; opacity: 0;
+  animation: kit-live 2.2s var(--ease-expo) infinite;
+}
+@keyframes kit-live {
+  0% { opacity: .5; transform: scale(.8); }
+  70%, 100% { opacity: 0; transform: scale(1.5); }
+}
+
+.kit-anim .nav a { position: relative; }
+.kit-anim .nav a:not(.btn)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform .45s var(--ease-expo);
+}
+.kit-anim .nav a:not(.btn):hover::after, .kit-anim .nav a.is-active::after { transform: scaleX(1); }
+
+.kit-anim .site-head { transition: box-shadow .4s ease, background .4s ease, border-color .4s ease; }
+.kit-anim .site-head.is-stuck {
+  box-shadow: 0 18px 40px -30px rgba(12, 18, 24, .8);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+}
+.kit-anim .brand-mark { transition: transform .6s var(--ease-back), border-radius .5s var(--ease-expo); }
+.kit-anim .brand:hover .brand-mark { transform: rotate(-12deg) scale(1.08); border-radius: 15px; }
+
+.kit-anim section > .shell > h2, .kit-anim .section-head h2 { position: relative; }
+
+/* --- table rows: stagger in once the table is on screen --- */
+
+.kit-anim tbody tr { opacity: 0; transform: translate3d(0, 12px, 0); }
+.kit-anim table.is-in tbody tr {
+  animation: kit-row-in .55s var(--ease-expo) forwards;
+  animation-delay: calc(var(--i, 0) * 26ms);
+}
+@keyframes kit-row-in { to { opacity: 1; transform: none; } }
+.kit-anim tbody tr { transition: background .25s ease; }
+.kit-anim tbody tr:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+
+.kit-anim .toast { animation: kit-toast-in .5s var(--ease-back) both; }
+@keyframes kit-toast-in { from { opacity: 0; transform: translateY(16px) scale(.94); } to { opacity: 1; transform: none; } }
+
+.kit-anim .modal.is-open .modal-body { animation: kit-modal-in .55s var(--ease-expo) both; }
+@keyframes kit-modal-in { from { opacity: 0; transform: translateY(26px) scale(.97); } to { opacity: 1; transform: none; } }
+
+/* --- the hero becomes a lit stage rather than a tinted gutter --- */
+
+.kit-anim .hero {
+  margin: 14px 0 26px;
+  padding-inline: clamp(20px, 3.4vw, 54px);
+  border-radius: 34px;
+  isolation: isolate;
+  color: #f2ece1;
+  background:
+    radial-gradient(120% 130% at 6% -10%, color-mix(in srgb, var(--brand) 62%, #070b10) 0%, transparent 58%),
+    radial-gradient(90% 110% at 98% 4%, color-mix(in srgb, var(--accent) 52%, #070b10) 0%, transparent 56%),
+    radial-gradient(70% 90% at 50% 120%, color-mix(in srgb, var(--brand-2) 70%, #070b10) 0%, transparent 62%),
+    #0b1116;
+  box-shadow:
+    0 50px 110px -70px rgba(4, 8, 12, .95),
+    inset 0 1px 0 rgba(255, 255, 255, .07);
+}
+
+/* fine lattice + a slow travelling highlight over the stage */
+.kit-anim .hero::before {
+  inset: 0; height: auto; opacity: 1; filter: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .055) 1px, transparent 1px),
+    radial-gradient(52% 62% at 22% 18%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 70%);
+  background-size: 46px 46px, 46px 46px, 100% 100%;
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 88%);
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 88%);
+  animation: kit-grid-drift 26s linear infinite;
+}
+@keyframes kit-grid-drift {
+  to { background-position: 46px 46px, 46px 46px, 0 0; }
+}
+
+.kit-anim .hero h1 { color: #fff; text-shadow: 0 18px 60px rgba(0, 0, 0, .55); font-size: clamp(2.3rem, 3.5vw + .95rem, 3.75rem); line-height: 1.04; }
+@media (max-width: 1100px) { .kit-anim .hero h1 br { display: none; } }
+.kit-anim .hero h1 em {
+  background: linear-gradient(100deg, #8ef0cd 0%, #ffd88f 30%, #7fe3ff 58%, #ffd88f 82%, #8ef0cd 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  border-bottom: 0; box-shadow: none; text-decoration: none; text-shadow: none;
+  animation: kit-text-flow 11s linear infinite;
+}
+.kit-anim .hero .lede, .kit-anim .hero p { color: rgba(242, 236, 225, .8); }
+.kit-anim .hero .eyebrow { color: color-mix(in srgb, var(--accent) 22%, #fff); }
+.kit-anim .hero .hero-cap, .kit-anim .hero .hero-note, .kit-anim .hero .hero-tick,
+.kit-anim .hero .hero-caption, .kit-anim .hero small, .kit-anim .hero .muted {
+  color: rgba(242, 236, 225, .74);
+}
+.kit-anim .hero .hero-cap b, .kit-anim .hero .hero-note b { color: #fff; }
+.kit-anim .hero b, .kit-anim .hero strong { color: #fff; }
+.kit-anim .hero .stat b { color: #fff; }
+.kit-anim .hero .stat span { color: rgba(242, 236, 225, .62); }
+.kit-anim .hero .stat-strip { border-top-color: rgba(255, 255, 255, .16); }
+.kit-anim .hero .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, .3); }
+.kit-anim .hero .btn-ghost:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .55); }
+.kit-anim .hero .btn-primary { box-shadow: 0 16px 34px -16px color-mix(in srgb, var(--brand) 90%, #000); }
+.kit-anim .hero a:not(.btn) { color: inherit; }
+.kit-anim .hero .hero-frame { box-shadow: 0 40px 90px -40px rgba(0, 0, 0, .9), 0 0 0 1px rgba(255, 255, 255, .12); }
+.kit-anim .hero .hero-glow { opacity: .9; }
+
+/* --- one-line navigation on wide screens --- */
+
+@media (min-width: 901px) {
+  .kit-anim .head-inner { gap: 12px; position: relative; padding-right: 176px; }
+  .kit-anim .nav .btn {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    margin: 0;
+  }
+  .kit-anim .brand { flex: 0 0 auto; }
+  .kit-anim .brand small, .kit-anim .nav a, .kit-anim .nav .btn { white-space: nowrap; }
+  .kit-anim .nav { gap: 0; flex-wrap: wrap; justify-content: flex-end; min-width: 0; }
+  .kit-anim .nav a:not(.btn) { padding: 7px 7px; font-size: .82rem; }
+  .kit-anim .nav .btn { padding-inline: 14px; }
+}
+@media (min-width: 901px) and (max-width: 1140px) {
+  .kit-anim .brand small { display: none; }
+  .kit-anim .nav a:not(.btn) { padding: 6px 6px; font-size: .79rem; }
+}
+
+/* --- section rhythm: gradient hairline above every h2 block --- */
+
+.kit-anim section h2 { position: relative; }
+.kit-anim section > .shell > h2::before,
+.kit-anim .section-head h2::before {
+  content: ""; position: absolute; left: 0; top: -18px; width: 64px; height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  transform-origin: 0 50%; animation: kit-streak 1s var(--ease-expo) both;
+}
+
+/* --- bigger, warmer cards with a gradient top edge on hover --- */
+
+.kit-anim .card, .kit-anim .tile { border-radius: 20px; }
+.kit-anim .card::before, .kit-anim .tile::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 3px; border-radius: 20px 20px 0 0;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform .6s var(--ease-expo);
+}
+.kit-anim .card:hover::before, .kit-anim .tile:hover::before { transform: scaleX(1); }
+
+/* --- respect the reader --- */
+
+@media (prefers-reduced-motion: reduce) {
+  .kit-anim .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .kit-anim body::after, .kit-anim .hero::before, .kit-anim .hero-orbit,
+  .kit-anim .hero-orbit::before, .kit-anim .hero-orbit::after,
+  .kit-anim .hero h1, .kit-anim .hero h1 em, .kit-anim .eyebrow::before,
+  .kit-anim .bar i::after, .kit-anim .bar-fill::after, .kit-anim .pulse::after,
+  .kit-anim tbody tr, .kit-anim .spark path.line, .kit-anim .donut .value,
+  .kit-anim .readout-big b, .kit-anim .stat b { animation: none !important; }
+  .kit-anim tbody tr { opacity: 1; transform: none; }
+  .kit-anim .card, .kit-anim .tile, .kit-anim .stat { transform: none; }
+  .kit-anim .card::after, .kit-anim .tile::after { display: none; }
+  .kit-anim .kit-spot { display: none; }
+}
+
 /* ---------- print ---------- */
 
 @media print {
   .site-head, .site-foot, .hero-glow, .btn, .menu-toggle, .toast, .modal-backdrop { display: none !important; }
+  .kit-progress, .kit-spot { display: none !important; }
+  body::after { display: none !important; }
+  tbody tr { opacity: 1 !important; transform: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   body::before { display: none; }
   section { padding: 12pt 0; break-inside: avoid; }

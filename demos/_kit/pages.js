@@ -57,6 +57,46 @@
     heads.forEach(function (h) { io.observe(h); });
   }
 
+  /* ---------- motion: stagger indices + count-up metric figures ---------- */
+
+  function motion() {
+    $$('[data-reveal-delay]').forEach(function (el) {
+      el.style.setProperty('--i', el.getAttribute('data-reveal-delay'));
+    });
+    var nodes = $$('.metrics .metric > b');
+    if (!nodes.length || !('IntersectionObserver' in global)) return;
+    if (global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    nodes.forEach(function (el) {
+      var raw = el.textContent.trim();
+      var m = raw.match(/(\d[\d,]*(?:\.\d+)?)/);
+      if (!m) return;
+      var prefix = raw.slice(0, m.index);
+      var suffix = raw.slice(m.index + m[0].length);
+      var value = parseFloat(m[0].replace(/,/g, ''));
+      if (!isFinite(value)) return;
+      var dp = (m[0].split('.')[1] || '').length;
+      if (value < 25) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          io.disconnect();
+          var start = null;
+          function run(ts) {
+            if (start === null) start = ts;
+            var p = Math.min(1, (ts - start) / 950);
+            var eased = 1 - Math.pow(1 - p, 3);
+            var figure = (value * eased).toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp });
+            el.textContent = prefix + figure + suffix;
+            if (p < 1) global.requestAnimationFrame(run);
+            else el.textContent = raw;
+          }
+          global.requestAnimationFrame(run);
+        });
+      }, { threshold: 0.45 });
+      io.observe(el);
+    });
+  }
+
   /* ---------- live filtering over a data table ---------- */
 
   function filter(tableSel, opts) {
@@ -229,6 +269,7 @@
         ready: function () {
           progress();
           toc();
+          motion();
           auto();
           if (setup) setup(api);
         }
