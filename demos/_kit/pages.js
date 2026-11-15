@@ -259,6 +259,27 @@
     });
   }
 
+  /* A wide reference table is scrollable inside its own box, which reads as a
+     broken page unless the reader can see there is more to the right. Mark the
+     ones that actually overflow so the CSS can show an edge fade and a hint. */
+  function wideTables() {
+    var boxes = $$('.table-scroll');
+    if (!boxes.length) return;
+    function paint() {
+      boxes.forEach(function (box) {
+        var over = box.scrollWidth - box.clientWidth > 12;
+        box.classList.toggle('is-wide', over);
+        box.classList.toggle('is-scrolled', over && box.scrollLeft > 12);
+        box.classList.toggle('is-end', over && box.scrollLeft + box.clientWidth >= box.scrollWidth - 12);
+      });
+    }
+    boxes.forEach(function (box) {
+      box.addEventListener('scroll', paint, { passive: true });
+    });
+    global.addEventListener('resize', paint);
+    paint();
+  }
+
   var api = { exports: {}, stores: {}, rerender: {} };
 
   global.pages = {
@@ -271,6 +292,7 @@
           toc();
           motion();
           auto();
+          wideTables();
           if (setup) setup(api);
         }
       });

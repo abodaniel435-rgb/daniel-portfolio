@@ -332,6 +332,30 @@ window.PROJECTS = [
     accent: "#f5a524"
   },
   {
+    slug: "nairadesk",
+    name: "NairaDesk",
+    category: "product",
+    categoryLabel: "Payroll · full-stack",
+    year: "2026",
+    status: "Deploy-ready",
+    tagline: "The PayRite calculator, rebuilt as the backend it should have had.",
+    summary: "PayRite proved the maths in a browser tab. NairaDesk moves it onto PHP and MySQL: register a company, keep a staff roster, run a month and get a frozen, auditable pay run you can produce to a labour officer two years later.",
+    problem: "A calculator you cannot audit is a liability. PAYE was worked out correctly and then thrown away — no record of what was paid, on what inputs, under which rate schedule, and no way to show anyone anything afterwards.",
+    approach: "A PHP 8.2 and MySQL application on the same ForgeStack core as the other builds. The engine is a line-for-line port of the browser calculator, and a run-time test cuts the maths out of demos/payrite/app.js and executes both side by side. The statutory bands live in a `rates` table, so a relief ceiling that moves does not need a redeploy.",
+    features: [
+      "Roster, per-employee reliefs and a frozen monthly pay run",
+      "PAYE bands, CRA, rent relief and pension held as data, not code",
+      "Admin console: rate editor, accounts, audit log and every stored run",
+      "Engine parity test — 52 cases, 672 figures, 0 mismatches against PayRite",
+      "66 HTTP assertions: CSRF, tenant isolation, bcrypt-only storage, login throttle"
+    ],
+    stack: ["PHP 8.2", "MySQL", "PDO", "cPanel", "Cron"],
+    live: null,
+    source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/nairadesk",
+    thumb: "assets/projects/nairadesk.jpg",
+    accent: "#17694a"
+  },
+  {
     slug: "forgestack",
     name: "ForgeStack",
     category: "product",

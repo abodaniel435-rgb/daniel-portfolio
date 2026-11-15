@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2">
   <link rel="stylesheet" href="../_stage/stage.css">
 </head>
 <body>
@@ -234,59 +234,54 @@
   /* ---------- product data ---------- */
   var PRODUCTS = [
     {
-      id: 'eggs-big', name: 'Eggs — Big', cat: 'eggs', catLabel: 'Eggs',
+      id: 'eggs-big', img: 'assets/photos/eggs-big.webp', alt: 'Crate of 30 large brown farm eggs resting in straw', name: 'Eggs — Big', cat: 'eggs', catLabel: 'Eggs',
       price: '₦4,200', unit: 'per crate',
       desc: 'Crate of 30 large-size eggs, collected daily and hand-graded before packing.',
       specs: ['Crate of 30', 'Large size', 'Collected daily']
     },
     {
-      id: 'eggs-medium', name: 'Eggs — Medium', cat: 'eggs', catLabel: 'Eggs',
+      id: 'eggs-medium', img: 'assets/photos/eggs-medium.webp', alt: 'Tray of 30 medium mixed-colour farm eggs', name: 'Eggs — Medium', cat: 'eggs', catLabel: 'Eggs',
       price: '₦3,700', unit: 'per crate',
       desc: 'Crate of 30 medium-size eggs — the steady everyday crate for households and shops.',
       specs: ['Crate of 30', 'Medium size', 'Hand-graded']
     },
     {
-      id: 'eggs-small', name: 'Eggs — Small', cat: 'eggs', catLabel: 'Eggs',
+      id: 'eggs-small', img: 'assets/photos/eggs-small.webp', alt: 'Crate of 30 small farm eggs packed in a market tray', name: 'Eggs — Small', cat: 'eggs', catLabel: 'Eggs',
       price: '₦3,200', unit: 'per crate',
       desc: 'Crate of 30 small-size eggs, sorted by hand. Mixed crates available on request.',
       specs: ['Crate of 30', 'Small size', 'Mixed crates on request']
     },
     {
-      id: 'broiler-small', name: 'Broiler — Small', cat: 'poultry', catLabel: 'Poultry',
+      id: 'broiler-small', img: 'assets/photos/broiler-small.webp', alt: 'Young small broiler chicken, lean and leggy, in the poultry house', name: 'Broiler — Small', cat: 'poultry', catLabel: 'Poultry',
       price: '₦6,500', unit: 'per bird',
       desc: 'Roughly 1.2kg – 1.5kg live weight. Sold live or dressed — tell us which you prefer.',
       specs: ['1.2kg – 1.5kg', 'Live or dressed', 'Well-fed']
     },
     {
-      id: 'broiler-medium', name: 'Broiler — Medium', cat: 'poultry', catLabel: 'Poultry',
+      id: 'broiler-medium', img: 'assets/photos/broiler-medium.webp', alt: 'Medium full-bodied broiler chicken standing on deep litter', name: 'Broiler — Medium', cat: 'poultry', catLabel: 'Poultry',
       price: '₦8,500', unit: 'per bird',
       desc: 'Roughly 1.6kg – 2kg live weight. Raised on a proper feeding schedule to good table weight.',
       specs: ['1.6kg – 2kg', 'Live or dressed', 'Order a day ahead']
     },
     {
-      id: 'broiler-large', name: 'Broiler — Large', cat: 'poultry', catLabel: 'Poultry',
+      id: 'broiler-large', img: 'assets/photos/broiler-large.webp', alt: 'Large broad-breasted broiler chicken in golden evening light', name: 'Broiler — Large', cat: 'poultry', catLabel: 'Poultry',
       price: '₦10,500', unit: 'per bird',
       desc: '2.1kg and above, live weight. The biggest birds we raise — best ordered a day ahead when dressed.',
       specs: ['2.1kg +', 'Live or dressed', 'Bulk pricing 5+']
     },
     {
-      id: 'layer-point-of-lay', name: 'Layer — Point of Lay', cat: 'poultry', catLabel: 'Poultry',
+      id: 'layer-point-of-lay', img: 'assets/photos/layer-point-of-lay.webp', alt: 'Slim point-of-lay pullet, not yet laying, on the farm ground', name: 'Layer — Point of Lay', cat: 'poultry', catLabel: 'Poultry',
       price: '₦7,500', unit: 'per bird',
       desc: 'Young hen, about to start laying. Ideal if you are starting a flock or restocking.',
       specs: ['Point of lay', 'Live bird', 'Flock starter']
     },
     {
-      id: 'layer-laying', name: 'Layer — Already Laying', cat: 'poultry', catLabel: 'Poultry',
+      id: 'layer-laying', img: 'assets/photos/layer-laying.webp', alt: 'Mature brown laying hen beside a nesting box with a fresh egg', name: 'Layer — Already Laying', cat: 'poultry', catLabel: 'Poultry',
       price: '₦9,000', unit: 'per bird',
       desc: 'Mature hen, currently producing eggs. Ask about availability before a bulk order.',
       specs: ['Already laying', 'Live bird', 'Restock ready']
     }
   ];
-
-  var GLYPHS = {
-    eggs: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M16 4c5 0 9 8.4 9 13.2C25 23 21 28 16 28s-9-5-9-10.8C7 12.4 11 4 16 4Z"/><path d="M11 17c1.5-3 3.5-5 6-6"/></svg>',
-    poultry: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M20 12c0-3.3-2.7-6-6-6s-6 2.7-6 6c0 1.4.5 2.6 1.3 3.6-2.5 1-4.3 3.4-4.3 6.4 0 .7.1 1.4.3 2 1.2-2 3.3-3.3 5.7-3.3M20 12c2.8 0 5 2.2 5 5 0 4-3.4 9-9 9"/><path d="M26 9l3-1-2 4"/><circle cx="21" cy="13" r="1" fill="currentColor" stroke="none"/></svg>'
-  };
 
   var list = document.getElementById('productList');
   var emptyState = document.getElementById('emptyState');
@@ -312,18 +307,20 @@
     var orderHref = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(orderMessage(product));
 
     card.innerHTML =
-      '<div class="product-top">' +
+      '<div class="product-media">' +
+        '<img src="' + product.img + '" width="720" height="540" loading="lazy" decoding="async" alt="' + product.alt + '">' +
         '<span class="pill pill-' + product.cat + '">' + product.catLabel + '</span>' +
-        '<span class="product-glyph" aria-hidden="true">' + GLYPHS[product.cat] + '</span>' +
       '</div>' +
-      '<h3>' + product.name + '</h3>' +
-      '<p class="product-desc">' + product.desc + '</p>' +
-      '<ul class="specs">' + product.specs.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
-      '<div class="product-foot">' +
-        '<div class="price"><strong>' + product.price + '</strong><span>' + product.unit + '</span></div>' +
-        '<a class="btn btn-dark" href="' + orderHref + '" target="_blank" rel="noopener" aria-label="Order ' + product.name + ' on WhatsApp">Order' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
-        '</a>' +
+      '<div class="product-body">' +
+        '<h3>' + product.name + '</h3>' +
+        '<p class="product-desc">' + product.desc + '</p>' +
+        '<ul class="specs">' + product.specs.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
+        '<div class="product-foot">' +
+          '<div class="price"><strong>' + product.price + '</strong><span>' + product.unit + '</span></div>' +
+          '<a class="btn btn-dark" href="' + orderHref + '" target="_blank" rel="noopener" aria-label="Order ' + product.name + ' on WhatsApp">Order' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
+          '</a>' +
+        '</div>' +
       '</div>';
     return card;
   }

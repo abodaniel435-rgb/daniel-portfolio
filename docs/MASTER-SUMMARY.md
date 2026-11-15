@@ -6,7 +6,7 @@
 
 | # | Deliverable | Status | Where |
 | --- | --- | --- | --- |
-| 1 | Redesigned portfolio | **Done** | `portfolio/daniel-portfolio/` — 26 projects, filters, case studies, mobile nav |
+| 1 | Redesigned portfolio | **Done** | `portfolio/daniel-portfolio/` — 27 projects, filters, case studies, mobile nav |
 | 2 | Upgraded fitness demos | **Done** | `demos/thatguys-fitness/demos.html` — interactive Coach Studio, 8 exercises, 24 AI instructor frames, phase-by-phase player |
 | 3 | Functional custom AI agent | **Done** | `agent/forgestack/` — brief → deployed-ready PHP + MySQL site |
 | 4 | Multiple professional sites across industries | **Done** | 8 full-stack builds + 6 redesigned sites + 10 new browser tools (tables below) |
@@ -164,6 +164,56 @@ So the fix is data, not code, and it is one step:
 3. On cPanel nothing else is required — `listimages.php` will list them immediately. For GitHub Pages run `node tools/trinity_manifest.mjs`, which rewrites `images.json` from the folder and refuses to write an empty manifest.
 
 To make 172 photographs load acceptably, the grid now pages: it opens with 24 pieces, shows "*n* of 172 shown", and a **Show more** button adds another 24 and scrolls to the first new card. Search and collection filters reset the page and count against the whole catalogue, not the visible slice.
+
+## 6f. The full-stack conversion pass (NairaDesk) and three core bugs
+
+The owner asked whether any of this was actually backend work, and if not, to convert it. The
+honest answer has two halves. Five of the builds were already full-stack — AjoCircle, FarmCoop,
+Meditrack, RoutePilot and ForgeStack are PHP 8.2 + MySQL with real auth, roles, validation,
+automation and cPanel installers. The ten tools in `demos/` were not: they keep their state in
+`localStorage`, which is a fine calculator and not a product.
+
+**PayRite became NairaDesk** (`sites/nairadesk`, registered as the 27th project). Same engine,
+moved server-side: register a company, keep a staff roster with per-employee reliefs, run a month
+and get a frozen pay run in MySQL that survives deleting the roster row it came from. An admin
+console edits the statutory bands as data, so a relief ceiling that moves between filing seasons
+is one field, not a redeploy.
+
+Two tests back that claim rather than assert it:
+
+- `tools/smoke.php` — **66 assertions over real HTTP** (sessions, CSRF refusal and forged tokens,
+  registration, the JSON API against the engine, duplicate pay-run months, tenant isolation,
+  bcrypt-only storage, cookie flags, the admin console, a live rate edit picked up by the next
+  calculation, audit contents, the 8-per-15-minutes lockout). It signs into the administrator
+  section with a throwaway admin it creates and deletes, so **no real password is needed to run
+  it and none is ever written into the repository.** Current status: 66 passed, 0 failed.
+- `tools/engine_parity.php` — cuts the calculator out of `demos/payrite/app.js` at run time and
+  executes it under Node against `Payroll::compute()`. **52 cases × 14 figures = 672 comparisons,
+  0 mismatches.** Nothing is copied into the test, so if the demo is ever refactored the anchors
+  vanish and it fails loudly instead of comparing a stale snapshot.
+
+**Three latent bugs were found by writing those tests, and all three lived in the shared core** —
+so they were silently affecting AjoCircle, FarmCoop, Meditrack and RoutePilot too:
+
+1. `Db::update()` mixed named `SET` placeholders with a positional `?` in the `WHERE`, which PDO
+   rejects (HY093). Any admin rate save or account toggle would have returned a 500. It now
+   supports both styles.
+2. `Auth` had no `login()` — registration created an account and then left the visitor signed
+   out. Added, with `session_regenerate_id(true)` so the pre-login session id is retired.
+3. `base_path()` returned a bare `\` on Windows when the app sat at the document root, which
+   prefixed **every** generated URL with a backslash. Chrome read `/login` as a hostname and
+   served "this site can't be reached". Two regression assertions now fail if a backslash appears
+   in any generated URL.
+
+Also fixed in NairaDesk itself: a duplicate pay-run month hit the unique key and crashed instead of
+opening the run that exists, and the auth pages rendered outside the layout so flash messages —
+including the lockout notice — were invisible.
+
+**Two caveats.** The nine remaining tools are still frontend-only; NairaDesk is the one
+conversion so far, done properly with tests, rather than nine done thinly. And the 24 cPanel
+archives in `Downloads` were packaged before these core fixes, so **rebuild them before uploading
+any of the four PHP sites** — an installed copy from those zips still carries the `update()` and
+`base_path()` bugs.
 
 ## 7. Outstanding / optional
 

@@ -47,6 +47,31 @@
 /* ---------- data tables ---------- */
 
 .table-scroll { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; overflow: auto; box-shadow: var(--shadow-sm); }
+/* pages.js marks the tables that genuinely overflow their box and where the
+   reader currently is inside them; the mask is painted on the scroll box
+   itself, so it fades the columns rather than the page behind them. */
+.table-scroll.is-wide > table.data { font-size: .87rem; }
+.table-scroll.is-wide td, .table-scroll.is-wide th { padding-left: 13px; padding-right: 13px; }
+.table-scroll.is-wide {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 78px), rgba(0,0,0,.25));
+  mask-image: linear-gradient(90deg, #000 calc(100% - 78px), rgba(0,0,0,.25));
+}
+.table-scroll.is-wide.is-end {
+  -webkit-mask-image: none; mask-image: none;
+}
+.table-scroll.is-wide.is-scrolled {
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.25), #000 78px, #000 calc(100% - 78px), rgba(0,0,0,.25));
+  mask-image: linear-gradient(90deg, rgba(0,0,0,.25), #000 78px, #000 calc(100% - 78px), rgba(0,0,0,.25));
+}
+.table-scroll.is-wide.is-scrolled.is-end {
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.25), #000 78px);
+  mask-image: linear-gradient(90deg, rgba(0,0,0,.25), #000 78px);
+}
+.table-scroll.is-wide caption::after {
+  content: " · scroll sideways for every column";
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--brand);
+}
 table.data { width: 100%; border-collapse: collapse; font-size: .92rem; min-width: 620px; }
 table.data caption { text-align: left; padding: 16px 18px 12px; font-size: .84rem; color: var(--ink-3); border-bottom: 1px solid var(--line); }
 table.data thead th { position: sticky; top: 0; z-index: 2; background: var(--paper-2); text-align: left; padding: 12px 16px;

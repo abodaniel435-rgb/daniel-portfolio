@@ -142,7 +142,12 @@ section { padding: clamp(56px, 7vw, 104px) 0; position: relative; }
 .hero-orbit { position: absolute; width: 420px; height: 420px; border: 1px solid var(--line); border-radius: 50%; right: -140px; top: -120px; opacity: .5; pointer-events: none; }
 
 .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-top: 40px; padding-top: 26px; border-top: 1px solid var(--line); }
-.stat b { display: block; font: 700 clamp(1.5rem, 2vw + .6rem, 2.3rem)/1 var(--font-display); color: var(--ink); }
+/* A stat column is often only ~180px wide while its figure can be a ten-character
+   ₦ amount, so the number is sized from the column rather than the viewport —
+   otherwise "₦1,200,000" paints straight over the next stat. */
+.stat { min-width: 0; container-type: inline-size; }
+.stat b { display: block; font: 700 clamp(1.5rem, 2vw + .6rem, 2.3rem)/1.05 var(--font-display); color: var(--ink); }
+.stat b { font-size: clamp(1.3rem, 13cqi, 2.2rem); letter-spacing: -.018em; overflow-wrap: anywhere; }
 .stat span { display: block; margin-top: 6px; font-size: .86rem; color: var(--ink-3); }
 .band-ink .stat b { color: #fff; }
 .band-ink .stat span { color: rgba(244, 241, 236, .68); }
@@ -546,7 +551,7 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 }
 .kit-anim .readout-big b { transform-origin: 0 70%; display: inline-block; }
 .kit-anim .stat b.is-bumped { animation: kit-bloom .75s var(--ease-back); }
-.kit-anim .stat b { display: inline-block; transform-origin: 0 70%; }
+.kit-anim .stat b { transform-origin: 0 70%; }
 
 /* --- bars and charts: overshoot fill with a glowing head --- */
 
@@ -752,8 +757,8 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 .kit-stage .kit-par i {
   position: absolute; inset: 0; display: block;
   background: var(--kit-bg, none) var(--kit-pos, 50% 45%) / cover no-repeat;
-  opacity: var(--kit-o, .46);
-  filter: saturate(.78) contrast(1.06);
+  opacity: var(--kit-o, .55);
+  filter: saturate(.62) contrast(1.02) brightness(1.05);
   transform: scale(var(--kit-z, 1.04));
   animation: kit-kenburns 38s ease-in-out infinite alternate;
 }
@@ -762,21 +767,23 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   100% { transform: scale(1.16) translate3d(1.4%, -1.2%, 0); }
 }
 
-/* the scrim is what keeps body copy readable: a paper wash that thickens as
-   the page goes down, plus a vignette so the plate never fights the type */
+/* The scrim is what keeps body copy readable — but it is a fixed layer, so a
+   wash that thickens toward its own bottom makes the photograph vanish after
+   the first screen and the rest of the page reads as flat colour. It holds a
+   steady, light veil instead, so the plate stays behind every section. */
 .kit-stage::after {
   content: ""; position: absolute; inset: 0;
   background:
     linear-gradient(180deg,
-      color-mix(in srgb, var(--paper) 58%, transparent) 0%,
-      color-mix(in srgb, var(--paper) 74%, transparent) 26%,
-      color-mix(in srgb, var(--paper) 90%, transparent) 62%,
-      color-mix(in srgb, var(--paper) 96%, transparent) 100%),
-    radial-gradient(130% 92% at 78% 2%, transparent 22%, color-mix(in srgb, var(--ink) 30%, transparent) 100%);
+      color-mix(in srgb, var(--paper) 74%, transparent) 0%,
+      color-mix(in srgb, var(--paper) 85%, transparent) 18%,
+      color-mix(in srgb, var(--paper) 87%, transparent) 60%,
+      color-mix(in srgb, var(--paper) 84%, transparent) 100%),
+    radial-gradient(140% 100% at 78% 0%, transparent 30%, color-mix(in srgb, var(--ink) 22%, transparent) 100%);
 }
 
 /* section bands keep a little of the plate alive instead of going flat */
-.kit-anim .band { background: color-mix(in srgb, var(--paper-2) 86%, transparent); }
+.kit-anim .band { background: color-mix(in srgb, var(--paper-2) 74%, transparent); }
 
 /* the opening panel is the same photograph, cropped and lit, so the plate
    reads as the site's own imagery rather than decoration dropped behind it */
