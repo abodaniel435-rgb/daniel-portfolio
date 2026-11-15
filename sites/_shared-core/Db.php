@@ -61,11 +61,26 @@ final class Db
 
     public static function update(string $table, array $data, string $where, array $whereParams = []): int
     {
-        $sets = [];
-        foreach (array_keys($data) as $col) {
-            $sets[] = '`' . str_replace('`', '', $col) . '` = :' . $col;
+        if ($data === []) {
+            return 0;
         }
-        $sql = sprintf('UPDATE `%s` SET %s WHERE %s', str_replace('`', '', $table), implode(', ', $sets), $where);
+        $cols = array_keys($data);
+        $quote = static function (string $name): string {
+            return '`' . str_replace('`', '', $name) . '`';
+        };
+
+        /* PDO refuses a statement that mixes `?` and named placeholders, and the
+           old code always wrote the SET clause with names — so `Db::update($t,
+           $d, 'id = ?', [$id])` died with HY093 at runtime. Write SET in
+           whichever style the caller used for WHERE instead. */
+        if (str_contains($where, '?')) {
+            $sets = implode(', ', array_map(static fn ($c) => $quote($c) . ' = ?', $cols));
+            $sql = sprintf('UPDATE %s SET %s WHERE %s', $quote($table), $sets, $where);
+            return self::run($sql, array_merge(array_values($data), array_values($whereParams)))->rowCount();
+        }
+
+        $sets = implode(', ', array_map(static fn ($c) => $quote($c) . ' = :' . $c, $cols));
+        $sql = sprintf('UPDATE %s SET %s WHERE %s', $quote($table), $sets, $where);
         return self::run($sql, array_merge($data, $whereParams))->rowCount();
     }
 

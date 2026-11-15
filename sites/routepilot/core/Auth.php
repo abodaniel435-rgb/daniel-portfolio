@@ -39,6 +39,23 @@ final class Auth
         return true;
     }
 
+    /**
+     * Open a session for a user id directly — used by registration, where the
+     * password has just been written and there is nothing to verify. The
+     * identifier is rotated so a session id handed out before the account
+     * existed never names a signed-in user.
+     */
+    public static function login(int $userId): void
+    {
+        self::$cached = null;
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
+        $_SESSION['user_id'] = $userId;
+        $_SESSION['last_activity'] = time();
+        self::$cached = Db::one('SELECT * FROM users WHERE id = ? AND is_active = 1 LIMIT 1', [$userId]);
+    }
+
     public static function user(): ?array
     {
         if (self::$cached !== null) {

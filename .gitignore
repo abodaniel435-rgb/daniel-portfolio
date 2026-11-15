@@ -10,6 +10,12 @@ desktop.ini
 database/*.db
 storage/*.lock
 storage/installed.lock
+# the patterns above only match at the repo root; each app keeps its own
+# storage/ directory, and an install lock in there is runtime state too
+**/.env
+**/storage/*.lock
+**/storage/installed.lock
+**/storage/*.sqlite3
 __pycache__/
 node_modules/
 venv/

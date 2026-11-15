@@ -17,8 +17,11 @@ function base_path(): string
     if (str_contains($script, '/public/')) {
         $base = rtrim(substr($script, 0, strpos($script, '/public/')), '/');
     } else {
-        $base = rtrim(dirname($script), '/');
-        if ($base === '/' || $base === '.') {
+        /* dirname() hands back a Windows-style root ("\") when the script sits
+           at the top, which then prefixes every url() with "\" — normalise the
+           separator and treat every spelling of "no prefix" as empty. */
+        $base = rtrim(str_replace('\\', '/', dirname($script)), '/');
+        if ($base === '' || $base === '/' || $base === '.') {
             $base = '';
         }
     }
