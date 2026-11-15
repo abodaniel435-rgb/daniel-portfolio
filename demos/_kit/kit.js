@@ -639,7 +639,7 @@
       }) + '</span>';
     }).join('');
     el.appendChild(track);
-    var hero = $('.hero');
+    var hero = $('.hero, .page-hero');
     if (hero && hero.parentNode) hero.parentNode.insertBefore(el, hero.nextSibling);
   }
 
@@ -663,8 +663,8 @@
         if (!reduce && stageEl) {
           curtain();
           ticker();
-          $$('.hero h1').forEach(splitWords);
-          $$('.hero .eyebrow').forEach(decode);
+          $$('.hero h1, .page-hero h1').forEach(splitWords);
+          $$('.hero .eyebrow, .page-hero .eyebrow').forEach(decode);
           /* parallax the plate on the same rAF budget the rail already uses */
           var par = $('.kit-stage .kit-par');
           if (par) {

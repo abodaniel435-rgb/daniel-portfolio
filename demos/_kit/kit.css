@@ -819,7 +819,7 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   from { opacity: 0; transform: translateY(.42em); clip-path: inset(0 0 100% 0); }
   to   { opacity: 1; transform: none; clip-path: inset(-.32em 0 -.32em 0); }
 }
-.kit-anim .hero h1.kit-split { animation: none; clip-path: none; opacity: 1; }
+.kit-anim .hero h1.kit-split, .kit-anim .page-hero h1.kit-split { animation: none; clip-path: none; opacity: 1; }
 
 /* the decode line sits in the eyebrow, where the text is short and uppercase */
 .kit-anim .eyebrow.kit-decode { min-width: 0; }
