@@ -248,7 +248,8 @@ img { display: block; max-width: 100%; }
 .case-header .site-nav a:hover, .case-header .site-nav a:focus-visible { color: var(--ink); }
 .case-header .site-nav .nav-contact { color: #4f7419; }
 .case-shell { width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
-.case-hero { padding: 64px 0 0; }
+.case-hero { padding: 64px 0 0; position: relative; isolation: isolate; overflow: hidden; }
+.case-hero::before { content: ""; position: absolute; z-index: -1; inset: -14% -6%; background: var(--case-bg, url("assets/projects/tech-circuit.jpg")) center 34% / cover no-repeat; filter: blur(30px) saturate(.68) brightness(.62); opacity: .5; transform: scale(1.1); animation: hero-backdrop-drift 34s ease-in-out infinite alternate; }
 .case-back { display: inline-flex; align-items: center; gap: 9px; color: var(--muted); font: 500 12px var(--font-mono); letter-spacing: .05em; text-transform: uppercase; transition: color .2s ease, gap .2s ease; }
 .case-back:hover, .case-back:focus-visible { color: var(--ink); gap: 13px; }
 .case-heading { max-width: 880px; margin-top: 40px; }

@@ -44,6 +44,11 @@ if (!project) {
     shot.alt = project.name + ' — ' + project.tagline;
   }
 
+  // The case page is the one page in the portfolio that used to sit on a flat
+  // panel; it now wears the project's own artwork as a blurred backdrop.
+  const hero = document.querySelector('.case-hero');
+  if (hero && project.thumb) hero.style.setProperty('--case-bg', 'url("' + project.thumb + '")');
+
   const featureList = document.getElementById('caseFeatures');
   if (featureList) {
     featureList.innerHTML = project.features.map((item) => '<li>' + item + '</li>').join('');
