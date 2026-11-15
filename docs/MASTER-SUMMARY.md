@@ -131,6 +131,38 @@ The ten tools and their 30 generated pages were pushed from a flat design to a m
 
 Verification after the pass, all on the local build: `verify_demos.mjs` reports 16 of 16 index pages `ok`; the new `tools/verify_pages.mjs` exercises all 30 generated pages — contents rail built, every reveal shown, metrics and table rows visible, click-to-sort reordering the first table, live filtering emptying it — and reports 30 of 30 pass. Screenshots were checked at 1440, 1024 and 390 CSS pixels.
 
+## 6d. The photograph pass (kit v7 + the standalone stage)
+
+The owner's instruction was blunt: *every page of every site has a background image*, and the motion should be impossible to miss. This pass did that in two layers, because the portfolio contains two different kinds of site.
+
+**Kit v7 — the ten tools and their 30 generated pages.** `kit.js` derives the plate from the URL (`demos/<slug>/<page>.html` → `demos/_media/<slug>-hero.webp`), so no page needed markup added to it. All ten plates return 200. On top of the plate: a Ken Burns breath that never repeats the same crop, a scroll-linked parallax shift on the same layer, a diagonal curtain wipe that opens each hero image, a word-by-word curtain on the headline (each word rises out of its own clip box on a 46ms stagger), a scramble-decode on the eyebrow, a travelling light bar across the hero frame, and a marquee built from the page's own `h2` text so the ticker says something true about that page. The plate is also blended into the hero itself at 30% under a luminosity mask with a soft-edge gradient, so the photograph reads even where the body copy sits.
+
+**`demos/_stage/` — the six sites that ship their own CSS.** abosodion-farm, moonlight-events, rentjury, skycast and thatguys-fitness carried no photograph at all and almost no motion. Five plates were generated into `demos/_media/` and a small standalone layer was written — `stage.css` and `stage.js`, linked last in each of the 12 pages by `tools/add_stage.cjs`. It deliberately imports none of the kit's resets: it reads the page's *own* background colour at runtime, sets that as the canvas, makes the body transparent so the fixed plate can show through, and derives the wash, the plate opacity and the hairline colour from whether that colour is light or dark. A dark site (SkyCast, ThatGuys, Moonlight) and a warm light site (ABOSODION) therefore get the same mechanism with different numbers, and neither loses its palette. The same layer adds the progress meter, the word curtain, the light sweep, the ticker and scroll reveals.
+
+Two guards matter here. The layer skips the body-transparent step on any page that paints its own gradient or sky, so SkyCast keeps its atmosphere. And it skips a ticker on a page that already runs a marquee — Moonlight Events has one of its own, and two marquees stacked is noise, not motion.
+
+**Reveals cannot strand content.** Every hidden state is written as `[data-fx-r]:not(.fx-in)`, never as a static `opacity: 0`, so an element is only ever hidden while the layer is armed; if `stage.js` throws, the `try/catch` removes `.fx-anim` and the page is exactly what it was before. Elements already on screen are marked outright at tag time, a throttled scroll sweep backs up the observer, and the tagging runs again at 1.1s and 2.6s because three of these sites fetch their lists after load.
+
+**Verified.** `verify_demos.mjs` reports 16 of 16 `ok`, zero page errors, zero stuck reveals. A separate scroll-through assertion on all 12 standalone pages reports **0 elements left hidden** on every one. Note for whoever re-runs this: several of these pages set `scroll-behavior: smooth`, so a scripted scroll loop that does not override it never actually reaches the bottom and the check reports false failures — the harness must force `scroll-behavior: auto` first.
+
+**Hotel Miramar and Campus Coin, re-checked live rather than by reading the diff.** Miramar was run as a real Flask app and every page was asserted to carry its own plate key (`index`, `rooms`, `room`, `attractions`, `about`, `location`, `contact`, `feedback`, `auth`), with `room_detail` pulling the booked room's own photograph into the background layer. Campus Coin was built with Vite (116 kB CSS / 408 kB JS) and served from `dist/`; the landing page renders the Lagos night plate behind the hero with the currency marquee above it.
+
+## 6e. Trinity Lightings — what the catalogue actually is
+
+The owner asked repeatedly for the other ~100 pieces back. The mechanism is worth stating plainly, because it changes what "restoring" means:
+
+The original showroom was never a hard-coded list. `listimages.php` in the owner's own source scanned `images/` and returned whatever was in the folder, so the count on screen was exactly the number of photographs on disk. The descriptions in `products.js` are keyed *by filename*, and any photo without an entry still appears with a generated name — which is why the catalogue resizes itself to the folder with no code change.
+
+All **172 original filenames** were recovered and preserved, and `tools/trinity_manifest.mjs` regenerates `images.json` from whatever is in the folder. Every one of those files on this machine is **zero bytes** — the folder is a set of cloud placeholders, and the photograph data was never downloaded here. Nothing was deleted in this workspace; the images were already absent before any edit was made, which is why the showroom shows the 18 pieces that have real files.
+
+So the fix is data, not code, and it is one step:
+
+1. Download the 172 photos for real (open the folder once so the cloud fetches them, or export from the phone/original camera card).
+2. Drop them into `demos/trinity-lightings/images/`.
+3. On cPanel nothing else is required — `listimages.php` will list them immediately. For GitHub Pages run `node tools/trinity_manifest.mjs`, which rewrites `images.json` from the folder and refuses to write an empty manifest.
+
+To make 172 photographs load acceptably, the grid now pages: it opens with 24 pieces, shows "*n* of 172 shown", and a **Show more** button adds another 24 and scrolls to the first new card. Search and collection filters reset the page and count against the whole catalogue, not the visible slice.
+
 ## 7. Outstanding / optional
 
 - Nothing required by the brief is unfinished in this workspace, and the portfolio itself is now published (section 6b). The remaining work belongs to cPanel: 24 packages sit in `C:\Users\HI\Downloads` waiting to be uploaded, and the ten tools are already live on GitHub Pages — deploying them to a host is optional, only needed if he wants them off Pages or under his own domain.
@@ -138,3 +170,5 @@ Verification after the pass, all on the local build: `verify_demos.mjs` reports 
 - Optional polish: re-encode the Hotel Miramar tour video to 720p if a smaller download is wanted; add screenshots to generated `docs/` on future builds.
 - The generated Kite Courier and the six deploy-ready PHP builds have no public URL yet — deployment is an owner action (packages + guides are ready).
 - Hotel Miramar and Campus Coin still carry their development passwords until the owner rotates them on the deployed copy.
+- **The 172 Trinity photographs are an owner action, not an open engineering task** (section 6e). The code path, the manifest generator and the paging are all in place and tested; the showroom will fill itself the moment real files replace the zero-byte placeholders.
+- Hotel Miramar's live Render deployment still serves the previous navy-and-gold build until the owner redeploys; the redesigned source is what is committed here.

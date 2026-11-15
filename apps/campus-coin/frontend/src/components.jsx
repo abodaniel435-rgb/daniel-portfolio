@@ -1,8 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { cash, dateLabel, money, shortMoney } from './currency'
+import { PctRing, Roll, Scramble } from './motion'
 
 export { cash, money, shortMoney, dateLabel }
-
+export { PctRing, Roll, Scramble }
 /* ------------------------------------------------------------------ helpers */
 
 export function asList(data) {
@@ -85,17 +86,20 @@ export function CountUp({ value }) {
     }
     const start = performance.now()
     let frame = 0
+    // expo-out: the number rushes in then eases into its seat, which reads as
+    // a mechanical roll rather than a linear ramp.
     const tick = (now) => {
-      const progress = Math.min(1, (now - start) / 900)
-      const eased = 1 - (1 - progress) ** 3
+      const progress = Math.min(1, (now - start) / 1200)
+      const eased = progress === 1 ? 1 : 1 - 2 ** (-10 * progress)
       setShown(target * eased)
       if (progress < 1) frame = requestAnimationFrame(tick)
+      else setShown(target)
     }
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
   }, [target, reduce])
 
-  return <span>{cash(shown)}</span>
+  return <Roll text={cash(shown)} />
 }
 
 /* ------------------------------------------------------------------- layout */
@@ -136,10 +140,11 @@ export function CardHead({ eyebrow, title, action }) {
 }
 
 export function StatTile({ label, value, meta, tone = '', icon }) {
+  const numeric = typeof value === 'string' || typeof value === 'number'
   return (
     <article className={`cc-stat ${tone ? `cc-stat--${tone}` : ''}`.trim()}>
       <p className="cc-stat-label">{label}</p>
-      <p className="cc-stat-value">{value}</p>
+      <p className="cc-stat-value">{numeric ? <Roll text={value} /> : value}</p>
       {meta && <p className="cc-stat-meta">{meta}</p>}
       {icon && <span className="cc-sr">{icon}</span>}
     </article>
@@ -561,7 +566,9 @@ export function BudgetLine({ budget, onEdit, onDelete }) {
         <span style={{ color: 'var(--muted)' }}>
           {left >= 0 ? `${money(left)} left` : `${money(Math.abs(left))} over`}
         </span>
-        <span>{Math.round(ratio)}%</span>
+        <PctRing value={ratio} tone={ratio >= 100 ? 'over' : ratio >= 80 ? 'warn' : ''}>
+          {Math.round(ratio)}%
+        </PctRing>
       </div>
       {(onEdit || onDelete) && (
         <div className="cc-budget-actions">

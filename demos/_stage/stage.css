@@ -1,0 +1,232 @@
+/* ============================================================
+   demos/_stage/stage.css
+   The background plate and motion layer for the six standalone
+   demos that carry their own stylesheet instead of the shared kit.
+   Linked last so it can win the two rules it needs to win, and
+   every effect below is gated on .fx-anim, which stage.js only
+   adds when the reader has not asked for reduced motion.
+   ============================================================ */
+
+html.fx-clear { background: var(--fx-base, #0c0e12); }
+html.fx-clear body { background: transparent !important; }
+
+/* ── the plate ─────────────────────────────────────────────── */
+.fx-stage {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fx-stage .fx-par {
+  position: absolute;
+  inset: -9%;
+  transform: translate3d(0, var(--sy, 0px), 0);
+  will-change: transform;
+}
+
+.fx-stage .fx-par i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: var(--fx-bg, none) var(--fx-pos, 50% 45%) / cover no-repeat;
+  opacity: var(--fx-o, .4);
+  filter: saturate(.78) contrast(1.06);
+  transform: scale(var(--fx-z, 1.05));
+  animation: fx-kenburns 38s ease-in-out infinite alternate;
+}
+
+/* Wash so copy stays legible at every depth, vignette so the plate
+   never fights the page for the edges of the screen. */
+.fx-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, var(--fx-wash, rgba(255, 255, 255, .72)) 0%, var(--fx-wash2, rgba(255, 255, 255, .88)) 100%),
+    radial-gradient(120% 90% at 50% 40%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, .28) 100%);
+}
+
+@keyframes fx-kenburns {
+  from { transform: scale(1.04) translate3d(-1.2%, .8%, 0); }
+  to   { transform: scale(1.14) translate3d(1.4%, -1%, 0); }
+}
+
+/* ── the hero borrows the plate ────────────────────────────── */
+.fx-hero { position: relative; }
+
+.fx-heroplate {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--fx-bg, none) var(--fx-pos, 50% 42%) / cover no-repeat;
+  opacity: .3;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: linear-gradient(104deg, transparent 4%, #000 48%, transparent 94%);
+  mask-image: linear-gradient(104deg, transparent 4%, #000 48%, transparent 94%);
+}
+
+/* Travelling light bar — the one that reads as "something is happening". */
+.fx-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx-sweep::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 34%;
+  background: linear-gradient(100deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, .16) 42%,
+      rgba(255, 255, 255, .3) 52%,
+      rgba(255, 255, 255, .16) 60%,
+      rgba(255, 255, 255, 0) 100%);
+  transform: translate3d(-140%, 0, 0) skewX(-14deg);
+  animation: fx-pass 7.5s cubic-bezier(.5, 0, .3, 1) infinite;
+  animation-delay: 1.2s;
+}
+
+@keyframes fx-pass {
+  0%   { transform: translate3d(-140%, 0, 0) skewX(-14deg); }
+  60%  { transform: translate3d(340%, 0, 0) skewX(-14deg); }
+  100% { transform: translate3d(340%, 0, 0) skewX(-14deg); }
+}
+
+/* ── word curtain on the headline ──────────────────────────── */
+.fx-anim .fx-w {
+  display: inline-block;
+  animation: fx-word .68s cubic-bezier(.16, 1, .3, 1) backwards;
+  animation-delay: calc(var(--n, 0) * 46ms + 120ms);
+}
+
+@keyframes fx-word {
+  from { opacity: 0; transform: translate3d(0, .42em, 0); clip-path: inset(0 0 100% 0); }
+  to   { opacity: 1; transform: none; clip-path: inset(-.34em 0 -.34em 0); }
+}
+
+.fx-anim .fx-hero h1.fx-split { animation: none; clip-path: none; opacity: 1; }
+
+/* ── scroll progress ───────────────────────────────────────── */
+.fx-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 2147483000;
+  pointer-events: none;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, var(--fx-accent, #6f8f5f), var(--fx-accent-2, #d8b26a));
+}
+
+/* ── ticker built from the page's own headings ─────────────── */
+.fx-ticker {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: clamp(18px, 3vw, 34px) 0 clamp(26px, 4vw, 54px);
+  padding: clamp(12px, 1.6vw, 18px) 0;
+  border-top: 1px solid var(--fx-line, rgba(128, 128, 128, .28));
+  border-bottom: 1px solid var(--fx-line, rgba(128, 128, 128, .28));
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.fx-ticker-label {
+  flex: 0 0 auto;
+  padding-left: clamp(16px, 4vw, 48px);
+  font-size: .62rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  opacity: .62;
+}
+
+.fx-ticker-track {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2.6rem;
+  white-space: nowrap;
+  animation: fx-marquee 34s linear infinite;
+}
+
+.fx-ticker-track span {
+  font-size: clamp(.86rem, 1.5vw, 1.12rem);
+  letter-spacing: .01em;
+  opacity: .82;
+}
+
+.fx-ticker-track span::before {
+  content: "◆";
+  margin-right: 2.6rem;
+  font-size: .5em;
+  opacity: .45;
+  vertical-align: .35em;
+}
+
+@keyframes fx-marquee { to { transform: translate3d(-50%, 0, 0); } }
+
+/* ── reveals that cannot strand content ────────────────────── */
+.fx-anim [data-fx-r]:not(.fx-in) {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+}
+
+.fx-anim [data-fx-r].fx-in {
+  animation: fx-rise .74s cubic-bezier(.16, 1, .3, 1) backwards;
+  animation-delay: calc(min(var(--i, 0), 9) * 62ms);
+}
+
+@keyframes fx-rise {
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+.fx-anim [data-fx-r="wipe"]:not(.fx-in) { clip-path: inset(0 100% 0 0); transform: none; }
+.fx-anim [data-fx-r="wipe"].fx-in {
+  animation: fx-wipe 1s cubic-bezier(.76, 0, .24, 1) backwards;
+  clip-path: auto;
+}
+
+@keyframes fx-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Section rules draw themselves as they arrive. */
+.fx-rule {
+  height: 1px;
+  margin: 0 0 clamp(14px, 2vw, 22px);
+  background: var(--fx-line, rgba(128, 128, 128, .4));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 900ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.fx-rule.fx-in { transform: scaleX(1); }
+
+/* ── respect the reader ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fx-stage .fx-par i,
+  .fx-sweep::after,
+  .fx-ticker-track,
+  .fx-anim .fx-w,
+  .fx-anim [data-fx-r],
+  .fx-anim [data-fx-r].fx-in,
+  .fx-rule {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}

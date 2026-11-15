@@ -81,7 +81,7 @@ export default function Auth({ register = false }) {
   }
 
   return (
-    <div className="cc-auth">
+    <div className="cc-auth cc-route">
       <aside className="cc-auth-aside">
         <Link to="/" className="cc-brand" aria-label="Campus Coin home">
           <span className="cc-brand-mark">C</span>

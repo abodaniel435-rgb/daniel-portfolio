@@ -8,7 +8,17 @@
 
   document.documentElement.classList.add('js');
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reduceMotion = mqReduce.matches;
+  // Motion vocabulary is opt-in: .mo only ever exists when motion is allowed.
+  if (!reduceMotion) {
+    document.documentElement.classList.add('mo');
+  }
+  if (typeof mqReduce.addEventListener === 'function') {
+    mqReduce.addEventListener('change', function (event) {
+      document.documentElement.classList.toggle('mo', !event.matches);
+    });
+  }
 
   function toISODate(date) {
     var y = date.getFullYear();
@@ -195,22 +205,239 @@
   }
 
   /* --------------------------------------------------------------- reveal */
+  function showAll(items) {
+    Array.prototype.forEach.call(items, function (item) {
+      item.classList.add('is-visible', 'in');
+    });
+  }
+
   function initReveal() {
-    var items = document.querySelectorAll('.reveal');
+    // Portal, auth and console pages share these blocks — mark them here so
+    // every template inherits the same entry without editing 20 files.
+    [
+      ['.page-intro .eyebrow', 'wipe'],
+      ['.page-intro h1', 'wipe'],
+      ['.auth-card__head .eyebrow', 'wipe'],
+      ['.auth-card__head h1', 'wipe'],
+      ['.auth-media__caption h2', 'up'],
+      ['.admin-page-head h1', 'up'],
+      ['.empty-state h2', 'up']
+    ].forEach(function (spec) {
+      document.querySelectorAll(spec[0] + ':not([data-reveal])').forEach(function (el) {
+        el.setAttribute('data-reveal', spec[1]);
+        if (!el.hasAttribute('data-fx') && el.tagName === 'H1') el.setAttribute('data-fx', 'decode');
+      });
+    });
+
+    // Console and portal templates are not hand-marked: give their top-level
+    // blocks the same choreography instead of editing 20 templates.
+    var autoGroups = [
+      ['.stat-grid', 'rise', 90],
+      ['.portal-actions', 'rise', 70],
+      ['.booking-list > *', 'wipe', 90],
+      ['.queue-list > *', 'wipe', 60],
+      ['.admin-content > *', 'rise', 0],
+      ['.admin-page-head', 'up', 0],
+      ['.filter-tabs', 'wipe', 0],
+      ['.chip-row', 'wipe', 40],
+      ['.kv', 'wipe', 40],
+      ['.tick-list', 'wipe', 40],
+      ['.auth-card', 'rise', 0],
+      ['.confirmation', 'wipe', 0],
+      ['.stepper', 'wipe', 60]
+    ];
+    autoGroups.forEach(function (spec) {
+      var step = spec[2];
+      document.querySelectorAll(spec[0] + ':not([data-reveal]):not(.reveal)').forEach(function (el) {
+        el.setAttribute('data-reveal', spec[1]);
+      });
+      // Index-based delay inside each group.
+      var seen = [];
+      document.querySelectorAll(spec[0]).forEach(function (el) {
+        var parent = el.parentElement;
+        if (!parent) return;
+        if (seen.indexOf(parent) === -1) seen.push(parent);
+      });
+      seen.forEach(function (parent) {
+        var kids = parent.querySelectorAll(':scope > [data-reveal]');
+        Array.prototype.forEach.call(kids, function (kid, index) {
+          if (!kid.style.getPropertyValue('--d')) {
+            kid.style.setProperty('--d', (index * (step || 110)) + 'ms');
+          }
+        });
+      });
+    });
+
+    var items = document.querySelectorAll('.reveal, [data-reveal]');
     if (!items.length) return;
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      items.forEach(function (item) { item.classList.add('is-visible'); });
+      showAll(items);
       return;
     }
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+
+    // Choreography: siblings inside a [data-stagger] group get an index delay.
+    document.querySelectorAll('[data-stagger]').forEach(function (group) {
+      var step = parseFloat(group.getAttribute('data-stagger')) || 90;
+      Array.prototype.forEach.call(group.children, function (child, index) {
+        if (child.hasAttribute('data-reveal') || child.classList.contains('reveal')) {
+          child.style.setProperty('--d', (index * step) + 'ms');
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    items.forEach(function (item) { observer.observe(item); });
+    });
+
+    var pending = Array.prototype.slice.call(items);
+
+    function reveal(el) {
+      // Revealed once, then forgotten: nothing animates a second time.
+      el.classList.add('is-visible', 'in');
+    }
+
+    var observer = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          var at = pending.indexOf(entry.target);
+          if (at > -1) pending.splice(at, 1);
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function (item) { observer.observe(item); });
+    }
+
+    // Safety net: some environments throttle IntersectionObserver delivery
+    // (headless renders, very old blink builds). A rAF-throttled rect check on
+    // scroll/resize guarantees nothing can stay permanently invisible.
+    var queued = false;
+    function checkPending() {
+      queued = false;
+      if (!pending.length) return;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        var rect = pending[i].getBoundingClientRect();
+        if (rect.top < vh * 0.94 && rect.bottom > 0) {
+          reveal(pending[i]);
+          if (observer) observer.unobserve(pending[i]);
+          pending.splice(i, 1);
+        }
+      }
+    }
+    function schedulePending() {
+      if (queued) return;
+      queued = true;
+      if ('requestAnimationFrame' in window) requestAnimationFrame(checkPending);
+      else checkPending();
+    }
+    window.addEventListener('scroll', schedulePending, { passive: true });
+    window.addEventListener('resize', schedulePending, { passive: true });
+    schedulePending();
+  }
+
+  /* ---------------------------------------------------- decode headline */
+  var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ&/\u00b7\u2014\u2022#*';
+
+  // Works on the text nodes inside the heading so <br> and <em> survive.
+  function initDecode() {
+    var targets = document.querySelectorAll('[data-fx="decode"]');
+    if (!targets.length || reduceMotion) return;
+
+    targets.forEach(function (el) {
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var slots = [];
+      var node = walker.nextNode();
+      while (node) {
+        if (node.nodeValue && node.nodeValue.length) slots.push({ node: node, text: node.nodeValue });
+        node = walker.nextNode();
+      }
+
+      var total = slots.reduce(function (sum, slot) { return sum + slot.text.length; }, 0);
+      if (!total) return;
+
+      // Settle time per character, left to right, over roughly 700ms.
+      var cursor = 0;
+      slots.forEach(function (slot) {
+        slot.out = slot.text.split('');
+        slot.settle = slot.text.split('').map(function (ch) {
+          cursor += 1;
+          if (ch === ' ' || ch === '\u00a0') return 0;
+          return 60 + (cursor / total) * 540 + Math.random() * 80;
+        });
+      });
+
+      var start = null;
+      function frame(now) {
+        if (start === null) start = now;
+        var elapsed = now - start;
+        if (elapsed > 700) {
+          slots.forEach(function (slot) { slot.node.nodeValue = slot.text; });
+          return;
+        }
+        slots.forEach(function (slot) {
+          for (var i = 0; i < slot.out.length; i++) {
+            var ch = slot.text.charAt(i);
+            slot.out[i] = (ch === ' ' || elapsed >= slot.settle[i])
+              ? ch
+              : GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
+          }
+          slot.node.nodeValue = slot.out.join('');
+        });
+        window.requestAnimationFrame(frame);
+      }
+      window.requestAnimationFrame(frame);
+    });
+  }
+
+  /* --------------------------------------------------- pointer sheen */
+  function initPointerSheen() {
+    if (reduceMotion || !window.PointerEvent) return;
+    var frame = null;
+    var target = null;
+    var point = { x: 0, y: 0 };
+
+    function apply() {
+      frame = null;
+      if (!target) return;
+      var rect = target.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      target.style.setProperty('--mx', (((point.x - rect.left) / rect.width) * 100).toFixed(2) + '%');
+      target.style.setProperty('--my', (((point.y - rect.top) / rect.height) * 100).toFixed(2) + '%');
+    }
+
+    // One delegated listener for the whole page, rAF-throttled.
+    document.addEventListener('pointermove', function (event) {
+      if (event.pointerType === 'touch') return;
+      var card = event.target && event.target.closest
+        ? event.target.closest('.fx-sheen, .room-card, .panel, .stat-card, .summary-card, .booking-card')
+        : null;
+      if (!card) return;
+      target = card;
+      point = { x: event.clientX, y: event.clientY };
+      if (frame === null) frame = window.requestAnimationFrame(apply);
+    }, { passive: true });
+  }
+
+  /* ---------------------------------------------- scroll progress line */
+  function initScrollProgress() {
+    var bar = document.querySelector('[data-scroll-progress]');
+    if (!bar) return;
+    if (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('animation-timeline', 'scroll(root)')) {
+      bar.setAttribute('data-native', 'true');
+      return;
+    }
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var doc = document.documentElement;
+      var range = doc.scrollHeight - doc.clientHeight;
+      var ratio = range > 0 ? Math.min(Math.max(doc.scrollTop / range, 0), 1) : 0;
+      bar.style.setProperty('--scroll-p', ratio.toFixed(4));
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
   }
 
   /* ----------------------------------------------------------------- init */
@@ -232,6 +459,9 @@
     initDateScopes();
     initGallery();
     initReveal();
+    initDecode();
+    initPointerSheen();
+    initScrollProgress();
   }
 
   if (document.readyState === 'loading') {

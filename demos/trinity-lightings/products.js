@@ -1,10 +1,9 @@
 // ============================================================
 // Trinity Lightings — products.js
-// The catalogue is driven by listimages.php, which returns a
-// plain JSON array of filenames found in /images.
+// The catalogue is driven by whatever is in /images.
 //
-// Contract (unchanged):
-//   GET listimages.php -> ["01-aurora-crystal.jpg", ...]
+//   on a PHP host:  GET listimages.php -> ["01-aurora-crystal.jpg", ...]
+//   on a static host: GET images.json  -> the same array, checked in
 //
 // Descriptions below are keyed by filename so the showroom copy
 // stays human while the photo list stays automatic. Any photo
@@ -98,21 +97,92 @@ const PRODUCT_META = {
     detail: "A softer, rounder alternative to the Meridian pendant — lovely clustered over a bedside or a reading corner.",
     finish: "Brushed brass · opal glass",
   },
+  "10-lustre-crystal.jpg": {
+    name: "Lustre",
+    category: "Crystal",
+    badge: "Signature",
+    price: "Price on request",
+    desc: "Five graduated tiers of clear crystal around a brass spine, dressed with candle sleeves.",
+    detail: "The largest crystal piece on the floor. It needs a fall of at least three metres to read properly — bring your measurements.",
+    finish: "Polished brass · clear crystal tiers",
+  },
+  "11-orchid-crystal.jpg": {
+    name: "Orchid",
+    category: "Crystal",
+    badge: "New",
+    price: "Price on request",
+    desc: "A wide oval cloud of clear glass rods, each cut to a different length.",
+    detail: "Held on four cables so it sits flat and low. Our most requested piece for living rooms with a 2.7 metre ceiling.",
+    finish: "Brushed brass canopy · staggered glass rods",
+  },
+  "12-sable-crystal.jpg": {
+    name: "Sable",
+    category: "Crystal",
+    badge: "",
+    price: "Price on request",
+    desc: "Faceted charcoal and clear glass on a gunmetal frame — crystal without the sweetness.",
+    detail: "The smoke tones keep it from glowing too warm, so it suits a dark-painted room or a studio rather than a classic dining space.",
+    finish: "Gunmetal frame · smoke and clear crystal",
+  },
+  "13-regent-brass.jpg": {
+    name: "Regent",
+    category: "Brass",
+    badge: "",
+    price: "Price on request",
+    desc: "Eight curved brass arms with frosted tulip shades around a turned central column.",
+    detail: "The traditional shape, done properly — solid cast arms, no tubing. Shades are replaceable individually.",
+    finish: "Polished brass · frosted glass shades",
+  },
+  "14-kano-brass.jpg": {
+    name: "Kano",
+    category: "Brass",
+    badge: "Signature",
+    price: "Price on request",
+    desc: "A domed brass shade pierced with thousands of small stars, throwing patterned light across the walls.",
+    detail: "Switched on, the room gets the drawing rather than the fitting. Works beautifully over a low table or in a corner.",
+    finish: "Aged brass · perforated dome",
+  },
+  "15-aurelia-brass.jpg": {
+    name: "Aurelia",
+    category: "Brass",
+    badge: "New",
+    price: "Price on request",
+    desc: "Five brass rings of different diameters, nested at staggered heights with small globe bulbs.",
+    detail: "Reads as one sculptural mass from below and as five separate rings from the side. Hung from a rectangular canopy.",
+    finish: "Brushed brass · opal globes",
+  },
+  "16-vertex-modern.jpg": {
+    name: "Vertex",
+    category: "Modern",
+    badge: "",
+    price: "Price on request",
+    desc: "A matte black geometric frame with a continuous warm LED line along its underside.",
+    detail: "Dimmable, with the driver in the canopy so nothing shows above the ceiling plate. Made to order in two sizes.",
+    finish: "Matte black brass · integrated LED",
+  },
+  "17-cinder-modern.jpg": {
+    name: "Cinder",
+    category: "Modern",
+    badge: "",
+    price: "Price on request",
+    desc: "A set of three black cylindrical pendants with soft opal diffusers at staggered heights.",
+    detail: "Sold as a set of three on one linear canopy — the standard answer for a kitchen island or a long dining table.",
+    finish: "Blackened brass · opal diffuser",
+  },
+  "18-ivory-modern.jpg": {
+    name: "Ivory",
+    category: "Modern",
+    badge: "New",
+    price: "Price on request",
+    desc: "A wide, shallow drum of veined alabaster on a slim brass rod, glowing through the stone.",
+    detail: "No two slabs vein the same way, so we photograph yours before it leaves the showroom. The quietest, warmest light we sell.",
+    finish: "Natural alabaster · brushed brass",
+  },
 };
 
-// Shown only when listimages.php cannot be reached (for example when
-// the site is previewed without PHP). Keeps the showroom furnished.
-const FALLBACK_FILES = [
-  "01-aurora-crystal.jpg",
-  "02-cascade-crystal.jpg",
-  "03-celeste-crystal.jpg",
-  "04-solaris-brass.jpg",
-  "05-meridian-brass.jpg",
-  "06-atelier-brass.jpg",
-  "07-halo-modern.jpg",
-  "08-monolith-modern.jpg",
-  "09-opaline-modern.jpg",
-];
+// Shown only when neither listimages.php nor images.json can be reached
+// (for example when the site is opened straight from disk).
+const FALLBACK_FILES = Object.keys(PRODUCT_META);
 
 function prettifyFilename(filename) {
   return String(filename)
@@ -139,16 +209,35 @@ function toProduct(filename, index) {
 
 async function loadProducts() {
   let files = [];
+
+  // 1. On a PHP host the folder itself is the catalogue: drop a photo into
+  //    /images and it appears. This stays the authoritative source there.
   try {
     const res = await fetch("listimages.php", {
       headers: { Accept: "application/json" },
       cache: "no-store",
     });
-    if (!res.ok) throw new Error(`listimages.php responded ${res.status}`);
-    const data = await res.json();
-    if (Array.isArray(data)) files = data;
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length) files = data;
+    }
   } catch (err) {
-    console.warn("Could not load the product image list — using the bundled catalogue.", err);
+    /* static host — no PHP, fall through to the manifest */
+  }
+
+  // 2. On GitHub Pages there is no PHP, so the checked-in manifest lists
+  //    every photographed piece. Without it the showroom would only ever
+  //    show the bundled fallback.
+  if (!files.length) {
+    try {
+      const res = await fetch("images.json", { cache: "no-store" });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length) files = data;
+      }
+    } catch (err) {
+      console.warn("Could not read images.json — using the bundled catalogue.", err);
+    }
   }
 
   if (!files.length) files = FALLBACK_FILES.slice();

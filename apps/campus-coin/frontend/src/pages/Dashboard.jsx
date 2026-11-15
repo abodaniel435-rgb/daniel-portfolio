@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
-import { asList, Card, CardHead, EmptyState, ErrorState, Icon, Meter, PageHead, Pill, Ring, SkeletonCard, StatTile, TransactionRow, useToast } from '../components'
+import { asList, Card, CardHead, EmptyState, ErrorState, Icon, Meter, PageHead, Pill, Ring, Scramble, SkeletonCard, StatTile, TransactionRow, useToast } from '../components'
 import { money, pct } from '../components'
 import { dateLabel, monthLabel } from '../currency'
 import { TransactionDialog } from '../forms'
@@ -157,7 +157,9 @@ export default function Dashboard() {
           <div className="cc-hero-top">
             <div>
               <p className="cc-eyebrow">Total balance</p>
-              <p className="cc-hero-value">{money(balance)}</p>
+              <p className="cc-hero-value">
+                <Scramble text={money(balance)} />
+              </p>
             </div>
             <Pill tone={balance >= 0 ? 'ok' : 'over'} dot>
               {balance >= 0 ? 'In the black' : 'Below zero'}

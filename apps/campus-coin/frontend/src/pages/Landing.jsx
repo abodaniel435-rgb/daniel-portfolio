@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom'
 import { Icon } from '../components'
+import { COUNTRIES } from '../currency'
+import { Scramble, Ticker } from '../motion'
+
+const COVERAGE = Array.from(new Set(COUNTRIES.map((entry) => `${entry.symbol} ${entry.code}`))).slice(0, 26)
 
 const FEATURES = [
   {
@@ -36,7 +40,7 @@ const FEATURES = [
 
 export default function Landing() {
   return (
-    <div className="cc-mk">
+    <div className="cc-mk cc-route">
       <header className="cc-mk-nav">
         <Link to="/" className="cc-brand" aria-label="Campus Coin home">
           <span className="cc-brand-mark">C</span>
@@ -52,14 +56,19 @@ export default function Landing() {
         </nav>
       </header>
 
+      <Ticker label="Runs in your currency" items={COVERAGE} />
+
       <div className="cc-mk-wrap">
         <section className="cc-hero-mk">
           <div className="cc-hero-mk-copy">
             <p className="cc-eyebrow">Student money, without the guesswork</p>
             <h1>
-              Money that
+              <Scramble as="span" text="Money that" />
               <br />
-              behaves on <em>campus.</em>
+              <Scramble as="span" text="behaves on" delay={110} />{' '}
+              <em>
+                <Scramble as="span" text="campus." delay={260} />
+              </em>
             </h1>
             <p className="cc-lead">
               Campus Coin turns your allowance into a plan you can actually keep. Log what you spend, see where it goes,

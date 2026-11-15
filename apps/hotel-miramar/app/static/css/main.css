@@ -23,6 +23,9 @@
    16 Admin shell
    17 Admin components
    18 Responsive
+   19 Photographic background stage
+   20 Motion system
+   21 Sheets for console, portal & auth
    ========================================================================== */
 
 /* 01 ---------------------------------------------------------------- Tokens */
@@ -101,7 +104,23 @@
 
   /* Motion */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-wipe: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur: 260ms;
+  --dur-reveal: 820ms;
+  --kb-dur: 26s;
+  --d: 0ms;
+
+  /* Sheets — content that floats over the photographic stage */
+  --sheet: rgba(251, 247, 239, 0.9);
+  --sheet-solid: #fbf7ef;
+  --sheet-sand: rgba(242, 234, 221, 0.92);
+  --sheet-sand-solid: #f2eadd;
+  --sheet-paper: rgba(255, 253, 248, 0.94);
+  --sheet-paper-solid: #fffdf8;
+  --sheet-ink: rgba(20, 28, 24, 0.88);
+  --sheet-ink-solid: #141c18;
+  --blur: blur(14px) saturate(1.25);
 
   --header-h: 78px;
   --container: 1200px;
@@ -148,7 +167,8 @@ body {
   font-size: var(--fs-base);
   line-height: var(--lh-body);
   color: var(--text);
-  background: var(--ivory);
+  /* The photographic stage (section 19) paints behind the sheets. */
+  background: transparent;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -2351,4 +2371,474 @@ body.admin-body {
 @media (prefers-reduced-motion: no-preference) {
   .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity 700ms var(--ease), transform 700ms var(--ease); }
   .js .reveal.is-visible { opacity: 1; transform: none; }
+}
+
+/* 19 ------------------------------------ Photographic background stage */
+/* One fixed photographic layer behind EVERY page. The image is chosen per
+   template by the data-bg key set on <body> in base.html; <html> carries the
+   dark canvas so the stage always has something to sit on. */
+html { background: var(--ink); }
+
+.bg-stage {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 78% 8%, #234034 0%, rgba(20, 28, 24, 0) 62%),
+    linear-gradient(175deg, #16241d 0%, #101a15 58%, #0b1310 100%);
+  --bg-photo: url('../images/hero/hero-poster.jpg');
+}
+
+.bg-stage__photo {
+  position: absolute;
+  inset: -9% -7%;
+  background-image: var(--bg-photo);
+  background-size: cover;
+  background-position: center 44%;
+  background-repeat: no-repeat;
+  filter: saturate(0.86) contrast(1.05) brightness(0.92);
+  opacity: 0.94;
+  transform: scale(1.06);
+  will-change: transform;
+}
+
+/* Scrim: keeps AA contrast for text laid over the photo at every scroll depth */
+.bg-stage__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 20, 16, 0.62) 0%, rgba(12, 20, 16, 0.4) 42%, rgba(12, 20, 16, 0.74) 100%),
+    radial-gradient(88% 62% at 50% 46%, rgba(20, 28, 24, 0) 0%, rgba(10, 16, 13, 0.62) 100%);
+}
+
+/* Grain + hairline weave so the layer never reads as a flat photo */
+.bg-stage__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(251, 247, 239, 0.05) 0 1px, rgba(251, 247, 239, 0) 1px 4px),
+    repeating-linear-gradient(0deg, rgba(10, 16, 13, 0.09) 0 1px, rgba(10, 16, 13, 0) 1px 3px),
+    radial-gradient(1px 1px at 22% 34%, rgba(251, 247, 239, 0.16) 50%, rgba(251, 247, 239, 0) 51%),
+    radial-gradient(1px 1px at 68% 71%, rgba(194, 162, 104, 0.14) 50%, rgba(194, 162, 104, 0) 51%);
+  background-size: 4px 100%, 100% 3px, 137px 149px, 211px 199px;
+  mix-blend-mode: soft-light;
+}
+
+/* Page keys — one rule per page, markup stays untouched in the 20 templates */
+body[data-bg="index"] .bg-stage { --bg-photo: url('../images/hero/hero-poster.jpg'); }
+body[data-bg="rooms"] .bg-stage { --bg-photo: url('../images/rooms/harbour-view-standard.jpg'); }
+body[data-bg="room"] .bg-stage { --bg-photo: url('../images/rooms/marina-deluxe.jpg'); }
+body[data-bg="attractions"] .bg-stage { --bg-photo: url('../images/attractions/gardens-by-the-bay.jpg'); }
+body[data-bg="about"] .bg-stage { --bg-photo: url('../images/hero/hero-poster.jpg'); }
+body[data-bg="contact"] .bg-stage { --bg-photo: url('../images/attractions/merlion-park.jpg'); }
+body[data-bg="feedback"] .bg-stage { --bg-photo: url('../images/attractions/clarke-quay.jpg'); }
+body[data-bg="location"] .bg-stage { --bg-photo: url('../images/attractions/marina-bay-sands.jpg'); }
+body[data-bg="auth"] .bg-stage { --bg-photo: url('../images/attractions/esplanade.jpg'); }
+body[data-bg="customer"] .bg-stage { --bg-photo: url('../images/rooms/executive-suite.jpg'); }
+body[data-bg="admin"] .bg-stage { --bg-photo: url('../images/rooms/presidential-suite.jpg'); }
+body[data-bg="default"] .bg-stage { --bg-photo: url('../images/attractions/marina-bay-header.jpg'); }
+
+/* Sheets: sections become warm milk-glass panes floating on the photograph.
+   The stage sits at z-index -1, so normal content already paints above it:
+   the header (800), scrim (850), drawer (900) and flash stack (950) keep
+   their own layering untouched. */
+main { position: relative; z-index: 1; }
+.site-footer { position: relative; }
+
+.section,
+.section--sand,
+.section--paper,
+.section--ink,
+.section--tight,
+.page-intro,
+.booking-bar-wrap,
+.cta-band { background-color: transparent; }
+
+.section {
+  background-image: linear-gradient(180deg, rgba(251, 247, 239, 0.74), rgba(251, 247, 239, 0.84));
+  -webkit-backdrop-filter: blur(16px) saturate(1.12);
+  backdrop-filter: blur(16px) saturate(1.12);
+}
+.section--sand {
+  background-image: linear-gradient(180deg, rgba(242, 234, 221, 0.78), rgba(240, 231, 216, 0.88));
+}
+.section--paper {
+  background-image: linear-gradient(180deg, rgba(255, 253, 248, 0.84), rgba(255, 253, 248, 0.92));
+}
+.section--ink {
+  background-image: linear-gradient(180deg, rgba(30, 58, 46, 0.72), rgba(20, 40, 32, 0.84));
+}
+.section--hairline { border-top: 1px solid rgba(201, 185, 158, 0.6); }
+
+.cta-band {
+  background-image: linear-gradient(115deg, rgba(30, 58, 46, 0.8) 0%, rgba(20, 40, 32, 0.72) 100%);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+}
+
+.page-intro {
+  background-image: linear-gradient(180deg, rgba(251, 247, 239, 0.76), rgba(251, 247, 239, 0.6));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* The interior page hero keeps its own picture but borrows the stage's depth */
+.page-hero, .home-hero { background: transparent; }
+.page-hero::after {
+  background:
+    linear-gradient(90deg, rgba(12, 20, 16, 0.66) 0%, rgba(12, 20, 16, 0.28) 58%, rgba(12, 20, 16, 0.1) 100%),
+    linear-gradient(180deg, rgba(12, 20, 16, 0.5) 0%, rgba(12, 20, 16, 0.2) 38%, rgba(12, 20, 16, 0.84) 100%);
+}
+
+/* 20 ------------------------------------------------------- Motion system */
+/* Everything below is gated on html.mo, which main.js adds only when the
+   browser does NOT report prefers-reduced-motion: reduce. Without JS, or with
+   reduced motion, every element stays fully visible. */
+
+/* --- a) Curtain-wipe reveals ------------------------------------------- */
+@keyframes wipeRight { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes wipeUp { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes riseIn { from { opacity: 0; transform: translate3d(0, 26px, 0); } to { opacity: 1; transform: none; } }
+@keyframes kenBurns {
+  from { transform: scale(1.06) translate3d(-1.2%, 0.8%, 0); }
+  to { transform: scale(1.17) translate3d(1.4%, -1.6%, 0); }
+}
+@keyframes scanSweep { from { transform: translateX(-110%); } to { transform: translateX(110%); } }
+@keyframes spinRing { to { transform: rotate(360deg); } }
+@keyframes marqueeSlide { to { transform: translate3d(-50%, 0, 0); } }
+@keyframes scrollWipe { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes lineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+html.mo .bg-stage__photo { animation: kenBurns var(--kb-dur) var(--ease) infinite alternate; }
+
+html.mo [data-reveal="wipe"] { clip-path: inset(0 100% 0 0); }
+html.mo [data-reveal="up"] { clip-path: inset(100% 0 0 0); }
+html.mo [data-reveal="rise"] { opacity: 0; transform: translate3d(0, 26px, 0); }
+
+html.mo [data-reveal].in {
+  animation: none;
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+  transform: none;
+}
+html.mo [data-reveal="wipe"].in { animation: wipeRight 900ms var(--ease-wipe) var(--d, 0ms) both; }
+html.mo [data-reveal="up"].in { animation: wipeUp 780ms var(--ease-wipe) var(--d, 0ms) both; }
+html.mo [data-reveal="rise"].in { animation: riseIn 640ms var(--ease-out) var(--d, 0ms) both; }
+
+/* Legacy .reveal keeps working, now with the same wipe vocabulary.
+   The settled clip-path is declared as well, so if an animation is ever
+   suppressed (screenshot tooling, forced repaint) the content stays visible. */
+html.mo .reveal { clip-path: inset(0 100% 0 0); }
+html.mo .reveal.is-visible {
+  clip-path: inset(0 0 0 0);
+  animation: wipeRight 820ms var(--ease-wipe) var(--d, 0ms) both;
+}
+
+/* --- d) Scroll-driven progress line ------------------------------------ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  z-index: 1100;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--brass) 0%, var(--brass-bright) 60%, #f0dcae 100%);
+  box-shadow: 0 0 18px rgba(194, 162, 104, 0.55);
+}
+html:not(.mo) .scroll-progress,
+.scroll-progress[data-static] { display: none; }
+
+@supports (animation-timeline: scroll(root)) {
+  html.mo .scroll-progress { animation: scrollWipe linear both; animation-timeline: scroll(root); }
+}
+/* rAF fallback — main.js sets --scroll-p between 0 and 1 */
+html.mo .scroll-progress:not([data-native]) {
+  transform: scaleX(var(--scroll-p, 0));
+}
+
+/* --- e) Scan sweep + pointer sheen on cards ---------------------------- */
+.fx-scan,
+.fx-sheen,
+.room-card,
+.panel,
+.stat-card,
+.summary-card,
+.booking-card,
+.quote-card,
+.table-wrap,
+.book-panel,
+.amenity { position: relative; }
+
+/* The list of surfaces that get the sweep + sheen, written once */
+html.mo .fx-scan::after,
+html.mo .room-card::after,
+html.mo .panel::after,
+html.mo .stat-card::after,
+html.mo .summary-card::after,
+html.mo .booking-card::after,
+html.mo .quote-card::after,
+html.mo .table-wrap::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  z-index: 3;
+  background: linear-gradient(90deg, rgba(194, 162, 104, 0) 0%, rgba(238, 216, 166, 0.95) 50%, rgba(194, 162, 104, 0) 100%);
+  transform: translateX(-110%);
+  opacity: 0;
+  pointer-events: none;
+}
+html.mo .fx-scan:hover::after,
+html.mo .room-card:hover::after,
+html.mo .panel:hover::after,
+html.mo .stat-card:hover::after,
+html.mo .summary-card:hover::after,
+html.mo .booking-card:hover::after,
+html.mo .quote-card:hover::after,
+html.mo .table-wrap:hover::after { animation: scanSweep 1050ms var(--ease) 1; opacity: 1; }
+
+.fx-sheen,
+.room-card,
+.panel,
+.stat-card,
+.summary-card,
+.booking-card,
+.quote-card,
+.book-panel { --mx: 50%; --my: 50%; }
+
+html.mo .fx-sheen::before,
+html.mo .room-card::before,
+html.mo .panel::before,
+html.mo .stat-card::before,
+html.mo .summary-card::before,
+html.mo .booking-card::before,
+html.mo .quote-card::before,
+html.mo .book-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+  background: radial-gradient(340px circle at var(--mx) var(--my), rgba(240, 220, 174, 0.17), rgba(240, 220, 174, 0) 62%);
+}
+html.mo .fx-sheen:hover::before,
+html.mo .room-card:hover::before,
+html.mo .panel:hover::before,
+html.mo .stat-card:hover::before,
+html.mo .summary-card:hover::before,
+html.mo .booking-card:hover::before,
+html.mo .quote-card:hover::before,
+html.mo .book-panel:hover::before { opacity: 1; }
+
+/* --- f) Conic ring on stats & seals ------------------------------------ */
+.fx-ring,
+.intro-fact,
+.stat-card,
+.queue-item__icon,
+.confirmation__seal { position: relative; }
+
+html.mo .fx-ring::before,
+html.mo .confirmation__seal::before,
+html.mo .queue-item__icon::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    rgba(194, 162, 104, 0) 0deg,
+    rgba(194, 162, 104, 0.55) 60deg,
+    rgba(240, 226, 190, 0.95) 92deg,
+    rgba(194, 162, 104, 0) 150deg,
+    rgba(194, 162, 104, 0) 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1.6px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1.6px));
+  opacity: 0.85;
+  will-change: transform;
+}
+html.mo .fx-ring::before { opacity: 0; transition: opacity var(--dur) var(--ease); }
+html.mo .fx-ring:hover::before { opacity: 1; }
+html.mo .fx-ring::before,
+html.mo .confirmation__seal::before,
+html.mo .queue-item__icon::before { animation: spinRing 5.5s linear infinite; }
+
+/* --- g) Marquee band --------------------------------------------------- */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid rgba(201, 185, 158, 0.55);
+  background-image: linear-gradient(180deg, rgba(242, 234, 221, 0.72), rgba(242, 234, 221, 0.84));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding-block: 0.95rem;
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: center;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+html.mo .marquee__track { animation: marqueeSlide 38s linear infinite; }
+html.mo .marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.marquee__item::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  background: var(--brass);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* --- h) Hover systems -------------------------------------------------- */
+html.mo .nav__link { letter-spacing: var(--tracking-label); transition: color 320ms var(--ease), letter-spacing 420ms var(--ease); }
+html.mo .nav__link:hover { letter-spacing: 0.21em; color: var(--ink); }
+html.mo .nav__link::after { transform-origin: right; transition: transform 460ms var(--ease-wipe); }
+html.mo .nav__link:hover::after { transform-origin: left; }
+
+html.mo .btn { position: relative; isolation: isolate; overflow: hidden; }
+html.mo .btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(194, 162, 104, 0.92), rgba(238, 216, 166, 0.92));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 520ms var(--ease-wipe);
+}
+html.mo .btn:hover::after { transform: scaleX(1); }
+html.mo .btn:hover { color: var(--ink); border-color: var(--brass-bright); }
+html.mo .btn--ghost::after,
+html.mo .btn--light::after { background: var(--ivory); }
+html.mo .btn--brass::after { background: #f0dcae; }
+
+html.mo .room-card,
+html.mo .booking-card,
+html.mo .summary-card,
+html.mo .panel,
+html.mo .quote-card { transition: transform 420ms var(--ease-out), box-shadow 420ms var(--ease-out), border-color 320ms var(--ease); }
+html.mo .room-card:hover,
+html.mo .booking-card:hover,
+html.mo .summary-card:hover,
+html.mo .panel:hover,
+html.mo .quote-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 34px 60px -28px rgba(10, 16, 13, 0.55);
+  border-color: var(--brass-bright);
+}
+
+html.mo .room-card__media img,
+html.mo .neighbourhood-media img,
+html.mo .gallery__main img { transition: transform 900ms var(--ease-out); }
+html.mo .room-card:hover .room-card__media img,
+html.mo .neighbourhood-media:hover img { transform: scale(1.06); }
+
+html.mo .section-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.5rem;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--brass), rgba(194, 162, 104, 0));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+html.mo .section-head { position: relative; }
+html.mo .section-head.in::after { animation: lineGrow 900ms var(--ease-wipe) 220ms both; }
+
+html.mo .amenity { transition: background 320ms var(--ease), padding-left 380ms var(--ease-wipe); }
+html.mo .amenity:hover { background: rgba(255, 253, 248, 0.6); padding-left: 0.5rem; }
+
+html.mo .admin-nav__link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 2px;
+  height: 0;
+  background: var(--brass-bright);
+  transform: translateY(-50%);
+  transition: height 320ms var(--ease-wipe);
+}
+html.mo .admin-nav__link:hover::before { height: 70%; }
+
+/* 21 ------------------------------------------------- Sheets: console/portal */
+body.admin-body { background: transparent; }
+.admin-shell { position: relative; z-index: 1; }
+.admin-sidebar {
+  background: linear-gradient(178deg, rgba(22, 36, 29, 0.82) 0%, rgba(16, 26, 21, 0.86) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+.admin-topbar { background: rgba(255, 253, 248, 0.8); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); }
+.admin-content > * { position: relative; }
+.panel,
+.table-wrap,
+.stat-card,
+.summary-card,
+.booking-card,
+.empty-state,
+.confirmation,
+.book-panel,
+.auth-note-panel {
+  background-image: linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(255, 253, 248, 0.87));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.auth-shell { position: relative; z-index: 1; background: transparent; }
+.auth-panel {
+  background-image: linear-gradient(180deg, rgba(251, 247, 239, 0.8), rgba(251, 247, 239, 0.68));
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+.auth-card {
+  position: relative;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  background-image: linear-gradient(180deg, rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.88));
+  border: 1px solid rgba(201, 185, 158, 0.5);
+  box-shadow: 0 40px 80px -40px rgba(10, 16, 13, 0.65);
+}
+.booking-bar {
+  background-image: linear-gradient(180deg, rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.9));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 40px 70px -38px rgba(10, 16, 13, 0.7);
+}
+.site-footer {
+  background-image: linear-gradient(180deg, rgba(20, 28, 24, 0.72), rgba(14, 20, 17, 0.9));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Extreme type scale on the display headings, brand palette untouched */
+.home-hero__title { font-size: clamp(3rem, 6.9vw, 6rem); letter-spacing: -0.032em; }
+.page-hero h1 { font-size: clamp(2.4rem, 5vw, 4.1rem); letter-spacing: -0.028em; }
+.section-head h2 { font-size: clamp(2.1rem, 4vw, 3.4rem); line-height: 1.04; letter-spacing: -0.024em; }
+html.mo .home-hero__title { text-shadow: 0 20px 60px rgba(8, 14, 11, 0.5); }
+
+@media (prefers-reduced-motion: reduce) {
+  html.mo .bg-stage__photo { animation: none; transform: scale(1.02); }
 }

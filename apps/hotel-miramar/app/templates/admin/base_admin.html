@@ -7,10 +7,17 @@
   <title>{% block title %}Operations — {{ hotel_name }}{% endblock %}</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#16241d">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v=7">
   {% block extra_css %}{% endblock %}
 </head>
-<body class="admin-body">
+<body class="admin-body" data-bg="admin">
+  <div class="bg-stage" data-bg-stage aria-hidden="true">
+    <div class="bg-stage__photo"></div>
+    <div class="bg-stage__scrim"></div>
+    <div class="bg-stage__grain"></div>
+  </div>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+
   <a class="skip-link" href="#admin-main">Skip to console content</a>
 
   <div class="admin-shell">
@@ -128,7 +135,7 @@
     </div>
   </div>
 
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}?v=7"></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

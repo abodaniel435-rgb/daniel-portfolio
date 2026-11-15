@@ -9,20 +9,20 @@
 
 <!-- Hero -->
 <section class="home-hero">
-  <div class="home-hero__media">
+  <div class="home-hero__media" data-reveal="wipe">
     <img src="{{ hero_src }}" alt="{{ hero_alt }}" fetchpriority="high">
   </div>
   <span class="home-hero__scroll" aria-hidden="true">Marina Bay, Singapore</span>
   <div class="container home-hero__inner">
-    <div class="home-hero__content">
-      <p class="eyebrow">Marina Bay &middot; Singapore</p>
-      <h1 class="home-hero__title">A quieter kind of<br><em>luxury</em>, on the bay.</h1>
+    <div class="home-hero__content" data-stagger="110">
+      <p class="eyebrow" data-reveal="wipe">Marina Bay &middot; Singapore</p>
+      <h1 class="home-hero__title" data-reveal="wipe" data-fx="decode">A quieter kind of<br><em>luxury</em>, on the bay.</h1>
       {% if hero_slide and hero_slide.caption %}
-        <p class="home-hero__lede">{{ hero_slide.caption }}</p>
+        <p class="home-hero__lede" data-reveal="rise">{{ hero_slide.caption }}</p>
       {% else %}
-        <p class="home-hero__lede">Five room categories, warm Singaporean service and the water at your doorstep. Reserved for travellers who prefer the calm side of the city.</p>
+        <p class="home-hero__lede" data-reveal="rise">Five room categories, warm Singaporean service and the water at your doorstep. Reserved for travellers who prefer the calm side of the city.</p>
       {% endif %}
-      <div class="home-hero__meta">
+      <div class="home-hero__meta" data-reveal="rise">
         <span>Est. Marina Bay</span>
         <span>5 minutes to Bayfront MRT</span>
         {% if featured_rooms %}<span>From S${{ '%.0f'|format(featured_rooms|map(attribute='price_per_night')|min) }} per night</span>{% endif %}
@@ -69,39 +69,61 @@
   <div class="container">
     <div class="split intro-split">
       <div>
-        <p class="eyebrow">The hotel</p>
-        <h2 class="display" style="font-size: clamp(2.1rem, 3.8vw, 3.2rem); margin-top: 1rem;">A sanctuary of warm timber, sea light and unhurried service.</h2>
+        <p class="eyebrow" data-reveal="wipe">The hotel</p>
+        <h2 class="display" data-reveal="up" style="font-size: clamp(2.1rem, 3.8vw, 3.2rem); margin-top: 1rem;">A sanctuary of warm timber, sea light and unhurried service.</h2>
         <div class="intro-facts">
           {% if featured_rooms %}
-          <div class="intro-fact">
+          <div class="intro-fact fx-ring" data-reveal="rise" style="--d: 0ms">
             <div class="intro-fact__value">S${{ '%.0f'|format(featured_rooms|map(attribute='price_per_night')|min) }}</div>
             <div class="intro-fact__label">Nightly, from</div>
           </div>
           {% endif %}
-          <div class="intro-fact">
+          <div class="intro-fact fx-ring" data-reveal="rise" style="--d: 110ms">
             <div class="intro-fact__value">24h</div>
             <div class="intro-fact__label">Front desk</div>
           </div>
-          <div class="intro-fact">
+          <div class="intro-fact fx-ring" data-reveal="rise" style="--d: 220ms">
             <div class="intro-fact__value">05 min</div>
             <div class="intro-fact__label">Walk to MRT</div>
           </div>
         </div>
       </div>
-      <div class="stack">
-        <p class="pull-quote">Hotel Miramar SG is an address for people who like their luxury <em>low-lit</em>: dark timber, ivory linen, brass details and the bay moving quietly outside.</p>
-        <p class="muted">Set on Marina Boulevard, the hotel keeps the city close but the noise at arm's length. Rooms open onto harbour light, the rooftop pool faces the skyline, and the front desk knows your name by the second night.</p>
-        <p class="muted">Breakfast is served until eleven. Cars are parked for you. Nothing is rushed.</p>
-        <a class="link-arrow" href="{{ url_for('public.about') }}">Our story</a>
+      <div class="stack" data-stagger="110">
+        <p class="pull-quote" data-reveal="rise">Hotel Miramar SG is an address for people who like their luxury <em>low-lit</em>: dark timber, ivory linen, brass details and the bay moving quietly outside.</p>
+        <p class="muted" data-reveal="rise">Set on Marina Boulevard, the hotel keeps the city close but the noise at arm's length. Rooms open onto harbour light, the rooftop pool faces the skyline, and the front desk knows your name by the second night.</p>
+        <p class="muted" data-reveal="rise">Breakfast is served until eleven. Cars are parked for you. Nothing is rushed.</p>
+        <a class="link-arrow" data-reveal="rise" href="{{ url_for('public.about') }}">Our story</a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Amenities marquee -->
+<section class="marquee" aria-label="Hotel amenities">
+  <div class="marquee__track">
+    <span class="marquee__item">Rooftop infinity pool</span>
+    <span class="marquee__item">Miramar Table</span>
+    <span class="marquee__item">Spa &amp; wellness</span>
+    <span class="marquee__item">Executive lounge</span>
+    <span class="marquee__item">Valet &amp; airport transfer</span>
+    <span class="marquee__item">Fibre Wi-Fi</span>
+    <span class="marquee__item">Harbour view rooms</span>
+    <span class="marquee__item">Breakfast until eleven</span>
+    <span class="marquee__item" aria-hidden="true">Rooftop infinity pool</span>
+    <span class="marquee__item" aria-hidden="true">Miramar Table</span>
+    <span class="marquee__item" aria-hidden="true">Spa &amp; wellness</span>
+    <span class="marquee__item" aria-hidden="true">Executive lounge</span>
+    <span class="marquee__item" aria-hidden="true">Valet &amp; airport transfer</span>
+    <span class="marquee__item" aria-hidden="true">Fibre Wi-Fi</span>
+    <span class="marquee__item" aria-hidden="true">Harbour view rooms</span>
+    <span class="marquee__item" aria-hidden="true">Breakfast until eleven</span>
   </div>
 </section>
 
 <!-- Rooms showcase -->
 <section class="section section--sand section--hairline">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal="up">
       <div class="section-head__text">
         <p class="eyebrow">Stay</p>
         <h2>Rooms &amp; suites</h2>
@@ -112,10 +134,10 @@
       </div>
     </div>
 
-    <div class="grid-3">
+    <div class="grid-3" data-stagger="120">
       {% for room in featured_rooms %}
       {% set amenities = room.amenities.split(',') if room.amenities else [] %}
-      <article class="room-card reveal">
+      <article class="room-card reveal fx-scan fx-sheen">
         <a class="room-card__media" href="{{ url_for('public.room_detail', room_id=room.id) }}" tabindex="-1" aria-hidden="true">
           <img src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}"
                alt="{{ room.name }}" loading="lazy">
@@ -154,48 +176,48 @@
   <div class="container">
     <div class="amenity-layout">
       <div class="amenity-aside">
-        <p class="eyebrow">Facilities</p>
-        <h2 style="margin-top: 1rem;">Everything kept ready, nothing overdone.</h2>
+        <p class="eyebrow" data-reveal="wipe">Facilities</p>
+        <h2 style="margin-top: 1rem;" data-reveal="up">Everything kept ready, nothing overdone.</h2>
         <p class="muted" style="margin-top: 1rem;">Six things we do properly, from the rooftop pool at dusk to a car waiting before you ask.</p>
         <a class="link-arrow" href="{{ url_for('public.contact') }}" style="margin-top: 1.75rem;">Enquire with the desk</a>
       </div>
-      <div class="amenity-list">
-        <div class="amenity">
+      <div class="amenity-list" data-stagger="70">
+        <div class="amenity fx-scan" data-reveal="wipe" style="--d: 0ms">
           <span class="amenity__num">01</span>
           <div>
             <div class="amenity__name">Rooftop infinity pool</div>
             <p class="amenity__copy">A quiet edge of water above Marina Bay, open from six in the morning until late.</p>
           </div>
         </div>
-        <div class="amenity">
+        <div class="amenity fx-scan" data-reveal="wipe" style="--d: 70ms">
           <span class="amenity__num">02</span>
           <div>
             <div class="amenity__name">Miramar Table</div>
             <p class="amenity__copy">Seasonal Singaporean cooking and a short wine list, served indoors or on the terrace.</p>
           </div>
         </div>
-        <div class="amenity">
+        <div class="amenity fx-scan" data-reveal="wipe" style="--d: 140ms">
           <span class="amenity__num">03</span>
           <div>
             <div class="amenity__name">Spa &amp; wellness</div>
             <p class="amenity__copy">Treatment rooms, a steam room and a small gym with harbour light.</p>
           </div>
         </div>
-        <div class="amenity">
+        <div class="amenity fx-scan" data-reveal="wipe" style="--d: 210ms">
           <span class="amenity__num">04</span>
           <div>
             <div class="amenity__name">Executive lounge</div>
             <p class="amenity__copy">A calm floor for suite guests: breakfast, evening canapés and a desk if you must.</p>
           </div>
         </div>
-        <div class="amenity">
+        <div class="amenity fx-scan" data-reveal="wipe" style="--d: 280ms">
           <span class="amenity__num">05</span>
           <div>
             <div class="amenity__name">Valet &amp; airport transfers</div>
             <p class="amenity__copy">Cars met at the door, parked for you, and a transfer arranged to Changi on request.</p>
           </div>
         </div>
-        <div class="amenity">
+        <div class="amenity fx-scan" data-reveal="wipe" style="--d: 350ms">
           <span class="amenity__num">06</span>
           <div>
             <div class="amenity__name">Fibre Wi-Fi throughout</div>
@@ -211,27 +233,27 @@
 <section class="section section--sand section--hairline">
   <div class="container">
     <div class="split" style="align-items: stretch;">
-      <div class="neighbourhood-media reveal">
+      <div class="neighbourhood-media reveal fx-scan">
         <img src="{{ url_for('static', filename='images/attractions/gardens-by-the-bay.jpg') }}" alt="Gardens by the Bay at dusk" loading="lazy">
       </div>
       <div>
-        <p class="eyebrow">The neighbourhood</p>
-        <h2 style="margin-top: 1rem;">The bay is the front garden.</h2>
+        <p class="eyebrow" data-reveal="wipe">The neighbourhood</p>
+        <h2 style="margin-top: 1rem;" data-reveal="up">The bay is the front garden.</h2>
         <p class="muted" style="margin-top: 1rem;">Walk out and the city arranges itself around you: gardens to the north, the waterfront to the south, the MRT one block east.</p>
-        <div class="distance-list">
-          <div class="distance">
+        <div class="distance-list" data-stagger="80">
+          <div class="distance" data-reveal="wipe">
             <div class="distance__name">Bayfront MRT <small>Circle &amp; Downtown lines</small></div>
             <div class="distance__time">5 min walk</div>
           </div>
-          <div class="distance">
+          <div class="distance" data-reveal="wipe">
             <div class="distance__name">Gardens by the Bay <small>Supertree Grove &amp; conservatories</small></div>
             <div class="distance__time">8 min walk</div>
           </div>
-          <div class="distance">
+          <div class="distance" data-reveal="wipe">
             <div class="distance__name">Marina Bay Sands <small>SkyPark, mall &amp; waterfront dining</small></div>
             <div class="distance__time">10 min walk</div>
           </div>
-          <div class="distance">
+          <div class="distance" data-reveal="wipe">
             <div class="distance__name">Changi Airport <small>By taxi, traffic dependent</small></div>
             <div class="distance__time">25 min drive</div>
           </div>
@@ -245,14 +267,14 @@
 <!-- Film -->
 <section class="section section--ink">
   <div class="container">
-    <div class="section-head" style="justify-content: center; text-align: center;">
+    <div class="section-head" style="justify-content: center; text-align: center;" data-reveal="up">
       <div class="section-head__text">
         <p class="eyebrow" style="justify-content: center;">A film</p>
         <h2 style="color: var(--ivory); margin-top: 1rem;">See the rooms before you arrive</h2>
         <p style="color: rgba(251, 247, 239, 0.7); margin-inline: auto;">A short walk through the lobby, the rooms and the bay at dusk.</p>
       </div>
     </div>
-    <div class="video-frame">
+    <div class="video-frame fx-scan" data-reveal="wipe">
       <video controls playsinline preload="none"
              poster="{{ url_for('static', filename='images/hero/hero-poster.jpg') }}">
         <source src="{{ url_for('static', filename='videos/hotel-miramar-tour.mp4') }}" type="video/mp4">
@@ -266,7 +288,7 @@
 {% if testimonials %}
 <section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal="up">
       <div class="section-head__text">
         <p class="eyebrow">Guest voices</p>
         <h2>In their words</h2>
@@ -277,9 +299,9 @@
     </div>
   </div>
   <div class="container">
-    <div class="quote-grid">
+    <div class="quote-grid" data-stagger="140">
       {% for t in testimonials %}
-      <article class="quote-card">
+      <article class="quote-card fx-scan fx-sheen" data-reveal="wipe">
         <div class="quote-mark" aria-hidden="true">&ldquo;</div>
         <blockquote>{{ t.message }}</blockquote>
         <div class="quote-card__foot">
@@ -300,11 +322,11 @@
   </div>
   <div class="container cta-band__inner">
     <div>
-      <p class="eyebrow" style="color: var(--brass-bright);">Reservations</p>
-      <h2>Your room is waiting.</h2>
+      <p class="eyebrow" style="color: var(--brass-bright);" data-reveal="wipe">Reservations</p>
+      <h2 data-reveal="up">Your room is waiting.</h2>
       <p>Book directly with us for the best available rate, a flexible arrival time and a room chosen with care.</p>
     </div>
-    <div class="cta-band__actions">
+    <div class="cta-band__actions" data-reveal="rise">
       <a class="btn btn--brass" href="{{ url_for('public.rooms') }}">Check availability</a>
       <a class="btn btn--light" href="{{ url_for('public.contact') }}">Speak to the desk</a>
     </div>

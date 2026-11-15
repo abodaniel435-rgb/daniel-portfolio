@@ -46,7 +46,7 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="auth-page">
+    <div className="auth-page cc-route">
       <div className="auth-shape" />
       <Link to="/" className="brand"><span>◒</span> Campus<span>Coin</span></Link>
       <div className="auth-card rise reset-card">

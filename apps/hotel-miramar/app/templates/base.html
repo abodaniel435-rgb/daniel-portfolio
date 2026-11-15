@@ -3,6 +3,24 @@
 {% set account_active = current_endpoint.startswith('customer.') %}
 {% set admin_active = current_endpoint.startswith('admin.') %}
 {% set login_active = current_endpoint in ['auth.login', 'auth.password_recovery', 'auth.reset_password', 'auth.register'] %}
+{% set bg_map = {
+  'public.index': 'index',
+  'public.rooms': 'rooms',
+  'public.room_detail': 'room',
+  'public.attractions': 'attractions',
+  'public.about': 'about',
+  'public.contact': 'contact',
+  'public.feedback': 'feedback',
+  'public.location': 'location'
+} %}
+{% set bg_key = bg_map.get(current_endpoint, 'default') %}
+{% if current_endpoint.startswith('auth.') %}{% set bg_key = 'auth' %}{% endif %}
+{% if current_endpoint.startswith('customer.') %}{% set bg_key = 'customer' %}{% endif %}
+{% if current_endpoint.startswith('admin.') %}{% set bg_key = 'admin' %}{% endif %}
+{% set bg_src = '' %}
+{% if current_endpoint == 'public.room_detail' and room %}
+  {% set bg_src = url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') %}
+{% endif %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +29,17 @@
   <title>{% block title %}{{ hotel_name }}{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}Hotel Miramar SG — a quiet luxury hotel on Marina Bay, Singapore. Rooms and suites with harbour views, moments from Gardens by the Bay.{% endblock %}">
   <meta name="theme-color" content="#1e3a2e">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v=7">
   {% block extra_css %}{% endblock %}
 </head>
-<body class="{% block body_class %}site-body{% endblock %}">
+<body class="{% block body_class %}site-body{% endblock %}" data-bg="{{ bg_key }}">
+  <div class="bg-stage" data-bg-stage{% if bg_key == 'room' and bg_src %} style="--bg-photo: url('{{ bg_src }}')"{% endif %} aria-hidden="true">
+    <div class="bg-stage__photo"></div>
+    <div class="bg-stage__scrim"></div>
+    <div class="bg-stage__grain"></div>
+  </div>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header" data-header>
@@ -140,7 +165,7 @@
     </div>
   </footer>
 
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}?v=7"></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -13,14 +13,14 @@
       <span aria-hidden="true">/</span>
       <span aria-current="page">Neighbourhood</span>
     </nav>
-    <h1>The neighbourhood</h1>
-    <p>Singapore's finest experiences, most of them within a walk of the lobby.</p>
+    <h1 data-reveal="wipe" data-fx="decode">The neighbourhood</h1>
+    <p data-reveal="rise">Singapore's finest experiences, most of them within a walk of the lobby.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal="up">
       <div class="section-head__text">
         <p class="eyebrow">Around the bay</p>
         <h2>Six reasons to leave the room</h2>
@@ -40,9 +40,9 @@
       ('Singapore Flyer', 'A slow rotation with 360-degree views of the city and the strait.', 'images/attractions/singapore-flyer.jpg', '14 min walk')
     ] %}
 
-    <div class="grid-3">
+    <div class="grid-3" data-stagger="110">
       {% for name, desc, img, time in spots %}
-      <article class="room-card reveal">
+      <article class="room-card reveal fx-scan fx-sheen">
         <div class="room-card__media">
           <img src="{{ url_for('static', filename=img) }}" alt="{{ name }}" loading="lazy">
           <span class="room-card__flag">{{ time }}</span>
@@ -66,16 +66,16 @@
   <div class="container">
     <div class="split">
       <div>
-        <p class="eyebrow">A day out</p>
-        <h2 style="margin-top: 1rem;">A suggested Saturday.</h2>
+        <p class="eyebrow" data-reveal="wipe">A day out</p>
+        <h2 style="margin-top: 1rem;" data-reveal="up">A suggested Saturday.</h2>
         <p class="muted" style="margin-top: 1rem;">Coffee at the hotel, the conservatories before the heat, lunch at the water, and the Supertrees after dark.</p>
         <a class="link-arrow" href="{{ url_for('public.contact') }}" style="margin-top: 1.5rem;">Ask the desk to plan it</a>
       </div>
-      <div class="distance-list" style="margin-top: 0;">
-        <div class="distance"><div class="distance__name">07:30 — Breakfast at Miramar Table</div><div class="distance__time">In house</div></div>
-        <div class="distance"><div class="distance__name">09:00 — Gardens by the Bay</div><div class="distance__time">8 min walk</div></div>
-        <div class="distance"><div class="distance__name">13:00 — Lunch on the waterfront</div><div class="distance__time">10 min walk</div></div>
-        <div class="distance"><div class="distance__name">19:30 — Supertree Grove light show</div><div class="distance__time">8 min walk</div></div>
+      <div class="distance-list" style="margin-top: 0;" data-stagger="80">
+        <div class="distance" data-reveal="wipe"><div class="distance__name">07:30 — Breakfast at Miramar Table</div><div class="distance__time">In house</div></div>
+        <div class="distance" data-reveal="wipe"><div class="distance__name">09:00 — Gardens by the Bay</div><div class="distance__time">8 min walk</div></div>
+        <div class="distance" data-reveal="wipe"><div class="distance__name">13:00 — Lunch on the waterfront</div><div class="distance__time">10 min walk</div></div>
+        <div class="distance" data-reveal="wipe"><div class="distance__name">19:30 — Supertree Grove light show</div><div class="distance__time">8 min walk</div></div>
       </div>
     </div>
   </div>

@@ -14,8 +14,8 @@
     </nav>
     <div class="room-detail-head">
       <div>
-        <p class="eyebrow">{{ room.room_type }}</p>
-        <h1>{{ room.name }}</h1>
+        <p class="eyebrow" data-reveal="wipe">{{ room.room_type }}</p>
+        <h1 data-reveal="wipe" data-fx="decode">{{ room.name }}</h1>
       </div>
       <p class="room-detail-head__meta">Sleeps {{ room.max_occupancy }} &middot; {{ room.room_type }} &middot; Marina Bay</p>
     </div>
@@ -27,24 +27,24 @@
     <div class="detail-shell">
       <div class="stack--lg" style="display: grid; gap: clamp(2rem, 4vw, 3rem);">
         <div class="gallery">
-          <div class="gallery__main">
+          <div class="gallery__main fx-scan" data-reveal="wipe">
             <img data-gallery-main
                  src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}"
                  alt="{{ room.name }}" fetchpriority="high">
           </div>
-          <div class="gallery__thumbs" role="group" aria-label="Room gallery">
-            <button type="button" class="gallery__thumb" data-gallery-thumb aria-pressed="true"
+          <div class="gallery__thumbs" data-stagger="90" role="group" aria-label="Room gallery">
+            <button type="button" class="gallery__thumb" data-reveal="wipe" style="--d: 0ms" data-gallery-thumb aria-pressed="true"
                     data-src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}"
                     data-alt="{{ room.name }}">
               <img src="{{ url_for('static', filename='images/rooms/' + room.image_filename) if room.image_filename else url_for('static', filename='images/rooms/marina-deluxe.jpg') }}"
                    alt="View {{ room.name }}" loading="lazy">
             </button>
-            <button type="button" class="gallery__thumb" data-gallery-thumb aria-pressed="false"
+            <button type="button" class="gallery__thumb" data-reveal="wipe" data-gallery-thumb aria-pressed="false"
                     data-src="{{ url_for('static', filename='images/hero/hero-poster.jpg') }}"
                     data-alt="Rooftop pool and terrace at dusk">
               <img src="{{ url_for('static', filename='images/hero/hero-poster.jpg') }}" alt="Rooftop pool and terrace" loading="lazy">
             </button>
-            <button type="button" class="gallery__thumb" data-gallery-thumb aria-pressed="false"
+            <button type="button" class="gallery__thumb" data-reveal="wipe" data-gallery-thumb aria-pressed="false"
                     data-src="{{ url_for('static', filename='images/attractions/marina-bay-header.jpg') }}"
                     data-alt="Marina Bay at dusk">
               <img src="{{ url_for('static', filename='images/attractions/marina-bay-header.jpg') }}" alt="Marina Bay at dusk" loading="lazy">
@@ -53,9 +53,9 @@
         </div>
 
         <div>
-          <p class="eyebrow">The room</p>
-          <h2 style="margin-top: 0.9rem;">Considered, quiet, generous.</h2>
-          <div class="prose" style="margin-top: 1.1rem;">
+          <p class="eyebrow" data-reveal="wipe">The room</p>
+          <h2 style="margin-top: 0.9rem;" data-reveal="up">Considered, quiet, generous.</h2>
+          <div class="prose" style="margin-top: 1.1rem;" data-reveal="rise">
             {% if room.description %}
             <p>{{ room.description }}</p>
             {% else %}
@@ -66,12 +66,12 @@
         </div>
 
         <div>
-          <p class="eyebrow">In the room</p>
+          <p class="eyebrow" data-reveal="wipe">In the room</p>
           <h2 style="margin-top: 0.9rem; font-size: clamp(1.6rem, 2.6vw, 2.1rem);">Amenities</h2>
           {% if room.amenities %}
-          <ul class="tick-list">
+          <ul class="tick-list" data-stagger="45">
             {% for a in room.amenities.split(',') %}
-            <li>{{ a.strip() }}</li>
+            <li data-reveal="wipe">{{ a.strip() }}</li>
             {% endfor %}
           </ul>
           {% else %}
@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <aside class="book-panel" aria-label="Booking panel">
+      <aside class="book-panel fx-scan fx-sheen" aria-label="Booking panel" data-reveal="rise">
         <div class="book-panel__rate">
           <div class="rate">S${{ '%.0f'|format(room.price_per_night) }}<span class="rate__unit">per night</span></div>
           <span class="badge {{ 'badge-approved' if room.is_available else 'badge-cancelled' }}">{{ 'Available' if room.is_available else 'Waitlist' }}</span>

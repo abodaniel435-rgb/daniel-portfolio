@@ -601,14 +601,20 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 
 .kit-anim section > .shell > h2, .kit-anim .section-head h2 { position: relative; }
 
-/* --- table rows: stagger in once the table is on screen --- */
+/* --- table rows: stagger in once the table is on screen ---
+   The hidden state lives on `table:not(.is-in)`, and the keyframe uses
+   `backwards`, so a finished row is visible because the cascade says so —
+   not because an animation is still holding it up. */
 
-.kit-anim tbody tr { opacity: 0; transform: translate3d(0, 12px, 0); }
+.kit-anim table:not(.is-in) tbody tr { opacity: 0; transform: translate3d(0, 12px, 0); }
 .kit-anim table.is-in tbody tr {
-  animation: kit-row-in .55s var(--ease-expo) forwards;
-  animation-delay: calc(var(--i, 0) * 26ms);
+  animation: kit-row-in .5s var(--ease-expo) backwards;
+  animation-delay: calc(min(var(--i, 0), 10) * 26ms);
 }
-@keyframes kit-row-in { to { opacity: 1; transform: none; } }
+@keyframes kit-row-in {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to   { opacity: 1; transform: none; }
+}
 .kit-anim tbody tr { transition: background .25s ease; }
 .kit-anim tbody tr:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
 
@@ -719,6 +725,150 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 }
 .kit-anim .card:hover::before, .kit-anim .tile:hover::before { transform: scaleX(1); }
 
+/* ==========================================================================
+   STAGE LAYER — a real photograph behind the page, plus the dramatic
+   entrances: curtain wipes, word curtains, a decode line and a ticker.
+   All of it lives under .kit-anim, which kit.js only sets when the reader
+   has not asked for reduced motion. If the script throws, kit.js drops the
+   class and every element below simply sits in its finished position.
+   ========================================================================== */
+
+/* --- the photographic plate ---
+   html carries the canvas colour so body can stay transparent and let a
+   negative z-index layer show through, whatever a site layer sets on body. */
+
+.kit-anim html { background: var(--paper); }
+.kit-anim body { background: transparent; }
+
+.kit-stage {
+  position: fixed; inset: 0; z-index: -2;
+  overflow: hidden; pointer-events: none;
+}
+.kit-stage .kit-par {
+  position: absolute; inset: -9%;
+  transform: translate3d(0, var(--sy, 0px), 0);
+  will-change: transform;
+}
+.kit-stage .kit-par i {
+  position: absolute; inset: 0; display: block;
+  background: var(--kit-bg, none) var(--kit-pos, 50% 45%) / cover no-repeat;
+  opacity: var(--kit-o, .46);
+  filter: saturate(.78) contrast(1.06);
+  transform: scale(var(--kit-z, 1.04));
+  animation: kit-kenburns 38s ease-in-out infinite alternate;
+}
+@keyframes kit-kenburns {
+  0%   { transform: scale(1.02) translate3d(-1.2%, .8%, 0); }
+  100% { transform: scale(1.16) translate3d(1.4%, -1.2%, 0); }
+}
+
+/* the scrim is what keeps body copy readable: a paper wash that thickens as
+   the page goes down, plus a vignette so the plate never fights the type */
+.kit-stage::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--paper) 58%, transparent) 0%,
+      color-mix(in srgb, var(--paper) 74%, transparent) 26%,
+      color-mix(in srgb, var(--paper) 90%, transparent) 62%,
+      color-mix(in srgb, var(--paper) 96%, transparent) 100%),
+    radial-gradient(130% 92% at 78% 2%, transparent 22%, color-mix(in srgb, var(--ink) 30%, transparent) 100%);
+}
+
+/* section bands keep a little of the plate alive instead of going flat */
+.kit-anim .band { background: color-mix(in srgb, var(--paper-2) 86%, transparent); }
+
+/* the opening panel is the same photograph, cropped and lit, so the plate
+   reads as the site's own imagery rather than decoration dropped behind it */
+.kit-anim .hero, .kit-anim .page-hero { overflow: hidden; }
+.kit-anim .hero::after, .kit-anim .page-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: var(--kit-bg, none) var(--kit-pos, 50% 45%) / cover no-repeat;
+  opacity: .3;
+  mix-blend-mode: luminosity;
+  mask-image: linear-gradient(105deg, transparent 6%, #000 52%, transparent 96%);
+  -webkit-mask-image: linear-gradient(105deg, transparent 6%, #000 52%, transparent 96%);
+}
+.kit-anim .hero .shell, .kit-anim .page-hero .shell { position: relative; z-index: 1; }
+
+/* --- curtain wipe across every photographic surface --- */
+
+.kit-anim .kit-wipe {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.1s var(--ease-expo) var(--dl, 0ms);
+}
+.kit-anim .kit-wipe.is-in { clip-path: inset(0 0 0 0); }
+
+.kit-anim .hero-frame { position: relative; }
+.kit-anim .hero-frame img { animation: kit-frame-breathe 26s ease-in-out infinite alternate; }
+@keyframes kit-frame-breathe {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.09); }
+}
+
+/* --- word curtain on the display lines ---
+   `backwards` fill only: a word that never animates is still a word the
+   visitor can read, which a static opacity:0 would not have given us. */
+
+.kit-anim .kit-w {
+  display: inline-block;
+  animation: kit-word .68s var(--ease-expo) backwards;
+  animation-delay: calc(var(--n, 0) * 46ms + 110ms);
+}
+@keyframes kit-word {
+  from { opacity: 0; transform: translateY(.42em); clip-path: inset(0 0 100% 0); }
+  to   { opacity: 1; transform: none; clip-path: inset(-.32em 0 -.32em 0); }
+}
+.kit-anim .hero h1.kit-split { animation: none; clip-path: none; opacity: 1; }
+
+/* the decode line sits in the eyebrow, where the text is short and uppercase */
+.kit-anim .eyebrow.kit-decode { min-width: 0; }
+.kit-anim .eyebrow.kit-decode .kit-d {
+  color: color-mix(in srgb, var(--accent) 70%, var(--brand));
+}
+
+/* --- section ticker: the page's own headings, kept moving --- */
+
+.kit-ticker {
+  position: relative; z-index: 1;
+  margin: 0 auto clamp(26px, 4vw, 46px);
+  overflow: hidden;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.kit-ticker-track {
+  display: inline-flex; gap: 34px; white-space: nowrap;
+  will-change: transform;
+  animation: kit-marquee 34s linear infinite;
+}
+.kit-ticker-track span {
+  font: 700 .74rem/1 var(--font-body);
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-3);
+  display: inline-flex; align-items: center; gap: 34px;
+}
+.kit-ticker-track span::after {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+}
+@keyframes kit-marquee { to { transform: translate3d(-50%, 0, 0); } }
+
+/* --- a light bar travelling through the hero plate as it arrives --- */
+
+.kit-anim .hero-frame::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, transparent 34%, color-mix(in srgb, var(--accent) 42%, transparent) 50%, transparent 66%);
+  background-size: 260% 100%;
+  animation: kit-sweep 1.5s var(--ease-expo) .35s both;
+}
+@keyframes kit-sweep {
+  from { background-position: 160% 0; opacity: .9; }
+  to   { background-position: -60% 0; opacity: 0; }
+}
+
 /* --- respect the reader --- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -728,11 +878,17 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   .kit-anim .hero h1, .kit-anim .hero h1 em, .kit-anim .eyebrow::before,
   .kit-anim .bar i::after, .kit-anim .bar-fill::after, .kit-anim .pulse::after,
   .kit-anim tbody tr, .kit-anim .spark path.line, .kit-anim .donut .value,
-  .kit-anim .readout-big b, .kit-anim .stat b { animation: none !important; }
+  .kit-anim .readout-big b, .kit-anim .stat b,
+  .kit-stage .kit-par i, .kit-anim .hero-frame img, .kit-anim .hero-frame::after,
+  .kit-anim .kit-w { animation: none !important; }
   .kit-anim tbody tr { opacity: 1; transform: none; }
   .kit-anim .card, .kit-anim .tile, .kit-anim .stat { transform: none; }
   .kit-anim .card::after, .kit-anim .tile::after { display: none; }
   .kit-anim .kit-spot { display: none; }
+  .kit-anim .kit-wipe { clip-path: none; transition: none; }
+  .kit-anim .hero-frame::after { display: none; }
+  .kit-ticker-track { animation: none !important; }
+  .kit-stage .kit-par { transform: none; }
 }
 
 /* ---------- print ---------- */

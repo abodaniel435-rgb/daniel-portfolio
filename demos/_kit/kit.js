@@ -439,23 +439,47 @@
     }
 
     /* tables and sparklines arrive when they reach the viewport */
-    if ('IntersectionObserver' in global) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          var node = entry.target;
-          if (node.tagName === 'TABLE') {
-            $$('tbody tr', node).forEach(function (row, i) {
-              row.style.setProperty('--i', Math.min(i, 22));
-            });
-          }
-          node.classList.add('is-in');
-          io.unobserve(node);
+    var watch = $$('table, .spark');
+    if (watch.length) {
+      var mark = function (node) {
+        if (node.classList.contains('is-in')) return;
+        if (node.tagName === 'TABLE') {
+          $$('tbody tr', node).forEach(function (row, i) {
+            row.style.setProperty('--i', Math.min(i, 22));
+          });
+        }
+        node.classList.add('is-in');
+      };
+      if ('IntersectionObserver' in global) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            mark(entry.target);
+            io.unobserve(entry.target);
+          });
+        }, { threshold: .06 });
+        watch.forEach(function (node) { io.observe(node); });
+      }
+      /* A fast scroll can hand the observer nothing to sample, and a table
+         that never announces itself would then sit transparent forever —
+         the same sweep reveal() falls back on. */
+      var queued2 = false;
+      function sweep2() {
+        queued2 = false;
+        watch.forEach(function (node) {
+          if (node.classList.contains('is-in')) return;
+          if (node.getBoundingClientRect().top < global.innerHeight - 24) mark(node);
         });
-      }, { threshold: .06 });
-
-      $$('table').forEach(function (table) { io.observe(table); });
-      $$('.spark').forEach(function (chart) { io.observe(chart); });
+      }
+      function queue2() {
+        if (queued2) return;
+        queued2 = true;
+        global.setTimeout(sweep2, 60);
+      }
+      global.addEventListener('scroll', queue2, { passive: true });
+      global.addEventListener('resize', queue2);
+      global.addEventListener('orientationchange', queue2);
+      sweep2();
     }
 
     /* a bloom on each readout change, once the number has settled */
@@ -484,10 +508,178 @@
     }
   }
 
+  /* ---------- stage ----------
+     The demo sites all live at demos/<slug>/<page>.html and keep their
+     photography at demos/_media/<slug>-hero.webp, so the plate can be found
+     from the URL alone — no per-page markup to maintain or forget. */
+
+  var PLATE_POS = {
+    index: '50% 42%', data: '22% 62%', playbook: '78% 30%', record: '46% 74%',
+    guide: '64% 20%', demos: '30% 40%', workouts: '70% 66%', contact: '40% 30%'
+  };
+
+  function stage() {
+    if (reduce) return null;
+    var doc = document;
+    var path = (global.location.pathname || '').split('?')[0];
+    var segs = path.split('/').filter(Boolean);
+    var file = segs.length ? segs[segs.length - 1] : '';
+    var slug = segs.length > 1 ? segs[segs.length - 2] : '';
+    if (!slug || !/\.html?$/i.test(file)) return null;
+
+    var page = file.replace(/\.html?$/i, '');
+    var stageEl = doc.createElement('div');
+    stageEl.className = 'kit-stage';
+    stageEl.setAttribute('aria-hidden', 'true');
+    stageEl.innerHTML = '<div class="kit-par"><i></i></div>';
+    doc.body.insertBefore(stageEl, doc.body.firstChild);
+
+    var pos = PLATE_POS[page] || PLATE_POS.index;
+    var zoom = page === 'index' ? 1.04 : 1.14;
+    var root = doc.documentElement;
+    root.style.setProperty('--kit-bg', 'url("../_media/' + slug + '-hero.webp")');
+    root.style.setProperty('--kit-pos', pos);
+    root.style.setProperty('--kit-z', String(zoom));
+    return stageEl;
+  }
+
+  /* ---------- word curtain ----------
+     Words are wrapped in place; an element child such as <em> is kept whole
+     so its own gradient text clip survives. */
+
+  function splitWords(el) {
+    var doc = document;
+    var kids = Array.prototype.slice.call(el.childNodes);
+    var words = [];
+    kids.forEach(function (node) {
+      if (node.nodeType === 3) {
+        String(node.nodeValue).split(/\s+/).forEach(function (chunk) {
+          if (chunk) words.push({ word: chunk });
+        });
+      } else if (node.nodeName === 'BR') {
+        /* a break inside an inline-block span is no break at all */
+        words.push({ br: true });
+      } else if (node.nodeType === 1) {
+        words.push({ el: node });
+      }
+    });
+    if (!words.length) return 0;
+    el.textContent = '';
+    var n = 0;
+    words.forEach(function (piece, i) {
+      if (piece.br) { el.appendChild(doc.createElement('br')); return; }
+      var span = doc.createElement('span');
+      span.className = 'kit-w';
+      span.style.setProperty('--n', n++);
+      if (piece.el) span.appendChild(piece.el);
+      else span.textContent = piece.word;
+      el.appendChild(span);
+      if (i < words.length - 1) el.appendChild(doc.createTextNode(' '));
+    });
+    el.classList.add('kit-split');
+    return n;
+  }
+
+  /* ---------- decode ----------
+     Scrambles a short uppercase line into place. The timeout is the point:
+     requestAnimationFrame stalls in a hidden tab, and a headline left
+     mid-scramble is a headline nobody can read. */
+
+  var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\<>*+=—·';
+
+  function decode(el) {
+    var target = (el.textContent || '').trim();
+    if (!target || target.length > 60) return;
+    el.classList.add('kit-decode');
+    var out = doc_span(el);
+    var start = null, ticks = 0;
+    function finish() { out.textContent = target; }
+    function frame(ts) {
+      if (start === null) start = ts;
+      ticks += 1;
+      var settled = Math.floor((ts - start) / 26);
+      var text = '';
+      for (var i = 0; i < target.length; i++) {
+        var ch = target.charAt(i);
+        if (ch === ' ') { text += ' '; continue; }
+        text += i < settled ? ch : GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
+      }
+      out.textContent = text;
+      if (settled <= target.length) global.requestAnimationFrame(frame);
+      else finish();
+    }
+    global.requestAnimationFrame(frame);
+    global.setTimeout(finish, 1700);
+  }
+
+  function doc_span(el) {
+    var holder = document.createElement('span');
+    holder.className = 'kit-d';
+    el.textContent = '';
+    el.appendChild(holder);
+    return holder;
+  }
+
+  /* ---------- ticker ----------
+     Built from the page's own section headings, so it indexes the page
+     instead of inventing copy to scroll past. */
+
+  function ticker() {
+    var heads = $$('.shell h2, .section-head h2').slice(0, 8);
+    if (heads.length < 3) return;
+    var items = heads.map(function (h) { return h.textContent.trim(); });
+    var el = document.createElement('div');
+    el.className = 'kit-ticker';
+    el.setAttribute('aria-hidden', 'true');
+    var track = document.createElement('div');
+    track.className = 'kit-ticker-track';
+    track.innerHTML = items.concat(items).map(function (t) {
+      return '<span>' + String(t).replace(/[&<>]/g, function (c) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c];
+      }) + '</span>';
+    }).join('');
+    el.appendChild(track);
+    var hero = $('.hero');
+    if (hero && hero.parentNode) hero.parentNode.insertBefore(el, hero.nextSibling);
+  }
+
+  function curtain() {
+    /* photographic surfaces wipe open from the left rather than fading up */
+    $$('figure, .hero-frame, [data-wipe], .shot, .plate, .photo, .thumb').forEach(function (el) {
+      if (!el.querySelector('img') && el.tagName !== 'IMG') return;
+      el.classList.add('kit-wipe');
+      var box = el.getBoundingClientRect();
+      if (box.top < global.innerHeight) { void el.offsetWidth; el.classList.add('is-in'); }
+    });
+  }
+
   function boot(options) {
     var opts = options || {};
     document.addEventListener('DOMContentLoaded', function () {
-      motion();
+      var stageEl = null;
+      try {
+        stageEl = stage();
+        motion();
+        if (!reduce && stageEl) {
+          curtain();
+          ticker();
+          $$('.hero h1').forEach(splitWords);
+          $$('.hero .eyebrow').forEach(decode);
+          /* parallax the plate on the same rAF budget the rail already uses */
+          var par = $('.kit-stage .kit-par');
+          if (par) {
+            var shift = function () {
+              par.style.setProperty('--sy', (-Math.min(global.scrollY, 900) * 0.06).toFixed(1) + 'px');
+            };
+            global.addEventListener('scroll', shift, { passive: true });
+            shift();
+          }
+        }
+      } catch (err) {
+        /* a motion failure must never cost the reader the page itself */
+        document.documentElement.classList.remove('kit-anim');
+        if (global.console && console.warn) console.warn('kit motion disabled', err);
+      }
       nav();
       activeLinks();
       reveal();
@@ -506,6 +698,8 @@
     dateLabel: dateLabel, uid: uid, store: store,
     reveal: reveal, counters: counters, sparkline: sparkline, bars: bars, donut: donut,
     tabs: tabs, toast: toast, validate: validate, paintErrors: paintErrors,
-    csv: csv, download: download, print: print, motion: motion, boot: boot
+    csv: csv, download: download, print: print, motion: motion,
+    stage: stage, splitWords: splitWords, decode: decode, ticker: ticker, curtain: curtain,
+    boot: boot
   };
 })(window);

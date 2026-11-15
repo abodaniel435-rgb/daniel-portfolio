@@ -3323,3 +3323,799 @@ button.cc-navlink {
     scroll-behavior: auto !important;
   }
 }
+
+/* 26. BACKDROP STAGE + SIGNATURE MOTION -------------------------------------
+   Four graded photographic plates sit behind the whole app, one fixed stage
+   mounted in App.jsx, crossfaded per route. Everything from `26.2` down is
+   gated behind html.cc-motion, which only exists when the OS does not ask for
+   reduced motion — the resting state of every element is the normal UI.
+   ------------------------------------------------------------------------ */
+
+/* 26.1 the stage ----------------------------------------------------------- */
+:root {
+  --glass: rgba(13, 17, 22, 0.72);
+  --glass-quiet: rgba(11, 14, 19, 0.62);
+  --glass-strong: rgba(10, 13, 17, 0.86);
+  --glass-line: rgba(255, 255, 255, 0.075);
+  --wipe: cubic-bezier(0.76, 0, 0.24, 1);
+  --settle: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cc-bgstage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--ink-950);
+}
+
+.cc-bglayer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+
+.cc-bglayer.is-on {
+  opacity: 1;
+}
+
+.cc-bglayer > i {
+  position: absolute;
+  inset: -7%;
+  background-size: cover;
+  background-position: 50% 50%;
+  transform: scale(1.03);
+  /* the plates are graded very dark, so they need a lift before the scrim
+     takes it back down — this is what makes the photo actually read */
+  filter: brightness(2.7) saturate(1.22) contrast(1.04);
+}
+
+html.cc-motion .cc-bglayer.is-on > i {
+  animation: cc-kenburns 38s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+}
+
+@keyframes cc-kenburns {
+  from {
+    transform: scale(1.03) translate3d(-1.4%, 1.2%, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(1.8%, -1.6%, 0);
+  }
+}
+
+/* dark scrim — keeps body copy at AA while still letting the plate read */
+.cc-bgscrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(125% 115% at 78% 6%, rgba(8, 9, 11, 0.1), rgba(8, 9, 11, 0.5) 58%, rgba(8, 9, 11, 0.84) 100%),
+    linear-gradient(180deg, rgba(8, 9, 11, 0.58) 0%, rgba(8, 9, 11, 0.34) 44%, rgba(8, 9, 11, 0.74) 100%);
+}
+
+html[data-cc-bg='desk'] .cc-bgscrim,
+html[data-cc-bg='graphite'] .cc-bgscrim {
+  background:
+    radial-gradient(115% 105% at 68% 8%, rgba(8, 9, 11, 0.14), rgba(8, 9, 11, 0.56) 56%, rgba(8, 9, 11, 0.86) 100%),
+    linear-gradient(180deg, rgba(8, 9, 11, 0.6) 0%, rgba(8, 9, 11, 0.4) 46%, rgba(8, 9, 11, 0.78) 100%);
+}
+
+/* fine grain so the plate never reads as a raw photo */
+.cc-bggrain {
+  position: absolute;
+  inset: -40%;
+  opacity: 0.26;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='170' height='170' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 170px 170px;
+}
+
+html.cc-motion .cc-bggrain {
+  animation: cc-grain 5.4s steps(5, end) infinite;
+}
+
+@keyframes cc-grain {
+  0% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-2.4%, 1.6%, 0); }
+  40% { transform: translate3d(1.8%, -2.2%, 0); }
+  60% { transform: translate3d(-1.2%, -1.4%, 0); }
+  80% { transform: translate3d(2.2%, 1.2%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+/* 26.2 glass surfaces over the plate --------------------------------------- */
+.cc-app,
+.cc-mk,
+.cc-auth,
+.cc-main {
+  position: relative;
+  z-index: 1;
+  background-color: transparent !important;
+}
+
+.cc-auth-aside,
+.cc-auth-main {
+  background-color: transparent !important;
+}
+
+.cc-side {
+  background-color: rgba(8, 9, 11, 0.74) !important;
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  border-right-color: var(--glass-line) !important;
+}
+
+.cc-topbar,
+.cc-mk-nav {
+  background-color: rgba(8, 9, 11, 0.55) !important;
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom-color: var(--glass-line) !important;
+}
+
+.cc-card,
+.cc-goal,
+.cc-budget-card,
+.cc-feature,
+.cc-step,
+.cc-mock,
+.cc-auth-card,
+.cc-empty,
+.cc-modal,
+.cc-pop,
+.glass,
+.report-panel,
+.tip-tile,
+.split-card,
+.metric,
+.jar,
+.forecast-card,
+.streak-card,
+.broke-card,
+.health-ring,
+.sim-out > div,
+.auth-card,
+.cc-cta-band {
+  background-color: var(--glass) !important;
+  border-color: var(--glass-line) !important;
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+}
+
+.cc-stat {
+  background-color: var(--glass-quiet) !important;
+  border-color: var(--glass-line) !important;
+  backdrop-filter: blur(9px) saturate(1.15);
+  -webkit-backdrop-filter: blur(9px) saturate(1.15);
+}
+
+.cc-card--quiet,
+.cc-tx:hover {
+  background-color: rgba(18, 23, 30, 0.72) !important;
+}
+
+.cc-modal-backdrop {
+  background-color: rgba(5, 6, 8, 0.72) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.cc-tabbar {
+  background-color: rgba(8, 9, 11, 0.8) !important;
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cc-card,
+  .cc-stat,
+  .cc-goal,
+  .cc-budget-card,
+  .cc-feature,
+  .cc-step,
+  .cc-mock,
+  .cc-auth-card,
+  .cc-side,
+  .cc-topbar,
+  .cc-mk-nav,
+  .glass,
+  .report-panel,
+  .tip-tile,
+  .split-card,
+  .metric,
+  .jar,
+  .auth-card {
+    background-color: rgba(12, 16, 21, 0.94) !important;
+  }
+}
+
+/* slightly cooler text ramp so small grey copy clears AA on the plates */
+:root {
+  --muted: #a4adb4;
+  --dim: #7f8891;
+}
+
+/* 26.3 curtain-wipe reveals ------------------------------------------------ */
+html.cc-motion [data-reveal]:not(.cc-in) {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+}
+
+html.cc-motion [data-reveal].cc-in {
+  animation: cc-wipe 0.72s var(--wipe) backwards;
+  animation-delay: calc(var(--rd, 0) * 55ms);
+}
+
+@keyframes cc-wipe {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* 26.4 hover: 1px scan sweep + pointer specular ---------------------------- */
+[data-glow] {
+  position: relative;
+}
+
+[data-glow]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, rgba(201, 247, 90, 0.9), transparent) no-repeat;
+  background-size: 46% 1px;
+  background-position: -46% 0;
+}
+
+[data-glow]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    220px 220px at var(--mx, 50%) var(--my, 50%),
+    rgba(201, 247, 90, 0.13),
+    rgba(201, 247, 90, 0.04) 42%,
+    transparent 72%
+  );
+}
+
+[data-glow].is-lit::after {
+  opacity: 1;
+}
+
+html.cc-motion [data-glow]:hover::before {
+  opacity: 0.9;
+  animation: cc-scan 1.05s var(--wipe);
+}
+
+@keyframes cc-scan {
+  from {
+    background-position: -46% 0;
+  }
+  to {
+    background-position: 146% 0;
+  }
+}
+
+html.cc-motion [data-glow] {
+  transition: transform 0.34s var(--settle), box-shadow 0.34s ease, border-color 0.3s ease,
+    background-color 0.2s ease;
+}
+
+html.cc-motion [data-glow]:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 247, 90, 0.22);
+  box-shadow: 0 34px 64px -34px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(201, 247, 90, 0.1);
+}
+
+/* 26.5 scroll progress bar ------------------------------------------------- */
+.cc-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 130;
+  pointer-events: none;
+  transform: scaleX(var(--p, 0));
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--lime-deep), var(--lime) 55%, #f2ffc6);
+  box-shadow: 0 0 14px rgba(201, 247, 90, 0.55);
+}
+
+@supports (animation-timeline: scroll(root)) {
+  .cc-progress {
+    transform: scaleX(0);
+    animation: cc-scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  @keyframes cc-scroll-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* 26.6 marquee ticker ------------------------------------------------------ */
+.cc-ticker {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 11px 0;
+  border-block: 1px solid var(--glass-line);
+  background: rgba(8, 9, 11, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.cc-ticker-label {
+  flex: none;
+  padding-left: clamp(16px, 5vw, 64px);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.cc-ticker-view {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.cc-ticker-rail {
+  display: flex;
+  width: max-content;
+}
+
+html.cc-motion .cc-ticker-rail {
+  animation: cc-marquee 46s linear infinite;
+}
+
+.cc-ticker:hover .cc-ticker-rail {
+  animation-play-state: paused;
+}
+
+@keyframes cc-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.cc-ticker-set {
+  display: flex;
+  align-items: center;
+}
+
+.cc-ticker-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 0 20px;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+.cc-ticker-item::after {
+  content: '◆';
+  font-size: 0.5rem;
+  color: var(--lime);
+  opacity: 0.45;
+  margin-left: 4px;
+}
+
+.cc-ticker-item b {
+  color: var(--lime);
+  font-weight: 700;
+}
+
+/* 26.7 rotating conic rings ------------------------------------------------ */
+.cc-pctring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  isolation: isolate;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.cc-pctring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(var(--lime) var(--p, 0%), rgba(255, 255, 255, 0.08) 0);
+  opacity: 0.2;
+}
+
+.cc-pctring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  z-index: -2;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 56%,
+    rgba(201, 247, 90, 0.7) 74%,
+    rgba(201, 247, 90, 0.12) 86%,
+    transparent 100%
+  );
+  filter: blur(3px);
+  opacity: 0;
+}
+
+html.cc-motion .cc-pctring::before {
+  opacity: 0.85;
+  animation: cc-spin 3.6s linear infinite;
+}
+
+.cc-pctring--warn::after {
+  background: conic-gradient(var(--amber) var(--p, 0%), rgba(255, 255, 255, 0.08) 0);
+}
+
+.cc-pctring--over::after {
+  background: conic-gradient(var(--coral) var(--p, 0%), rgba(255, 255, 255, 0.08) 0);
+}
+
+.cc-pctring--warn {
+  color: var(--amber);
+}
+
+.cc-pctring--over {
+  color: var(--coral);
+}
+
+.cc-pctring--warn::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 56%,
+    rgba(255, 190, 90, 0.7) 74%,
+    rgba(255, 190, 90, 0.12) 86%,
+    transparent 100%
+  );
+}
+
+.cc-pctring--over::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 56%,
+    rgba(255, 118, 118, 0.7) 74%,
+    rgba(255, 118, 118, 0.12) 86%,
+    transparent 100%
+  );
+}
+
+.cc-pctring-face {
+  position: relative;
+  z-index: 1;
+}
+
+.cc-ring::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  z-index: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 60%, rgba(201, 247, 90, 0.55) 78%, transparent 94%);
+  filter: blur(7px);
+  opacity: 0;
+}
+
+html.cc-motion .cc-ring::before {
+  opacity: 0.8;
+  animation: cc-spin 6.5s linear infinite;
+}
+
+.cc-ring svg,
+.cc-ring-centre {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes cc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 26.8 digit roll ---------------------------------------------------------- */
+.cc-roll {
+  display: inline;
+}
+
+.cc-roll-face {
+  display: inline;
+}
+
+.cc-roll-d,
+.cc-roll-x {
+  display: inline-block;
+  font-weight: inherit;
+}
+
+html.cc-motion .cc-roll-d {
+  animation: cc-digit 0.52s var(--settle) backwards;
+  animation-delay: calc(var(--ri, 0) * 34ms);
+}
+
+@keyframes cc-digit {
+  from {
+    transform: translateY(-0.42em);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* 26.9 decode/scramble ----------------------------------------------------- */
+.cc-scramble {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+/* 26.10 route + entrance micro-transition ---------------------------------- */
+html.cc-motion .cc-route {
+  animation: cc-fade 0.18s ease both;
+}
+
+html.cc-motion .cc-enter {
+  animation: cc-rise 0.18s var(--settle) both;
+}
+
+/* 26.11 hover language: nav wipes, button fills, link tracking -------------- */
+.cc-navlink {
+  position: relative;
+}
+
+.cc-navlink::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9%;
+  bottom: 9%;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--lime);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 0.3s var(--wipe);
+}
+
+.cc-navlink:hover::before {
+  transform: scaleY(1);
+  transform-origin: 50% 0;
+}
+
+.cc-navlink.active::before {
+  transform: scaleY(1);
+  transform-origin: 50% 0;
+}
+
+.cc-navlink span {
+  transition: letter-spacing 0.3s var(--settle), transform 0.3s var(--settle);
+}
+
+.cc-navlink:hover span {
+  letter-spacing: 0.012em;
+  transform: translateX(2px);
+}
+
+.cc-mk-nav-links a:not(.cc-btn) {
+  position: relative;
+  transition: color 0.2s ease, letter-spacing 0.34s var(--settle);
+}
+
+.cc-mk-nav-links a:not(.cc-btn)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 1px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.36s var(--wipe);
+}
+
+.cc-mk-nav-links a:not(.cc-btn):hover {
+  letter-spacing: 0.015em;
+}
+
+.cc-mk-nav-links a:not(.cc-btn):hover::after {
+  transform: scaleX(1);
+}
+
+.cc-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+html.cc-motion .cc-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.05));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.4s var(--wipe);
+}
+
+html.cc-motion .cc-btn:hover:not(:disabled)::before {
+  transform: scaleX(1);
+}
+
+html.cc-motion .cc-btn:not(:disabled) {
+  transition: transform 0.16s var(--settle), background-color 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.24s ease;
+}
+
+html.cc-motion .cc-btn--primary:hover:not(:disabled) {
+  box-shadow: 0 12px 30px -14px rgba(201, 247, 90, 0.7);
+}
+
+.cc-link svg {
+  transition: transform 0.28s var(--settle);
+}
+
+.cc-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* meter sheen on the fill */
+.cc-meter-fill {
+  position: relative;
+  overflow: hidden;
+}
+
+html.cc-motion .cc-meter-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+}
+
+html.cc-motion .cc-card:hover .cc-meter-fill::after,
+html.cc-motion .cc-budget-card:hover .cc-meter-fill::after,
+html.cc-motion .cc-goal:hover .cc-meter-fill::after {
+  animation: cc-sheen 1.1s var(--wipe);
+}
+
+@keyframes cc-sheen {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* 26.12 bigger display type, tighter tracking --------------------------------
+   Scoped to >=641px so the existing responsive size steps still win on phones. */
+@media (min-width: 641px) {
+  .cc-h1 {
+    font-size: clamp(2rem, 4.1vw, 3rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .cc-h2 {
+    font-size: 1.4375rem;
+    letter-spacing: -0.032em;
+  }
+
+  .cc-hero-value {
+    font-size: clamp(2.5rem, 6.2vw, 4.1rem);
+    letter-spacing: -0.055em;
+  }
+
+  .cc-stat-value {
+    font-size: clamp(1.45rem, 2.9vw, 1.95rem);
+    letter-spacing: -0.04em;
+  }
+
+  .cc-hero-mk h1 {
+    font-size: clamp(2.9rem, 7.6vw, 5.6rem);
+    line-height: 0.9;
+    letter-spacing: -0.062em;
+  }
+
+  .cc-mk-section-head h2 {
+    font-size: clamp(1.9rem, 4.4vw, 3.15rem);
+    line-height: 0.98;
+    letter-spacing: -0.052em;
+  }
+
+  .cc-cta-band h2 {
+    font-size: clamp(1.7rem, 3.6vw, 2.7rem);
+    letter-spacing: -0.05em;
+  }
+
+  .cc-auth-quote h2 {
+    font-size: clamp(2rem, 3.8vw, 3.1rem);
+    letter-spacing: -0.05em;
+  }
+
+  .cc-auth-card h1 {
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    letter-spacing: -0.05em;
+  }
+
+  .cc-page-head {
+    margin-bottom: var(--s4);
+  }
+
+  .cc-page {
+    padding-top: var(--s5);
+  }
+}
+
+/* keep dense data legible: rows and table copy never move on hover */
+.cc-tx:hover {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.cc-motion [data-reveal]:not(.cc-in),
+  html.cc-motion [data-reveal].cc-in {
+    opacity: 1;
+    clip-path: none;
+    animation: none;
+  }
+
+  .cc-bggrain,
+  .cc-bglayer > i,
+  .cc-ticker-rail,
+  .cc-pctring::before,
+  .cc-ring::before {
+    animation: none !important;
+  }
+
+  .cc-bglayer {
+    transition: none;
+  }
+}
+

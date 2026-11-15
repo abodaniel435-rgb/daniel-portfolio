@@ -7,7 +7,7 @@ import {
   Icon,
   Modal,
   PageHead,
-  Pill,
+  PctRing,
   SkeletonCard,
   StatTile,
   money,
@@ -203,7 +203,9 @@ export default function Goals() {
                     <b>{goal.name}</b>
                     <small>{goal.deadline ? `by ${prettyDate(goal.deadline)}` : 'no deadline'}</small>
                   </div>
-                  <Pill tone={done ? 'ok' : ratio >= 50 ? 'info' : ''}>{Math.round(ratio)}%</Pill>
+                  <PctRing value={ratio} tone={done ? '' : ratio >= 80 ? 'warn' : ''}>
+                    {Math.round(ratio)}%
+                  </PctRing>
                 </div>
 
                 <div className="cc-goal-figures">
