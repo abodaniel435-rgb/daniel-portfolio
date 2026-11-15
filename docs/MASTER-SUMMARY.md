@@ -210,10 +210,12 @@ opening the run that exists, and the auth pages rendered outside the layout so f
 including the lockout notice — were invisible.
 
 **Two caveats.** The nine remaining tools are still frontend-only; NairaDesk is the one
-conversion so far, done properly with tests, rather than nine done thinly. And the 24 cPanel
-archives in `Downloads` were packaged before these core fixes, so **rebuild them before uploading
-any of the four PHP sites** — an installed copy from those zips still carries the `update()` and
-`base_path()` bugs.
+conversion so far, done properly with tests, rather than nine done thinly. And the cPanel
+archives in `Downloads` were packaged on 9 November — before these core fixes. They have been
+rebuilt from this repository by `tools/build_php_zips.py`, which refuses to write a package
+containing a `.env`, a log or an install lock and checks that the `Db.php` inside carries the
+fix: AjoCircle 90 KB, FarmCoop 108 KB, MediTrack 62 KB, RoutePilot 91 KB and NairaDesk 126 KB,
+all five reporting `core/Db.php=fixed`. Upload those, not the 9 November copies.
 
 ## 7. Outstanding / optional
 
