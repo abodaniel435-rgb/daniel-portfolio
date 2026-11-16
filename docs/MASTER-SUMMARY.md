@@ -56,6 +56,8 @@ Each is a four-page static site — the tool, a `data.html` carrying the publish
 
 They share one zero-dependency design system (`demos/_kit/`) — `kit.css`/`kit.js` for the tools and `pages.css`/`pages.js` for the generated pages — and are versioned as `?v=6` so a kit change cannot be served stale.
 
+Two of the ten have since been taken off `localStorage` and rebuilt as PHP + MySQL applications with real accounts, review queues and test suites: **PayRite → NairaDesk** (section 6f) and **MarketRate → PriceDesk** (section 6g). Their demos remain online as the calculator front-end; the servers are the products.
+
 ### Left untouched, as instructed
 
 **CurrenSee** and **Cityofgoldestate.com**. Their portfolio entries were not edited; no source for either exists in this workspace and no live deployment was touched.
@@ -209,13 +211,74 @@ Also fixed in NairaDesk itself: a duplicate pay-run month hit the unique key and
 opening the run that exists, and the auth pages rendered outside the layout so flash messages —
 including the lockout notice — were invisible.
 
-**Two caveats.** The nine remaining tools are still frontend-only; NairaDesk is the one
-conversion so far, done properly with tests, rather than nine done thinly. And the cPanel
+**Two caveats.** The other nine tools were still frontend-only; NairaDesk is the first conversion,
+done properly with tests rather than nine done thinly — section 6g adds the second, from MarketRate.
+And the cPanel
 archives in `Downloads` were packaged on 9 November — before these core fixes. They have been
 rebuilt from this repository by `tools/build_php_zips.py`, which refuses to write a package
 containing a `.env`, a log or an install lock and checks that the `Db.php` inside carries the
 fix: AjoCircle 90 KB, FarmCoop 108 KB, MediTrack 62 KB, RoutePilot 91 KB and NairaDesk 126 KB,
 all five reporting `core/Db.php=fixed`. Upload those, not the 9 November copies.
+
+## 6g. The second conversion (PriceDesk) and the bug that was in all six apps
+
+MarketRate became **PriceDesk** (`sites/pricedesk`, registered as the 28th project). The demo already
+had the right idea — a reporter files a price in whatever unit the market actually sells in, and the
+board answers in naira per kilogram — but it kept its quotes in `localStorage`, which means one
+browser's data is nobody's evidence. The conversion moved three things server-side: an account per
+reporter, a review queue between "filed" and "published", and the aggregation itself, so the number a
+trader acts on is computed from every verified quote in the database rather than from whatever that
+one phone happened to cache.
+
+`tools/smoke.php` drives it over real HTTP: **159 assertions, 0 failed**, covering sessions and CSRF
+refusal, registration and role assignment, filing a price in a local unit and watching it land on the
+board only after verification, duplicate and self-verification refusals, the JSON API versus the
+engine, per-market versus all-market aggregation, the haul maths, tenant isolation, bcrypt-only
+storage, the login throttle, the admin console, reference-data edits picked up by the next
+calculation, automation, and teardown that asserts the board is exactly the size it was before the
+run. Like NairaDesk's suite it mints a throwaway admin and deletes it afterwards, so no real
+password is needed to run it and none is stored in the repository. `tools/set_password.php` is the
+companion: it reads the new password from STDIN, never echoes it, and clears that account's throttle
+rows so a reset cannot lock the owner out of his own console. `sites/pricedesk/README.md` carries the
+reasoning (median over mean, unit normalisation, the haul formula) plus the cPanel steps, the same way
+`sites/nairadesk/README.md` does.
+
+**Four bugs, and the important one was not in PriceDesk.**
+
+1. `DATE_SUB(CURDATE(), INTERVAL 14 DAY` was missing its closing paren in three places — every board
+   load threw `PDOException 1064`.
+2. `Board::quotes()` returned raw snake_case rows into `Pricing::aggregate()`, which reads
+   `reportDate` and `reporterId`. Freshness silently reported "unknown" for a board full of prices
+   filed this morning. Fixed at the accessor, because three callers patching the same mismatch is
+   how the mismatch survives.
+3. **`Validator::max()` and `min()` validated a value and then never wrote it to `$clean`.** A field
+   guarded only by a length rule was checked, passed, and dropped before the `INSERT`. PriceDesk lost
+   the note on a filed price and the typed distance on a haul — and because `Validator` is the shared
+   ForgeStack core, the same bug was live in AjoCircle, FarmCoop, MediTrack, RoutePilot and
+   NairaDesk. Fixed once in `sites/_shared-core`, copied to all eight working copies, and each of the
+   other five apps was re-read to confirm nothing depended on the old behaviour.
+4. `Pricing::unitKey()` stripped digits and concatenated the rest, so "crate of 30" parsed as
+   `crateof` and fell back to a default weight. It now word-matches against the commodity's own unit
+   table, preferring a non-`kg` word so "50kg bag" is still a bag.
+
+Bug 3 is the one worth reading twice: it was invisible to every test that only checked the displayed
+error message, and it only showed up when a valid submission quietly lost a field.
+
+**The fifth problem was not a bug — a screenshot caught it.** Every line on the all-markets board was
+labelled *disputed*. The math was correct: pooling a wholesale floor and a city retail stall produces
+a ±34% spread, and the site's own legend calls that disputed. But the two are different commodities at
+different moments, and labelling the structural gap between them "the market does not agree" contradicted
+the copy the page prints about itself. `Pricing::acrossMarkets()` now measures spread *inside* each
+market and reports the cross-market range honestly, six regression assertions pin the behaviour, and
+the caption says which question the column answers. Reading the rendered page found this; no assertion
+would have.
+
+Also here: `home_compare()` carried sixteen lines of duplicated, paren-less SQL that `Board::quotes()`
+already owned — the fix removed the duplication rather than patching the copy. The cPanel package
+(`PriceDesk-cPanel.zip`, 179 KB, 54 files, `core/Db.php=fixed`) is in `Downloads` with the other five.
+
+**Eight of the ten tools are still frontend-only.** Two conversions done with a real test suite beat
+eight done thinly, and the shared-core fix above is the proof of why the slow route is the right one.
 
 ## 7. Outstanding / optional
 

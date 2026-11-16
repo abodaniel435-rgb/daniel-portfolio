@@ -356,6 +356,32 @@ window.PROJECTS = [
     accent: "#17694a"
   },
   {
+    slug: "pricedesk",
+    name: "PriceDesk",
+    category: "product",
+    categoryLabel: "Agritech · full-stack",
+    year: "2026",
+    status: "Deploy-ready",
+    tagline: "The MarketRate maths, moved onto the server a market association can actually trust.",
+    summary: "MarketRate worked the price maths in a browser tab and kept nothing. PriceDesk is the backend it needed: members file quotes in whatever unit they traded, nothing reaches the board until a reviewer verifies it, and every figure is normalised to naira per kilogram, aggregated on a median and stored — so a cooperative can argue with a number instead of a screenshot.",
+    problem: "A market association runs on a WhatsApp group where every seller quotes their own price in their own unit, and nobody can say whether the ₦9,000 crate is cheap or a mistake. A spreadsheet cannot answer who reported a price, who approved it, or what the board said last Tuesday — and it never nets fuel, levies, porters and spoilage before telling a seller the trip was worth it.",
+    approach: "A PHP 8.2 and MySQL application on the same ForgeStack core as the other builds. Unit weights live on the commodity row so a wrong basket size is a data fix, not a code fix; quotes are held `pending` until a named administrator verifies them; the haul rates are a table, so diesel moving does not need a redeploy. Aggregating across markets measures disagreement inside each market rather than between them — pooling first is what made the first version label every line disputed.",
+    features: [
+      "Quote filing in crate / mudu / bag, normalised per kilogram before anything is combined",
+      "Verification queue with per-row deviation against the verified peer median",
+      "Median with the spread and a confidence pill, never a bare average",
+      "Break-even load calculator: fuel, levies, porters and spoilage against the price gap",
+      "Watch lists that email on filing and again on verification — never before",
+      "Stale-line and outlier automation on cron, with every message kept in an outbox",
+      "159 HTTP assertions: CSRF, roles, tenant isolation, engine parity, login throttle"
+    ],
+    stack: ["PHP 8.2", "MySQL", "PDO", "cPanel", "Cron"],
+    live: null,
+    source: "https://github.com/abodaniel435-rgb/daniel-portfolio/tree/main/sites/pricedesk",
+    thumb: "assets/projects/pricedesk.jpg",
+    accent: "#a8431f"
+  },
+  {
     slug: "forgestack",
     name: "ForgeStack",
     category: "product",

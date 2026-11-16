@@ -37,18 +37,28 @@ final class Validator
 
     public function min(string $field, int $length): self
     {
-        $value = (string)($this->input[$field] ?? '');
-        if ($value !== '' && mb_strlen($value) < $length) {
+        $value = trim((string)($this->input[$field] ?? ''));
+        if ($value === '') {
+            return $this;
+        }
+        if (mb_strlen($value) < $length) {
             $this->errors[$field] = ucfirst(str_replace('_', ' ', $field)) . " must be at least {$length} characters.";
+        } else {
+            $this->clean[$field] = $value;
         }
         return $this;
     }
 
+    /* Length rules used to only check, never carry the value, so an optional field
+       guarded solely by max() was validated and then silently dropped on its way
+       into the database — a filed price lost its note, a haul lost its distance. */
     public function max(string $field, int $length): self
     {
-        $value = (string)($this->input[$field] ?? '');
+        $value = trim((string)($this->input[$field] ?? ''));
         if (mb_strlen($value) > $length) {
             $this->errors[$field] = ucfirst(str_replace('_', ' ', $field)) . " must be under {$length} characters.";
+        } else {
+            $this->clean[$field] = $value;
         }
         return $this;
     }

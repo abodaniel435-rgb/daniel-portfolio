@@ -14,6 +14,7 @@ if (Installer::installed()) {
 }
 
 $adminEmail = (string)env('ADMIN_EMAIL', 'abodaniel435@gmail.com');
+$adminName = trim((string)env('ADMIN_NAME', '')) ?: 'Daniel Abo';
 $adminPassword = (string)env('ADMIN_PASSWORD', '');
 $demoPassword = (string)env('DEMO_PASSWORD', '');
 
@@ -33,7 +34,7 @@ try {
         echo "Seed data applied ({$count} statements).\n";
     }
 
-    Installer::createUser('Daniel Abo', $adminEmail, $adminPassword, 'admin', '+2347038082491');
+    Installer::createUser($adminName, $adminEmail, $adminPassword, 'admin', '+2347038082491');
     echo "Administrator created: {$adminEmail}\n";
 
     $demoUsers = BASE_PATH . '/app/demo_users.php';

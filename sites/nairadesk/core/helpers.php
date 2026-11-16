@@ -189,8 +189,10 @@ function short_datetime(?string $date): string
 function status_badge(string $status): string
 {
     $map = [
-        'confirmed' => 'ok', 'completed' => 'ok', 'paid' => 'ok', 'active' => 'ok', 'delivered' => 'ok', 'approved' => 'ok',
-        'pending' => 'warn', 'scheduled' => 'warn', 'in_transit' => 'info', 'out_for_delivery' => 'info', 'processing' => 'info',
+        'confirmed' => 'ok', 'completed' => 'ok', 'paid' => 'ok', 'active' => 'ok', 'delivered' => 'ok',
+        'approved' => 'ok', 'verified' => 'ok', 'sent' => 'ok',
+        'pending' => 'warn', 'scheduled' => 'warn', 'in_transit' => 'info', 'out_for_delivery' => 'info',
+        'processing' => 'info', 'queued' => 'info',
         'cancelled' => 'bad', 'no_show' => 'bad', 'failed' => 'bad', 'rejected' => 'bad', 'overdue' => 'bad',
     ];
     $tone = $map[$status] ?? 'neutral';
