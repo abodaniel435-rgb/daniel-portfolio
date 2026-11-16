@@ -27,6 +27,13 @@ img { display: block; max-width: 100%; }
 .skip-link { position: fixed; top: 10px; left: 10px; z-index: 100; padding: 10px 14px; transform: translateY(-150%); background: var(--lime); color: var(--ink); font-weight: 700; }
 .skip-link:focus { transform: translateY(0); }
 
+/* One photographic plate sits behind every page, fixed, with a paper scrim so the
+   text keeps contrast; the case study swaps in the project's own artwork via --case-bg. */
+.bg-plate { position: fixed; inset: -8%; z-index: -2; pointer-events: none; background: var(--case-bg, url("assets/projects/portfolio-plate.webp")) 58% 46% / cover no-repeat; opacity: .78; filter: saturate(.62) contrast(1.05) brightness(1.07); translate: 0 var(--sy, 0px); transform: scale(1.06); animation: plate-drift 54s ease-in-out infinite alternate; will-change: transform, translate; }
+.bg-plate::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(243,244,237,.4) 0%, rgba(243,244,237,.62) 40%, rgba(243,244,237,.86) 100%), radial-gradient(130% 105% at 82% 0%, transparent 26%, rgba(23,35,31,.2) 100%); }
+.case-page .bg-plate { opacity: .5; filter: blur(22px) saturate(.66) brightness(1.06); }
+@keyframes plate-drift { from { transform: translate3d(-1%, 0, 0) scale(1.05); } to { transform: translate3d(1%, 0, 0) scale(1.14); } }
+
 .site-header { position: absolute; z-index: 20; top: 0; left: 0; width: 100%; color: var(--paper); }
 .nav-shell { width: min(1240px, calc(100% - 64px)); min-height: 88px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(243,244,237,.18); }
 .wordmark { display: inline-flex; align-items: center; gap: 10px; color: var(--paper); font: 700 15px var(--font-display); letter-spacing: .04em; }
@@ -83,7 +90,7 @@ img { display: block; max-width: 100%; }
 
 .section-pad { padding: 112px 0; }
 .section-shell { width: min(1240px, calc(100% - 64px)); margin: 0 auto; }
-.work-section { background: var(--paper); }
+.work-section { background: rgba(243,244,237,.48); }
 .section-heading { display: grid; grid-template-columns: 1fr .6fr; align-items: end; gap: 40px; }
 .eyebrow-dark { color: var(--muted); }
 .eyebrow-dark > span:first-child { color: #638b23; }
@@ -118,7 +125,7 @@ img { display: block; max-width: 100%; }
 .work-note { margin: 40px 0 0; padding: 15px 0; display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
 .note-mark { width: 20px; height: 20px; display: grid; place-items: center; background: var(--lime); color: var(--ink); font: 600 12px var(--font-mono); }
 
-.about-section { background: var(--ink-soft); color: var(--paper); }
+.about-section { background: rgba(30,44,38,.9); color: var(--paper); }
 .about-shell { width: min(1240px, calc(100% - 64px)); margin: 0 auto; display: grid; grid-template-columns: .68fr 1.32fr; gap: 80px; }
 .about-label { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
 .about-label .eyebrow { color: rgba(243,244,237,.55); }
@@ -130,7 +137,7 @@ img { display: block; max-width: 100%; }
 .capability-list { margin-top: 31px; display: flex; flex-wrap: wrap; gap: 8px 23px; color: var(--lime); font: 11px var(--font-mono); }
 .capability-list span::before { content: "— "; color: var(--coral); }
 
-.contact-section { background: var(--lime); }
+.contact-section { background: rgba(201,244,91,.85); }
 .contact-shell { width: min(1240px, calc(100% - 64px)); margin: 0 auto; display: grid; grid-template-columns: 1.05fr .95fr; align-items: end; gap: 70px; }
 .contact-shell h2 { color: var(--ink); }
 .contact-shell h2 em { color: #607f25; }
@@ -140,7 +147,7 @@ img { display: block; max-width: 100%; }
 .contact-link b { font: 18px var(--font-body); }
 .contact-actions > p { margin: 13px 0 0; color: #43552e; font-size: 12px; }
 
-.site-footer { min-height: 84px; padding: 18px max(32px, calc((100vw - 1240px)/2)); display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 28px; background: var(--ink); color: rgba(243,244,237,.62); }
+.site-footer { min-height: 84px; padding: 18px max(32px, calc((100vw - 1240px)/2)); display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 28px; background: rgba(23,35,31,.93); color: rgba(243,244,237,.62); }
 .footer-mark { color: var(--paper); }
 .site-footer p { margin: 0; font-size: 11px; }
 .site-footer small, .back-top { font: 9px var(--font-mono); }
@@ -200,6 +207,7 @@ img { display: block; max-width: 100%; }
   .art-index { right: 0; bottom: -6px; font-size: 8px; }
   .scroll-cue { left: 18px; font-size: 8px; }
   .section-pad { padding: 76px 0; }
+  .bg-plate { opacity: .42; }
   .section-heading { grid-template-columns: 1fr; gap: 16px; }
   .section-heading h2, .contact-shell h2 { font-size: 42px; }
   .section-intro { max-width: 100%; margin: 0; }
@@ -225,6 +233,7 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .bg-plate { animation: none; transform: none; translate: none; }
   .reveal { opacity: 1; transform: none; }
 }
 /* ---------- project registry additions ---------- */
@@ -241,15 +250,14 @@ img { display: block; max-width: 100%; }
 
 /* ---------- case study page ---------- */
 .case-page { background: var(--paper); }
-.case-header { position: relative; background: var(--paper); color: var(--ink); border-bottom: 1px solid var(--line); }
+.case-header { position: relative; background: rgba(243,244,237,.72); color: var(--ink); border-bottom: 1px solid var(--line); }
 .case-header .wordmark { color: var(--ink); }
 .case-header .wordmark-mark { border-color: rgba(23,35,31,.25); color: #55801c; }
 .case-header .site-nav { color: var(--muted); }
 .case-header .site-nav a:hover, .case-header .site-nav a:focus-visible { color: var(--ink); }
 .case-header .site-nav .nav-contact { color: #4f7419; }
 .case-shell { width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
-.case-hero { padding: 64px 0 0; position: relative; isolation: isolate; overflow: hidden; }
-.case-hero::before { content: ""; position: absolute; z-index: -1; inset: -14% -6%; background: var(--case-bg, url("assets/projects/tech-circuit.jpg")) center 34% / cover no-repeat; filter: blur(30px) saturate(.68) brightness(.62); opacity: .5; transform: scale(1.1); animation: hero-backdrop-drift 34s ease-in-out infinite alternate; }
+.case-hero { padding: 64px 0 0; }
 .case-back { display: inline-flex; align-items: center; gap: 9px; color: var(--muted); font: 500 12px var(--font-mono); letter-spacing: .05em; text-transform: uppercase; transition: color .2s ease, gap .2s ease; }
 .case-back:hover, .case-back:focus-visible { color: var(--ink); gap: 13px; }
 .case-heading { max-width: 880px; margin-top: 40px; }

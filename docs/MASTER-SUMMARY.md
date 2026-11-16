@@ -362,6 +362,30 @@ All six cPanel packages were rebuilt from the live source with the plates and co
 AjoCircle 174 KB, FarmCoop 1481 KB, MediTrack 249 KB, RoutePilot 193 KB, NairaDesk 127 KB,
 PriceDesk 179 KB — each checked to contain no `.env`, no log and no install lock, and `core/Db.php=fixed`.
 
+## 6k. The portfolio shell got the same treatment
+
+The sweep that proved the six apps painted a plate (`tools/check_plates.mjs`, which asks the *rendered*
+DOM rather than grepping HTML) reported 61/65, and the four gaps were the portfolio's own two pages.
+They now carry the same fixed photograph layer:
+
+- `assets/projects/portfolio-plate.webp` (1600x914, 54 KB) sits behind the whole document at
+  `z-index:-2`, with a paper scrim on `::after`, the slow `plate-drift` keyframe, and the scroll offset
+  carried in `translate` so the keyframe's `transform` cannot clobber it.
+- The opaque bands that used to hide it are now translucent — work 48%, about, contact, footer and the
+  case header — so the photograph reads through the page without touching text contrast.
+- The case study page wears the project's own artwork instead of a generic image: `project.js` sets
+  `--case-bg` on the body and `.bg-plate` reads it, blurred. That replaced `.case-hero::before`, which
+  painted the same artwork behind only the first screen.
+- Reveal-on-scroll and the parallax moved into a shared `ui.js`. The case page had always shipped
+  `.reveal` elements with **no observer at all**, so its About and Contact bands were sitting at
+  `opacity:0` for every visitor who scrolled past them; loading `ui.js` on both pages fixed that and
+  removed the duplication.
+- `prefers-reduced-motion` now stops the plate outright (`animation/transform/translate: none`) and the
+  34 reveal nodes resolve visible immediately — verified with `CDP_MEDIA`, not assumed.
+- Cache-busters moved to `?v=10` on `styles.css`, `projects.js`, `script.js`, `project.js` and `ui.js`.
+
+Sweep result after the change: **65/65 pages paint a background image.**
+
 ## 7. Outstanding / optional
 
 - Nothing required by the brief is unfinished in this workspace, and the portfolio itself is now published (section 6b). The remaining work belongs to cPanel: 24 packages sit in `C:\Users\HI\Downloads` waiting to be uploaded, and the ten tools are already live on GitHub Pages — deploying them to a host is optional, only needed if he wants them off Pages or under his own domain.
