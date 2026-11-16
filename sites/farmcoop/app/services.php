@@ -65,13 +65,30 @@ function fc_number(string $raw, float $min, float $max): ?float
     return round($value, 2);
 }
 
-function fc_is_url(string $url): bool
+/** An image field holds either a hosted URL or a path inside public/assets. */
+function fc_is_image(string $value): bool
 {
-    if ($url === '') {
+    if ($value === '') {
         return true;
     }
-    $scheme = strtolower((string)parse_url($url, PHP_URL_SCHEME));
-    return in_array($scheme, ['http', 'https'], true) && filter_var($url, FILTER_VALIDATE_URL) !== false;
+    if (preg_match('#^assets/[A-Za-z0-9._/-]+$#', $value) === 1) {
+        return !str_contains($value, '..');
+    }
+    $scheme = strtolower((string)parse_url($value, PHP_URL_SCHEME));
+    return in_array($scheme, ['http', 'https'], true) && filter_var($value, FILTER_VALIDATE_URL) !== false;
+}
+
+/** Turn a stored image value into something an <img> can load on this host. */
+function fc_media(?string $value, string $fallback = ''): string
+{
+    $value = trim((string)$value);
+    if ($value === '') {
+        $value = $fallback;
+    }
+    if ($value === '') {
+        return '';
+    }
+    return preg_match('#^https?://#i', $value) === 1 ? $value : asset($value);
 }
 
 function category_label(?string $slug): string
@@ -84,19 +101,19 @@ function category_label(?string $slug): string
 function category_image(string $category): string
 {
     $map = [
-        'vegetables' => 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=1200&q=80',
-        'grains' => 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1200&q=80',
-        'tubers' => 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=1200&q=80',
-        'fruits' => 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=1200&q=80',
-        'spices' => 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=80',
-        'other' => 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80',
+        'vegetables' => 'assets/img/content/photo-1576045057995-568f588f82fb.webp',
+        'grains' => 'assets/img/content/photo-1586201375761-83865001e31c.webp',
+        'tubers' => 'assets/img/content/photo-1518977676601-b53f82aba655.webp',
+        'fruits' => 'assets/img/content/photo-1571771894821-ce9b6c11b08e.webp',
+        'spices' => 'assets/img/content/photo-1596040033229-a9821ebd058d.webp',
+        'other' => 'assets/img/content/photo-1500937386664-56d1dfef3854.webp',
     ];
     return $map[$category] ?? $map['other'];
 }
 
 function listing_image(array $listing): string
 {
-    return $listing['image_url'] ?: category_image((string)$listing['category']);
+    return fc_media($listing['image_url'] ?? '', category_image((string)$listing['category']));
 }
 
 /** Full listing row joined with the farmer's profile + buyer-facing farm details. */

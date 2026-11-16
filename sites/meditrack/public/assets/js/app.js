@@ -1,4 +1,39 @@
+/* MediTrack — small progressive enhancements, no dependencies. */
 (() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // The plate is a fixed layer, so the scroll offset has to be applied by hand.
+  const plate = document.querySelector('.bg-plate');
+  if (plate && !reduce) {
+    let queued = false;
+    const paint = () => {
+      plate.style.setProperty('--sy', `${(window.scrollY * 0.055).toFixed(1)}px`);
+      queued = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!queued) { queued = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+    paint();
+  }
+
+  // Blocks reveal as they reach the viewport rather than all at once on load.
+  // The class on <html> is what arms the hidden start state, so a browser that
+  // never runs this script still shows everything (see the .js-io rules).
+  // This is a guard around the observer, not an early return: the menu, booking
+  // and flash enhancements below still have to attach either way.
+  const items = document.querySelectorAll('main .reveal, main .panel, main .card, main .stat, main .table-wrap, main .auth-form');
+  if (items.length && !reduce && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js-io');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+    items.forEach((el) => io.observe(el));
+  }
+
   const toggle = document.querySelector('.menu-btn');
   const links = document.getElementById('navlinks');
   if (toggle && links) {

@@ -111,8 +111,13 @@ function admin_doctor_create(): void
         ->max('name', 120)
         ->max('specialty', 120)
         ->integer('consultation_fee', 0, 1000000);
-    if (!$v->passes()) {
-        remember_errors($v->errors());
+    $photo = trim((string)($_POST['photo_url'] ?? ''));
+    if (!$v->passes() || !photo_is_valid($photo)) {
+        $errors = $v->errors();
+        if ($photo !== '' && !photo_is_valid($photo)) {
+            $errors['photo_url'] = 'Enter an image URL starting with https://, or a path under assets/.';
+        }
+        remember_errors($errors);
         remember_old($_POST);
         redirect('/admin/doctors');
     }
@@ -132,7 +137,7 @@ function admin_doctor_create(): void
                 'bio' => trim((string)($_POST['bio'] ?? '')),
                 'consultation_fee' => (float)$v->value('consultation_fee'),
                 'room' => trim((string)($_POST['room'] ?? '')),
-                'photo_url' => trim((string)($_POST['photo_url'] ?? '')),
+                'photo_url' => $photo,
                 'is_accepting' => 1,
             ]);
             foreach ([[1, '09:00:00', '15:00:00'], [3, '09:00:00', '15:00:00'], [5, '09:00:00', '15:00:00']] as $slot) {

@@ -25,14 +25,46 @@
   --radius-sm:13px;
   --font-display:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;
   --font-body:"Manrope",system-ui,-apple-system,sans-serif;
+  /* Headings carry a serif so the ledger reads as an institution rather than an
+     app; the numerals and the wordmark stay on the grotesque, where tabular
+     figures actually line up. */
+  --font-serif:"Newsreader",Georgia,serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--porcelain);color:var(--ink);font:16px/1.65 var(--font-body);-webkit-font-smoothing:antialiased}
+
+/* ---------- background plate ----------
+   Every page sits on one photograph of a circle meeting at dusk, dimmed to a wash
+   under the porcelain. It is fixed rather than attached so it keeps drifting behind
+   the ledger as you scroll; the paper colour above stays the fallback if the image
+   is ever missing. */
+.bg-plate{
+  position:fixed;inset:-8%;z-index:-2;pointer-events:none;
+  background:url("../img/plate.webp") 62% 44%/cover no-repeat;
+  opacity:.62;
+  filter:saturate(.72) contrast(1.06) brightness(1.08);
+  /* plate-drift animates `transform`, which would clobber a scroll offset left in the
+     same property — so the parallax rides in on `translate`, which composes with it. */
+  translate:0 var(--sy,0px);
+  transform:scale(1.06);
+  animation:plate-drift 58s ease-in-out infinite alternate;
+  will-change:transform,translate;
+}
+.bg-plate::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(246,245,251,.58),rgba(246,245,251,.8) 34%,rgba(246,245,251,.9)),
+    radial-gradient(132% 104% at 84% 2%,transparent 26%,rgba(21,27,61,.3));
+}
+@keyframes plate-drift{
+  from{transform:translate3d(-1.2%,0,0) scale(1.05)}
+  to{transform:translate3d(1.2%,0,0) scale(1.15)}
+}
 img{max-width:100%;display:block}
 a{color:var(--emerald-deep);text-decoration:none}
 a:hover{color:var(--indigo)}
-h1,h2,h3,h4{font-family:var(--font-display);line-height:1.12;letter-spacing:-.025em;margin:0 0 .5em;font-weight:800}
+h1,h2,h3,h4{font-family:var(--font-serif);line-height:1.08;letter-spacing:-.018em;margin:0 0 .5em;font-weight:600}
 h1{font-size:clamp(2.1rem,4.6vw,3.7rem)}
 h2{font-size:clamp(1.65rem,2.8vw,2.4rem)}
 h3{font-size:1.14rem;font-weight:700}
@@ -91,7 +123,7 @@ code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84
 
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;color:#fff;padding:88px 24px 104px;background:var(--indigo)}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(112deg,rgba(21,27,61,.97) 6%,rgba(21,27,61,.86) 44%,rgba(21,27,61,.42)),url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(112deg,rgba(21,27,61,.97) 6%,rgba(21,27,61,.86) 44%,rgba(21,27,61,.42)),url("../img/plate.webp") 58% 40%/cover no-repeat}
 .hero::after{content:"";position:absolute;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(15,159,116,.35),transparent 66%);right:-180px;top:-190px;pointer-events:none}
 .hero-inner{position:relative;max-width:1220px;margin:auto;display:grid;grid-template-columns:1.08fr .92fr;gap:58px;align-items:center}
 .hero h1{color:#fff;margin-bottom:20px}
@@ -294,8 +326,8 @@ table.data td .sub{display:block;font-size:.74rem;color:var(--muted)}
 .chart-bar span{font-size:.68rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 
 /* auth */
-.auth{min-height:100vh;display:grid;grid-template-columns:1.02fr .98fr;background:var(--porcelain)}
-.auth-art{position:relative;background:linear-gradient(165deg,rgba(21,27,61,.93),rgba(21,27,61,.62)),url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1400&q=80") center/cover;color:#fff;padding:52px;display:flex;flex-direction:column;justify-content:space-between}
+.auth{min-height:100vh;display:grid;grid-template-columns:1.02fr .98fr;background:transparent}
+.auth-art{position:relative;background:linear-gradient(165deg,rgba(21,27,61,.93),rgba(21,27,61,.62)),url("../img/plate.webp") 40% 55%/cover;color:#fff;padding:52px;display:flex;flex-direction:column;justify-content:space-between}
 .auth-art h1{font-size:clamp(1.95rem,3.2vw,2.9rem);max-width:15ch;color:#fff}
 .auth-art h1 em{font-style:normal;color:var(--gold)}
 .auth-art p{color:#c4c8e2;max-width:42ch}
@@ -304,7 +336,7 @@ table.data td .sub{display:block;font-size:.74rem;color:var(--muted)}
 .auth-point{display:flex;gap:12px;align-items:flex-start;font-size:.87rem;color:#c4c8e2}
 .auth-point i{width:24px;height:24px;border-radius:50%;background:rgba(15,159,116,.24);color:#7fe0bf;display:grid;place-items:center;font-style:normal;font-size:.7rem;flex:0 0 auto;font-weight:800}
 .auth-form-wrap{display:grid;place-items:center;padding:40px 24px}
-.auth-form{width:100%;max-width:438px}
+.auth-form{width:100%;max-width:438px;background:rgba(255,255,255,.84);border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:var(--shadow);backdrop-filter:blur(16px)}
 .auth-form h2{font-size:1.75rem;margin-bottom:5px}
 .auth-form .sub{color:var(--muted);font-size:.88rem;margin-bottom:24px}
 .auth-foot{text-align:center;font-size:.84rem;color:var(--muted);margin-top:20px}
@@ -331,6 +363,24 @@ table.data td .sub{display:block;font-size:.74rem;color:var(--muted)}
 .reveal:nth-child(3){animation-delay:.14s}
 .reveal:nth-child(4){animation-delay:.21s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* With scripting available the blocks wait for the viewport instead of firing all
+   at once on load: a long ledger should reveal itself as you read down it. Without
+   it the rules above still animate, so nothing is ever left invisible. */
+.js-io main .reveal,.js-io main .panel,.js-io main .card,.js-io main .stat,.js-io main .table-wrap,.js-io main .auth-form{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);
+}
+.js-io main .reveal.in,.js-io main .panel.in,.js-io main .card.in,.js-io main .stat.in,.js-io main .table-wrap.in,.js-io main .auth-form.in{
+  opacity:1;transform:none;
+}
+.js-io main .stat-row>*:nth-child(2),.js-io main .grid-2>*:nth-child(2),.js-io main .grid-3>*:nth-child(2){transition-delay:.08s}
+.js-io main .stat-row>*:nth-child(3),.js-io main .grid-2>*:nth-child(3),.js-io main .grid-3>*:nth-child(3){transition-delay:.16s}
+.js-io main .stat-row>*:nth-child(4){transition-delay:.24s}
+.stat{transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,border-color .22s ease}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#cfeee1}
+.btn:active{transform:translateY(0) scale(.985)}
+tbody tr{transition:background .18s ease}
+tbody tr:hover{background:var(--porcelain)}
 .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4bd3a8;box-shadow:0 0 0 0 rgba(75,211,168,.6);animation:pulse 2.2s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(75,211,168,0)}100%{box-shadow:0 0 0 0 rgba(75,211,168,0)}}
 .divider{height:1px;background:var(--line);margin:18px 0}
@@ -393,5 +443,5 @@ table.data td .sub{display:block;font-size:.74rem;color:var(--muted)}
   .site-footer{padding:42px 18px 24px}
 }
 @media(prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }

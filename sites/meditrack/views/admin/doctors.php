@@ -62,7 +62,7 @@
           <div><label for="qualifications">Qualifications</label><input id="qualifications" name="qualifications" value="<?= e(old('qualifications')) ?>" placeholder="MBBS, FMCP"></div>
           <div><label for="room">Room</label><input id="room" name="room" value="<?= e(old('room')) ?>" placeholder="Room 2A"></div>
         </div>
-        <div><label for="photo_url">Photo URL (optional)</label><input id="photo_url" name="photo_url" type="url" value="<?= e(old('photo_url')) ?>" placeholder="https://…"></div>
+        <div><label for="photo_url">Photo (optional)</label><input id="photo_url" name="photo_url" type="text" value="<?= e(old('photo_url')) ?>" placeholder="https://… or assets/img/content/…"></div>
         <div><label for="bio">Short bio</label><textarea id="bio" name="bio" style="min-height:90px" placeholder="Focus areas and approach to care."><?= e(old('bio')) ?></textarea></div>
         <button class="btn btn-primary" type="submit">Create doctor account</button>
         <p class="hint">Creates the login, profile and default Mon/Wed/Fri 09:00–15:00 availability. The doctor can change their password after signing in.</p>

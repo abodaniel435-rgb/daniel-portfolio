@@ -8,10 +8,12 @@
   <meta name="theme-color" content="#0b1220">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= e(asset('assets/css/app.css')) ?>">
+  <script src="<?= e(asset('assets/js/app.js')) ?>" defer></script>
 </head>
 <body class="theme-dark">
+<div class="bg-plate" aria-hidden="true"></div>
 <div class="auth">
   <aside class="auth-art">
     <a class="brand" href="<?= e(url('/')) ?>">

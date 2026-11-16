@@ -280,6 +280,88 @@ already owned — the fix removed the duplication rather than patching the copy.
 **Eight of the ten tools are still frontend-only.** Two conversions done with a real test suite beat
 eight done thinly, and the shared-core fix above is the proof of why the slow route is the right one.
 
+## 6h. The photograph pass on the six PHP apps
+
+The brief asked for a background image on every page of every site, and the ten kit demos had got one.
+The six PHP apps had not. They now do, built the same way each time so the code stays legible when you
+jump between repos:
+
+- a fixed `.bg-plate` layer carrying one commissioned photograph per site (`public/assets/img/plate.webp`,
+  62–106 KB, WebP), sitting *under* the page colour so a missing file degrades to the old flat background
+  rather than a broken icon;
+- a `::after` scrim (vertical wash + corner vignette) that keeps text contrast where it was;
+- `@keyframes plate-drift` for the slow scale, `translate` for scroll parallax, and an
+  IntersectionObserver that arms itself with `.js-io` on `<html>` — so a browser that never runs the
+  script still shows every block;
+- a display typeface per site (AjoCircle Newsreader, MediTrack Spectral, FarmCoop its existing serif,
+  RoutePilot Bricolage Grotesque) instead of six apps in one sans.
+
+**A defect that made the parallax decorative only.** The scroll offset was written into `--sy` inside
+`transform`, and `plate-drift` animates `transform` — so the keyframe replaced the whole property every
+frame and the parallax never ran. Found by reading FarmCoop's CSS after it had been written the other
+way, then confirmed in the browser on all six apps: the offset now rides in `translate`, which composes
+with the animated `transform`, and `getComputedStyle` returns `translate: 0px 49.5px` *next to* a live
+`matrix(...)` while scrolling. (Verifying it needed `scrollTo({behavior:"instant"})` — `html` sets
+`scroll-behavior:smooth`, and headless throttling left a smooth scroll parked at 0, which looks exactly
+like a broken handler.)
+
+**A reduced-motion reset that was not one.** Four apps opted out with
+`*{animation-duration:.001ms!important}`, which is the usual snippet but is incomplete for
+`infinite` animations: at a microsecond per iteration, `plate-drift` and the live-dot `pulse` cycle
+thousands of times a second — the plate jitters sideways and the CPU burns, on the machines that asked
+not to be animated. Adding `animation-iteration-count:1!important` makes the reset mean what it says.
+NairaDesk and PriceDesk already set `animation:none` explicitly, so they only needed `translate:none`
+beside the `transform:none` they had.
+
+**The kit's own reduced-motion bug, same family.** `demos/_kit/kit.js` had `if (reduce) return null`
+inside `stage()`, which threw away the *photograph* as well as the motion. The opt-out is now scoped to
+the drift and the parallax; `CDP_MEDIA="prefers-reduced-motion:reduce"` proves the plate is still in the
+DOM in that mode.
+
+## 6i. Content photography, and why the marketplace was empty
+
+A screenshot of FarmCoop's marketplace showed six cards with blank image wells. The seeded produce and
+farm photos — and MediTrack's doctor portraits — were `images.unsplash.com` hotlinks stored in the
+database, so the pages depended on a third-party CDN being reachable, and any cPanel host that strips
+external requests shows the same empty boxes the browser did.
+
+- `tools/fetch_site_photos.py` now pulls every remote photo a PHP app references into
+  `public/assets/img/content/*.webp` (13 for FarmCoop, 5 for MediTrack, capped at 1200 px, q76) and
+  rewrites the source to the local path. Re-running is cheap: existing files are reused.
+- `tools/localise_db_photos.php` does the same for rows already in a dev database, one row at a time,
+  so nothing else in the table is touched.
+- Stored values are now resolved by `fc_media()` / `photo_src()`: a full URL still passes through
+  (a farmer who pastes a hosted photo is not broken), anything else is treated as a path under
+  `public/` and served through `asset()`, which means the seed data is host-independent and works from a
+  cPanel subdirectory. `fc_is_url()` became `fc_is_image()` and accepts `assets/…` without a scheme,
+  rejecting `..` segments; the two `type="url"` inputs that would have refused to submit a relative path
+  are `type="text"` with the same validation behind them.
+- MediTrack gained the validation its admin form never had — the photo field was written straight to the
+  database from `admin.php`.
+- One crop fix: `.doctor-photo` is a 230 px landscape window over a portrait photograph, so `center`
+  cut foreheads off. `center 18%` puts the window on the upper third, where a head shot keeps its face.
+
+## 6j. These six apps had never been executed before
+
+The four later builds had been written, packaged and documented, but never run. They now install against
+local MySQL, and every GET route was probed anonymously and as the signed-in admin
+(`tools/probe_routes.sh`, which fails on any `Warning:`/`Notice:`/`Fatal error` in the rendered HTML):
+
+| site | public | protected anon | protected admin | role-gated | PHP warnings |
+|---|---|---|---|---|---|
+| FarmCoop | 200 | 302 | 200 | 403 (`/farmer`, `/buyer`) | 0 |
+| RoutePilot | 200 | 302 | 200 | 403 (`/courier/queue`) | 0 |
+| MediTrack | 200 | 302 | 200 | 403 (`/patient/*`) | 0 |
+
+The tooling that made that testable is worth keeping: `tools/login_session.sh` takes a password on
+stdin only (never argv, never a file) and prints the `forge_session` cookie, `tools/dev_reset_pw.php`
+resets a dev account from stdin, and `tools/cdp_shot.mjs` grew `CDP_COOKIE`, `CDP_MEDIA` and `CDP_EVAL`
+so a headless capture can be signed in, motion-reduced, or interrogated for computed styles.
+
+All six cPanel packages were rebuilt from the live source with the plates and content photos inside:
+AjoCircle 174 KB, FarmCoop 1481 KB, MediTrack 249 KB, RoutePilot 193 KB, NairaDesk 127 KB,
+PriceDesk 179 KB — each checked to contain no `.env`, no log and no install lock, and `core/Db.php=fixed`.
+
 ## 7. Outstanding / optional
 
 - Nothing required by the brief is unfinished in this workspace, and the portfolio itself is now published (section 6b). The remaining work belongs to cPanel: 24 packages sit in `C:\Users\HI\Downloads` waiting to be uploaded, and the ten tools are already live on GitHub Pages — deploying them to a host is optional, only needed if he wants them off Pages or under his own domain.
@@ -289,3 +371,6 @@ eight done thinly, and the shared-core fix above is the proof of why the slow ro
 - Hotel Miramar and Campus Coin still carry their development passwords until the owner rotates them on the deployed copy.
 - **The 172 Trinity photographs are an owner action, not an open engineering task** (section 6e). The code path, the manifest generator and the paging are all in place and tested; the showroom will fill itself the moment real files replace the zero-byte placeholders.
 - Hotel Miramar's live Render deployment still serves the previous navy-and-gold build until the owner redeploys; the redesigned source is what is committed here.
+- **ForgeStack still seeds remote hero photos.** `tools/forgestack/app/Profiles.php` holds four `images.unsplash.com` URLs that land in a generated site's `app/config.php`, so a new build hotlinks its hero until the generator bundles the image into the project the way `tools/fetch_site_photos.py` now does for the six PHP apps. That is generator plumbing, not a one-line swap, and it is deliberately left un-half-done.
+- Campus Coin's `src/legacy.css` keeps two remote `url()`s on `.shell::before` and `.landing`. Neither class exists in the JSX any more, so the browser never fetches them — dead CSS, not a dependency. The live background stage (`src/motion.jsx`) already serves four local images from `public/bg/`.
+- The ten kit demos share one typeface trio (Fraunces + Inter + JetBrains Mono). Rotating a display face per tool is polish, and the six PHP apps now each have their own.

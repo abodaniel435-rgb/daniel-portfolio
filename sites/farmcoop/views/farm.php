@@ -18,7 +18,7 @@
 <section class="section" style="padding-top:38px">
   <div class="split" style="align-items:start;margin-bottom:44px">
     <div class="reveal" style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-sm)">
-      <img src="<?= e($farm['photo_url'] ?: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80') ?>" alt="<?= e($farm['farm_name']) ?>" style="width:100%;height:360px;object-fit:cover">
+      <img src="<?= e(fc_media($farm['photo_url'], 'assets/img/content/photo-1500937386664-56d1dfef3854.webp')) ?>" alt="<?= e($farm['farm_name']) ?>" style="width:100%;height:360px;object-fit:cover">
     </div>
     <div class="reveal d1">
       <p class="eyebrow">About the farm</p>

@@ -27,6 +27,7 @@ $appName = (string)env('APP_NAME', 'FarmCoop');
   <script src="<?= e(asset('assets/js/app.js')) ?>" defer></script>
 </head>
 <body>
+  <div class="bg-plate" aria-hidden="true"></div>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <div class="topbar">

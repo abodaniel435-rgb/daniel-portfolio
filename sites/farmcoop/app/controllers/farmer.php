@@ -76,10 +76,10 @@ function farmer_profile_save(): void
         ->in('state', nigerian_states());
 
     $photo = trim((string)($input['photo_url'] ?? ''));
-    if (!$v->passes() || !fc_is_url($photo)) {
+    if (!$v->passes() || !fc_is_image($photo)) {
         $errors = $v->errors();
-        if ($photo !== '' && !fc_is_url($photo)) {
-            $errors['photo_url'] = 'Enter a full image URL starting with http:// or https://.';
+        if ($photo !== '' && !fc_is_image($photo)) {
+            $errors['photo_url'] = 'Enter an image URL starting with https://, or a path under assets/.';
         }
         remember_errors($errors);
         remember_old($input);
@@ -229,8 +229,8 @@ function farmer_listing_input(): array
     }
 
     $image = trim((string)($input['image_url'] ?? ''));
-    if (!fc_is_url($image)) {
-        $errors['image_url'] = 'Enter a full image URL starting with http:// or https://.';
+    if (!fc_is_image($image)) {
+        $errors['image_url'] = 'Enter an image URL starting with https://, or a path under assets/.';
     } elseif (mb_strlen($image) > 255) {
         $errors['image_url'] = 'Keep the image URL under 255 characters.';
     }

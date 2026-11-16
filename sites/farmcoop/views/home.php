@@ -126,7 +126,7 @@
       </div>
       <div class="reveal d1">
         <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)">
-          <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80" alt="Rows of crops on a Nigerian farm" style="width:100%;height:430px;object-fit:cover">
+          <img src="<?= e(fc_media('assets/img/content/photo-1464226184884-fa280b87c399.webp')) ?>" alt="Rows of crops on a Nigerian farm" style="width:100%;height:430px;object-fit:cover">
         </div>
         <div class="card" style="margin-top:-46px;margin-left:22px;margin-right:22px;position:relative;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
           <div>
@@ -173,7 +173,7 @@
     <?php foreach ($farms as $farm): ?>
       <article class="farm-card reveal">
         <a href="<?= e(url('/farm/' . $farm['id'])) ?>" aria-label="Open <?= e($farm['farm_name']) ?>">
-          <div class="farm-media" style="background-image:url('<?= e($farm['photo_url'] ?: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=900&q=80') ?>')"></div>
+          <div class="farm-media" style="background-image:url('<?= e(fc_media($farm['photo_url'], 'assets/img/content/photo-1500937386664-56d1dfef3854.webp')) ?>')"></div>
         </a>
         <div class="farm-body">
           <div class="flex-between" style="margin-bottom:6px">

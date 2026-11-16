@@ -14,6 +14,7 @@
   <script src="<?= e(asset('assets/js/app.js')) ?>" defer></script>
 </head>
 <body>
+<div class="bg-plate" aria-hidden="true"></div>
 <div class="auth">
   <aside class="auth-art">
     <a class="brand brand-light" href="<?= e(url('/')) ?>">

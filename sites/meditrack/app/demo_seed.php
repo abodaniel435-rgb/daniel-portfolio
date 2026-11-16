@@ -8,7 +8,7 @@ return function (): void {
             'bio' => 'Family medicine with a focus on preventive care and chronic disease follow-up.',
             'fee' => 7500,
             'room' => 'Room 2A',
-            'photo' => 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80',
+            'photo' => 'assets/img/content/photo-1622253692010-333f2da6031d.webp',
         ],
         'paediatrics@meditrack.test' => [
             'specialty' => 'Paediatrics',
@@ -16,7 +16,7 @@ return function (): void {
             'bio' => 'Newborn to adolescent care, immunisations and growth monitoring.',
             'fee' => 9000,
             'room' => 'Room 4B',
-            'photo' => 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=600&q=80',
+            'photo' => 'assets/img/content/photo-1594824476967-48c8b964273f.webp',
         ],
     ];
 

@@ -11,7 +11,7 @@ return function (): void {
             'lga' => 'Abeokuta North',
             'produce_focus' => 'Tomatoes, tatashe peppers & leafy greens',
             'about' => 'A 12-hectare family farm off Kobape Road supplying hotels and market traders across Abeokuta and Lagos since 2011. Harvests are picked to order and graded before pickup.',
-            'photo' => 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80',
+            'photo' => 'assets/img/content/photo-1500937386664-56d1dfef3854.webp',
             'verified' => 1,
         ],
         'halima@farmcoop.test' => [
@@ -20,7 +20,7 @@ return function (): void {
             'lga' => 'Zaria',
             'produce_focus' => 'Ofada rice, yellow maize & cowpea',
             'about' => 'A women-led grain collective aggregating harvests from 34 smallholder farms around Zaria. Every batch is cleaned, weighed and bagged on site.',
-            'photo' => 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80',
+            'photo' => 'assets/img/content/photo-1464226184884-fa280b87c399.webp',
             'verified' => 1,
         ],
         'emeka@farmcoop.test' => [
@@ -29,7 +29,7 @@ return function (): void {
             'lga' => 'Abakaliki',
             'produce_focus' => 'Yam, plantain & cassava',
             'about' => 'Third-generation yam farmers in Abakaliki. We cure tubers properly so they travel well and arrive firm at the buyer\'s kitchen.',
-            'photo' => 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80',
+            'photo' => 'assets/img/content/photo-1592982537447-7440770cbfc9.webp',
             'verified' => 0,
         ],
     ];
@@ -76,7 +76,7 @@ return function (): void {
             'lga' => 'Abeokuta North',
             'location' => 'Ogunlana Farm, Kobape Road, Abeokuta',
             'description' => "Firm, deep-red Roma tomatoes picked the evening before pickup. Graded to remove splits, packed in ventilated 20kg crates. Sold by weight, weighed in front of the buyer. Ideal for stew bases, sauces and hotel kitchens.\n\nMinimum order 10kg. Bring your own crates or hire ours for ₦500 each.",
-            'image_url' => 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=1200&q=80',
+            'image_url' => 'assets/img/content/photo-1592924357228-91a4daadcfea.webp',
         ],
         [
             'farmer' => 'farmer@farmcoop.test',
@@ -92,7 +92,7 @@ return function (): void {
             'lga' => 'Abeokuta North',
             'location' => 'Ogunlana Farm, Kobape Road, Abeokuta',
             'description' => 'Thick-fleshed red tatashe with a sweet finish, harvested at full colour. Consistent sizing between 90g and 130g per fruit. Suitable for pepper base, stew and grill menus.',
-            'image_url' => 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=1200&q=80',
+            'image_url' => 'assets/img/content/photo-1563565375-f3fdfdbefa83.webp',
         ],
         [
             'farmer' => 'halima@farmcoop.test',
@@ -108,7 +108,7 @@ return function (): void {
             'lga' => 'Zaria',
             'location' => 'Suleiman Collective store, Sabon Gari, Zaria',
             'description' => "Short-grain Ofada rice from the 2025 wet-season harvest, destoned and winnowed twice. Smoky aroma, high swelling capacity — about 2.4x its dry weight when cooked.\n\nBagged in 25kg and 50kg jute sacks. Samples available on request before you commit a bulk order.",
-            'image_url' => 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1200&q=80',
+            'image_url' => 'assets/img/content/photo-1586201375761-83865001e31c.webp',
         ],
         [
             'farmer' => 'halima@farmcoop.test',
@@ -124,7 +124,7 @@ return function (): void {
             'lga' => 'Zaria',
             'location' => 'Suleiman Collective store, Sabon Gari, Zaria',
             'description' => 'Sun-dried yellow maize at 12% moisture, cleaned and bagged. Tested for aflatoxin at the Zaria aggregation centre. Good for feed mills, poultry farms and pap producers.',
-            'image_url' => 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=1200&q=80',
+            'image_url' => 'assets/img/content/photo-1551754655-cd27e38d2076.webp',
         ],
         [
             'farmer' => 'emeka@farmcoop.test',
@@ -140,7 +140,7 @@ return function (): void {
             'lga' => 'Abakaliki',
             'location' => 'Nwosu Farm yard, Abakaliki–Afikpo Road',
             'description' => 'Mature green bunches, 9 to 12 fingers each, one basket holds 22 to 25 bunches. Cut to order so they ripen in transit rather than on the farm. Great for dodo, chips and boiling.',
-            'image_url' => 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=1200&q=80',
+            'image_url' => 'assets/img/content/photo-1571771894821-ce9b6c11b08e.webp',
         ],
         [
             'farmer' => 'emeka@farmcoop.test',
@@ -156,7 +156,7 @@ return function (): void {
             'lga' => 'Abakaliki',
             'location' => 'Nwosu Farm barn, Abakaliki–Afikpo Road',
             'description' => 'Cured Puna yam from the new harvest, 1.8kg to 3kg per tuber. Cured for 10 days in a ventilated barn so the skin sets and the tuber stores for weeks without rotting.',
-            'image_url' => 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=1200&q=80',
+            'image_url' => 'assets/img/content/photo-1518977676601-b53f82aba655.webp',
         ],
     ];
 

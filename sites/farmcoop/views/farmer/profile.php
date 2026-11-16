@@ -63,7 +63,7 @@ $val = static function (string $key, $default = '') use ($profile) {
 
           <div>
             <label for="photo_url">Farm photo URL</label>
-            <input id="photo_url" name="photo_url" type="url" value="<?= e($val('photo_url')) ?>" placeholder="https://images.unsplash.com/…">
+            <input id="photo_url" name="photo_url" type="text" value="<?= e($val('photo_url')) ?>" placeholder="https://… or assets/img/content/…">
             <?= field_error('photo_url') ?>
             <p class="hint">Optional but recommended — a real photo of the farm builds buyer confidence.</p>
           </div>
@@ -79,7 +79,7 @@ $val = static function (string $key, $default = '') use ($profile) {
         <div class="panel">
           <p class="eyebrow" style="margin-bottom:10px">Preview</p>
           <div style="border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)">
-            <div style="height:140px;background:var(--cream-deep) center/cover no-repeat;background-image:url('<?= e($val('photo_url') ?: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80') ?>')"></div>
+            <div style="height:140px;background:var(--cream-deep) center/cover no-repeat;background-image:url('<?= e(fc_media($val('photo_url'), 'assets/img/content/photo-1500937386664-56d1dfef3854.webp')) ?>')"></div>
             <div style="padding:16px">
               <div class="flex-between" style="margin-bottom:6px">
                 <?php if ($profile && (int)$profile['is_verified'] === 1): ?>

@@ -50,7 +50,7 @@
     </div>
     <div class="reveal">
       <div class="card" style="padding:0;overflow:hidden">
-        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80" alt="Doctor speaking with a patient in a bright clinic" style="height:390px;width:100%;object-fit:cover">
+        <img src="<?= e(photo_src('assets/img/content/photo-1576091160399-112ba8d25d1d.webp')) ?>" alt="Doctor speaking with a patient in a bright clinic" style="height:390px;width:100%;object-fit:cover">
         <div style="padding:22px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
           <div><strong style="display:block">Patient-first by design</strong><span style="font-size:.82rem;color:var(--muted)">Clear next steps at every stage</span></div>
           <span class="badge badge-ok">Secure sessions</span>
@@ -104,7 +104,7 @@
   <div class="grid grid-3" style="margin-top:24px">
     <?php foreach ($doctors as $doctor): ?>
       <article class="doctor-card reveal">
-        <div class="doctor-photo" style="background-image:url('<?= e($doctor['photo_url'] ?: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80') ?>')"></div>
+        <div class="doctor-photo" style="background-image:url('<?= e(photo_src($doctor['photo_url'], 'assets/img/content/photo-1559839734-2b71ea197ec2.webp')) ?>')"></div>
         <div class="doctor-body">
           <span class="doctor-spec"><?= e($doctor['specialty']) ?></span>
           <h3><?= e($doctor['name']) ?></h3>

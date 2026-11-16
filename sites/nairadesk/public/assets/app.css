@@ -42,9 +42,12 @@ body {
   background: url("img/plate.webp") 62% 38% / cover no-repeat;
   opacity: .5;
   filter: saturate(.6) contrast(1.04) brightness(1.06);
-  transform: translate3d(0, var(--sy, 0px), 0) scale(1.06);
+  /* plate-drift animates `transform`, which would clobber a scroll offset left in the
+     same property — so the parallax rides in on `translate`, which composes with it. */
+  translate: 0 var(--sy, 0px);
+  transform: scale(1.06);
   animation: plate-drift 44s ease-in-out infinite alternate;
-  will-change: transform;
+  will-change: transform, translate;
 }
 .bg-plate::after {
   content: "";
@@ -194,6 +197,6 @@ input:focus, select:focus { outline: 0; border-color: var(--brand); box-shadow: 
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .bg-plate, .bg-plate::after { animation: none; transform: none; }
+  .bg-plate, .bg-plate::after { animation: none; transform: none; translate: none; }
   .anim .panel, .anim .card, .anim .readout, .anim h1, .anim .stat-row .stat, .anim .anim-rule { animation: none; }
 }

@@ -1,6 +1,22 @@
 (() => {
   'use strict';
 
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Background plate: it is fixed, so the scroll offset has to be applied by hand */
+  const plate = document.querySelector('.bg-plate');
+  if (plate && !reduce) {
+    let queued = false;
+    const paint = () => {
+      plate.style.setProperty('--sy', `${(window.scrollY * 0.055).toFixed(1)}px`);
+      queued = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!queued) { queued = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+    paint();
+  }
+
   /* Mobile navigation */
   const toggle = document.querySelector('.menu-btn');
   const links = document.getElementById('navlinks');
@@ -17,9 +33,11 @@
     });
   }
 
-  /* Scroll reveals */
+  /* Scroll reveals — the hidden start state lives behind the .js class that the head
+     script puts on <html>, so a browser that never runs this file still shows every
+     block; here the job is only to trade the on-load burst for a viewport cue. */
   const reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && reveals.length) {
+  if (!reduce && 'IntersectionObserver' in window && reveals.length) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {

@@ -16,7 +16,7 @@
           <div class="pick-grid">
             <?php foreach ($doctors as $item): ?>
               <a class="pick" href="<?= e(url('/patient/book?doctor=' . $item['id'])) ?>">
-                <img src="<?= e($item['photo_url'] ?: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=200&q=80') ?>" alt="">
+                <img src="<?= e(photo_src($item['photo_url'], 'assets/img/content/photo-1559839734-2b71ea197ec2.webp')) ?>" alt="">
                 <div>
                   <strong><?= e($item['name']) ?></strong>
                   <span><?= e($item['specialty']) ?> · <?= e($item['room'] ?: 'Main clinic') ?></span>
@@ -38,7 +38,7 @@
 
       <div class="panel">
         <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:18px">
-          <img src="<?= e($doctor['photo_url'] ?: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=200&q=80') ?>" alt="" style="width:64px;height:64px;border-radius:50%;object-fit:cover">
+          <img src="<?= e(photo_src($doctor['photo_url'], 'assets/img/content/photo-1559839734-2b71ea197ec2.webp')) ?>" alt="" style="width:64px;height:64px;border-radius:50%;object-fit:cover">
           <div style="flex:1;min-width:180px">
             <strong><?= e($doctor['name']) ?></strong>
             <div style="font-size:.84rem;color:var(--muted)"><?= e($doctor['qualifications'] ?: 'Licensed clinician') ?> · <?= e($doctor['room'] ?: 'Main clinic') ?></div>

@@ -17,7 +17,7 @@
     <div class="grid grid-3">
       <?php foreach ($doctors as $doctor): ?>
         <article class="doctor-card reveal">
-          <div class="doctor-photo" style="background-image:url('<?= e($doctor['photo_url'] ?: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80') ?>')"></div>
+          <div class="doctor-photo" style="background-image:url('<?= e(photo_src($doctor['photo_url'], 'assets/img/content/photo-1559839734-2b71ea197ec2.webp')) ?>')"></div>
           <div class="doctor-body">
             <span class="doctor-spec"><?= e($doctor['specialty']) ?></span>
             <h3><?= e($doctor['name']) ?></h3>

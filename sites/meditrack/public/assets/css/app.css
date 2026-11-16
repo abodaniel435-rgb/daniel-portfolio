@@ -19,17 +19,49 @@
   --radius-sm:12px;
   --font-display:"Sora",system-ui,sans-serif;
   --font-body:"Inter",system-ui,sans-serif;
+  /* Headings carry a serif so the clinic reads as an institution rather than an
+     app; the numerals and the wordmark stay on the grotesque, where tabular
+     figures actually line up. */
+  --font-serif:"Spectral",Georgia,serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--sand);color:var(--ink);font:16px/1.65 var(--font-body);-webkit-font-smoothing:antialiased}
+
+/* ---------- background plate ----------
+   Every page sits on one photograph of the pharmacy counter, dimmed to a wash
+   under the sand. It is fixed rather than attached so it keeps drifting behind
+   the schedule as you scroll; the paper colour above stays the fallback if the image
+   is ever missing. */
+.bg-plate{
+  position:fixed;inset:-8%;z-index:-2;pointer-events:none;
+  background:url("../img/plate.webp") 62% 44%/cover no-repeat;
+  opacity:.62;
+  filter:saturate(.72) contrast(1.06) brightness(1.08);
+  /* plate-drift animates `transform`, which would clobber a scroll offset left in the
+     same property — so the parallax rides in on `translate`, which composes with it. */
+  translate:0 var(--sy,0px);
+  transform:scale(1.06);
+  animation:plate-drift 58s ease-in-out infinite alternate;
+  will-change:transform,translate;
+}
+.bg-plate::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(247,245,239,.58),rgba(247,245,239,.8) 34%,rgba(247,245,239,.9)),
+    radial-gradient(132% 104% at 84% 2%,transparent 26%,rgba(10,37,32,.3));
+}
+@keyframes plate-drift{
+  from{transform:translate3d(-1.2%,0,0) scale(1.05)}
+  to{transform:translate3d(1.2%,0,0) scale(1.15)}
+}
 img{max-width:100%;display:block}
 a{color:var(--teal);text-decoration:none}
 a:hover{color:var(--forest)}
-h1,h2,h3,h4{font-family:var(--font-display);line-height:1.12;letter-spacing:-.02em;margin:0 0 .5em}
-h1{font-size:clamp(2.2rem,5vw,4rem);font-weight:700}
-h2{font-size:clamp(1.7rem,3vw,2.6rem);font-weight:700}
-h3{font-size:1.18rem;font-weight:600}
+h1,h2,h3,h4{font-family:var(--font-serif);font-weight:600;line-height:1.08;letter-spacing:-.018em;margin:0 0 .5em}
+h1{font-size:clamp(2.2rem,5vw,4rem)}
+h2{font-size:clamp(1.7rem,3vw,2.6rem)}
+h3{font-size:1.18rem}
 p{margin:0 0 1em}
 small{font-size:.82rem}
 code{background:var(--mint);padding:2px 7px;border-radius:6px;font-size:.86em}
@@ -76,7 +108,7 @@ code{background:var(--mint);padding:2px 7px;border-radius:6px;font-size:.86em}
 
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;background:var(--forest);color:#fff;padding:84px 24px 96px}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(7,38,32,.96) 8%,rgba(7,38,32,.72) 52%,rgba(7,38,32,.42)),url("https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1800&q=80") center/cover;opacity:1}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(7,38,32,.96) 8%,rgba(7,38,32,.72) 52%,rgba(7,38,32,.42)),url("../img/plate.webp") 58% 36%/cover no-repeat;opacity:1}
 .hero::after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(20,163,148,.35),transparent 65%);right:-120px;top:-140px}
 .hero-inner{position:relative;max-width:1200px;margin:auto;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
 .hero h1{color:#fff;margin-bottom:22px}
@@ -114,7 +146,9 @@ code{background:var(--mint);padding:2px 7px;border-radius:6px;font-size:.86em}
 
 .doctor-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
 .doctor-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-.doctor-photo{height:230px;background:var(--mint) center/cover no-repeat;position:relative}
+/* Portrait photos cropped to a landscape card lose the face at center, so the
+   window sits on the upper third where a head shot keeps its subject. */
+.doctor-photo{height:230px;background:var(--mint) center 18%/cover no-repeat;position:relative}
 .doctor-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,37,32,.35),transparent 55%)}
 .doctor-body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
 .doctor-body h3{margin:0;font-size:1.12rem}
@@ -240,8 +274,8 @@ table.data tr:hover td{background:#fbfdfc}
 .tl-body span{font-size:.8rem;color:var(--muted)}
 
 /* auth */
-.auth{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;background:var(--sand)}
-.auth-art{position:relative;background:linear-gradient(160deg,rgba(7,38,32,.88),rgba(7,38,32,.55)),url("https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1400&q=80") center/cover;color:#fff;padding:54px;display:flex;flex-direction:column;justify-content:space-between}
+.auth{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;background:transparent}
+.auth-art{position:relative;background:linear-gradient(160deg,rgba(7,38,32,.88),rgba(7,38,32,.55)),url("../img/plate.webp") 38% 58%/cover no-repeat;color:#fff;padding:54px;display:flex;flex-direction:column;justify-content:space-between}
 .auth-art h1{font-size:clamp(2rem,3.4vw,3rem);max-width:14ch}
 .auth-art p{color:#c9ded7;max-width:40ch}
 .auth-art .brand{color:#fff}
@@ -249,7 +283,7 @@ table.data tr:hover td{background:#fbfdfc}
 .auth-point{display:flex;gap:12px;align-items:flex-start;font-size:.88rem;color:#c9ded7}
 .auth-point i{width:24px;height:24px;border-radius:50%;background:rgba(143,227,200,.18);color:#8fe3c8;display:grid;place-items:center;font-style:normal;font-size:.7rem;flex:0 0 auto}
 .auth-form-wrap{display:grid;place-items:center;padding:40px 24px}
-.auth-form{width:100%;max-width:430px}
+.auth-form{width:100%;max-width:452px;background:rgba(255,255,255,.84);border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:var(--shadow);backdrop-filter:blur(16px)}
 .auth-form h2{font-size:1.8rem;margin-bottom:6px}
 .auth-form .sub{color:var(--muted);font-size:.9rem;margin-bottom:26px}
 .auth-form .btn{margin-top:8px}
@@ -283,6 +317,24 @@ table.data tr:hover td{background:#fbfdfc}
 .reveal:nth-child(3){animation-delay:.12s}
 .reveal:nth-child(4){animation-delay:.18s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* With scripting available the blocks wait for the viewport instead of firing all
+   at once on load: a long appointment list should reveal itself as you read down
+   it. Without it the rules above still animate, so nothing is ever left invisible. */
+.js-io main .reveal,.js-io main .panel,.js-io main .card,.js-io main .stat,.js-io main .table-wrap,.js-io main .auth-form{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);
+}
+.js-io main .reveal.in,.js-io main .panel.in,.js-io main .card.in,.js-io main .stat.in,.js-io main .table-wrap.in,.js-io main .auth-form.in{
+  opacity:1;transform:none;
+}
+.js-io main .stats>*:nth-child(2),.js-io main .grid-2>*:nth-child(2),.js-io main .grid-3>*:nth-child(2),.js-io main .grid-4>*:nth-child(2){transition-delay:.08s}
+.js-io main .stats>*:nth-child(3),.js-io main .grid-2>*:nth-child(3),.js-io main .grid-3>*:nth-child(3),.js-io main .grid-4>*:nth-child(3){transition-delay:.16s}
+.js-io main .stats>*:nth-child(4),.js-io main .grid-4>*:nth-child(4){transition-delay:.24s}
+.stat{transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,border-color .22s ease}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--mint-deep)}
+.btn:active{transform:translateY(0) scale(.985)}
+tbody tr{transition:background .18s ease}
+tbody tr:hover{background:var(--sand)}
 .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#6ee7b7;box-shadow:0 0 0 0 rgba(110,231,183,.6);animation:pulse 2.2s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(110,231,183,0)}100%{box-shadow:0 0 0 0 rgba(110,231,183,0)}}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84em;letter-spacing:.02em}
@@ -325,5 +377,5 @@ table.data tr:hover td{background:#fbfdfc}
   .site-footer{padding:42px 18px 24px}
 }
 @media(prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }

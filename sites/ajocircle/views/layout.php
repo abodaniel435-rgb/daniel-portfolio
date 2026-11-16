@@ -13,11 +13,12 @@ $user = Auth::user();
   <meta name="theme-color" content="#151b3d">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= e(asset('assets/css/app.css')) ?>">
   <script src="<?= e(asset('assets/js/app.js')) ?>" defer></script>
 </head>
 <body>
+  <div class="bg-plate" aria-hidden="true"></div>
   <header class="site-header">
     <div class="nav">
       <a class="brand" href="<?= e(url('/')) ?>" aria-label="AjoCircle home">

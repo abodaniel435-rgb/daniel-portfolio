@@ -46,6 +46,10 @@
   --radius-sm:11px;
   --font-display:"Space Grotesk",system-ui,sans-serif;
   --font-body:"Inter",system-ui,sans-serif;
+  /* Headings get Bricolage: a chunky grotesque with enough industrial personality to
+     sit against a freight-yard photograph. Numerals, the wordmark and the uppercase
+     micro-labels stay on Space Grotesk, where tabular figures actually line up. */
+  --font-serif:"Bricolage Grotesque",system-ui,sans-serif;
   --ring:0 0 0 4px rgba(53,194,232,.18);
 }
 
@@ -85,12 +89,53 @@ body.theme-dark{
     linear-gradient(180deg,#070d18 0%,#0b1220 40%,#080f1b 100%);
   background-attachment:fixed;
 }
+
+/* ------------------------------------------------------------ background plate
+   Every page sits on one photograph of a night freight yard, dimmed to a wash under
+   the paper. It is fixed rather than attached so the yard keeps drifting behind the
+   desk as you scroll; the body colour above stays the fallback if the image is ever
+   missing. */
+.bg-plate{
+  position:fixed;inset:-8%;z-index:-2;pointer-events:none;
+  background:url("../img/plate.webp") 62% 44%/cover no-repeat;
+  opacity:.5;
+  filter:saturate(.7) brightness(1.04);
+  /* plate-drift animates `transform`, which would clobber a scroll offset left in the
+     same property — so the parallax rides in on `translate`, which composes with it. */
+  translate:0 var(--sy,0px);
+  transform:scale(1.06);
+  animation:plate-drift 58s ease-in-out infinite alternate;
+  will-change:transform,translate;
+}
+.bg-plate::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(245,247,250,.62),rgba(245,247,250,.82) 34%,rgba(245,247,250,.9)),
+    radial-gradient(132% 104% at 84% 2%,transparent 26%,rgba(11,18,32,.32));
+}
+/* Portal screens and the auth pages put theme-dark on <body> server-side, so the
+   override hangs off the same class rather than a second toggle. A night photograph
+   belongs behind a dark UI: it comes back up and the scrim turns to navy, so the plate
+   reads as ambient light in the yard instead of a washed-out photo. */
+body.theme-dark .bg-plate{
+  opacity:.7;
+  filter:saturate(.62) contrast(1.04) brightness(.8);
+}
+body.theme-dark .bg-plate::after{
+  background:
+    linear-gradient(180deg,rgba(7,13,24,.7),rgba(7,13,24,.85) 34%,rgba(11,18,32,.93)),
+    radial-gradient(132% 104% at 84% 2%,transparent 22%,rgba(2,6,14,.72));
+}
+@keyframes plate-drift{
+  from{transform:translate3d(-1.2%,0,0) scale(1.05)}
+  to{transform:translate3d(1.2%,0,0) scale(1.15)}
+}
 img{max-width:100%;display:block}
 a{color:var(--cyan-deep);text-decoration:none;transition:color .18s ease}
 a:hover{color:var(--text)}
 body.theme-dark a{color:var(--cyan)}
 body.theme-dark a:hover{color:var(--amber)}
-h1,h2,h3,h4{font-family:var(--font-display);line-height:1.1;letter-spacing:-.025em;margin:0 0 .5em;font-weight:700}
+h1,h2,h3,h4{font-family:var(--font-serif);line-height:1.1;letter-spacing:-.025em;margin:0 0 .5em;font-weight:700}
 h1{font-size:clamp(2.3rem,5.2vw,4.1rem)}
 h2{font-size:clamp(1.75rem,3.2vw,2.7rem)}
 h3{font-size:1.16rem;font-weight:600;letter-spacing:-.015em}
@@ -151,6 +196,7 @@ body.theme-dark .avatar{background:linear-gradient(140deg,var(--amber-soft),var(
   transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease
 }
 .btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.985)}
 .btn-primary{background:linear-gradient(135deg,var(--amber),#ff9518);color:#231604;box-shadow:0 12px 26px rgba(245,165,36,.32)}
 .btn-primary:hover{box-shadow:0 18px 34px rgba(245,165,36,.42);color:#231604}
 .btn-dark{background:var(--navy);color:#fff;box-shadow:0 12px 26px rgba(11,18,32,.28)}
@@ -193,11 +239,12 @@ body.theme-dark .eyebrow{color:var(--amber)}
   background:var(--navy);color:#fff;
   padding:86px 26px 100px
 }
+/* Cropped at the loaded-truck end of the yard; the headline sits over the dark left half. */
 .hero::before{
   content:"";position:absolute;inset:0;z-index:-2;
   background:
     linear-gradient(100deg,rgba(7,13,24,.97) 4%,rgba(7,13,24,.86) 42%,rgba(11,18,32,.52) 74%,rgba(11,18,32,.35)),
-    url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1900&q=80") center/cover no-repeat;
+    url("../img/plate.webp") 78% 42%/cover no-repeat;
 }
 .hero::after{
   content:"";position:absolute;z-index:-1;width:640px;height:640px;right:-160px;top:-200px;border-radius:50%;
@@ -239,8 +286,11 @@ body.theme-dark .eyebrow{color:var(--amber)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1240px;margin:-46px auto 0;padding:0 26px;position:relative;z-index:6}
 .stat{
   background:var(--surface);border:1px solid var(--border);border-radius:16px;
-  padding:22px;box-shadow:var(--shadow)
+  padding:22px;box-shadow:var(--shadow);
+  /* Lift on `translate`, so it coexists with the reveal transform (see .js-io below). */
+  transition:translate .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,border-color .22s ease
 }
+.stat:hover{translate:0 -3px;box-shadow:var(--shadow-lg);border-color:rgba(245,165,36,.42)}
 .stat strong{display:block;font:700 1.9rem/1 var(--font-display);letter-spacing:-.03em;color:var(--text)}
 .stat span{display:block;margin-top:8px;font-size:.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.09em;font-weight:600}
 .stat small{display:block;margin-top:6px;font-size:.76rem;color:var(--text-muted)}
@@ -252,8 +302,11 @@ body.theme-dark .stat-accent strong{color:var(--amber)}
   background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
   padding:26px;box-shadow:var(--shadow-sm)
 }
-.card-hover{transition:transform .26s ease,box-shadow .26s ease,border-color .26s ease}
-.card-hover:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(245,165,36,.4)}
+/* The lift lives on `translate`, not `transform`: a revealed card already owns
+   transform (see the .js-io rules), which would out-specify this hover and eat it.
+   Every card lifts now, so .card-hover is kept only as the existing markup hook. */
+.card,.card-hover{transition:translate .26s cubic-bezier(.16,1,.3,1),box-shadow .26s ease,border-color .26s ease}
+.card:hover,.card-hover:hover{translate:0 -4px;box-shadow:var(--shadow-lg);border-color:rgba(245,165,36,.4)}
 .feature .icon{
   width:48px;height:48px;border-radius:14px;display:grid;place-items:center;margin-bottom:18px;
   background:linear-gradient(140deg,rgba(245,165,36,.2),rgba(245,165,36,.06));
@@ -554,13 +607,16 @@ body.theme-dark .kpi.kpi-cyan strong{color:var(--cyan)}
 }
 .empty strong{display:block;color:var(--text);margin-bottom:5px;font-family:var(--font-display);font-size:1rem}
 
-/* ------------------------------------------------------------------ auth */
-.auth{min-height:100vh;display:grid;grid-template-columns:1.02fr .98fr;background:var(--navy-900)}
+/* ------------------------------------------------------------------ auth
+   The shell is transparent so the fixed plate is what you actually sign in against;
+   a solid --navy-900 here would bury it. */
+.auth{min-height:100vh;display:grid;grid-template-columns:1.02fr .98fr;background:transparent}
+/* Cropped at the dispatcher end, opposite the hero. */
 .auth-art{
   position:relative;padding:52px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;
   background:
     linear-gradient(165deg,rgba(7,13,24,.9),rgba(7,13,24,.62)),
-    url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1500&q=80") center/cover
+    url("../img/plate.webp") 22% 58%/cover no-repeat
 }
 .auth-art::after{
   content:"";position:absolute;right:-120px;bottom:-140px;width:420px;height:420px;border-radius:50%;
@@ -576,8 +632,17 @@ body.theme-dark .kpi.kpi-cyan strong{color:var(--cyan)}
   width:23px;height:23px;border-radius:50%;background:rgba(245,165,36,.18);color:var(--amber);
   display:grid;place-items:center;font-style:normal;font-size:.68rem;flex:0 0 auto;font-weight:700
 }
-.auth-form-wrap{display:grid;place-items:center;padding:40px 26px;background:var(--navy-900)}
-.auth-form{width:100%;max-width:420px;color:#eef3fb}
+.auth-form-wrap{display:grid;place-items:center;padding:40px 26px;background:transparent}
+/* Frosted panel rather than a solid card, so the yard stays behind the form. The plain
+   rgba line is the fallback for browsers without color-mix(); both stop on the surface
+   tokens so the panel keeps following the theme. */
+.auth-form{
+  width:100%;max-width:440px;color:#eef3fb;
+  background:linear-gradient(160deg,rgba(16,27,45,.78),rgba(22,35,58,.7));
+  background:linear-gradient(160deg,color-mix(in srgb,var(--surface) 78%,transparent),color-mix(in srgb,var(--surface-2) 72%,transparent));
+  border:1px solid var(--border);border-radius:22px;padding:32px;
+  box-shadow:var(--shadow-lg);backdrop-filter:blur(16px)
+}
 .auth-form h2{font-size:1.8rem;margin-bottom:4px;color:#fff}
 .auth-form .sub{color:#93a4bf;font-size:.88rem;margin-bottom:24px}
 .auth-form label{color:#c2cee0}
@@ -605,7 +670,8 @@ body.theme-dark .kpi.kpi-cyan strong{color:var(--cyan)}
 .site-footer .brand{color:#fff;margin-bottom:14px}
 .site-footer .brand em{color:var(--amber)}
 .site-footer p{font-size:.87rem;max-width:36ch;color:#93a4bf}
-.site-footer h4{color:#fff;font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:14px}
+/* An uppercase micro-label, not a heading — stays on Space Grotesk with the numerals. */
+.site-footer h4{color:#fff;font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:14px;font-family:var(--font-display)}
 .site-footer a{color:#93a4bf;display:block;font-size:.85rem;margin-bottom:9px}
 .site-footer a:hover{color:var(--amber)}
 .footer-bottom{
@@ -638,6 +704,22 @@ body.theme-dark .kpi.kpi-cyan strong{color:var(--cyan)}
 .reveal:nth-child(3){animation-delay:.12s}
 .reveal:nth-child(4){animation-delay:.18s}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* With scripting available the blocks wait for the viewport instead of firing all at
+   once on load: a long dispatch board should reveal itself as you work down it. The rise
+   animation is handed over to the transition here, otherwise its forwards fill would
+   keep overriding the hidden start state. Without the class the rules above still run,
+   so nothing is ever left invisible. */
+.js-io main .reveal,.js-io main .panel,.js-io main .card,.js-io main .stat,.js-io main .kpi,.js-io main .table-wrap,.js-io main .auth-form{
+  animation:none;
+  opacity:0;transform:translateY(22px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1),
+             translate .26s cubic-bezier(.16,1,.3,1),box-shadow .26s ease,border-color .26s ease;
+}
+.js-io main .reveal.in,.js-io main .panel.in,.js-io main .card.in,.js-io main .stat.in,.js-io main .kpi.in,.js-io main .table-wrap.in,.js-io main .auth-form.in{opacity:1;transform:none}
+.js-io main .stats>*:nth-child(2),.js-io main .kpi-row>*:nth-child(2),.js-io main .grid-2>*:nth-child(2),.js-io main .grid-3>*:nth-child(2),.js-io main .grid-4>*:nth-child(2),.js-io main .steps>*:nth-child(2){transition-delay:.08s}
+.js-io main .stats>*:nth-child(3),.js-io main .kpi-row>*:nth-child(3),.js-io main .grid-2>*:nth-child(3),.js-io main .grid-3>*:nth-child(3),.js-io main .grid-4>*:nth-child(3),.js-io main .steps>*:nth-child(3){transition-delay:.16s}
+.js-io main .stats>*:nth-child(4),.js-io main .kpi-row>*:nth-child(4),.js-io main .grid-3>*:nth-child(4),.js-io main .grid-4>*:nth-child(4),.js-io main .steps>*:nth-child(4){transition-delay:.24s}
 .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 0 rgba(53,194,232,.6);animation:pulse 2.2s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(53,194,232,0)}100%{box-shadow:0 0 0 0 rgba(53,194,232,0)}}
 
@@ -688,10 +770,14 @@ body.theme-dark .kpi.kpi-cyan strong{color:var(--cyan)}
   .timeline{padding-left:30px}
 }
 @media(prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  *{animation-duration:.001ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 @media print{
   .site-header,.portal-side,.site-footer,.flashes,.btn{display:none!important}
   body{background:#fff;color:#000}
   .panel,.table-wrap{box-shadow:none;border-color:#ccc}
+  /* The plate is decoration and ink; and a panel below the fold has not been revealed
+     yet, so print has to release it or the shipment page comes out with holes in it. */
+  .bg-plate{display:none}
+  .js-io main .reveal,.js-io main .panel,.js-io main .card,.js-io main .stat,.js-io main .kpi,.js-io main .table-wrap{opacity:1!important;transform:none!important}
 }

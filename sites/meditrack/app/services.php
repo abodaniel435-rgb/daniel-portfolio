@@ -103,3 +103,31 @@ function doctor_specialties(): array
 {
     return array_column(Db::all('SELECT DISTINCT specialty FROM doctors ORDER BY specialty'), 'specialty');
 }
+
+/** An image field holds either a hosted URL or a path inside public/assets. */
+function photo_is_valid(string $value): bool
+{
+    if ($value === '') {
+        return true;
+    }
+    if (preg_match('#^assets/[A-Za-z0-9._/-]+$#', $value) === 1) {
+        return !str_contains($value, '..');
+    }
+    $scheme = strtolower((string)parse_url($value, PHP_URL_SCHEME));
+    return in_array($scheme, ['http', 'https'], true) && filter_var($value, FILTER_VALIDATE_URL) !== false;
+}
+
+/** Resolve a stored photo value: a hosted URL passes through, a path is served
+    from this install with the asset cache-buster, so the seed data stays
+    host-independent and works on cPanel subdirectories. */
+function photo_src(?string $value, string $fallback = ''): string
+{
+    $value = trim((string)$value);
+    if ($value === '') {
+        $value = $fallback;
+    }
+    if ($value === '') {
+        return '';
+    }
+    return preg_match('#^https?://#i', $value) === 1 ? $value : asset($value);
+}

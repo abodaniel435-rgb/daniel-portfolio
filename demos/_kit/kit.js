@@ -511,7 +511,10 @@
   /* ---------- stage ----------
      The demo sites all live at demos/<slug>/<page>.html and keep their
      photography at demos/_media/<slug>-hero.webp, so the plate can be found
-     from the URL alone — no per-page markup to maintain or forget. */
+     from the URL alone — no per-page markup to maintain or forget.
+     Reduced motion opts out of the drift and the parallax (the CSS holds both
+     still), not of the photograph: the plate is part of the design, not an
+     animation bolted onto it. */
 
   var PLATE_POS = {
     index: '50% 42%', data: '22% 62%', playbook: '78% 30%', record: '46% 74%',
@@ -519,7 +522,6 @@
   };
 
   function stage() {
-    if (reduce) return null;
     var doc = document;
     var path = (global.location.pathname || '').split('?')[0];
     var segs = path.split('/').filter(Boolean);

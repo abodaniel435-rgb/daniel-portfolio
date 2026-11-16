@@ -109,7 +109,7 @@ $val = static function (string $key, $default = '') use ($listing) {
 
           <div>
             <label for="image_url">Photo URL</label>
-            <input id="image_url" name="image_url" type="url" value="<?= e($val('image_url')) ?>" placeholder="https://images.unsplash.com/…">
+            <input id="image_url" name="image_url" type="text" value="<?= e($val('image_url')) ?>" placeholder="https://… or assets/img/content/…">
             <?= field_error('image_url') ?>
             <p class="hint">Optional. Leave blank to use a category photo. Use a clear, recent photo of this harvest.</p>
           </div>
