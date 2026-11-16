@@ -56,7 +56,7 @@ Each is a four-page static site — the tool, a `data.html` carrying the publish
 
 They share one zero-dependency design system (`demos/_kit/`) — `kit.css`/`kit.js` for the tools and `pages.css`/`pages.js` for the generated pages — and are versioned as `?v=6` so a kit change cannot be served stale.
 
-Two of the ten have since been taken off `localStorage` and rebuilt as PHP + MySQL applications with real accounts, review queues and test suites: **PayRite → NairaDesk** (section 6f) and **MarketRate → PriceDesk** (section 6g). Their demos remain online as the calculator front-end; the servers are the products.
+Two of the ten have since been taken off `localStorage` and rebuilt as PHP + MySQL applications with real accounts, review queues and test suites: **PayRite → NairaDesk** (section 6f) and **MarketRate → PriceDesk** (section 6g). Section 6l adds a second server built from the PayRite demo — **`sites/payrite`**, one employer's payroll desk with a staff portal, deliberately separated from NairaDesk's multi-company workspace. The demos stay online as the calculator front-ends; the servers are the products.
 
 ### Left untouched, as instructed
 
@@ -386,9 +386,95 @@ They now carry the same fixed photograph layer:
 
 Sweep result after the change: **65/65 pages paint a background image.**
 
+## 6l. The third conversion (PayRite), the role bug in all nine copies, and a scope collision
+
+`demos/payrite` became **PayRite** (`sites/payrite`) — the third tool given a server, after NairaDesk and
+PriceDesk. The demo computed Nigerian PAYE in the browser and kept the month in `localStorage`: the
+arithmetic was right and the record was nobody's evidence, visible only in the one browser that typed it.
+What moved server-side is the whole desk — an account per staff member, a roster, draft → lock → void
+monthly runs in MySQL, and payslips that carry their own copy of the band table and relief constants used
+(`bands_json`, `rules_json`), so a locked February still renders the way February was computed after the
+rates change for March.
+
+One engine, four callers: `Payroll::compute()` backs the landing calculator, the `/api/paye` JSON endpoint,
+the desk's run builder and the slip viewer, and `calculations` logs what the public calculator was asked
+and answered. A figure a visitor is shown and a figure on a locked payslip cannot now disagree, because
+they are the same function.
+
+`tools/smoke.php` drives it over real HTTP: **147 assertions, 0 failed** on a freshly installed database,
+covering all 33 route registrations probed anonymously, as administrator and as staff — sessions, CSRF
+refusal (419), the role wall (403, not a redirect), duplicate-month refusal, void-then-rebuild, draft slips
+never reaching staff, the login throttle, bcrypt-only storage, a live band edit picked up by the next
+draft, and teardown that leaves no account, roster row or slip behind. `php -l` is clean across every file,
+28 screenshots were taken at desktop / 390px / `prefers-reduced-motion`, and the payslip arithmetic was
+checked by hand against the statute: ₦1,400,000 gross with ₦6,000,000 of rent → CRA ₦3,560,000, rent
+relief ₦1,200,000, taxable ₦10,696,000, annual PAYE ₦2,359,040.04, **net ₦1,056,413.33** — exactly what
+the rendered slip prints.
+
+**Seven bugs, and the first one was not in PayRite.**
+
+1. **`Auth::register()` carried a hard-coded role allowlist** — `['admin','patient','doctor','farmer',
+   'buyer','dispatcher','courier','member','applicant','employer']` — and silently rewrote anything else
+   to `member`. PayRite registers `staff`, so every new account came out `member` and was bounced by its
+   own portal guard. The fix replaces the list with a slug check (`/^[a-z][a-z0-9_]{0,23}$/`), which makes
+   the core stop deciding what roles exist: a site's controller owns that. Applied to **all nine copies**
+   (`_shared-core`, the six apps, PayRite, ForgeStack's generator template). `admin` stays reachable
+   deliberately, because `sites/routepilot/app/controllers/admin.php:115` validates
+   `->in('role', ['dispatcher','courier','admin'])` and legitimately lets an administrator create another
+   one — so the fix had to leave that path working, not just open the door.
+2. `Class "Desk" not found` during install: the CLI installer bootstraps the framework but the demo seed
+   calls `Payroll::compute()` and `Desk::audit()`, which live in the application. `core/cli/install.php`
+   now requires `app/services.php` the way `public/index.php` does.
+3. **Staff could read draft payslips.** `slipsForUser()` filtered `status <> 'void'`, which includes
+   `draft` — so a month still being checked was published to the people it pays. Now `status = 'locked'`.
+4. **A voided month could not be rebuilt.** `payroll_runs.period` was UNIQUE while `admin_run_void()`
+   promised "A new draft can be built for the same month". The index is now `(period, status)` and the
+   real rule — one *live* run per month — moved into `Desk::liveRunByPeriod()`, because MySQL has no
+   partial unique index and the voided run has to stay on file as evidence. The live database was
+   migrated with `ALTER TABLE`, not by dropping it.
+5. **Consolidated relief could exceed the pay it relieved.** The statute says ₦200,000 + 20% of annual
+   gross; on a small salary the floor alone is bigger than the year's pay, and the slip printed a relief
+   larger than the wage. `min($annualGross, …)` in the engine, with a regression assertion.
+6. `/api/paye` read `rent` and `pension` while the landing form posts `annual_rent` and `pension_rate`, so
+   a visitor copying the published example URL got the default back. Both spellings are now accepted — a
+   public endpoint is judged by what people paste into it.
+7. `Class "Board" not found` in `tools/set_password.php`: PriceDesk copy-paste residue. A grep for
+   `Board::|Pricing::|pricedesk|market` across the whole site found exactly that one line, which is now
+   `Desk::audit('account.password_reset', …)`.
+
+Two assertions were also **wrong rather than the app**: the suite expected a signed-out POST to redirect to
+`/login` and a staff hit on a desk route to do the same. The guard runs before the CSRF token is read and
+`requireRole()` answers 403 for a signed-in wrong-role user, which is the correct behaviour — the
+expectations were corrected and the app left alone.
+
+**The interesting problem was a collision, not a bug.** `sites/nairadesk` is section 6f's conversion of
+*this same demo*. Registering PayRite as a second project would have put two entries in the portfolio
+describing one product, which is worse than not shipping it. Rather than merge or delete, the two were
+separated on what they actually do: **NairaDesk is multi-company payroll** — a workspace per employer, a
+tenant check on every query — and **PayRite is one employer's desk with an employee portal** — lock/void
+workflow, per-slip frozen rate copies, staff who sign in and see only their own locked slips. Both
+`projects.js` entries were rewritten to say so, and PayRite's tagline is now "The payroll desk an employer
+runs and the staff can check."
+
+Styling got the same pass as the other six apps: the background plate on every page, a role-exclusive
+masthead (an administrator has no payslips, so the staff links were bouncing off the guard), and a
+mobile masthead that puts the brand on its own line — eight links beside a logo had been stacking into
+four cramped rows at 390px.
+
+`docs/sites/payrite.md` was rewritten from the static-tool guide it had been into the full-stack
+deployment guide and tech report; `sites/payrite/README.md` carries the reasoning and the PAYE working.
+The flat package **`PayRite-cPanel.zip` (199 KB, 54 files, `core/Db.php=fixed`, no `.env` and no install
+lock inside)** is in `C:\Users\HI\Downloads` with the other six PHP builds, and `tools/build_php_zips.py`
+now builds seven.
+
+**Eight of the ten kit tools still have no server** — cropkeep, feesplan, fuelmeter, landedcost, recircle,
+riderpool, sealcheck, suncost. They are being converted one at a time, each with its own test pass, for
+the reason bug 1 above keeps demonstrating: a fix found in one app is usually a fix owed by all of them.
+
 ## 7. Outstanding / optional
 
-- Nothing required by the brief is unfinished in this workspace, and the portfolio itself is now published (section 6b). The remaining work belongs to cPanel: 24 packages sit in `C:\Users\HI\Downloads` waiting to be uploaded, and the ten tools are already live on GitHub Pages — deploying them to a host is optional, only needed if he wants them off Pages or under his own domain.
+- Nothing required by the brief is unfinished in this workspace, and the portfolio itself is now published (section 6b). The remaining work belongs to cPanel: 25 packages sit in `C:\Users\HI\Downloads` waiting to be uploaded — seven of them the PHP builds, `PayRite-cPanel.zip` being the newest (section 6l) — and the ten tools are already live on GitHub Pages — deploying them to a host is optional, only needed if he wants them off Pages or under his own domain.
+- **Eight kit tools are still frontend-only** (cropkeep, feesplan, fuelmeter, landedcost, recircle, riderpool, sealcheck, suncost). Each conversion follows the same route as the three done: engine moved server-side, accounts and roles, a route-by-route probe, a smoke suite, docs, and a flat package. The reason to keep them one at a time is that the shared core has now carried three bugs affecting every app at once (sections 6f, 6g, 6l).
 - The generator tooling (`tools/build_pages.mjs`, `tools/pages/*.mjs`, `tools/link_pages.mjs`, `tools/build_demo_zips.py`, `tools/verify_demos.mjs`) lives in the workspace, not in the Pages repository, so the site is self-sufficient but regenerating a page needs the workspace. Moving the generators into the repo is a deliberate choice, not an oversight to fix silently.
 - Optional polish: re-encode the Hotel Miramar tour video to 720p if a smaller download is wanted; add screenshots to generated `docs/` on future builds.
 - The generated Kite Courier and the six deploy-ready PHP builds have no public URL yet — deployment is an owner action (packages + guides are ready).

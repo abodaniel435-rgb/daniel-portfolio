@@ -116,7 +116,7 @@ final class Auth
             'email' => $email,
             'phone' => trim((string)($data['phone'] ?? '')),
             'password_hash' => password_hash((string)$data['password'], PASSWORD_DEFAULT),
-            'role' => in_array($role, ['admin', 'patient', 'doctor', 'farmer', 'buyer', 'dispatcher', 'courier', 'member', 'applicant', 'employer'], true) ? $role : 'member',
+            'role' => preg_match('/^[a-z][a-z0-9_]{0,23}$/', $role) === 1 ? $role : 'member',
             'is_active' => 1,
             'created_at' => date('Y-m-d H:i:s'),
         ]);
