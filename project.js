@@ -40,7 +40,7 @@ if (!project) {
 
   const shot = document.getElementById('caseShot');
   if (shot) {
-    shot.src = project.thumb;
+    shot.src = project.thumb || 'assets/projects/tech-circuit.jpg';
     shot.alt = project.name + ' — ' + project.tagline;
   }
 

@@ -264,12 +264,17 @@ retired from the entire portfolio; Cormorant stays only in Hotel Miramar; Inter 
   outcome section, a second image and a real figure, instead of five text blocks.
 - Add View Transitions between index and case (with a `prefers-reduced-motion` and unsupported-browser
   fallback), a ≥1440px tier that uses the width, and animated counters for the proof row.
-- Typography: Syne display with a real scale (three weights, distinct sizes for h1/h2/h3), DM Sans/Archivo
-  body, self-hosted subsets, `font-display: swap`.
-- Performance: re-encode `tech-circuit.jpg` (448 KB → ≤120 KB) or replace it, add `srcset`/`sizes`, drop
-  the unused faces, and stop parsing all 50 KB of `projects.js` on the case page for one project.
-- Delete the orphan `trinity-chandelier.jpg` reference and fix the hardcoded `width="1200" height="750"`
-  on the 960×600 pair.
+- Typography: Space Grotesk display with a real scale (three weights, distinct sizes for h1/h2/h3),
+  DM Sans body, DM Mono for the rails — all four latin subsets self-hosted in `assets/fonts/` with
+  `font-display: swap`. The Google Fonts `<link>` is gone, so the shell makes zero third-party requests.
+- Performance: `tech-circuit.jpg` re-encoded 1920×1280/448 KB → 1400×933/116 KB; `tools/make_thumbs.py`
+  writes 320w and 640w candidates for all 28 cards and `cardImage()` emits `srcset`/`sizes` per card kind.
+  A forced full-grid load went from 3.80 MB to 1.09 MB of images at 1440. Case pages no longer fetch the
+  448 KB hero plate as a fallback `src` — `project.html` ships a data-URI frame and `project.js` supplies
+  the project's own artwork. `projects.js` stays whole: it is 15.7 KB gzipped, and splitting it would add
+  a build step, which is the one thing this repository cannot carry (cPanel hosts it as-is).
+- Deleted the orphan `assets/projects/trinity-chandelier.jpg`; the 960×600 pair now declares its real
+  intrinsic size in `NATIVE_SIZES`, and every hero `<img>` carries `width`/`height`.
 
 ---
 

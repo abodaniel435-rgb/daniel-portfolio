@@ -7,13 +7,12 @@
   <meta name="theme-color" content="#17231f">
   <title>Case study — Daniel</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2317231f'/><path d='M11 8h5.5a8 8 0 0 1 0 16H11V8z' fill='none' stroke='%23c9f45b' stroke-width='2.6' stroke-linejoin='round'/></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=14">
-  <script src="projects.js?v=14" defer></script>
-  <script src="project.js?v=14" defer></script>
-  <script src="ui.js?v=14" defer></script>
+  <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=15">
+  <script src="projects.js?v=15" defer></script>
+  <script src="project.js?v=15" defer></script>
+  <script src="ui.js?v=15" defer></script>
 </head>
 <body class="case-page">
   <div class="bg-plate" aria-hidden="true"></div>
@@ -41,7 +40,7 @@
           <div class="case-actions" id="caseActions"></div>
         </div>
         <figure class="case-shot">
-          <img id="caseShot" src="assets/projects/tech-circuit.jpg" alt="" width="1200" height="750">
+          <img id="caseShot" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 750'><rect width='1200' height='750' fill='%2317231f'/></svg>" alt="" width="1200" height="750" fetchpriority="high">
         </figure>
       </div>
     </section>

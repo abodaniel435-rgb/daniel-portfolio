@@ -43,13 +43,31 @@ function layoutFor(project) {
 
 /* Two thumbnails are 960x600 while the rest are 1200x750. Declaring the wrong
    intrinsic size makes the browser reserve the wrong box and jump on load. */
-const THUMB_SIZES = {
+/* tools/make_thumbs.py writes the 320w and 640w candidates next to the 1200w originals.
+   These two sources are 960w, so they need their own intrinsic size and full candidate. */
+const NATIVE_SIZES = {
   'assets/projects/city-of-gold.jpg': [960, 600],
   'assets/projects/currensee.jpg': [960, 600]
 };
 
+/* The three card kinds draw the same artwork at wildly different widths — a 126px rail,
+   a ~607px column, a ~658px feature panel — and all three used to fetch the 1200px file. */
+const CARD_SIZES = {
+  feature: '(max-width: 980px) 92vw, (max-width: 1440px) 658px, 724px',
+  half: '(max-width: 720px) 92vw, (max-width: 980px) 44vw, (max-width: 1440px) 607px, 433px',
+  row: '126px'
+};
+
 function thumbSize(thumb) {
-  return THUMB_SIZES[thumb] || [1200, 750];
+  return NATIVE_SIZES[thumb] || [1200, 750];
+}
+
+function thumbSrcset(thumb) {
+  const [native] = thumbSize(thumb);
+  const stem = thumb.replace('assets/projects/', '').replace(/\.jpg$/, '');
+  return ['assets/projects/thumbs/' + stem + '-320.jpg 320w',
+    'assets/projects/thumbs/' + stem + '-640.jpg 640w',
+    escapeHtml(thumb) + ' ' + native + 'w'].join(', ');
 }
 
 function cardVars(project, pos) {
@@ -59,7 +77,7 @@ function cardVars(project, pos) {
   return parts.join(';');
 }
 
-function cardImage(project) {
+function cardImage(project, kind) {
   const [w, h] = thumbSize(project.thumb);
   const href = project.demo || project.live || 'project.html?p=' + encodeURIComponent(project.slug);
   const isLive = Boolean(project.demo || project.live);
@@ -68,6 +86,7 @@ function cardImage(project) {
   const label = isLive ? 'Open ' + escapeHtml(project.name) + ' live site' : 'Read the ' + escapeHtml(project.name) + ' case study';
   return '<a class="project-image" href="' + escapeHtml(href) + '"' + linkAttrs + ' aria-label="' + label + '">' +
     '<img src="' + escapeHtml(project.thumb) + '" alt="' + escapeHtml(alt) +
+    '" srcset="' + thumbSrcset(project.thumb) + '" sizes="' + CARD_SIZES[kind] +
     '" width="' + w + '" height="' + h + '" loading="lazy">' +
     '<span class="image-open" aria-hidden="true">' + (isLive ? '↗' : '→') + '</span></a>';
 }
@@ -86,7 +105,7 @@ function cardBody(project, index, kind) {
 
   if (kind === 'row') {
     return [
-      cardImage(project),
+      cardImage(project, kind),
       '<div class="row-text">',
       '  ' + meta,
       '  <h3>' + escapeHtml(project.name) + '</h3>',
@@ -110,8 +129,8 @@ function cardBody(project, index, kind) {
   /* Feature cards pair artwork and copy side by side, which needs the copy to be a
      single grid item; the half cards stay a plain vertical stack. */
   return kind === 'feature'
-    ? cardImage(project) + '\n<div class="card-copy">' + copy + '</div>'
-    : cardImage(project) + '\n' + copy;
+    ? cardImage(project, kind) + '\n<div class="card-copy">' + copy + '</div>'
+    : cardImage(project, kind) + '\n' + copy;
 }
 
 function projectCard(project, index, kind, pos) {
