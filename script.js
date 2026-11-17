@@ -145,6 +145,46 @@ if (grid && Array.isArray(window.PROJECTS)) {
 
 const filterButtons = document.querySelectorAll('.filter-button');
 
+/* The proof row and the filter counts were typed by hand and drifted the moment a
+   project was added — the page claimed 26 while the registry held 28. The HTML keeps
+   a plausible number for no-JS, and this corrects every one of them from the data. */
+function fillCounts() {
+  const list = window.PROJECTS || [];
+  const counts = {
+    total: list.length,
+    open: list.filter((project) => project.demo || project.live).length,
+    paid: list.filter((project) => /paid client/i.test(project.categoryLabel || '')).length
+  };
+  document.querySelectorAll('[data-proof]').forEach((node) => {
+    const value = counts[node.dataset.proof];
+    if (value === undefined) return;
+    const text = String(value).padStart(2, '0');
+    node.textContent = text;
+    node.dataset.count = text;
+  });
+  filterButtons.forEach((button) => {
+    const filter = button.dataset.filter;
+    const n = filter === 'all' ? list.length : list.filter((project) => project.category === filter).length;
+    const badge = document.createElement('span');
+    badge.textContent = n;
+    button.append(badge);
+  });
+}
+
+if (Array.isArray(window.PROJECTS)) fillCounts();
+
+/* Cross-document view transitions morph the clicked thumbnail into the case study's
+   own artwork. Only the element that was actually clicked may claim the name, because
+   duplicate view-transition names on one page cancel the transition outright, and a
+   new-tab link never transitions at all. */
+document.querySelector('#projectGrid')?.addEventListener('click', (event) => {
+  const image = event.target.closest('.project-image');
+  if (!image || image.target) return;
+  document.querySelectorAll('.project-image img').forEach((node) => { node.style.viewTransitionName = ''; });
+  const shot = image.querySelector('img');
+  if (shot) shot.style.viewTransitionName = 'case-art';
+});
+
 filterButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const filter = button.dataset.filter;
