@@ -47,6 +47,13 @@ if (!project) {
   // The case page wears the project's own artwork as its page-wide plate; --case-bg
   // is read by .bg-plate, which sits on the body and so covers the whole scroll.
   if (project.thumb) document.body.style.setProperty('--case-bg', 'url("' + project.thumb + '")');
+  // The registry also carries the project's accent. It was never read, so every case
+  // study dressed itself in the shell's lime.
+  const accent = window.PALETTE.accent(project.accent);
+  if (accent) {
+    document.body.style.setProperty('--p-accent', accent);
+    document.body.style.setProperty('--p-on', window.PALETTE.on(accent));
+  }
 
   const featureList = document.getElementById('caseFeatures');
   if (featureList) {

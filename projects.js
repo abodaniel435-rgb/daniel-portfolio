@@ -692,3 +692,22 @@ window.PROJECTS = [
     accent: "#16704f"
   }
 ];
+
+/* Both the grid and the case page dress themselves from a project's accent, and an
+   element filled with that accent needs its glyph colour chosen from the accent's own
+   luminance — 0.18 is where white-on-accent and ink-on-accent tie. The helper lives
+   here because this is the one module every page loads first. */
+window.PALETTE = {
+  accent(hex) {
+    return /^#[0-9a-f]{6}$/i.test(String(hex || '').trim()) ? String(hex).trim() : '';
+  },
+  on(hex) {
+    const code = parseInt(this.accent(hex).slice(1), 16);
+    if (Number.isNaN(code)) return '#17231f';
+    const lin = [(code >> 16) & 255, (code >> 8) & 255, code & 255].map((v) => {
+      const s = v / 255;
+      return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2] > 0.18 ? '#17231f' : '#fafbf6';
+  }
+};
