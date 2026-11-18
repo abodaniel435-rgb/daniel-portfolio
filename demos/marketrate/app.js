@@ -27,9 +27,12 @@
     if (!el) return el;
     if (String(el.textContent) !== String(text)) {
       el.textContent = text;
-      el.classList.remove('tick');
-      void el.offsetWidth;
-      el.classList.add('tick');
+      /* the number changes either way; only the flash is motion */
+      if (!kit.reduce) {
+        el.classList.remove('tick');
+        void el.offsetWidth;
+        el.classList.add('tick');
+      }
     }
     return el;
   }

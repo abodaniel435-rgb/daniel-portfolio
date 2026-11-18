@@ -2,6 +2,12 @@
    Deep petrol blue + solar amber on warm paper. Signature motion: the sun arc. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Albert Sans for display,
+     Outfit for body. The faces ship from ../_kit/fonts.css - no third-party request. */
+  --font-display: "Albert Sans", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Outfit", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(2.05rem, 3.4vw + 1rem, 3.35rem);
   --brand: #12506b;
   --brand-2: #0c3648;
   --accent: #e0932b;

@@ -2,6 +2,12 @@
    Academic indigo, brass, cream ledger paper. Signature: the bursar's sweep. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): DM Serif Display for display,
+     Public Sans for body. The faces ship from ../_kit/fonts.css — no third-party request. */
+  --font-display: "DM Serif Display", "Iowan Old Style", Georgia, serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(1.95rem, 3.1vw + 1rem, 3.05rem);
   --brand: #2f4a8c;
   --brand-2: #22376a;
   --accent: #cf9a2c;

@@ -3,6 +3,12 @@
    Signature motion = the ETA chain lighting up stop by stop along the route line. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Barlow Condensed for display,
+     Inter Tight for body. The faces ship from ../_kit/fonts.css - no third-party request. */
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Inter Tight", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(2.45rem, 4.5vw + 1rem, 4.05rem);
   --brand: #3c4a99;
   --brand-2: #2a3573;
   --brand-3: #6f7cc9;
@@ -38,7 +44,8 @@ body { background: var(--paper); letter-spacing: -.011em; }
 .hero h1 em { color: var(--brand); font-style: normal; border-bottom: 5px solid color-mix(in srgb, var(--accent) 70%, transparent); }
 .hero-frame { border-radius: 8px 26px 26px 26px; }
 .hero-orbit {
-  width: 470px; height: 470px; right: -170px; top: -150px;
+  width: clamp(250px, 33vw, 470px); height: clamp(250px, 33vw, 470px);
+  right: clamp(-200px, -14vw, -120px); top: clamp(-180px, -13vw, -110px);
   border-color: color-mix(in srgb, var(--brand) 26%, var(--line));
 }
 .hero-orbit::after {

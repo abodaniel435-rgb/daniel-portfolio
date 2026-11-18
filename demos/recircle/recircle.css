@@ -4,6 +4,12 @@
    that turns with accumulated weight + the week band that fills day by day. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Onest for display,
+     DM Sans for body. The faces ship from ../_kit/fonts.css - no third-party request. */
+  --font-display: "Onest", "Segoe UI", system-ui, sans-serif;
+  --font-body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(2.1rem, 3.6vw + 1rem, 3.4rem);
   --brand: #16704f;
   --brand-2: #0c4c34;
   --brand-3: #e5f3ec;

@@ -3,6 +3,12 @@
    running the waterline of the hero frame while the tide line breathes. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Oswald for display,
+     Barlow for body. The faces ship from ../_kit/fonts.css - no third-party request. */
+  --font-display: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(2.35rem, 4.3vw + 1rem, 3.9rem);
   --brand: #2b4a63;
   --brand-2: #1c3346;
   --accent: #c1652b;
@@ -70,7 +76,16 @@ section { padding: clamp(56px, 6vw, 96px) 0; }
   border: 1px solid rgba(193, 101, 43, .55); box-shadow: var(--shadow-md);
 }
 .hero .split { align-items: center; }
-.hero h1 em { color: var(--accent); }
+/* Oswald ships no italic: the emphasis is a manifest line pulled out of the heading and
+   tinted like a highlighted cargo row, which is what the tool is actually about. */
+.hero h1 em {
+  color: var(--accent);
+  font-style: normal;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: .01em .1em;
+}
 .hero-glow { background: radial-gradient(ellipse at 50% 100%, rgba(193, 101, 43, .3), transparent 62%); }
 .stat b { color: var(--brand-2); }
 .stat-strip { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }

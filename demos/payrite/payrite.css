@@ -1,6 +1,12 @@
 /* PayRite — site layer on top of _kit/kit.css */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Familjen Grotesk for display,
+     Schibsted Grotesk for body. The faces ship from ../_kit/fonts.css - no third-party request. */
+  --font-display: "Familjen Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(1.95rem, 3.1vw + 1rem, 3.1rem);
   --brand: #146b5a;
   --brand-2: #0d4d40;
   --accent: #c8964f;

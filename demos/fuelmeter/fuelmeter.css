@@ -3,6 +3,12 @@
    signature motion = the fuel gauge needle sweeping plus a pump-nozzle drip. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Rajdhani for display,
+     Onest for body. The faces ship from ../_kit/fonts.css - no third-party request. */
+  --font-display: "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Onest", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(2.4rem, 4.4vw + 1rem, 4rem);
   --brand: #c0451f;
   --brand-2: #8f2f10;
   --accent: #1f6f8b;
@@ -28,9 +34,17 @@ body { letter-spacing: -.012em; }
 
 /* ---------- hero ---------- */
 
-.hero h1 em { color: var(--brand); }
+/* Rajdhani has no italic cut, so the emphasis is a gauge bracket rather than a slant —
+   a synthesised oblique on a squarish technical face reads as a rendering bug. */
+.hero h1 em {
+  color: var(--brand);
+  font-style: normal;
+  border-top: 3px solid color-mix(in srgb, var(--brand) 46%, transparent);
+  border-bottom: 3px solid color-mix(in srgb, var(--brand) 46%, transparent);
+  padding-block: .02em;
+}
 .hero-frame { border-radius: 22px 22px 4px 22px; }
-.hero-orbit { border-color: color-mix(in srgb, var(--brand) 30%, var(--line)); right: -150px; top: -140px; }
+.hero-orbit { border-color: color-mix(in srgb, var(--brand) 30%, var(--line)); right: clamp(-180px, -13vw, -110px); top: clamp(-170px, -12vw, -100px); }
 .hero-orbit::after {
   content: ""; position: absolute; inset: 58px; border-radius: 50%;
   border: 1px dashed color-mix(in srgb, var(--accent) 34%, transparent);

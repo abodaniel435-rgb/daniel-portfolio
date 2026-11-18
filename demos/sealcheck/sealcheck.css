@@ -3,6 +3,12 @@
    colder than PayRite: rule lines, mono labels, an ink panel instead of cream. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Schibsted Grotesk for display,
+     Public Sans for body. The faces ship from ../_kit/fonts.css — no third-party request. */
+  --font-display: "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(2.1rem, 3.5vw + 1rem, 3.45rem);
   --brand: #12667a;
   --brand-2: #0a4553;
   --accent: #d99321;
@@ -43,7 +49,7 @@ h1, h2, h3, h4 { letter-spacing: -.025em; }
   background-image: linear-gradient(to right, color-mix(in srgb, var(--brand) 8%, transparent) 1px, transparent 1px);
   background-size: 46px 100%;
 }
-.hero-orbit { border-color: color-mix(in srgb, var(--brand) 30%, transparent); border-radius: 50%; width: 380px; height: 380px; top: -90px; }
+.hero-orbit { border-color: color-mix(in srgb, var(--brand) 30%, transparent); border-radius: 50%; width: clamp(220px, 27vw, 380px); height: clamp(220px, 27vw, 380px); top: clamp(-120px, -8vw, -60px); }
 .hero-frame { border-radius: 8px; border: 1px solid color-mix(in srgb, var(--brand) 30%, var(--line)); }
 .hero-cap { margin-top: 12px; max-width: 40ch; }
 

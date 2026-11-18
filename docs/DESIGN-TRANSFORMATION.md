@@ -223,20 +223,42 @@ retired from the entire portfolio; Cormorant stays only in Hotel Miramar; Inter 
 
 ## 6. Rebuilding the shared layers (this is the work that makes the rest stick)
 
-### 6.1 `demos/_kit`
-- **Stop overriding authored heroes.** Delete the `.kit-anim .hero` dark-stage rule (`kit.css:634-648`) and
-  the forced `h1 em` gradient-clip (`:668-675`). The kit supplies `.shell`, `.split`, form controls,
-  tables, focus, and the reveal/counter primitives; the tool supplies surface, type and hero.
-- Make every identity token overridable and **actually read by the kit**: `--font-display`, `--font-body`,
-  `--surface`, `--ink`, `--accent`, `--radius`, `--shadow`, `--ease`. Each tool then declares its own in
-  one `:root` block — which today not one of them does.
-- Split `motion()` into opt-in features (`data-motion="reveal|count|tilt|curtain|ticker"`) so a page asks
-  for what it uses instead of receiving all eight.
-- Complete reduced-motion: one rule set that kills `rowIn`, `tick`, `tickBig`, and every per-tool keyframe;
-  add the missing guard in `marketrate/app.js`.
-- Fix overflow properly: remove `html{overflow-x:hidden}`, give tables a scroll wrapper with a fade edge,
-  and make `hero-orbit` size in `clamp()` rather than a fixed 420–470px at `right:-140px`.
-- Bump `?v=` on every kit file in every tool head as part of the change.
+### 6.1 `demos/_kit` — done
+
+- **Stopped overriding authored heroes.** Deleted the `.kit-anim .hero` dark-stage rule and the forced
+  `h1 em` gradient-clip. The kit now supplies `.shell`, `.split`, form controls, tables, focus and the
+  reveal/counter primitives; each tool owns its surface, type and hero. A tool that wants emphasis on a
+  phrase styles its own `em` — fuelmeter makes it a gauge bracket, landedcost a manifest band, and the
+  tools whose display face has no italic ship a designed treatment instead of a synthesised oblique.
+- **Identity is authored per tool, in one `:root` block.** `--font-display`, `--font-body`, `--font-mono`,
+  `--hero-h1`, `--surface`, `--ink`, `--accent`, `--radius` are all read by the kit and all overridable;
+  the kit defaults are system stacks on purpose, so a tool that declares nothing looks like a tool that
+  declared nothing. Ten tools now carry ten different display faces, sized to the face
+  (`--hero-h1`) rather than to one global clamp, and the `<h1>` line breaks were rebalanced for the new
+  metrics.
+- **Type is self-hosted.** `tools/fetch_fonts.mjs` + `tools/fonts-manifest.json` pull 18 variable families
+  from the Google CSS2 API *as a download source only* and write `demos/_kit/fonts.css` + 42 woff2 files
+  (latin **and** latin-ext — the naira sign is not in latin). Every tool head links `../_kit/fonts.css`;
+  a page whose CSS never names a family never fetches it. Zero `fonts.googleapis.com` /
+  `fonts.gstatic.com` requests remain in any demo.
+- **Motion is opt-in.** `<html data-motion="reveal count words curtain ticker parallax spot decode">`;
+  `kit.js` gates each feature through `wants()`, so the ticker runs only on the two price-feed tools
+  (`marketrate`, `riderpool`), the parallax plate only on the three tools with photographic heroes, and
+  the cursor spotlight ships on none. With the attribute absent the page still gets the baseline set.
+  `splitWords()` now preserves source whitespace, which is what fixed the "honestly ." rendering.
+- **Reduced motion is complete and proven.** The blanket `*` rule replaced the old `.kit-anim`-scoped list
+  (unreachable — the class is only added when motion is welcome), `.kit-par` keeps its plate and loses its
+  `transform`, the ticker/spotlight/progress rail are removed, and `.reveal` is neutralised at
+  specificity-safe precedence. Verified by screenshot, not by reading the CSS.
+- **Overflow is fixed at the cause.** `html{overflow-x:hidden}` is gone; `.table-wrap` paints a real
+  fade-edge affordance (Lea Verou scroll shadows, `local` masks over `scroll` gradients); `hero-orbit`
+  sizes and offsets in `clamp()` in the kit and in all four tools that overrode it.
+- **`?v=` bumped to 11** across all 40 tool and companion pages, and `tools/build_pages.mjs` stamps the
+  new value plus the per-tool `data-motion` and font link on generated pages.
+- **Packaging follows.** `tools/build_demo_zips.py` now writes a per-tool `_kit/fonts.css` containing only
+  the `@font-face` blocks for families that tool names, and ships only those woff2 files — 6-8 faces and
+  not 1.4 MB. An extracted PayRite zip served over HTTP resolves Familjen Grotesk / Schibsted Grotesk /
+  JetBrains Mono, reports zero out-of-origin requests and renders standalone.
 
 ### 6.2 `sites/_shared-core` and the seven apps
 - Add a per-app identity block: the layout reads a `$THEME` array (surface, ink, accents, display, body,

@@ -2,6 +2,12 @@
    Olive green + clay gold on warm paper. Signature motion: the decay front creeping along the bar. */
 
 :root {
+  /* Identity, authored here (docs/DESIGN-TRANSFORMATION.md §5): Zilla Slab for display,
+     Figtree for body. The faces ship from ../_kit/fonts.css - no third-party request. */
+  --font-display: "Zilla Slab", "Iowan Old Style", Georgia, serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  /* one line per thought, sized to this face rather than to the kit default */
+  --hero-h1: clamp(2.05rem, 3.4vw + 1rem, 3.3rem);
   --brand: #4c6b21;
   --brand-2: #354c14;
   --accent: #c9973a;

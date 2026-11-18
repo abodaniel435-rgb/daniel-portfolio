@@ -6,8 +6,28 @@
 
   var reduce = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Set before anything paints, so sections are never shown flat and then hidden.
-  if (!reduce) document.documentElement.classList.add('kit-anim');
+  /* The dramatic layer is opt-out twice over: the reader's prefers-reduced-motion, and a
+     page's own <html data-motion="off"> for when the authored identity is calmer than the
+     kit's. Both have to be read before anything paints, so sections are never shown flat
+     and then hidden. */
+  var quiet = reduce || document.documentElement.dataset.motion === 'off';
+
+  if (!quiet) document.documentElement.classList.add('kit-anim');
+
+  /* Motion is requested, not delivered. Before this, boot() fired every device it owns on
+     every tool, so ten products shared one entrance, one ticker and one scramble — the
+     sameness the identity rules are there to stop. A page opts in with
+     <html data-motion="reveal count words curtain">; a page that names nothing keeps the
+     old full set, so nothing regresses until it is edited. */
+  var allow = (function () {
+    var attr = document.documentElement.dataset.motion;
+    if (!attr || attr === 'off') return null;
+    var set = {};
+    attr.split(/[\s,]+/).forEach(function (f) { if (f) set[f] = true; });
+    return set;
+  })();
+
+  function wants(feature) { return !allow || !!allow[feature]; }
 
   /* ---------- formatting ---------- */
 
@@ -98,7 +118,9 @@
 
   function reveal(root) {
     var items = $$('.reveal', root);
-    if (reduce || !('IntersectionObserver' in global)) {
+    // Opting out of reveal must still settle the elements — kit.css hides .reveal until it
+    // carries .is-in, so skipping the observer without this would leave the page blank.
+    if (quiet || !wants('reveal') || !('IntersectionObserver' in global)) {
       items.forEach(function (el) { el.classList.add('is-in'); });
       return;
     }
@@ -153,7 +175,7 @@
       var dp = Number(el.dataset.decimals || 0);
       var prefix = el.dataset.prefix || '';
       var suffix = el.dataset.suffix || '';
-      if (reduce) { el.textContent = prefix + amount(target, dp) + suffix; return; }
+      if (quiet || !wants('count')) { el.textContent = prefix + amount(target, dp) + suffix; return; }
       var start = null;
       var duration = 1200;
       function frame(ts) {
@@ -374,7 +396,7 @@
      for reduced motion, the page keeps the plain, fully visible layout. */
 
   function motion() {
-    if (reduce) return;
+    if (quiet) return;
     var root = document.documentElement;
     var doc = document;
     var head = $('.site-head');
@@ -386,10 +408,14 @@
     doc.body.appendChild(rail);
     var railFill = rail.firstChild;
 
-    var spot = doc.createElement('div');
-    spot.className = 'kit-spot';
-    spot.setAttribute('aria-hidden', 'true');
-    doc.body.appendChild(spot);
+    /* The cursor spotlight is a device, not a primitive: it used to appear on all ten tools,
+       which is precisely the sameness the opt-in exists to stop. A page asks for it. */
+    if (wants('spot')) {
+      var spot = doc.createElement('div');
+      spot.className = 'kit-spot';
+      spot.setAttribute('aria-hidden', 'true');
+      doc.body.appendChild(spot);
+    }
 
     var fine = global.matchMedia && global.matchMedia('(pointer: fine)').matches;
     var mx = 0, my = 0, frame = 0;
@@ -553,16 +579,24 @@
     var doc = document;
     var kids = Array.prototype.slice.call(el.childNodes);
     var words = [];
+    var gap = false;   // whitespace seen since the last token
     kids.forEach(function (node) {
       if (node.nodeType === 3) {
-        String(node.nodeValue).split(/\s+/).forEach(function (chunk) {
-          if (chunk) words.push({ word: chunk });
+        // Split on the whitespace instead of throwing it away: "…<em>fare</em>." has no
+        // space before the full stop, and rejoining every token with a space put one there.
+        String(node.nodeValue).split(/(\s+)/).forEach(function (chunk) {
+          if (!chunk) return;
+          if (/^\s+$/.test(chunk)) { gap = true; return; }
+          words.push({ word: chunk, space: gap });
+          gap = false;
         });
       } else if (node.nodeName === 'BR') {
         /* a break inside an inline-block span is no break at all */
         words.push({ br: true });
+        gap = false;
       } else if (node.nodeType === 1) {
-        words.push({ el: node });
+        words.push({ el: node, space: gap });
+        gap = false;
       }
     });
     if (!words.length) return 0;
@@ -570,13 +604,13 @@
     var n = 0;
     words.forEach(function (piece, i) {
       if (piece.br) { el.appendChild(doc.createElement('br')); return; }
+      if (piece.space && i > 0) el.appendChild(doc.createTextNode(' '));
       var span = doc.createElement('span');
       span.className = 'kit-w';
       span.style.setProperty('--n', n++);
       if (piece.el) span.appendChild(piece.el);
       else span.textContent = piece.word;
       el.appendChild(span);
-      if (i < words.length - 1) el.appendChild(doc.createTextNode(' '));
     });
     el.classList.add('kit-split');
     return n;
@@ -662,13 +696,13 @@
       try {
         stageEl = stage();
         motion();
-        if (!reduce && stageEl) {
-          curtain();
-          ticker();
-          $$('.hero h1, .page-hero h1').forEach(splitWords);
-          $$('.hero .eyebrow, .page-hero .eyebrow').forEach(decode);
+        if (!quiet && stageEl) {
+          if (wants('curtain')) curtain();
+          if (wants('ticker')) ticker();
+          if (wants('words')) $$('.hero h1, .page-hero h1').forEach(splitWords);
+          if (wants('decode')) $$('.hero .eyebrow, .page-hero .eyebrow').forEach(decode);
           /* parallax the plate on the same rAF budget the rail already uses */
-          var par = $('.kit-stage .kit-par');
+          var par = wants('parallax') && $('.kit-stage .kit-par');
           if (par) {
             var shift = function () {
               par.style.setProperty('--sy', (-Math.min(global.scrollY, 900) * 0.06).toFixed(1) + 'px');
@@ -695,6 +729,7 @@
 
   global.kit = {
     reduce: reduce,
+    quiet: quiet,
     $: $, $$: $$, on: on, setText: setText,
     money: money, amount: amount, pct: pct, num: num, clamp: clamp, slug: slug,
     dateLabel: dateLabel, uid: uid, store: store,

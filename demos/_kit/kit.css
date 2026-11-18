@@ -20,8 +20,12 @@
   --shadow-sm: 0 1px 2px rgba(12, 18, 24, .06), 0 6px 18px -12px rgba(12, 18, 24, .22);
   --shadow-md: 0 2px 6px rgba(12, 18, 24, .07), 0 22px 48px -26px rgba(12, 18, 24, .35);
   --shadow-lg: 0 4px 10px rgba(12, 18, 24, .08), 0 40px 80px -40px rgba(12, 18, 24, .45);
-  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
-  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* Identity is authored, never inherited: the kit ships the primitives and the type
+     library, each tool names its own display and body face in its own :root. These
+     defaults are system stacks on purpose — a tool that forgets gets a plain page, not
+     another project's typography. */
+  --font-display: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --maxw: 1180px;
   --ease: cubic-bezier(.22, .75, .2, 1);
@@ -29,7 +33,9 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: hidden; }
+/* overflow-x lived here and hid every horizontal bug instead of fixing them; .hero and
+   .kit-stage already clip their own bleed, and clipping the root breaks position: sticky. */
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -132,14 +138,18 @@ section { padding: clamp(56px, 7vw, 104px) 0; position: relative; }
 
 .hero { padding: clamp(46px, 6vw, 92px) 0 clamp(48px, 6vw, 90px); position: relative; overflow: hidden; }
 .hero-copy { max-width: 60ch; position: relative; z-index: 2; }
-.hero h1 { margin-bottom: .28em; }
+/* --hero-h1 is the tool's own display size: a clamp tuned for Anton reads tiny in DM Serif
+   Display and enormous in Familjen Grotesk, so the scale belongs to the project, not the kit. */
+.hero h1 { margin-bottom: .28em; font-size: var(--hero-h1, clamp(2.2rem, 3.8vw + 1rem, 3.6rem)); }
 .hero h1 em { color: var(--brand); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 .hero-art { position: relative; z-index: 2; }
 .hero-frame { border-radius: 26px; overflow: hidden; box-shadow: var(--shadow-lg); border: 1px solid var(--line); background: var(--paper-2); }
 .hero-frame img { width: 100%; height: 100%; object-fit: cover; }
 .hero-glow { position: absolute; inset: auto -10% -55% -10%; height: 62%; background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 62%); filter: blur(28px); pointer-events: none; z-index: 1; }
-.hero-orbit { position: absolute; width: 420px; height: 420px; border: 1px solid var(--line); border-radius: 50%; right: -140px; top: -120px; opacity: .5; pointer-events: none; }
+/* Sized in clamp so the ring scales with the viewport instead of bleeding a fixed 140px
+   past a 380px-wide phone; .hero clips it, but a fixed bleed still shifts the composition. */
+.hero-orbit { position: absolute; width: clamp(240px, 30vw, 420px); height: clamp(240px, 30vw, 420px); border: 1px solid var(--line); border-radius: 50%; right: clamp(-170px, -12vw, -100px); top: clamp(-150px, -10vw, -80px); opacity: .5; pointer-events: none; }
 
 .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-top: 40px; padding-top: 26px; border-top: 1px solid var(--line); }
 /* A stat column is often only ~180px wide while its figure can be a ten-character
@@ -258,7 +268,20 @@ th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: l
 th { font: 700 .76rem/1 var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
 tbody tr { transition: background .18s; }
 tbody tr:hover { background: color-mix(in srgb, var(--brand) 6%, transparent); }
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+/* A wide table on a phone looks complete until someone tries to read the last column.
+   The white masks ride the content (local), the shadows ride the viewport (scroll), so a
+   fade appears only at the edge where there is still something off-screen to find. */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, #fff 34%, rgba(255, 255, 255, 0)) 0 0 / 46px 100% no-repeat local,
+    linear-gradient(270deg, #fff 34%, rgba(255, 255, 255, 0)) 100% 0 / 46px 100% no-repeat local,
+    radial-gradient(20px 100% at 0 50%, rgba(12, 18, 24, .22), rgba(12, 18, 24, 0)) 0 0 / 20px 100% no-repeat scroll,
+    radial-gradient(20px 100% at 100% 50%, rgba(12, 18, 24, .22), rgba(12, 18, 24, 0)) 100% 0 / 20px 100% no-repeat scroll,
+    #fff;
+}
 .table-wrap table { min-width: 620px; }
 td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 
@@ -438,27 +461,10 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   100% { transform: translate3d(4%, -3%, 0) scale(1.12); }
 }
 
-.kit-anim .hero-orbit {
-  animation: kit-orbit 18s linear infinite;
-  border-color: color-mix(in srgb, var(--brand) 26%, transparent);
-}
-.kit-anim .hero-orbit::before,
-.kit-anim .hero-orbit::after {
-  content: ""; position: absolute; inset: 14%; border-radius: 50%;
-  border: 1px dashed color-mix(in srgb, var(--accent) 40%, transparent);
-  animation: kit-orbit-rev 26s linear infinite;
-}
-.kit-anim .hero-orbit::after {
-  inset: 30%; border-style: solid; opacity: .55;
-  animation: kit-ring-pulse 4.6s var(--ease-expo) infinite;
-}
-@keyframes kit-orbit { to { transform: rotate(360deg); } }
-@keyframes kit-orbit-rev { to { transform: rotate(-360deg); } }
-@keyframes kit-ring-pulse {
-  0% { transform: scale(1); opacity: .55; }
-  70% { transform: scale(1.22); opacity: 0; }
-  100% { transform: scale(1.22); opacity: 0; }
-}
+/* The orbit is the page's own composition: six tools restyle it (fuelmeter squares it,
+   marketrate resizes it, recircle drops it). The kit used to bolt two dashed rings and a
+   pulse onto it and spin all three, which made every hero the same floating-circle hero. */
+.kit-anim .hero-orbit { border-color: color-mix(in srgb, var(--brand) 26%, transparent); }
 
 .kit-anim .hero h1 {
   clip-path: inset(0 0 0 0);
@@ -468,15 +474,6 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   from { opacity: 0; transform: translateY(26px); clip-path: inset(0 0 40% 0); }
   to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
 }
-
-.kit-anim .hero h1 em {
-  background: linear-gradient(100deg, var(--brand) 0%, var(--accent) 34%, var(--brand-2) 62%, var(--accent) 100%);
-  background-size: 260% 100%;
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent; -webkit-text-fill-color: transparent;
-  animation: kit-text-flow 9s linear infinite;
-}
-@keyframes kit-text-flow { to { background-position: -260% 0; } }
 
 /* the eyebrow's existing rule is a 26px bar — give it a streak instead of a dot */
 .kit-anim .eyebrow::before {
@@ -628,68 +625,6 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 
 .kit-anim .modal.is-open .modal-body { animation: kit-modal-in .55s var(--ease-expo) both; }
 @keyframes kit-modal-in { from { opacity: 0; transform: translateY(26px) scale(.97); } to { opacity: 1; transform: none; } }
-
-/* --- the hero becomes a lit stage rather than a tinted gutter --- */
-
-.kit-anim .hero {
-  margin: 14px 0 26px;
-  padding-inline: clamp(20px, 3.4vw, 54px);
-  border-radius: 34px;
-  isolation: isolate;
-  color: #f2ece1;
-  background:
-    radial-gradient(120% 130% at 6% -10%, color-mix(in srgb, var(--brand) 62%, #070b10) 0%, transparent 58%),
-    radial-gradient(90% 110% at 98% 4%, color-mix(in srgb, var(--accent) 52%, #070b10) 0%, transparent 56%),
-    radial-gradient(70% 90% at 50% 120%, color-mix(in srgb, var(--brand-2) 70%, #070b10) 0%, transparent 62%),
-    #0b1116;
-  box-shadow:
-    0 50px 110px -70px rgba(4, 8, 12, .95),
-    inset 0 1px 0 rgba(255, 255, 255, .07);
-}
-
-/* fine lattice + a slow travelling highlight over the stage */
-.kit-anim .hero::before {
-  inset: 0; height: auto; opacity: 1; filter: none;
-  background:
-    linear-gradient(rgba(255, 255, 255, .055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .055) 1px, transparent 1px),
-    radial-gradient(52% 62% at 22% 18%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 70%);
-  background-size: 46px 46px, 46px 46px, 100% 100%;
-  mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 88%);
-  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 88%);
-  animation: kit-grid-drift 26s linear infinite;
-}
-@keyframes kit-grid-drift {
-  to { background-position: 46px 46px, 46px 46px, 0 0; }
-}
-
-.kit-anim .hero h1 { color: #fff; text-shadow: 0 18px 60px rgba(0, 0, 0, .55); font-size: clamp(2.3rem, 3.5vw + .95rem, 3.75rem); line-height: 1.04; }
-@media (max-width: 1100px) { .kit-anim .hero h1 br { display: none; } }
-.kit-anim .hero h1 em {
-  background: linear-gradient(100deg, #8ef0cd 0%, #ffd88f 30%, #7fe3ff 58%, #ffd88f 82%, #8ef0cd 100%);
-  background-size: 260% 100%;
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent; -webkit-text-fill-color: transparent;
-  border-bottom: 0; box-shadow: none; text-decoration: none; text-shadow: none;
-  animation: kit-text-flow 11s linear infinite;
-}
-.kit-anim .hero .lede, .kit-anim .hero p { color: rgba(242, 236, 225, .8); }
-.kit-anim .hero .eyebrow { color: color-mix(in srgb, var(--accent) 22%, #fff); }
-.kit-anim .hero .hero-cap, .kit-anim .hero .hero-note, .kit-anim .hero .hero-tick,
-.kit-anim .hero .hero-caption, .kit-anim .hero small, .kit-anim .hero .muted {
-  color: rgba(242, 236, 225, .74);
-}
-.kit-anim .hero .hero-cap b, .kit-anim .hero .hero-note b { color: #fff; }
-.kit-anim .hero b, .kit-anim .hero strong { color: #fff; }
-.kit-anim .hero .stat b { color: #fff; }
-.kit-anim .hero .stat span { color: rgba(242, 236, 225, .62); }
-.kit-anim .hero .stat-strip { border-top-color: rgba(255, 255, 255, .16); }
-.kit-anim .hero .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, .3); }
-.kit-anim .hero .btn-ghost:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .55); }
-.kit-anim .hero .btn-primary { box-shadow: 0 16px 34px -16px color-mix(in srgb, var(--brand) 90%, #000); }
-.kit-anim .hero a:not(.btn) { color: inherit; }
-.kit-anim .hero .hero-frame { box-shadow: 0 40px 90px -40px rgba(0, 0, 0, .9), 0 0 0 1px rgba(255, 255, 255, .12); }
-.kit-anim .hero .hero-glow { opacity: .9; }
 
 /* --- one-line navigation on wide screens --- */
 
@@ -879,23 +814,23 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 /* --- respect the reader --- */
 
 @media (prefers-reduced-motion: reduce) {
-  .kit-anim .reveal { opacity: 1; transform: none; filter: none; transition: none; }
-  .kit-anim body::after, .kit-anim .hero::before, .kit-anim .hero-orbit,
-  .kit-anim .hero-orbit::before, .kit-anim .hero-orbit::after,
-  .kit-anim .hero h1, .kit-anim .hero h1 em, .kit-anim .eyebrow::before,
-  .kit-anim .bar i::after, .kit-anim .bar-fill::after, .kit-anim .pulse::after,
-  .kit-anim tbody tr, .kit-anim .spark path.line, .kit-anim .donut .value,
-  .kit-anim .readout-big b, .kit-anim .stat b,
-  .kit-stage .kit-par i, .kit-anim .hero-frame img, .kit-anim .hero-frame::after,
-  .kit-anim .kit-w { animation: none !important; }
-  .kit-anim tbody tr { opacity: 1; transform: none; }
-  .kit-anim .card, .kit-anim .tile, .kit-anim .stat { transform: none; }
-  .kit-anim .card::after, .kit-anim .tile::after { display: none; }
-  .kit-anim .kit-spot { display: none; }
-  .kit-anim .kit-wipe { clip-path: none; transition: none; }
-  .kit-anim .hero-frame::after { display: none; }
-  .kit-ticker-track { animation: none !important; }
-  .kit-stage .kit-par { transform: none; }
+  /* Blanket, because each tool authors its own keyframes and the kit cannot know their
+     names. The list this replaces was scoped to .kit-anim, which kit.js only adds when
+     motion is welcome — so every rule in it was unreachable. With fill-mode both, collapsing
+     the duration lands each entrance on its settled, visible end state instead of hiding it. */
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+  /* The plate stays — it is the project's photograph, not an animation; only its drift goes.
+     The ticker and the cursor spot are pure movement, so those do go, and the ticker band
+     is removed whole rather than leaving an empty strip where the marquee used to be. */
+  .kit-par { transform: none !important; }
+  .kit-ticker, .kit-spot, .kit-progress { display: none !important; }
+  .kit-anim .reveal, .reveal { opacity: 1; transform: none; filter: none; }
 }
 
 /* ---------- print ---------- */
